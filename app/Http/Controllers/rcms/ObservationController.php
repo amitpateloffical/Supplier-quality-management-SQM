@@ -1944,10 +1944,10 @@ class ObservationController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $changestage, 'history' => "Report Issued Performed", 'process' => 'Observation', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                                    function ($message) use ($email, $changestage) {
+                                    ['data' => $changestage, 'site' => "OBS", 'history' => "Report Issued Performed", 'process' => 'Observation', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                    function ($message) use ($email, $changestage) { 
                                         $message->to($email)
-                                        ->subject("QMS Notification: Observation, Record " . $changestage->record . " - Activity: Report Issued Performed");
+                                        ->subject("QMS Notification: Observation, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Report Issued Performed");
                                     }
                                 );
                             } catch (\Exception $e) {
@@ -2003,10 +2003,10 @@ class ObservationController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $changestage, 'history' => "Complete Performed", 'process' => 'Observation', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                    ['data' => $changestage, 'site' => "OBS", 'history' => "Complete Performed", 'process' => 'Observation', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                                     function ($message) use ($email, $changestage) {
                                         $message->to($email)
-                                        ->subject("QMS Notification: Observation, Record " . $changestage->record . " - Activity: Complete Performed");
+                                        ->subject("QMS Notification: Observation, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Complete Performed");
                                     }
                                 );
                             } catch (\Exception $e) {
@@ -2116,10 +2116,10 @@ class ObservationController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $changestage, 'history' => "All CAPA Closed Performed", 'process' => 'Observation', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                    ['data' => $changestage, 'site' => "OBS", 'history' => "All CAPA Closed Performed", 'process' => 'Observation', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                                     function ($message) use ($email, $changestage) {
                                         $message->to($email)
-                                        ->subject("QMS Notification: Observation, Record " . $changestage->record . " - Activity: All CAPA Closed Performed");
+                                        ->subject("QMS Notification: Observation, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: All CAPA Closed Performed");
                                     }
                                 );
                             } catch (\Exception $e) {
@@ -2176,10 +2176,10 @@ class ObservationController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $changestage, 'history' => "Final Approval Performed", 'process' => 'Observation', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                    ['data' => $changestage, 'site' => "OBS", 'history' => "Final Approval Performed", 'process' => 'Observation', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                                     function ($message) use ($email, $changestage) {
                                         $message->to($email)
-                                        ->subject("QMS Notification: Observation, Record " . $changestage->record . " - Activity: Final Approval Performed");
+                                        ->subject("QMS Notification: Observation, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Final Approval Performed");
                                     }
                                 );
                             } catch (\Exception $e) {
@@ -2197,10 +2197,10 @@ class ObservationController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $changestage, 'history' => "Final Approval Performed", 'process' => 'Observation', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                    ['data' => $changestage, 'site' => "OBS", 'history' => "Final Approval Performed", 'process' => 'Observation', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                                     function ($message) use ($email, $changestage) {
                                         $message->to($email)
-                                        ->subject("QMS Notification: Observation, Record " . $changestage->record . " - Activity: Final Approval Performed");
+                                        ->subject("QMS Notification: Observation, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Final Approval Performed");
                                     }
                                 );
                             } catch (\Exception $e) {
@@ -2219,10 +2219,10 @@ class ObservationController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $changestage, 'history' => "Final Approval Performed", 'process' => 'Observation', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                    ['data' => $changestage, 'site' => "OBS", 'history' => "Final Approval Performed", 'process' => 'Observation', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                                     function ($message) use ($email, $changestage) {
                                         $message->to($email)
-                                        ->subject("QMS Notification: Observation, Record " . $changestage->record . " - Activity: Final Approval Performed");
+                                        ->subject("QMS Notification: Observation, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Final Approval Performed");
                                     }
                                 );
                             } catch (\Exception $e) {
@@ -2290,10 +2290,10 @@ class ObservationController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $changeControl, 'history' => "Cancel Performed", 'process' => 'Observation', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                    ['data' => $changeControl, 'site' => "OBS", 'history' => "Cancel Performed", 'process' => 'Observation', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                                     function ($message) use ($email, $changeControl) {
                                         $message->to($email)
-                                        ->subject("QMS Notification: Observation, Record " . $changeControl->record . " - Activity: Cancel Performed");
+                                        ->subject("QMS Notification: Observation, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel Performed");
                                     }
                                 );
                             } catch (\Exception $e) {
@@ -2311,10 +2311,10 @@ class ObservationController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $changeControl, 'history' => "Cancel Performed", 'process' => 'Observation', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                    ['data' => $changeControl, 'site' => "OBS", 'history' => "Cancel Performed", 'process' => 'Observation', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                                     function ($message) use ($email, $changeControl) {
                                         $message->to($email)
-                                        ->subject("QMS Notification: Observation, Record " . $changeControl->record . " - Activity: Cancel Performed");
+                                        ->subject("QMS Notification: Observation, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel Performed");
                                     }
                                 );
                             } catch (\Exception $e) {
@@ -2437,10 +2437,10 @@ class ObservationController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $changeControl, 'history' => "Reject CAPA Plan", 'process' => 'Observation', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                    ['data' => $changeControl, 'site' => "OBS", 'history' => "Reject CAPA Plan", 'process' => 'Observation', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                                     function ($message) use ($email, $changeControl) {
                                         $message->to($email)
-                                        ->subject("QMS Notification: Observation, Record " . $changeControl->record . " - Activity: Reject CAPA Plan");
+                                        ->subject("QMS Notification: Observation, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Reject CAPA Plan");
                                     }
                                 );
                             } catch (\Exception $e) {
@@ -2563,10 +2563,10 @@ class ObservationController extends Controller
 
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $changeControl, 'history' => "QA Approval Without CAPA Performed", 'process' => 'Observation', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                ['data' => $changeControl, 'site' => "OBS", 'history' => "QA Approval Without CAPA Performed", 'process' => 'Observation', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                                 function ($message) use ($email, $changeControl) {
                                     $message->to($email)
-                                    ->subject("QMS Notification: Observation, Record " . $changeControl->record . " - Activity: QA Approval Without CAPA Performed");
+                                    ->subject("QMS Notification: Observation, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA Approval Without CAPA Performed");
                                 }
                             );
                         }

@@ -988,10 +988,10 @@ class ExtensionNewController extends Controller
                     try {
                         Mail::send(
                             'mail.view-mail',
-                            ['data' => $extensionNew, 'history' => "Cancelled Performed", 'process' => 'Extension', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                            ['data' => $extensionNew, 'site' => "EXT", 'history' => "Cancelled Performed", 'process' => 'Extension', 'comment' => $request->comments, 'user'=> Auth::user()->name],
                             function ($message) use ($email, $extensionNew) {
                                 $message->to($email)
-                                ->subject("QMS Notification: Extension, Record " . $extensionNew->record . " - Activity: Cancelled Performed");
+                                ->subject("QMS Notification: Extension, Record #" . str_pad($extensionNew->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancelled Performed");
                             }
                         );
                     } catch (\Exception $e) {
@@ -1009,10 +1009,10 @@ class ExtensionNewController extends Controller
                     try {
                         Mail::send(
                             'mail.view-mail',
-                            ['data' => $extensionNew, 'history' => "Cancelled Performed", 'process' => 'Extension', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                            ['data' => $extensionNew, 'site' => "EXT", 'history' => "Cancelled Performed", 'process' => 'Extension', 'comment' => $request->comments, 'user'=> Auth::user()->name],
                             function ($message) use ($email, $extensionNew) {
                                 $message->to($email)
-                                ->subject("QMS Notification: Extension, Record " . $extensionNew->record . " - Activity: Cancelled Performed");
+                                ->subject("QMS Notification: Extension, Record #" . str_pad($extensionNew->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancelled Performed");
                             }
                         );
                     } catch (\Exception $e) {
@@ -1107,10 +1107,10 @@ class ExtensionNewController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $extensionNew, 'history' => "More Info Required Performed", 'process' => 'Extension', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                    ['data' => $extensionNew, 'site' => "EXT", 'history' => "More Info Required Performed", 'process' => 'Extension', 'comment' => $request->comments, 'user'=> Auth::user()->name],
                                     function ($message) use ($email, $extensionNew) {
                                         $message->to($email)
-                                        ->subject("QMS Notification: Extension, Record " . $extensionNew->record . " - Activity: More Info Required Performed");
+                                        ->subject("QMS Notification: Extension, Record #" . str_pad($extensionNew->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Info Required Performed");
                                     }
                                 );
                             } catch (\Exception $e) {
@@ -1163,10 +1163,10 @@ class ExtensionNewController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $extensionNew, 'history' => "More Info Required Performed", 'process' => 'Extension', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                    ['data' => $extensionNew, 'site' => "EXT", 'history' => "More Info Required Performed", 'process' => 'Extension', 'comment' => $request->comments, 'user'=> Auth::user()->name],
                                     function ($message) use ($email, $extensionNew) {
                                         $message->to($email)
-                                        ->subject("QMS Notification: Extension, Record " . $extensionNew->record . " - Activity: More Info Required Performed");
+                                        ->subject("QMS Notification: Extension, Record #" . str_pad($extensionNew->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Info Required Performed");
                                     }
                                 );
                             } catch (\Exception $e) {
@@ -1241,10 +1241,10 @@ class ExtensionNewController extends Controller
                         try {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $extensionNew, 'history' => "Submitted Performed", 'process' => 'Extension', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                ['data' => $extensionNew, 'site' => "EXT", 'history' => "Submitted Performed", 'process' => 'Extension', 'comment' => $request->comments, 'user'=> Auth::user()->name],
                                 function ($message) use ($email, $extensionNew) {
                                     $message->to($email)
-                                    ->subject("QMS Notification: Extension, Record " . $extensionNew->record . " - Activity: Submitted Performed");
+                                    ->subject("QMS Notification: Extension, Record #" . str_pad($extensionNew->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submitted Performed");
                                 }
                             );
                         } catch (\Exception $e) {
@@ -1314,10 +1314,10 @@ class ExtensionNewController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $extensionNew, 'history' => "Reviewed Performed", 'process' => 'Extension', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                    ['data' => $extensionNew, 'site' => "EXT", 'history' => "Reviewed Performed", 'process' => 'Extension', 'comment' => $request->comments, 'user'=> Auth::user()->name],
                                     function ($message) use ($email, $extensionNew) {
                                         $message->to($email)
-                                        ->subject("QMS Notification: Extension, Record " . $extensionNew->record . " - Activity: Reviewed Performed");
+                                        ->subject("QMS Notification: Extension, Record #" . str_pad($extensionNew->record, 4, '0', STR_PAD_LEFT) . " - Activity: Reviewed Performed");
                                     }
                                 );
                             } catch (\Exception $e) {
@@ -1394,10 +1394,10 @@ class ExtensionNewController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $extensionNew, 'history' => "Approved Performed", 'process' => 'Extension', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                    ['data' => $extensionNew, 'site' => "EXT", 'history' => "Approved Performed", 'process' => 'Extension', 'comment' => $request->comments, 'user'=> Auth::user()->name],
                                     function ($message) use ($email, $extensionNew) {
                                         $message->to($email)
-                                        ->subject("QMS Notification: Extension, Record " . $extensionNew->record . " - Activity: Approved Performed");
+                                        ->subject("QMS Notification: Extension, Record #" . str_pad($extensionNew->record, 4, '0', STR_PAD_LEFT) . " - Activity: Approved Performed");
                                     }
                                 );
                             } catch (\Exception $e) {
@@ -1415,10 +1415,10 @@ class ExtensionNewController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $extensionNew, 'history' => "Approved Performed", 'process' => 'Extension', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                    ['data' => $extensionNew, 'site' => "EXT", 'history' => "Approved Performed", 'process' => 'Extension', 'comment' => $request->comments, 'user'=> Auth::user()->name],
                                     function ($message) use ($email, $extensionNew) {
                                         $message->to($email)
-                                        ->subject("QMS Notification: Extension, Record " . $extensionNew->record . " - Activity: Approved Performed");
+                                        ->subject("QMS Notification: Extension, Record #" . str_pad($extensionNew->record, 4, '0', STR_PAD_LEFT) . " - Activity: Approved Performed");
                                     }
                                 );
                             } catch (\Exception $e) {

@@ -6016,7 +6016,7 @@ class SupplierController extends Controller
                                         ['data' => $supplier, 'history' => "Need for Sourcing of Starting Material Performed", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
                                         function ($message) use ($email, $supplier) {
                                             $message->to($email)
-                                            ->subject("QMS Notification: Supplier, Record " . $supplier->record . " - Activity: Need for Sourcing of Starting Material Performed");
+                                            ->subject("QMS Notification: Supplier, Record #" . str_pad($supplier->record, 4, '0', STR_PAD_LEFT) . " - Activity: Need for Sourcing of Starting Material Performed");
                                         }
                                     );
                                 } catch (\Exception $e) {
@@ -6074,7 +6074,7 @@ class SupplierController extends Controller
                                         ['data' => $supplier, 'history' => "Request Justified Performed", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
                                         function ($message) use ($email, $supplier) {
                                             $message->to($email)
-                                            ->subject("QMS Notification: Supplier, Record " . $supplier->record . " - Activity: Request Justified Performed");
+                                            ->subject("QMS Notification: Supplier, Record #" . str_pad($supplier->record, 4, '0', STR_PAD_LEFT) . " - Activity: Request Justified Performed");
                                         }
                                     );
                                 } catch (\Exception $e) {
@@ -6133,7 +6133,7 @@ class SupplierController extends Controller
                                     ['data' => $supplier, 'history' => "Pre-Purchase Sample Required Performed", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
                                     function ($message) use ($email, $supplier) {
                                         $message->to($email)
-                                        ->subject("QMS Notification: Supplier, Record " . $supplier->record . " - Activity: Pre-Purchase Sample Required Performed");
+                                        ->subject("QMS Notification: Supplier, Record #" . str_pad($supplier->record, 4, '0', STR_PAD_LEFT) . " - Activity: Pre-Purchase Sample Required Performed");
                                     }
                                 );
                             } catch (\Exception $e) {
@@ -6190,7 +6190,7 @@ class SupplierController extends Controller
                                     ['data' => $supplier, 'history' => "Purchase Sample Request Initiated & Acknowledgement By PD Performed", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
                                     function ($message) use ($email, $supplier) {
                                         $message->to($email)
-                                        ->subject("QMS Notification: Supplier, Record " . $supplier->record . " - Activity: Purchase Sample Request Initiated & Acknowledgement By PD Performed");
+                                        ->subject("QMS Notification: Supplier, Record #" . str_pad($supplier->record, 4, '0', STR_PAD_LEFT) . " - Activity: Purchase Sample Request Initiated & Acknowledgement By PD Performed");
                                     }
                                 );
                             } catch (\Exception $e) {
@@ -6250,7 +6250,7 @@ class SupplierController extends Controller
                                     ['data' => $supplier, 'history' => "Purchase Sample Analysis Satisfactory Performed", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
                                     function ($message) use ($email, $supplier) {
                                         $message->to($email)
-                                        ->subject("QMS Notification: Supplier, Record " . $supplier->record . " - Activity: Purchase Sample Analysis Satisfactory Performed");
+                                        ->subject("QMS Notification: Supplier, Record #" . str_pad($supplier->record, 4, '0', STR_PAD_LEFT) . " - Activity: Purchase Sample Analysis Satisfactory Performed");
                                     }
                                 );
                             } catch (\Exception $e) {
@@ -6308,7 +6308,7 @@ class SupplierController extends Controller
                                     ['data' => $supplier, 'history' => "F&D Review Completed Performed", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
                                     function ($message) use ($email, $supplier) {
                                         $message->to($email)
-                                        ->subject("QMS Notification: Supplier, Record " . $supplier->record . " - Activity: F&D Review Completed Performed");
+                                        ->subject("QMS Notification: Supplier, Record #" . str_pad($supplier->record, 4, '0', STR_PAD_LEFT) . " - Activity: F&D Review Completed Performed");
                                     }
                                 );
                             } catch (\Exception $e) {
@@ -6365,7 +6365,7 @@ class SupplierController extends Controller
                                     ['data' => $supplier, 'history' => "Acknowledgement By Purchase Department Performed", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
                                     function ($message) use ($email, $supplier) {
                                         $message->to($email)
-                                        ->subject("QMS Notification: Supplier, Record " . $supplier->record . " - Activity: Acknowledgement By Purchase Department Performed");
+                                        ->subject("QMS Notification: Supplier, Record #" . str_pad($supplier->record, 4, '0', STR_PAD_LEFT) . " - Activity: Acknowledgement By Purchase Department Performed");
                                     }
                                 );
                             } catch (\Exception $e) {
@@ -6687,7 +6687,7 @@ class SupplierController extends Controller
                                     ['data' => $supplier, 'history' => "Manufacturer Audit Failed Performed", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
                                     function ($message) use ($email, $supplier) {
                                         $message->to($email)
-                                        ->subject("QMS Notification: Supplier, Record " . $supplier->record . " - Activity: Manufacturer Audit Failed Performed");
+                                        ->subject("QMS Notification: Supplier, Record #" . str_pad($supplier->record, 4, '0', STR_PAD_LEFT) . " - Activity: Manufacturer Audit Failed Performed");
                                     }
                                 );
                             } catch (\Exception $e) {
@@ -6708,7 +6708,7 @@ class SupplierController extends Controller
                                     ['data' => $supplier, 'history' => "Manufacturer Audit Failed Performed", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
                                     function ($message) use ($email, $supplier) {
                                         $message->to($email)
-                                        ->subject("QMS Notification: Supplier, Record " . $supplier->record . " - Activity: Manufacturer Audit Failed Performed");
+                                        ->subject("QMS Notification: Supplier, Record #" . str_pad($supplier->record, 4, '0', STR_PAD_LEFT) . " - Activity: Manufacturer Audit Failed Performed");
                                     }
                                 );
                             } catch (\Exception $e) {
@@ -6729,7 +6729,7 @@ class SupplierController extends Controller
                                     ['data' => $supplier, 'history' => "Manufacturer Audit Failed Performed", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
                                     function ($message) use ($email, $supplier) {
                                         $message->to($email)
-                                        ->subject("QMS Notification: Supplier, Record " . $supplier->record . " - Activity: Manufacturer Audit Failed Performed");
+                                        ->subject("QMS Notification: Supplier, Record #" . str_pad($supplier->record, 4, '0', STR_PAD_LEFT) . " - Activity: Manufacturer Audit Failed Performed");
                                     }
                                 );
                             } catch (\Exception $e) {
@@ -7078,7 +7078,7 @@ class SupplierController extends Controller
                                     ['data' => $supplier, 'history' => "Request More Info Performed", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
                                     function ($message) use ($email, $supplier) {
                                         $message->to($email)
-                                        ->subject("QMS Notification: Supplier, Record " . $supplier->record . " - Activity: Request More Info Performed");
+                                        ->subject("QMS Notification: Supplier, Record #" . str_pad($supplier->record, 4, '0', STR_PAD_LEFT) . " - Activity: Request More Info Performed");
                                     }
                                 );
                             } catch (\Exception $e) {
@@ -7137,7 +7137,7 @@ class SupplierController extends Controller
                                     ['data' => $supplier, 'history' => "Request More Info Performed", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
                                     function ($message) use ($email, $supplier) {
                                         $message->to($email)
-                                        ->subject("QMS Notification: Supplier, Record " . $supplier->record . " - Activity: Request More Info Performed");
+                                        ->subject("QMS Notification: Supplier, Record #" . str_pad($supplier->record, 4, '0', STR_PAD_LEFT) . " - Activity: Request More Info Performed");
                                     }
                                 );
                             } catch (\Exception $e) {
@@ -7196,7 +7196,7 @@ class SupplierController extends Controller
                                     ['data' => $supplier, 'history' => "Request More Info Performed", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
                                     function ($message) use ($email, $supplier) {
                                         $message->to($email)
-                                        ->subject("QMS Notification: Supplier, Record " . $supplier->record . " - Activity: Request More Info Performed");
+                                        ->subject("QMS Notification: Supplier, Record #" . str_pad($supplier->record, 4, '0', STR_PAD_LEFT) . " - Activity: Request More Info Performed");
                                     }
                                 );
                             } catch (\Exception $e) {
@@ -7255,7 +7255,7 @@ class SupplierController extends Controller
                                     ['data' => $supplier, 'history' => "Purchase Sample Analysis Not Satisfactory Performed", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
                                     function ($message) use ($email, $supplier) {
                                         $message->to($email)
-                                        ->subject("QMS Notification: Supplier, Record " . $supplier->record . " - Activity: Purchase Sample Analysis Not Satisfactory Performed");
+                                        ->subject("QMS Notification: Supplier, Record #" . str_pad($supplier->record, 4, '0', STR_PAD_LEFT) . " - Activity: Purchase Sample Analysis Not Satisfactory Performed");
                                     }
                                 );
                             } catch (\Exception $e) {
@@ -7312,7 +7312,7 @@ class SupplierController extends Controller
                                     ['data' => $supplier, 'history' => "Request More Info Performed", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
                                     function ($message) use ($email, $supplier) {
                                         $message->to($email)
-                                        ->subject("QMS Notification: Supplier, Record " . $supplier->record . " - Activity: Request More Info Performed");
+                                        ->subject("QMS Notification: Supplier, Record #" . str_pad($supplier->record, 4, '0', STR_PAD_LEFT) . " - Activity: Request More Info Performed");
                                     }
                                 );
                             } catch (\Exception $e) {
@@ -7369,7 +7369,7 @@ class SupplierController extends Controller
                                     ['data' => $supplier, 'history' => "Request More Info Performed", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
                                     function ($message) use ($email, $supplier) {
                                         $message->to($email)
-                                        ->subject("QMS Notification: Supplier, Record " . $supplier->record . " - Activity: Request More Info Performed");
+                                        ->subject("QMS Notification: Supplier, Record #" . str_pad($supplier->record, 4, '0', STR_PAD_LEFT) . " - Activity: Request More Info Performed");
                                     }
                                 );
                             } catch (\Exception $e) {
@@ -7426,7 +7426,7 @@ class SupplierController extends Controller
                                     ['data' => $supplier, 'history' => "Request Not Justified Performed", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
                                     function ($message) use ($email, $supplier) {
                                         $message->to($email)
-                                        ->subject("QMS Notification: Supplier, Record " . $supplier->record . " - Activity: Request Not Justified Performed");
+                                        ->subject("QMS Notification: Supplier, Record #" . str_pad($supplier->record, 4, '0', STR_PAD_LEFT) . " - Activity: Request Not Justified Performed");
                                     }
                                 );
                             } catch (\Exception $e) {
@@ -7484,7 +7484,7 @@ class SupplierController extends Controller
                                     ['data' => $supplier, 'history' => "Cancel Performed", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
                                     function ($message) use ($email, $supplier) {
                                         $message->to($email)
-                                        ->subject("QMS Notification: Supplier, Record " . $supplier->record . " - Activity: Cancel Performed");
+                                        ->subject("QMS Notification: Supplier, Record #" . str_pad($supplier->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel Performed");
                                     }
                                 );
                             } catch (\Exception $e) {
@@ -7505,7 +7505,7 @@ class SupplierController extends Controller
                                     ['data' => $supplier, 'history' => "Cancel Performed", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
                                     function ($message) use ($email, $supplier) {
                                         $message->to($email)
-                                        ->subject("QMS Notification: Supplier, Record " . $supplier->record . " - Activity: Cancel Performed");
+                                        ->subject("QMS Notification: Supplier, Record #" . str_pad($supplier->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel Performed");
                                     }
                                 );
                             } catch (\Exception $e) {
@@ -7526,7 +7526,7 @@ class SupplierController extends Controller
                                     ['data' => $supplier, 'history' => "Cancel Performed", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
                                     function ($message) use ($email, $supplier) {
                                         $message->to($email)
-                                        ->subject("QMS Notification: Supplier, Record " . $supplier->record . " - Activity: Cancel Performed");
+                                        ->subject("QMS Notification: Supplier, Record #" . str_pad($supplier->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel Performed");
                                     }
                                 );
                             } catch (\Exception $e) {
@@ -7595,7 +7595,7 @@ class SupplierController extends Controller
                                 ['data' => $supplier, 'history' => "Pre-Purchase Sample Not Required Performed", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
                                 function ($message) use ($email, $supplier) {
                                     $message->to($email)
-                                    ->subject("QMS Notification: Supplier, Record " . $supplier->record . " - Activity: Pre-Purchase Sample Not Required Performed");
+                                    ->subject("QMS Notification: Supplier, Record #" . str_pad($supplier->record, 4, '0', STR_PAD_LEFT) . " - Activity: Pre-Purchase Sample Not Required Performed");
                                 }
                             );
                         } catch (\Exception $e) {
@@ -7731,7 +7731,7 @@ class SupplierController extends Controller
                                 ['data' => $supplier, 'history' => "All Requirements Not Fulfilled Performed", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
                                 function ($message) use ($email, $supplier) {
                                     $message->to($email)
-                                    ->subject("QMS Notification: Supplier, Record " . $supplier->record . " - Activity: All Requirements Not Fulfilled Performed");
+                                    ->subject("QMS Notification: Supplier, Record #" . str_pad($supplier->record, 4, '0', STR_PAD_LEFT) . " - Activity: All Requirements Not Fulfilled Performed");
                                 }
                             );
                         } catch (\Exception $e) {
@@ -7752,7 +7752,7 @@ class SupplierController extends Controller
                                 ['data' => $supplier, 'history' => "All Requirements Not Fulfilled Performed", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
                                 function ($message) use ($email, $supplier) {
                                     $message->to($email)
-                                    ->subject("QMS Notification: Supplier, Record " . $supplier->record . " - Activity: All Requirements Not Fulfilled Performed");
+                                    ->subject("QMS Notification: Supplier, Record #" . str_pad($supplier->record, 4, '0', STR_PAD_LEFT) . " - Activity: All Requirements Not Fulfilled Performed");
                                 }
                             );
                         } catch (\Exception $e) {
@@ -7773,7 +7773,7 @@ class SupplierController extends Controller
                                 ['data' => $supplier, 'history' => "All Requirements Not Fulfilled Performed", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
                                 function ($message) use ($email, $supplier) {
                                     $message->to($email)
-                                    ->subject("QMS Notification: Supplier, Record " . $supplier->record . " - Activity: All Requirements Not Fulfilled Performed");
+                                    ->subject("QMS Notification: Supplier, Record #" . str_pad($supplier->record, 4, '0', STR_PAD_LEFT) . " - Activity: All Requirements Not Fulfilled Performed");
                                 }
                             );
                         } catch (\Exception $e) {
@@ -7840,7 +7840,7 @@ class SupplierController extends Controller
                                 ['data' => $supplier, 'history' => "Cancel Performed", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
                                 function ($message) use ($email, $supplier) {
                                     $message->to($email)
-                                    ->subject("QMS Notification: Supplier, Record " . $supplier->record . " - Activity: Cancel Performed");
+                                    ->subject("QMS Notification: Supplier, Record #" . str_pad($supplier->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel Performed");
                                 }
                             );
                         } catch (\Exception $e) {
@@ -7861,7 +7861,7 @@ class SupplierController extends Controller
                                 ['data' => $supplier, 'history' => "Cancel Performed", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
                                 function ($message) use ($email, $supplier) {
                                     $message->to($email)
-                                    ->subject("QMS Notification: Supplier, Record " . $supplier->record . " - Activity: Cancel Performed");
+                                    ->subject("QMS Notification: Supplier, Record #" . str_pad($supplier->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel Performed");
                                 }
                             );
                         } catch (\Exception $e) {
@@ -7882,7 +7882,7 @@ class SupplierController extends Controller
                                 ['data' => $supplier, 'history' => "Cancel Performed", 'process' => 'Supplier', 'comment' => $request->comments, 'user'=> Auth::user()->name],
                                 function ($message) use ($email, $supplier) {
                                     $message->to($email)
-                                    ->subject("QMS Notification: Supplier, Record " . $supplier->record . " - Activity: Cancel Performed");
+                                    ->subject("QMS Notification: Supplier, Record #" . str_pad($supplier->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel Performed");
                                 }
                             );
                         } catch (\Exception $e) {

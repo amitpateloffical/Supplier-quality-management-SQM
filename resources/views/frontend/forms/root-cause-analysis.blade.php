@@ -974,19 +974,19 @@
 
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="Submit_By">Submited By</label>
+                                    <label for="Submit_By">Submitted By</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="Submit_On">Submited On</label>
+                                    <label for="Submit_On">Submitted On</label>
                                     <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Submit_On">Submited Comment</label>
+                                    <label for="Submit_On">Submitted Comment</label>
                                     <div class="static"></div>
                                 </div>
                             </div>

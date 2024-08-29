@@ -1128,16 +1128,21 @@ class ActionItemController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $openState],
-                                function ($message) use ($email) {
+                                //     ['data' => $openState],
+                                // function ($message) use ($email) {
+                                //     $message->to($email)
+                                //         ->subject("Document sent ".Auth::user()->name);
+                                // }
+                                ['data' => $openState, 'history'=>" - Activity: Submit Permormed" , 'process' => ' Action Item', 'comment' => $openState->submitted_comment,'user'=> Auth::user()->name],
+                                function ($message) use ($email,$openState) {
                                     $message->to($email)
-                                        ->subject("Document sent ".Auth::user()->name);
+                                        ->subject("QMS Notification: Action Item, Record " . $openState->record . " - Activity: Submit Permormed");
                                 }
                                 );
                             } catch (\Exception $e) {
                                 \Log::error('Mail failed to send: ' . $e->getMessage());
                             }
-                            }
+                            
                         }
                 // } 
             }
@@ -1158,7 +1163,6 @@ class ActionItemController extends Controller
 
               
                 toastr()->success('Document Sent');
-
                 return back();
             }
 
@@ -1200,27 +1204,30 @@ class ActionItemController extends Controller
 
 
                 $list = Helpers::getActionOwnerUserList($openState->division_id);
-                  
-                foreach ($list as $u) {
+              foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $root->division_id){
                         $email = Helpers::getInitiatorEmail($openState->user_id);
                         if ($email !== null) {
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $openState],
-                                function ($message) use ($email) {
+                                //     ['data' => $openState],
+                                // function ($message) use ($email) {
+                                //     $message->to($email)
+                                //         ->subject("Document sent ".Auth::user()->name);
+                                // }
+                                ['data' => $openState, 'history'=>" - Activity: Complete Permormed" , 'process' => ' Action Item', 'comment' => $openState->completed_comment,'user'=> Auth::user()->name],
+                                function ($message) use ($email,$openState) {
                                     $message->to($email)
-                                        ->subject("Document sent ".Auth::user()->name);
+                                        ->subject("QMS Notification: Action Item, Record " . $openState->record . " - Activity: Complete Permormed");
                                 }
                                 );
                             } catch (\Exception $e) {
-                                // 
+                                \Log::error('Mail failed to send: ' . $e->getMessage());
                             }
-                        }
-                // } 
-            }
-
+                     }
+              }   
+             
                 $changeControl->update();
 
                 $history = new CCStageHistory();
@@ -1237,7 +1244,8 @@ class ActionItemController extends Controller
 
                 return back();
             }
-         else {
+         
+        }else {
             toastr()->error('E-signature Not match');
 
             return back();
@@ -1323,10 +1331,10 @@ class ActionItemController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $openState],
-                                function ($message) use ($email) {
+                                    ['data' => $openState, 'history'=>" - Activity: Cancel Permormed" , 'process' => ' Action Item', 'comment' => $openState->cancelled_comment,'user'=> Auth::user()->name],
+                                function ($message) use ($email,$openState) {
                                     $message->to($email)
-                                        ->subject("Document sent ".Auth::user()->name);
+                                        ->subject("QMS Notification: Action Item, Record " . $openState->record . " - Activity: Cancel Permormed");
                                 }
                                 );
                             } catch (\Exception $e) {
@@ -1352,15 +1360,15 @@ class ActionItemController extends Controller
                 return redirect('rcms/actionItem/' . $id);
             }
 
-
+        
          else {
             toastr()->error('E-signature Not match');
             return back();
         }
     }
 
-    public function actionStageMoreinfo(Request $request, $id)
-    {if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+    public function actionStageMoreinfo(Request $request, $id) {
+        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
         $changeControl = ActionItem::find($id);
         $lastopenState = ActionItem::find($id);
         $openState = ActionItem::find($id);
@@ -1408,19 +1416,22 @@ class ActionItemController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $openState],
-                                function ($message) use ($email) {
+                                //     ['data' => $openState],
+                                // function ($message) use ($email) {
+                                //     $message->to($email)
+                                //         ->subject("Document sent ".Auth::user()->name);
+                                // }
+                                ['data' => $openState, 'history'=>" - Activity: More Information Required Permormed" , 'process' => ' Action Item', 'comment' => $openState->more_information_required_comment,'user'=> Auth::user()->name],
+                                function ($message) use ($email,$openState) {
                                     $message->to($email)
-                                        ->subject("Document sent ".Auth::user()->name);
+                                        ->subject("QMS Notification: Action Item, Record " . $openState->record . " - Activity: More Information Required Permormed");
                                 }
                                 );
                             } catch (\Exception $e) {
                                 \Log::error('Mail failed to send: ' . $e->getMessage());
-                            } 
+                            }
                             }
                         }
-                // } 
-            }
 
 
 
@@ -1438,6 +1449,7 @@ class ActionItemController extends Controller
                 toastr()->success('Document Sent');
                 return redirect('rcms/actionItem/' . $id);
             }
+        }
          else {
             toastr()->error('E-signature Not match');
             return back();

@@ -1681,10 +1681,10 @@ $history->save();
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $root],
-                                function ($message) use ($email) {
+                                    ['data' => $root , 'history'=>" - Activity: Acknowledge Permormed"  ,'process' => ' Root Cause Analyses', 'comment' => $root->acknowledge_comment,'user'=> Auth::user()->name ],
+                                function ($message) use ($email, $root ) {
                                     $message->to($email)
-                                        ->subject("Document sent 6 ".Auth::user()->name);
+                                        ->subject("QMS Notification: Root Cause Analyses, Record " . $root->record . " - Activity: Acknowledge Permormed");
                                 }
                                 );
                             } catch (\Exception $e) {
@@ -1693,7 +1693,7 @@ $history->save();
                         }
                 // } 
             }
-
+         
                   
                 
                 $root->update();
@@ -1782,10 +1782,16 @@ $history->save();
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $root],
-                                    function ($message) use ($email) {
+                                    // ['data' => $root],
+                                    // function ($message) use ($email) {
+                                    //     $message->to($email)
+                                    //             ->subject("Document is Sent By " . Auth::user()->name);
+                                    // }
+
+                                    ['data' => $root , 'history'=>" - Activity: QA Review Complete Permormed",'process' => ' Root Cause Analyses', 'comment' => $root->qA_review_complete_comment,'user'=> Auth::user()->name ],
+                                    function ($message) use ($email, $root ) {
                                         $message->to($email)
-                                                ->subject("Document is Sent By " . Auth::user()->name);
+                                            ->subject("QMS Notification: Root Cause Analyses, Record " . $root->record . " - Activity: QA Review Complete Permormed");
                                     }
                                 );
                             } catch (\Exception $e) {
@@ -1854,10 +1860,15 @@ $history->save();
                                 try {
                                     Mail::send(
                                         'mail.view-mail',
-                                        ['data' => $root],
-                                    function ($message) use ($email) {
+                                    //     ['data' => $root],
+                                    // function ($message) use ($email) {
+                                    //     $message->to($email)
+                                    //         ->subject("Document sent 6 ".Auth::user()->name);
+                                    // }
+                                    ['data' => $root , 'history'=>" - Activity: Cancel Permormed" ,'process' => ' Root Cause Analyses', 'comment' => $root->cancelled_comment,'user'=> Auth::user()->name ],
+                                    function ($message) use ($email, $root ) {
                                         $message->to($email)
-                                            ->subject("Document sent 6 ".Auth::user()->name);
+                                            ->subject("QMS Notification: Root Cause Analyses, Record " . $root->record . " - Activity: Cancel Permormed");
                                     }
                                     );
                                 } catch (\Exception $e) {

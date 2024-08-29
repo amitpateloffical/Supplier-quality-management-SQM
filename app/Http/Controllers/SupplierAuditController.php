@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 // use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Log;
 use App\Models\SupplierAudit;
 use App\Models\RecordNumber;
 use Carbon\Carbon;
@@ -3203,7 +3204,7 @@ class SupplierAuditController extends Controller
                             // );
                             function ($message) use ($email, $changeControl ) {
                                 $message->to($email)
-                                ->subject("QMS Notification: Supplier Audit , Record " . $changeControl->record . " - Activity: 'history' =>Audit Lead More Info Reqd performed"); }
+                                ->subject("QMS Notification: Supplier Audit , Record " . $changeControl->record . " - Activity: All Capa Closed Performed"); }
                             );
                         } catch (\Exception $e) {
                             \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -3306,7 +3307,7 @@ class SupplierAuditController extends Controller
                                 ['data' => $changeControl, 'history' => 'Reject Performed', 'process' => 'Supplier Audit', 'comment' => $changeControl->comment_rejected_comment,'user'=> Auth::user()->name],
                                 function ($message) use ($email, $changeControl ) {
                                     $message->to($email)
-                                    ->subject("QMS Notification: Supplier Audit , Record " . $changeControl->record . " - Activity: 'history' =>Reject performed"); }
+                                    ->subject("QMS Notification: Supplier Audit , Record " . $changeControl->record . " - Activity: Reject performed"); }
                                 );
                             
                         } catch (\Exception $e) {
@@ -3364,7 +3365,7 @@ class SupplierAuditController extends Controller
                                 ['data' => $changeControl, 'history' => 'Reject Performed', 'process' => 'Supplier Audit', 'comment' => $changeControl->comment_rejected_comment,'user'=> Auth::user()->name],
                                 function ($message) use ($email, $changeControl ) {
                                     $message->to($email)
-                                    ->subject("QMS Notification: Supplier Audit , Record " . $changeControl->record . " - Activity: 'history' =>Rejected performed"); }
+                                    ->subject("QMS Notification: Supplier Audit , Record " . $changeControl->record . " - Activity:Rejected performed"); }
                                 );
                         } catch (\Exception $e) {
                             \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -3435,7 +3436,7 @@ class SupplierAuditController extends Controller
                                 ['data' => $changeControl, 'history' => 'Cancel Performed', 'process' => 'Supplier Audit', 'comment' => $changeControl->capa_execution_in_progress_comment,'user'=> Auth::user()->name],
                                 function ($message) use ($email, $changeControl ) {
                                     $message->to($email)
-                                    ->subject("QMS Notification: Supplier Audit , Record " . $changeControl->record . " - Activity: 'history' =>Cancel  performed"); }
+                                    ->subject("QMS Notification: Supplier Audit , Record " . $changeControl->record . " - Activity: Cancel  performed"); }
                                 );
                         } catch (\Exception $e) {
                             \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -3455,7 +3456,7 @@ class SupplierAuditController extends Controller
                                 ['data' => $changeControl, 'history' => 'Cancel Performed', 'process' => 'Supplier Audit', 'comment' => $changeControl->capa_execution_in_progress_comment,'user'=> Auth::user()->name],
                                 function ($message) use ($email, $changeControl ) {
                                     $message->to($email)
-                                    ->subject("QMS Notification: Supplier Audit , Record " . $changeControl->record . " - Activity: 'history' =>Cancel Performed"); }
+                                    ->subject("QMS Notification: Supplier Audit , Record " . $changeControl->record . " - Activity: Cancel Performed"); }
                                 );
                             
                         } catch (\Exception $e) {
@@ -3508,7 +3509,7 @@ class SupplierAuditController extends Controller
                                 ['data' => $changeControl, 'history' => 'Cancel Performed', 'process' => 'Supplier Audit', 'comment' => $changeControl->comment_cancelled_comment,'user'=> Auth::user()->name],
                                 function ($message) use ($email, $changeControl ) {
                                     $message->to($email)
-                                    ->subject("QMS Notification: Supplier Audit , Record " . $changeControl->record . " - Activity: 'history' => Cancel performed"); }
+                                    ->subject("QMS Notification: Supplier Audit , Record " . $changeControl->record . " - Activity: Cancel performed"); }
                                 );
                             
                         } catch (\Exception $e) {
@@ -3530,7 +3531,7 @@ class SupplierAuditController extends Controller
                                 ['data' => $changeControl, 'history' => 'Cancel Performed', 'process' => 'Supplier Audit', 'comment' => $changeControl->comment_cancelled_comment,'user'=> Auth::user()->name],
                                 function ($message) use ($email, $changeControl ) {
                                     $message->to($email)
-                                    ->subject("QMS Notification: Supplier Audit , Record " . $changeControl->record . " - Activity: 'history' => Cancel performed"); }
+                                    ->subject("QMS Notification: Supplier Audit , Record " . $changeControl->record . " - Activity: Cancel performed"); }
                                 );
                         } catch (\Exception $e) {
                             \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -3576,7 +3577,7 @@ class SupplierAuditController extends Controller
                                 ['data' => $changeControl, 'history' => 'Cancel Performed', 'process' => 'Supplier Audit', 'comment' => $changeControl->comment_cancelled_comment,'user'=> Auth::user()->name],
                                 function ($message) use ($email, $changeControl ) {
                                     $message->to($email)
-                                    ->subject("QMS Notification: Supplier Audit , Record " . $changeControl->record . " - Activity: 'history' => Cancel performed"); }
+                                    ->subject("QMS Notification: Supplier Audit , Record " . $changeControl->record . " - Activity: Cancel performed"); }
                                 );
                         } catch (\Exception $e) {
                             \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -3596,7 +3597,7 @@ class SupplierAuditController extends Controller
                                 ['data' => $changeControl, 'history' => 'Cancel Performed', 'process' => 'Supplier Audit', 'comment' => $changeControl->comment_cancelled_comment,'user'=> Auth::user()->name],
                                 function ($message) use ($email, $changeControl ) {
                                     $message->to($email)
-                                    ->subject("QMS Notification: Supplier Audit , Record " . $changeControl->record . " - Activity: 'history' => Cancel performed"); }
+                                    ->subject("QMS Notification: Supplier Audit , Record " . $changeControl->record . " - Activity: Cancel performed"); }
                                 );
                         } catch (\Exception $e) {
                             \Log::error('Mail failed to send: ' . $e->getMessage());

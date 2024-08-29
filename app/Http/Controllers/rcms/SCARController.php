@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\rcms;
 
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -956,11 +957,11 @@ class SCARController extends Controller
                                 
                                          function ($message) use ($email, $scar ) {
                                              $message->to($email)
-                                             ->subject("QMS Notification: SCAR , Record " . $scar->record . " - Activity: 'history' => Submit performed"); }
+                                             ->subject("QMS Notification: SCAR , Record " . $scar->record . " - Activity: Submit performed"); }
                                          );
                                     
                                 } catch (\Exception $e) {
-                                    \log::error('Mail failed to send: ' . $e->getMessage());
+                                    \Log::error('Mail failed to send: ' . $e->getMessage());
                                 }
                             // }
                      }
@@ -1021,7 +1022,7 @@ class SCARController extends Controller
                 //                       }
                 //                     );
                 //                 } catch (\Exception $e) {
-                //                     \log::error('Mail failed to send: ' . $e->getMessage());
+                //                     \Log::error('Mail failed to send: ' . $e->getMessage());
                 //                 }
                 //             // }
                 //      }
@@ -1141,10 +1142,10 @@ class SCARController extends Controller
                                     ['data' => $scar ,'history'=> 'Response performed'],
                                     function ($message) use ($email, $scar ) {
                                         $message->to($email)
-                                        ->subject("QMS Notification: SCAR , Record " . $scar->record . " - Activity: 'history' => Response performed"); }
+                                        ->subject("QMS Notification: SCAR , Record " . $scar->record . " - Activity: Response performed"); }
                                     );
                                 } catch (\Exception $e) {
-                                    \log::error('Mail failed to send: ' . $e->getMessage());
+                                    \Log::error('Mail failed to send: ' . $e->getMessage());
                                 }
                             // }
                      }
@@ -1199,10 +1200,10 @@ class SCARController extends Controller
                                         ['data' => $scar ,'history'=> 'Approve performed','process' => 'SCAR', 'comment' => $scar->approved_comment,'user'=> Auth::user()->name],
                                          function ($message) use ($email, $scar ) {
                                              $message->to($email)
-                                             ->subject("QMS Notification: SCAR , Record " . $scar->record . " - Activity: 'history' => Approve performed"); }
+                                             ->subject("QMS Notification: SCAR , Record " . $scar->record . " - Activity: Approve performed"); }
                                          );
                                 } catch (\Exception $e) {
-                                    \log::error('Mail failed to send: ' . $e->getMessage());
+                                    \Log::error('Mail failed to send: ' . $e->getMessage());
                                 }
                             // }
                      }
@@ -1220,10 +1221,10 @@ class SCARController extends Controller
                                         ['data' => $scar ,'history'=> 'Approve performed','process' => 'SCAR', 'comment' => $scar->approved_comment,'user'=> Auth::user()->name],
                                         function ($message) use ($email, $scar ) {
                                             $message->to($email)
-                                            ->subject("QMS Notification: SCAR , Record " . $scar->record . " - Activity: 'history' => Approve performed"); }
+                                            ->subject("QMS Notification: SCAR , Record " . $scar->record . " - Activity: Approve performed"); }
                                         );
                                 } catch (\Exception $e) {
-                                    \log::error('Mail failed to send: ' . $e->getMessage());
+                                    \Log::error('Mail failed to send: ' . $e->getMessage());
                                 }
                             // }
                      }
@@ -1347,10 +1348,10 @@ class SCARController extends Controller
                                 ['data' => $scar ,'history'=> 'Reject performed','process' => 'SCAR', 'comment' => $scar->rejected_comment,'user'=> Auth::user()->name],
                                          function ($message) use ($email, $scar ) {
                                              $message->to($email)
-                                             ->subject("QMS Notification: SCAR , Record " . $scar->record . " - Activity: 'history' => Reject performed"); }
+                                             ->subject("QMS Notification: SCAR , Record " . $scar->record . " - Activity:  Reject performed"); }
                                          );
                         } catch (\Exception $e) {
-                            \log::error('Mail failed to send: ' . $e->getMessage());
+                            \Log::error('Mail failed to send: ' . $e->getMessage());
                         }
                     // }
              }

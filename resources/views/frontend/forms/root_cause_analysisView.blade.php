@@ -1529,19 +1529,19 @@
 
                                     <div class="col-lg-3">
                                         <div class="group-input">
-                                            <label for="Submit_By">Submited By</label>
+                                            <label for="Submit_By">Submitted By</label>
                                             <div class="static"> @if($data->submitted_by) {{  $data->submitted_by }} @else Not Applicable @endif</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-3">
                                         <div class="group-input">
-                                            <label for="Submit_On">Submited On</label>
+                                            <label for="Submit_On">Submitted On</label>
                                             <div class="static"> @if($data->submitted_on) {{  $data->submitted_on }} @else Not Applicable @endif</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="Submit_On">Submited Comment</label>
+                                            <label for="Submit_On">Submitted Comment</label>
                                             <div class="static"> @if($data->submitted_comment) {{  $data->submitted_comment }} @else Not Applicable @endif</div>
                                         </div>
                                     </div>

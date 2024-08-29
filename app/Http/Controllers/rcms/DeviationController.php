@@ -5433,12 +5433,16 @@ class DeviationController extends Controller
                              try {
                                  Mail::send(
                                      'mail.view-mail',
-                                     ['data' => $deviation],
-                                     function ($message) use ($email) {
-                                         $message->to($email)
-                                             ->subject("Document Sent By " . Auth::user()->name);
-                                     }
-                                 );
+                                     ['data' => $deviation, 'history' => 'Submit Performed', 'process' => 'Deviation', 'comment' => $deviation->submit_comment, 'user'=> Auth::user()->name],
+                                     //     function ($message) use ($email) {
+                                //         $message->to($email)
+                                //             ->subject("Document Sent By " . Auth::user()->name);
+                                //     }
+                                // );
+                                 function ($message) use ($email, $deviation, $history) {
+                                    $message->to($email)
+                                    ->subject("QMS Notification: Deviation, Record " . $deviation->record . " - Activity: Submit Performed"); }
+                                );
                              } catch (\Exception $e) {
                                 \Log::error('Mail failed to send: ' . $e->getMessage());
                              }
@@ -5528,11 +5532,15 @@ class DeviationController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $deviation],
-                                    function ($message) use ($email) {
-                                        $message->to($email)
-                                            ->subject("Document Sent By " . Auth::user()->name);
-                                    }
+                                    ['data' => $deviation, 'history' => 'HOD Review Complete Performed', 'process' => 'Deviation', 'comment' => $deviation->HOD_Review_Comments, 'user'=> Auth::user()->name],
+                                    //    function ($message) use ($email) {
+                                //        $message->to($email)
+                                //            ->subject("Document Sent By " . Auth::user()->name);
+                                //    }
+                                //);
+                                function ($message) use ($email, $deviation, $history) {
+                                    $message->to($email)
+                                    ->subject("QMS Notification: Deviation, Record " . $deviation->record . " - Activity: HOD Review Complete Performed"); }
                                 );
                             } catch (\Exception $e) {
                                 \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -5650,11 +5658,15 @@ class DeviationController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $deviation],
-                                    function ($message) use ($email) {
-                                        $message->to($email)
-                                            ->subject("Document Sent By " . Auth::user()->name);
-                                    }
+                                    ['data' => $deviation, 'history' => 'QA Initial Review Complete Performed', 'process' => 'Deviation', 'comment' => $deviation->QA_Initial_Review_Comments, 'user'=> Auth::user()->name],
+                                //    function ($message) use ($email) {
+                                //        $message->to($email)
+                                //            ->subject("Document Sent By " . Auth::user()->name);
+                                //    }
+                                //);
+                                function ($message) use ($email, $deviation, $history) {
+                                    $message->to($email)
+                                    ->subject("QMS Notification: Deviation, Record " . $deviation->record . " - Activity: QA Initial Review Complete Performed"); }
                                 );
                             } catch (\Exception $e) {
                                 \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -6796,12 +6808,16 @@ class DeviationController extends Controller
                                  try {
                                      Mail::send(
                                          'mail.view-mail',
-                                         ['data' => $deviation],
-                                         function ($message) use ($email) {
-                                             $message->to($email)
-                                                 ->subject("Document Sent By " . Auth::user()->name);
-                                         }
-                                     );
+                                         ['data' => $deviation, 'history' => 'CFT Review Complete Performed', 'process' => 'Deviation', 'comment' => $deviation->CFT_Review_Comments, 'user'=> Auth::user()->name],
+                                         //     function ($message) use ($email) {
+                                    //         $message->to($email)
+                                    //             ->subject("Document Sent By " . Auth::user()->name);
+                                    //     }
+                                    // );
+                                           function ($message) use ($email, $deviation, $history) {
+                                                $message->to($email)
+                                                ->subject("QMS Notification: Deviation, Record " . $deviation->record . " - Activity: CFT Review Complete Performed"); }
+                                            );
                                  } catch (\Exception $e) {
                                     \Log::error('Mail failed to send: ' . $e->getMessage());
                                  }
@@ -7007,11 +7023,15 @@ class DeviationController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $deviation],
-                                    function ($message) use ($email) {
-                                        $message->to($email)
-                                            ->subject("Document Sent By " . Auth::user()->name);
-                                    }
+                                    ['data' => $deviation, 'history' => 'QAH Primary Approval Completed Performed', 'process' => 'Deviation', 'comment' => $deviation->Approved_Comments, 'user'=> Auth::user()->name],
+                                    //    function ($message) use ($email) {
+                                //        $message->to($email)
+                                //            ->subject("Document Sent By " . Auth::user()->name);
+                                //    }
+                                //);
+                                function ($message) use ($email, $deviation, $history) {
+                                    $message->to($email)
+                                    ->subject("QMS Notification: Deviation, Record " . $deviation->record . " - Activity: QAH Primary Approval Completed Performed"); }
                                 );
                             } catch (\Exception $e) {
                                 \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -7108,11 +7128,15 @@ class DeviationController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $deviation],
-                                    function ($message) use ($email) {
-                                        $message->to($email)
-                                            ->subject("Document Sent By " . Auth::user()->name);
-                                    }
+                                    ['data' => $deviation, 'history' => 'Initiator Update Completed Performed', 'process' => 'Deviation', 'comment' => $deviation->Initiator_Update_Completed_Comments, 'user'=> Auth::user()->name],
+                                //    function ($message) use ($email) {
+                                //        $message->to($email)
+                                //            ->subject("Document Sent By " . Auth::user()->name);
+                                //    }
+                                //);
+                                function ($message) use ($email, $deviation, $history) {
+                                    $message->to($email)
+                                    ->subject("QMS Notification: Deviation, Record " . $deviation->record . " - Activity: Initiator Update Completed Performed"); }
                                 );
                             } catch (\Exception $e) {
                                 \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -7187,12 +7211,17 @@ class DeviationController extends Controller
                              try {
                                  Mail::send(
                                      'mail.view-mail',
-                                     ['data' => $deviation],
-                                     function ($message) use ($email) {
-                                         $message->to($email)
-                                             ->subject("Document Sent By " . Auth::user()->name);
-                                     }
-                                 );
+                                     ['data' => $deviation, 'history' => 'HOD Final Review Complete Performed', 'process' => 'Deviation', 'comment' => $deviation->HOD_Final_Review_Comments, 'user'=> Auth::user()->name],
+                                     //     function ($message) use ($email) {
+                                //         $message->to($email)
+                                //             ->subject("Document Sent By " . Auth::user()->name);
+                                //     }
+                                // );
+
+                                function ($message) use ($email, $deviation, $history) {
+                                    $message->to($email)
+                                    ->subject("QMS Notification: Deviation, Record " . $deviation->record . " - Activity: HOD Final Review Complete Performed"); }
+                                );
                              } catch (\Exception $e) {
                                  //log error
                              }
@@ -7266,11 +7295,15 @@ class DeviationController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $deviation],
-                                    function ($message) use ($email) {
-                                        $message->to($email)
-                                            ->subject("Activity Performed By " . Auth::user()->name);
-                                    }
+                                    ['data' => $deviation, 'history' => 'QA Final Review Complete Performed', 'process' => 'Deviation', 'comment' => $deviation->QA_Final_Review_Comments, 'user'=> Auth::user()->name],
+                                    //    function ($message) use ($email) {
+                                //        $message->to($email)
+                                //            ->subject("Activity Performed By " . Auth::user()->name);
+                                //    }
+                                //);
+                                function ($message) use ($email, $deviation, $history) {
+                                    $message->to($email)
+                                    ->subject("QMS Notification: Deviation, Record " . $deviation->record . " - Activity: QA Final Review Complete Performed"); }
                                 );
                             } catch (\Exception $e) {
                                 //log error
@@ -7383,11 +7416,15 @@ class DeviationController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $deviation],
-                                    function ($message) use ($email) {
-                                        $message->to($email)
-                                            ->subject("Document Sent By " . Auth::user()->name);
-                                    }
+                                    ['data' => $deviation, 'history' => 'QA Final Approval Complete Performed', 'process' => 'Deviation', 'comment' => $deviation->QA_Final_Approval_Comments, 'user'=> Auth::user()->name],
+                                //    function ($message) use ($email) {
+                                //        $message->to($email)
+                                //            ->subject("Document Sent By " . Auth::user()->name);
+                                //    }
+                                //);
+                                function ($message) use ($email, $deviation, $history) {
+                                    $message->to($email)
+                                    ->subject("QMS Notification: Deviation, Record " . $deviation->record . " - Activity: QA Final Approval Complete Performed"); }
                                 );
                             } catch (\Exception $e) {
                                 \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -7405,11 +7442,15 @@ class DeviationController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $deviation],
-                                    function ($message) use ($email) {
-                                        $message->to($email)
-                                            ->subject("Document Sent By " . Auth::user()->name);
-                                    }
+                                    ['data' => $deviation, 'history' => 'QA Final Approval Complete Performed', 'process' => 'Deviation', 'comment' => $deviation->QA_Final_Approval_Comments, 'user'=> Auth::user()->name],
+                                //    function ($message) use ($email) {
+                                //        $message->to($email)
+                                //            ->subject("Document Sent By " . Auth::user()->name);
+                                //    }
+                                //);
+                                function ($message) use ($email, $deviation, $history) {
+                                    $message->to($email)
+                                    ->subject("QMS Notification: Deviation, Record " . $deviation->record . " - Activity: QA Final Approval Complete Performed"); }
                                 );
                             } catch (\Exception $e) {
                                 \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -7427,11 +7468,15 @@ class DeviationController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $deviation],
-                                    function ($message) use ($email) {
-                                        $message->to($email)
-                                            ->subject("Document Sent By " . Auth::user()->name);
-                                    }
+                                    ['data' => $deviation, 'history' => 'QA Final Approval Complete Performed', 'process' => 'Deviation', 'comment' => $deviation->QA_Final_Approval_Comments, 'user'=> Auth::user()->name],
+                                //    function ($message) use ($email) {
+                                //        $message->to($email)
+                                //            ->subject("Document Sent By " . Auth::user()->name);
+                                //    }
+                                //);
+                                function ($message) use ($email, $deviation, $history) {
+                                    $message->to($email)
+                                    ->subject("QMS Notification: Deviation, Record " . $deviation->record . " - Activity: QA Final Approval Complete Performed"); }
                                 );
                             } catch (\Exception $e) {
                                 \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -7449,11 +7494,15 @@ class DeviationController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $deviation],
-                                    function ($message) use ($email) {
-                                        $message->to($email)
-                                            ->subject("Document Sent By " . Auth::user()->name);
-                                    }
+                                    ['data' => $deviation, 'history' => 'QA Final Approval Complete Performed', 'process' => 'Deviation', 'comment' => $deviation->QA_Final_Approval_Comments, 'user'=> Auth::user()->name],
+                                //    function ($message) use ($email) {
+                                //        $message->to($email)
+                                //            ->subject("Document Sent By " . Auth::user()->name);
+                                //    }
+                                //);
+                                function ($message) use ($email, $deviation, $history) {
+                                    $message->to($email)
+                                    ->subject("QMS Notification: Deviation, Record " . $deviation->record . " - Activity: QA Final Approval Complete Performed"); }
                                 );
                             } catch (\Exception $e) {
                                 \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -7471,11 +7520,15 @@ class DeviationController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $deviation],
-                                    function ($message) use ($email) {
-                                        $message->to($email)
-                                            ->subject("Document Sent By " . Auth::user()->name);
-                                    }
+                                    ['data' => $deviation, 'history' => 'QA Final Approval Complete Performed', 'process' => 'Deviation', 'comment' => $deviation->QA_Final_Approval_Comments, 'user'=> Auth::user()->name],
+                                //    function ($message) use ($email) {
+                                //        $message->to($email)
+                                //            ->subject("Document Sent By " . Auth::user()->name);
+                                //    }
+                                //);
+                                function ($message) use ($email, $deviation, $history) {
+                                    $message->to($email)
+                                    ->subject("QMS Notification: Deviation, Record " . $deviation->record . " - Activity: QA Final Approval Complete Performed"); }
                                 );
                             } catch (\Exception $e) {
                                 \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -7538,6 +7591,7 @@ class DeviationController extends Controller
                 }
 
                 $history->save();
+
                 $list = Helpers::getQAHeadUserList($deviation->division_id);
                 foreach ($list as $u) {
                     //if ($u->q_m_s_divisions_id == $deviation->division_id) {
@@ -7546,11 +7600,15 @@ class DeviationController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $deviation],
-                                    function ($message) use ($email) {
-                                        $message->to($email)
-                                            ->subject("Document Sent By " . Auth::user()->name);
-                                    }
+                                    ['data' => $deviation, 'history' => 'CFT Review Not Required Performed', 'process' => 'Deviation', 'comment' => $deviation->CFT_Review_Not_Required_Comments, 'user'=> Auth::user()->name],
+                                //    function ($message) use ($email) {
+                                //        $message->to($email)
+                                //            ->subject("Document Sent By " . Auth::user()->name);
+                                //    }
+                                //);
+                                function ($message) use ($email, $deviation, $history) {
+                                    $message->to($email)
+                                    ->subject("QMS Notification: Deviation, Record " . $deviation->record . " - Activity: CFT Review Not Required Performed"); }
                                 );
                             } catch (\Exception $e) {
                                 \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -7630,11 +7688,15 @@ class DeviationController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $deviation],
-                                    function ($message) use ($email) {
-                                        $message->to($email)
-                                            ->subject("Document Sent By " . Auth::user()->name);
-                                    }
+                                    ['data' => $deviation, 'history' => 'Cancel Performed', 'process' => 'Deviation', 'comment' => $deviation->cancelled_comments, 'user'=> Auth::user()->name],
+                                //    function ($message) use ($email) {
+                                //        $message->to($email)
+                                //            ->subject("Document Sent By " . Auth::user()->name);
+                                //    }
+                                //);
+                                function ($message) use ($email, $deviation, $history) {
+                                    $message->to($email)
+                                    ->subject("QMS Notification: Deviation, Record " . $deviation->record . " - Activity: Cancel Performed"); }
                                 );
                             } catch (\Exception $e) {
                                 \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -7652,11 +7714,15 @@ class DeviationController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $deviation],
-                                    function ($message) use ($email) {
-                                        $message->to($email)
-                                            ->subject("Document Sent By " . Auth::user()->name);
-                                    }
+                                    ['data' => $deviation, 'history' => 'Cancel Performed', 'process' => 'Deviation', 'comment' => $deviation->cancelled_comments, 'user'=> Auth::user()->name],
+                                //    function ($message) use ($email) {
+                                //        $message->to($email)
+                                //            ->subject("Document Sent By " . Auth::user()->name);
+                                //    }
+                                //);
+                                function ($message) use ($email, $deviation, $history) {
+                                    $message->to($email)
+                                    ->subject("QMS Notification: Deviation, Record " . $deviation->record . " - Activity: Cancel Performed"); }
                                 );
                             } catch (\Exception $e) {
                                 \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -7674,11 +7740,15 @@ class DeviationController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $deviation],
-                                    function ($message) use ($email) {
-                                        $message->to($email)
-                                            ->subject("Document Sent By " . Auth::user()->name);
-                                    }
+                                    ['data' => $deviation, 'history' => 'Cancel Performed', 'process' => 'Deviation', 'comment' => $deviation->cancelled_comments, 'user'=> Auth::user()->name],
+                                //    function ($message) use ($email) {
+                                //        $message->to($email)
+                                //            ->subject("Document Sent By " . Auth::user()->name);
+                                //    }
+                                //);
+                                function ($message) use ($email, $deviation, $history) {
+                                    $message->to($email)
+                                    ->subject("QMS Notification: Deviation, Record " . $deviation->record . " - Activity: Cancel Performed"); }
                                 );
                             } catch (\Exception $e) {
                                 \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -7696,11 +7766,15 @@ class DeviationController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $deviation],
-                                    function ($message) use ($email) {
-                                        $message->to($email)
-                                            ->subject("Document Sent By " . Auth::user()->name);
-                                    }
+                                    ['data' => $deviation, 'history' => 'Cancel Performed', 'process' => 'Deviation', 'comment' => $deviation->cancelled_comments, 'user'=> Auth::user()->name],
+                                //    function ($message) use ($email) {
+                                //        $message->to($email)
+                                //            ->subject("Document Sent By " . Auth::user()->name);
+                                //    }
+                                //);
+                                function ($message) use ($email, $deviation, $history) {
+                                    $message->to($email)
+                                    ->subject("QMS Notification: Deviation, Record " . $deviation->record . " - Activity: Cancel Performed"); }
                                 );
                             } catch (\Exception $e) {
                                 \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -7718,11 +7792,15 @@ class DeviationController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $deviation],
-                                    function ($message) use ($email) {
-                                        $message->to($email)
-                                            ->subject("Document Sent By " . Auth::user()->name);
-                                    }
+                                    ['data' => $deviation, 'history' => 'Cancel Performed', 'process' => 'Deviation', 'comment' => $deviation->cancelled_comments, 'user'=> Auth::user()->name],
+                                //    function ($message) use ($email) {
+                                //        $message->to($email)
+                                //            ->subject("Document Sent By " . Auth::user()->name);
+                                //    }
+                                //);
+                                function ($message) use ($email, $deviation, $history) {
+                                    $message->to($email)
+                                    ->subject("QMS Notification: Deviation, Record " . $deviation->record . " - Activity: Cancel Performed"); }
                                 );
                             } catch (\Exception $e) {
                                 \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -7741,11 +7819,15 @@ class DeviationController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $deviation],
-                                    function ($message) use ($email) {
-                                        $message->to($email)
-                                            ->subject("Document Sent By " . Auth::user()->name);
-                                    }
+                                    ['data' => $deviation, 'history' => 'Cancel Performed', 'process' => 'Deviation', 'comment' => $deviation->cancelled_comments, 'user'=> Auth::user()->name],
+                                //    function ($message) use ($email) {
+                                //        $message->to($email)
+                                //            ->subject("Document Sent By " . Auth::user()->name);
+                                //    }
+                                //);
+                                function ($message) use ($email, $deviation, $history) {
+                                    $message->to($email)
+                                    ->subject("QMS Notification: Deviation, Record " . $deviation->record . " - Activity: Cancel Performed"); }
                                 );
                             } catch (\Exception $e) {
                                 \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -7806,11 +7888,15 @@ class DeviationController extends Controller
                                         try {
                                             Mail::send(
                                                 'mail.view-mail',
-                                                ['data' => $deviation],
-                                                function ($message) use ($email) {
-                                                    $message->to($email)
-                                                        ->subject("Document Sent By " . Auth::user()->name);
-                                                }
+                                                ['data' => $deviation, 'history' => 'Cancel Performed', 'process' => 'Deviation', 'comment' => $deviation->Hod_cancelled_comments, 'user'=> Auth::user()->name],
+                                                //    function ($message) use ($email) {
+                                            //        $message->to($email)
+                                            //            ->subject("Document Sent By " . Auth::user()->name);
+                                            //    }
+                                            //);
+                                            function ($message) use ($email, $deviation, $history) {
+                                                $message->to($email)
+                                                ->subject("QMS Notification: Deviation, Record " . $deviation->record . " - Activity: Cancel Performed"); }
                                             );
                                         } catch (\Exception $e) {
                                             \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -7828,11 +7914,15 @@ class DeviationController extends Controller
                                         try {
                                             Mail::send(
                                                 'mail.view-mail',
-                                                ['data' => $deviation],
-                                                function ($message) use ($email) {
-                                                    $message->to($email)
-                                                        ->subject("Document Sent By " . Auth::user()->name);
-                                                }
+                                                ['data' => $deviation, 'history' => 'Cancel Performed', 'process' => 'Deviation', 'comment' => $deviation->Hod_cancelled_comments, 'user'=> Auth::user()->name],
+                                            //    function ($message) use ($email) {
+                                            //        $message->to($email)
+                                            //            ->subject("Document Sent By " . Auth::user()->name);
+                                            //    }
+                                            //);
+                                            function ($message) use ($email, $deviation, $history) {
+                                                $message->to($email)
+                                                ->subject("QMS Notification: Deviation, Record " . $deviation->record . " - Activity: Cancel Performed"); }
                                             );
                                         } catch (\Exception $e) {
                                             \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -7850,11 +7940,15 @@ class DeviationController extends Controller
                                         try {
                                             Mail::send(
                                                 'mail.view-mail',
-                                                ['data' => $deviation],
-                                                function ($message) use ($email) {
-                                                    $message->to($email)
-                                                        ->subject("Document Sent By " . Auth::user()->name);
-                                                }
+                                                ['data' => $deviation, 'history' => 'Cancel Performed', 'process' => 'Deviation', 'comment' => $deviation->Hod_cancelled_comments, 'user'=> Auth::user()->name],
+                                            //    function ($message) use ($email) {
+                                            //        $message->to($email)
+                                            //            ->subject("Document Sent By " . Auth::user()->name);
+                                            //    }
+                                            //);
+                                            function ($message) use ($email, $deviation, $history) {
+                                                $message->to($email)
+                                                ->subject("QMS Notification: Deviation, Record " . $deviation->record . " - Activity: Cancel Performed"); }
                                             );
                                         } catch (\Exception $e) {
                                             \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -7872,11 +7966,15 @@ class DeviationController extends Controller
                                         try {
                                             Mail::send(
                                                 'mail.view-mail',
-                                                ['data' => $deviation],
-                                                function ($message) use ($email) {
-                                                    $message->to($email)
-                                                        ->subject("Document Sent By " . Auth::user()->name);
-                                                }
+                                                ['data' => $deviation, 'history' => 'Cancel Performed', 'process' => 'Deviation', 'comment' => $deviation->Hod_cancelled_comments, 'user'=> Auth::user()->name],
+                                            //    function ($message) use ($email) {
+                                            //        $message->to($email)
+                                            //            ->subject("Document Sent By " . Auth::user()->name);
+                                            //    }
+                                            //);
+                                            function ($message) use ($email, $deviation, $history) {
+                                                $message->to($email)
+                                                ->subject("QMS Notification: Deviation, Record " . $deviation->record . " - Activity: Cancel Performed"); }
                                             );
                                         } catch (\Exception $e) {
                                             \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -7894,11 +7992,15 @@ class DeviationController extends Controller
                                         try {
                                             Mail::send(
                                                 'mail.view-mail',
-                                                ['data' => $deviation],
-                                                function ($message) use ($email) {
-                                                    $message->to($email)
-                                                        ->subject("Document Sent By " . Auth::user()->name);
-                                                }
+                                                ['data' => $deviation, 'history' => 'Cancel Performed', 'process' => 'Deviation', 'comment' => $deviation->Hod_cancelled_comments, 'user'=> Auth::user()->name],
+                                            //    function ($message) use ($email) {
+                                            //        $message->to($email)
+                                            //            ->subject("Document Sent By " . Auth::user()->name);
+                                            //    }
+                                            //);
+                                            function ($message) use ($email, $deviation, $history) {
+                                                $message->to($email)
+                                                ->subject("QMS Notification: Deviation, Record " . $deviation->record . " - Activity: Cancel Performed"); }
                                             );
                                         } catch (\Exception $e) {
                                             \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -8325,11 +8427,15 @@ class DeviationController extends Controller
                     try {
                         Mail::send(
                             'mail.view-mail',
-                            ['data' => $deviation],
-                            function ($message) use ($email) {
-                                $message->to($email)
-                                    ->subject("Document Sent By " . Auth::user()->name);
-                            }
+                            ['data' => $deviation, 'history' => 'Send to Pending Initiator Update Performed', 'process' => 'Deviation', 'comment' => $deviation->HOD_Final_Send_to_Initiator_Comments, 'user'=> Auth::user()->name],
+                            //    function ($message) use ($email) {
+                        //        $message->to($email)
+                        //            ->subject("Document Sent By " . Auth::user()->name);
+                        //    }
+                        //);
+                        function ($message) use ($email, $deviation, $history) {
+                            $message->to($email)
+                            ->subject("QMS Notification: Deviation, Record " . $deviation->record . " - Activity:  Send to Pending Initiator Update Performed"); }
                         );
                     } catch (\Exception $e) {
                         \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -8389,11 +8495,15 @@ class DeviationController extends Controller
                         try {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $deviation],
-                                function ($message) use ($email) {
-                                    $message->to($email)
-                                        ->subject("Document Sent By " . Auth::user()->name);
-                                }
+                                ['data' => $deviation, 'history' => 'Send to QA Initiator Update Performed', 'process' => 'Deviation', 'comment' => $deviation->Send_to_QA_Initiator_Comments, 'user'=> Auth::user()->name],
+                                //    function ($message) use ($email) {
+                            //        $message->to($email)
+                            //            ->subject("Document Sent By " . Auth::user()->name);
+                            //    }
+                            //);
+                            function ($message) use ($email, $deviation, $history) {
+                                $message->to($email)
+                                ->subject("QMS Notification: Deviation, Record " . $deviation->record . " - Activity: Send to QA Initiator Update Performed"); }
                             );
                         } catch (\Exception $e) {
                             \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -8453,11 +8563,15 @@ class DeviationController extends Controller
                         try {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $deviation],
-                                function ($message) use ($email) {
-                                    $message->to($email)
-                                        ->subject("Document Sent By " . Auth::user()->name);
-                                }
+                                ['data' => $deviation, 'history' => 'Send to Pending Initiator Update Performed', 'process' => 'Deviation', 'comment' => $deviation->Send_to_Pending_Initiator_Updated_Comments, 'user'=> Auth::user()->name],
+                            //    function ($message) use ($email) {
+                            //        $message->to($email)
+                            //            ->subject("Document Sent By " . Auth::user()->name);
+                            //    }
+                            //);
+                            function ($message) use ($email, $deviation, $history) {
+                                $message->to($email)
+                                ->subject("QMS Notification: Deviation, Record " . $deviation->record . " - Activity: Send to Pending Initiator Update Performed"); }
                             );
                         } catch (\Exception $e) {
                             \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -8547,11 +8661,15 @@ class DeviationController extends Controller
                     try {
                         Mail::send(
                             'mail.view-mail',
-                            ['data' => $deviation],
-                            function ($message) use ($email) {
-                                $message->to($email)
-                                    ->subject("Document Sent By " . Auth::user()->name);
-                            }
+                            ['data' => $deviation, 'history' => 'Send to Opened Performed', 'process' => 'Deviation', 'comment' => $deviation->send_to_opened_comments, 'user'=> Auth::user()->name],
+                            //    function ($message) use ($email) {
+                        //        $message->to($email)
+                        //            ->subject("Document Sent By " . Auth::user()->name);
+                        //    }
+                        //);
+                        function ($message) use ($email, $deviation, $history) {
+                            $message->to($email)
+                            ->subject("QMS Notification: Deviation, Record " . $deviation->record . " - Activity: Send to Opened Performed"); }
                         );
                     } catch (\Exception $e) {
                         \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -8612,11 +8730,15 @@ class DeviationController extends Controller
                     try {
                         Mail::send(
                             'mail.view-mail',
-                            ['data' => $deviation],
-                            function ($message) use ($email) {
-                                $message->to($email)
-                                ->subject("Document Sent By " . Auth::user()->name);
-                            }
+                            ['data' => $deviation, 'history' => 'Send to Opened Performed', 'process' => 'Deviation', 'comment' => $deviation->Send_to_initialStage_Comments, 'user'=> Auth::user()->name],
+                        //    function ($message) use ($email) {
+                        //        $message->to($email)
+                        //        ->subject("Document Sent By " . Auth::user()->name);
+                        //    }
+                        //);
+                        function ($message) use ($email, $deviation, $history) {
+                            $message->to($email)
+                            ->subject("QMS Notification: Deviation, Record " . $deviation->record . " - Activity: Send to opened Performed"); }
                         );
                     } catch (\Exception $e) {
                         \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -8678,11 +8800,15 @@ class DeviationController extends Controller
                     try {
                         Mail::send(
                             'mail.view-mail',
-                            ['data' => $deviation],
-                            function ($message) use ($email) {
-                                $message->to($email)
-                                    ->subject("Document Sent By " . Auth::user()->name);
-                            }
+                            ['data' => $deviation, 'history' => 'Send to Opened Performed', 'process' => 'Deviation', 'comment' => $deviation->HOD_Final_Send_to_Opened_Comments, 'user'=> Auth::user()->name],
+                        //    function ($message) use ($email) {
+                        //        $message->to($email)
+                        //            ->subject("Document Sent By " . Auth::user()->name);
+                        //    }
+                        //);
+                        function ($message) use ($email, $deviation, $history) {
+                            $message->to($email)
+                            ->subject("QMS Notification: Deviation, Record " . $deviation->record . " - Activity: Send to opened Performed"); }
                         );
                     } catch (\Exception $e) {
                         \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -8773,11 +8899,15 @@ class DeviationController extends Controller
                     try {
                         Mail::send(
                             'mail.view-mail',
-                            ['data' => $deviation],
-                            function ($message) use ($email) {
-                                $message->to($email)
-                                    ->subject("Document Sent By " . Auth::user()->name);
-                            }
+                            ['data' => $deviation, 'history' => 'Send to Opened Performed', 'process' => 'Deviation', 'comment' => $deviation->QA_Final_Send_to_Opened_Comments, 'user'=> Auth::user()->name],
+                        //    function ($message) use ($email) {
+                        //        $message->to($email)
+                        //            ->subject("Document Sent By " . Auth::user()->name);
+                        //    }
+                        //);
+                        function ($message) use ($email, $deviation, $history) {
+                            $message->to($email)
+                            ->subject("QMS Notification: Deviation, Record " . $deviation->record . " - Activity: Send to opened Performed"); }
                         );
                     } catch (\Exception $e) {
                         \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -8839,11 +8969,15 @@ class DeviationController extends Controller
                     try {
                         Mail::send(
                             'mail.view-mail',
-                            ['data' => $deviation],
-                            function ($message) use ($email) {
-                                $message->to($email)
-                                    ->subject("Document Sent By " . Auth::user()->name);
-                            }
+                            ['data' => $deviation, 'history' => 'Send to Opened Performed', 'process' => 'Deviation', 'comment' => $deviation->QA_Approval_Send_to_Opened_Comments, 'user'=> Auth::user()->name],
+                        //    function ($message) use ($email) {
+                        //        $message->to($email)
+                        //            ->subject("Document Sent By " . Auth::user()->name);
+                        //    }
+                        //);
+                        function ($message) use ($email, $deviation, $history) {
+                            $message->to($email)
+                            ->subject("QMS Notification: Deviation, Record " . $deviation->record . " - Activity: Send to opened Performed"); }
                         );
                     } catch (\Exception $e) {
                         \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -8884,7 +9018,7 @@ class DeviationController extends Controller
 
         $history = new DeviationAuditTrail();
         $history->deviation_id = $id;
-        $history->activity_type = 'QA Secondary Send to Opened By, QA Secondary Send to Opened On';
+        $history->activity_type = 'QA Secondary Send to HOD By, QA Secondary Send to HOd On';
 
         if (is_null($lastDocument->QA_Secondary_Send_to_Hod_By) || $lastDocument->QA_Secondary_Send_to_Hod_By === '') {
             $history->previous = "";
@@ -8929,11 +9063,15 @@ class DeviationController extends Controller
                     try {
                         Mail::send(
                             'mail.view-mail',
-                            ['data' => $deviation],
-                            function ($message) use ($email) {
-                                $message->to($email)
-                                    ->subject("Document Sent By " . Auth::user()->name);
-                            }
+                            ['data' => $deviation, 'history' => 'Send to HOD Performed', 'process' => 'Deviation', 'comment' => $deviation->QA_Secondary_Send_to_Hod_Comments, 'user'=> Auth::user()->name],
+                        //    function ($message) use ($email) {
+                        //        $message->to($email)
+                        //            ->subject("Document Sent By " . Auth::user()->name);
+                        //    }
+                        //);
+                        function ($message) use ($email, $deviation, $history) {
+                            $message->to($email)
+                            ->subject("QMS Notification: Deviation, Record " . $deviation->record . " - Activity: Send to HOD Performed"); }
                         );
                     } catch (\Exception $e) {
                         \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -8958,7 +9096,7 @@ class DeviationController extends Controller
 
         $history = new DeviationAuditTrail();
         $history->deviation_id = $id;
-        $history->activity_type = 'Initiator Send to HOD By, Initiator Send to HOD By';
+        $history->activity_type = 'Initiator Send to HOD Review By, Initiator Send to HOD Review By';
 
         if (is_null($lastDocument->Send_to_Hod_By) || $lastDocument->Send_to_Hod_By === '') {
             $history->previous = "";
@@ -8994,11 +9132,15 @@ class DeviationController extends Controller
                     try {
                         Mail::send(
                             'mail.view-mail',
-                            ['data' => $deviation],
-                            function ($message) use ($email) {
-                                $message->to($email)
-                                    ->subject("Document Sent By " . Auth::user()->name);
-                            }
+                            ['data' => $deviation, 'history' => 'Send to HOD Review Performed', 'process' => 'Deviation', 'comment' => $deviation->Send_to_Hod_Comments, 'user'=> Auth::user()->name],
+                        //    function ($message) use ($email) {
+                        //        $message->to($email)
+                        //            ->subject("Document Sent By " . Auth::user()->name);
+                        //    }
+                        //);
+                        function ($message) use ($email, $deviation, $history) {
+                            $message->to($email)
+                            ->subject("QMS Notification: Deviation, Record " . $deviation->record . " - Activity: Send to HOD Review Performed"); }
                         );
                     } catch (\Exception $e) {
                         \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -9059,11 +9201,15 @@ class DeviationController extends Controller
                     try {
                         Mail::send(
                             'mail.view-mail',
-                            ['data' => $deviation],
-                            function ($message) use ($email) {
-                                $message->to($email)
-                                    ->subject("Document Sent By " . Auth::user()->name);
-                            }
+                            ['data' => $deviation, 'history' => 'Send to HOD Performed', 'process' => 'Deviation', 'comment' => $deviation->QA_Final_Send_to_HOD_Comments, 'user'=> Auth::user()->name],
+                        //    function ($message) use ($email) {
+                        //        $message->to($email)
+                        //            ->subject("Document Sent By " . Auth::user()->name);
+                        //    }
+                        //);
+                        function ($message) use ($email, $deviation, $history) {
+                            $message->to($email)
+                            ->subject("QMS Notification: Deviation, Record" . $deviation->record . " - Activity: Send to HOD Performed"); }
                         );
                     } catch (\Exception $e) {
                         \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -9123,11 +9269,15 @@ class DeviationController extends Controller
                     try {
                         Mail::send(
                             'mail.view-mail',
-                            ['data' => $deviation],
-                            function ($message) use ($email) {
-                                $message->to($email)
-                                    ->subject("Document Sent By " . Auth::user()->name);
-                            }
+                            ['data' => $deviation, 'history' => 'HOD Performed', 'process' => 'Deviation', 'comment' => $deviation->QA_Approval_Send_to_HOD_Comments, 'user'=> Auth::user()->name],
+                        //    function ($message) use ($email) {
+                        //        $message->to($email)
+                        //            ->subject("Document Sent By " . Auth::user()->name);
+                        //    }
+                        //);
+                        function ($message) use ($email, $deviation, $history) {
+                            $message->to($email)
+                            ->subject("QMS Notification: Deviation, Record " . $deviation->record . " - Activity: Send to HOD Performed"); }
                         );
                     } catch (\Exception $e) {
                         \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -9215,11 +9365,15 @@ class DeviationController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $deviation],
-                                    function ($message) use ($email) {
-                                        $message->to($email)
-                                            ->subject("Document Sent By " . Auth::user()->name);
-                                    }
+                                    ['data' => $deviation, 'history' => 'Send to QA Initial Review Performed', 'process' => 'Deviation', 'comment' => $deviation->Send_to_QA_Initial_Review_Comments, 'user'=> Auth::user()->name],
+                                //    function ($message) use ($email) {
+                                //        $message->to($email)
+                                //            ->subject("Document Sent By " . Auth::user()->name);
+                                //    }
+                                //);
+                                function ($message) use ($email, $deviation, $history) {
+                                    $message->to($email)
+                                    ->subject("QMS Notification: Deviation, Record " . $deviation->record . " - Activity: Send to QA Initial Review Performed"); }
                                 );
                             } catch (\Exception $e) {
                                 \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -9280,11 +9434,15 @@ class DeviationController extends Controller
                         try {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $deviation],
-                                function ($message) use ($email) {
-                                    $message->to($email)
-                                        ->subject("Document Sent By " . Auth::user()->name);
-                                }
+                                ['data' => $deviation, 'history' => 'Send to QA Initial Review Performed', 'process' => 'Deviation', 'comment' => $deviation->Send_to_QA_Initial_Comments, 'user'=> Auth::user()->name],
+                            //    function ($message) use ($email) {
+                            //        $message->to($email)
+                            //            ->subject("Document Sent By " . Auth::user()->name);
+                            //    }
+                            //);
+                            function ($message) use ($email, $deviation, $history) {
+                                $message->to($email)
+                                ->subject("QMS Notification: Deviation, Record " . $deviation->record . " - Activity: Send to QA Initial Review Performed"); }
                             );
                         } catch (\Exception $e) {
                             \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -9346,11 +9504,15 @@ class DeviationController extends Controller
                         try {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $deviation],
-                                function ($message) use ($email) {
-                                    $message->to($email)
-                                        ->subject("Document Sent By " . Auth::user()->name);
-                                }
+                                ['data' => $deviation, 'history' => 'Send to QA Initial Review Performed', 'process' => 'Deviation', 'comment' => $deviation->Approval_Send_to_QA_Initial_Comments, 'user'=> Auth::user()->name],
+                            //    function ($message) use ($email) {
+                            //        $message->to($email)
+                            //            ->subject("Document Sent By " . Auth::user()->name);
+                            //    }
+                            //);
+                            function ($message) use ($email, $deviation, $history) {
+                                $message->to($email)
+                                ->subject("QMS Notification: Deviation, Record " . $deviation->record . " - Activity: Send to QA Initial Review Performed"); }
                             );
                         } catch (\Exception $e) {
                             \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -9430,11 +9592,15 @@ class DeviationController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $deviation],
-                                    function ($message) use ($email) {
-                                        $message->to($email)
-                                            ->subject("Document Sent By " . Auth::user()->name);
-                                    }
+                                    ['data' => $deviation, 'history' => 'More Information Required Performed', 'process' => 'Deviation', 'comment' => $deviation->hod_more_info_required_comments, 'user'=> Auth::user()->name],
+                                    //    function ($message) use ($email) {
+                                //        $message->to($email)
+                                //            ->subject("Document Sent By " . Auth::user()->name);
+                                //    }
+                                //);
+                                function ($message) use ($email, $deviation, $history) {
+                                    $message->to($email)
+                                    ->subject("QMS Notification: Deviation, Record " . $deviation->record . " - Activity: More Information Required Performed"); }
                                 );
                             } catch (\Exception $e) {
                                 \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -9535,11 +9701,15 @@ class DeviationController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $deviation],
-                                    function ($message) use ($email) {
-                                        $message->to($email)
-                                            ->subject("Document Sent By " . Auth::user()->name);
-                                    }
+                                    ['data' => $deviation, 'history' => 'More Information Required Performed', 'process' => 'Deviation', 'comment' => $deviation->qa_more_info_required_comments, 'user'=> Auth::user()->name],
+                                //    function ($message) use ($email) {
+                                //        $message->to($email)
+                                //            ->subject("Document Sent By " . Auth::user()->name);
+                                //    }
+                                //);
+                                function ($message) use ($email, $deviation, $history) {
+                                    $message->to($email)
+                                    ->subject("QMS Notification: Deviation, Record " . $deviation->record . " - Activity: More Information Required Performed"); }
                                 );
                             } catch (\Exception $e) {
                                 \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -9647,11 +9817,15 @@ class DeviationController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $deviation],
-                                    function ($message) use ($email) {
-                                        $message->to($email)
-                                            ->subject("Document Sent By " . Auth::user()->name);
-                                    }
+                                    ['data' => $deviation, 'history' => 'More Information Required Performed', 'process' => 'Deviation', 'comment' => $deviation->cft_more_info_required_comments, 'user'=> Auth::user()->name],
+                                //    function ($message) use ($email) {
+                                //        $message->to($email)
+                                //            ->subject("Document Sent By " . Auth::user()->name);
+                                //    }
+                                //);
+                                function ($message) use ($email, $deviation, $history) {
+                                    $message->to($email)
+                                    ->subject("QMS Notification: Deviation, Record " . $deviation->record . " - Activity: More Information Required Performed"); }
                                 );
                             } catch (\Exception $e) {
                                 \Log::error('Mail failed to send: ' . $e->getMessage());

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\rcms;
+use Illuminate\Support\Facades\Log;
 
 use App\Http\Controllers\Controller;
 use App\Models\CC;
@@ -1145,14 +1146,14 @@ class EffectivenessCheckController extends Controller
                         try {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $effectiveness],
-                                function ($message) use ($email) {
+                                ['data' => $effectiveness, 'history' => 'Submit Performed', 'process' => 'Effectiveness Check', 'comment' => $effectiveness->submit_comment, 'user' => Auth::user()->name],
+                                function ($message) use ($email, $effectiveness) {
                                     $message->to($email)
-                                        ->subject("Document is Sent By " . Auth::user()->name);
+                                        ->subject("QMS Notification: Effectiveness Check, Record #" . $effectiveness->record . " - Activity: Submit Performed");
                                 }
                             );
                         } catch (\Exception $e) {
-                            \log::error('Mail failed to send: ' . $e->getMessage());
+                            \Log::error('Mail failed to send: ' . $e->getMessage());
                         }
                     }
                 }
@@ -1220,25 +1221,25 @@ class EffectivenessCheckController extends Controller
                 }
                 $history->save();
 
-                    $list = Helpers:: getQAUserList($effectiveness->division_id);
-                    foreach ($list as $u) {
-                        // if($u->q_m_s_divisions_id == $effectiveness->division_id){
-                            $email = Helpers::getInitiatorEmail($u->user_id);
-                            if (!empty($email)) {
-                                try {
-                              Mail::send(
-                                  'mail.view-mail',
-                                   ['data' => $effectiveness],
-                                function ($message) use ($email) {
+                $list = Helpers::getQAUserList($effectiveness->division_id);
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $effectiveness->division_id){
+                    $email = Helpers::getInitiatorEmail($u->user_id);
+                    if (!empty($email)) {
+                        try {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $effectiveness, 'history' => 'Effective Performed', 'process' => 'Effectiveness Check', 'comment' => $effectiveness->effective_comment, 'user' => Auth::user()->name],
+                                function ($message) use ($email, $effectiveness) {
                                     $message->to($email)
-                                        ->subject("Document is Sent By ".Auth::user()->name);
+                                        ->subject("QMS Notification: Effectiveness Check, Record #" . $effectiveness->record . " - Activity: Effective Performed");
                                 }
-                              );
-                            } catch (\Exception $e) {
-                                \log::error('Mail failed to send: ' . $e->getMessage());
-                            }
-                     }
-                  }
+                            );
+                        } catch (\Exception $e) {
+                            \Log::error('Mail failed to send: ' . $e->getMessage());
+                        }
+                    }
+                }
 
                 $effectiveness->update();
                 $history = new CCStageHistory();
@@ -1296,14 +1297,14 @@ class EffectivenessCheckController extends Controller
                         try {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $effectiveness],
-                                function ($message) use ($email) {
+                                ['data' => $effectiveness, 'history' => 'Effective Approval Completed Performed', 'process' => 'Effectiveness Check', 'comment' => $effectiveness->effective_approval_complete_comment, 'user' => Auth::user()->name],
+                                function ($message) use ($email, $effectiveness) {
                                     $message->to($email)
-                                        ->subject("Document is Sent By " . Auth::user()->name);
+                                        ->subject("QMS Notification: Effectiveness Check, Record #" . $effectiveness->record . " - Activity: Effective Approval Completed Performed");
                                 }
                             );
                         } catch (\Exception $e) {
-                            \log::error('Mail failed to send: ' . $e->getMessage());
+                            \Log::error('Mail failed to send: ' . $e->getMessage());
                         }
                     }
                 }
@@ -1316,14 +1317,14 @@ class EffectivenessCheckController extends Controller
                         try {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $effectiveness],
-                                function ($message) use ($email) {
+                                ['data' => $effectiveness, 'history' => 'Effective Approval Completed Performed', 'process' => 'Effectiveness Check', 'comment' => $effectiveness->effective_approval_complete_comment, 'user' => Auth::user()->name],
+                                function ($message) use ($email, $effectiveness) {
                                     $message->to($email)
-                                        ->subject("Document is Sent By " . Auth::user()->name);
+                                        ->subject("QMS Notification: Effectiveness Check, Record #" . $effectiveness->record . " - Activity: Effective Approval Completed Performed");
                                 }
                             );
                         } catch (\Exception $e) {
-                            \log::error('Mail failed to send: ' . $e->getMessage());
+                            \Log::error('Mail failed to send: ' . $e->getMessage());
                         }
                     }
                 }
@@ -1390,25 +1391,25 @@ class EffectivenessCheckController extends Controller
                 }
                 $history->save();
 
-                $list = Helpers:: getQAUserList($effectiveness->division_id);
+                $list = Helpers::getQAUserList($effectiveness->division_id);
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $effectiveness->division_id){
-                        $email = Helpers::getInitiatorEmail($u->user_id);
-                        if (!empty($email)) {
-                            try {
-                          Mail::send(
-                              'mail.view-mail',
-                               ['data' => $effectiveness],
-                            function ($message) use ($email) {
-                                $message->to($email)
-                                    ->subject("Document is Sent By ".Auth::user()->name);
-                            }
-                          );
+                    $email = Helpers::getInitiatorEmail($u->user_id);
+                    if (!empty($email)) {
+                        try {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $effectiveness, 'history' => 'Not Effective Performed', 'process' => 'Effectiveness Check', 'comment' => $effectiveness->not_effective_comment, 'user' => Auth::user()->name],
+                                function ($message) use ($email, $effectiveness) {
+                                    $message->to($email)
+                                        ->subject("QMS Notification: Effectiveness Check, Record #" . $effectiveness->record . " - Activity: Not Effective Performed");
+                                }
+                            );
                         } catch (\Exception $e) {
-                            \log::error('Mail failed to send: ' . $e->getMessage());
+                            \Log::error('Mail failed to send: ' . $e->getMessage());
                         }
-                 }
-              }
+                    }
+                }
 
                 $effectiveness->update();
                 $history = new CCStageHistory();
@@ -1467,14 +1468,14 @@ class EffectivenessCheckController extends Controller
                         try {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $effectiveness],
-                                function ($message) use ($email) {
+                                ['data' => $effectiveness, 'history' => 'Not Effective Approval Complete Performed', 'process' => 'Effectiveness Check', 'comment' => $effectiveness->not_effective_approval_complete_comment, 'user' => Auth::user()->name],
+                                function ($message) use ($email, $effectiveness) {
                                     $message->to($email)
-                                        ->subject("Document is Sent By " . Auth::user()->name);
+                                        ->subject("QMS Notification: Effectiveness Check, Record #" . $effectiveness->record . " - Activity: Not Effective Approval Complete Performed");
                                 }
                             );
                         } catch (\Exception $e) {
-                            \log::error('Mail failed to send: ' . $e->getMessage());
+                            \Log::error('Mail failed to send: ' . $e->getMessage());
                         }
                     }
                 }
@@ -1487,14 +1488,14 @@ class EffectivenessCheckController extends Controller
                         try {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $effectiveness],
-                                function ($message) use ($email) {
+                                ['data' => $effectiveness, 'history' => 'Not Effective Approval Complete Performed', 'process' => 'Effectiveness Check', 'comment' => $effectiveness->not_effective_approval_complete_comment, 'user' => Auth::user()->name],
+                                function ($message) use ($email, $effectiveness) {
                                     $message->to($email)
-                                        ->subject("Document is Sent By " . Auth::user()->name);
+                                        ->subject("QMS Notification: Effectiveness Check, Record #" . $effectiveness->record . " - Activity: Not Effective Approval Complete Performed");
                                 }
                             );
                         } catch (\Exception $e) {
-                            \log::error('Mail failed to send: ' . $e->getMessage());
+                            \Log::error('Mail failed to send: ' . $e->getMessage());
                         }
                     }
                 }
@@ -1560,25 +1561,25 @@ class EffectivenessCheckController extends Controller
                 }
                 $history->save();
 
-                $list = Helpers:: getSupervisorUserList($effectiveness->division_id);
-                    foreach ($list as $u) {
-                        // if($u->q_m_s_divisions_id == $effectiveness->division_id){
-                            $email = Helpers::getInitiatorEmail($u->user_id);
-                            if (!empty($email)) {
-                                try {
-                              Mail::send(
-                                  'mail.view-mail',
-                                   ['data' => $effectiveness],
-                                function ($message) use ($email) {
+                $list = Helpers::getSupervisorUserList($effectiveness->division_id);
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $effectiveness->division_id){
+                    $email = Helpers::getInitiatorEmail($u->user_id);
+                    if (!empty($email)) {
+                        try {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $effectiveness, 'history' => 'More Information Required Performed', 'process' => 'Effectiveness Check', 'comment' => $effectiveness->more_effective_comment, 'user' => Auth::user()->name],
+                                function ($message) use ($email, $effectiveness) {
                                     $message->to($email)
-                                        ->subject("Document is Sent By ".Auth::user()->name);
+                                        ->subject("QMS Notification: Effectiveness Check, Record #" . $effectiveness->record . " - Activity: More Information Required Performed");
                                 }
-                              );
-                            } catch (\Exception $e) {
-                                \log::error('Mail failed to send: ' . $e->getMessage());
-                            }
-                     }
-                  }
+                            );
+                        } catch (\Exception $e) {
+                            \Log::error('Mail failed to send: ' . $e->getMessage());
+                        }
+                    }
+                }
 
                 $effectiveness->update();
 
@@ -1631,25 +1632,25 @@ class EffectivenessCheckController extends Controller
                 }
                 $history->save();
 
-                $list = Helpers:: getSupervisorUserList($effectiveness->division_id);
-                    foreach ($list as $u) {
-                        // if($u->q_m_s_divisions_id == $effectiveness->division_id){
-                            $email = Helpers::getInitiatorEmail($u->user_id);
-                            if (!empty($email)) {
-                                try {
-                              Mail::send(
-                                  'mail.view-mail',
-                                   ['data' => $effectiveness],
-                                function ($message) use ($email) {
+                $list = Helpers::getSupervisorUserList($effectiveness->division_id);
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $effectiveness->division_id){
+                    $email = Helpers::getInitiatorEmail($u->user_id);
+                    if (!empty($email)) {
+                        try {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $effectiveness, 'history' => 'More Information Required Performed', 'process' => 'Effectiveness Check', 'comment' => $effectiveness->more_not_effective_comment, 'user' => Auth::user()->name],
+                                function ($message) use ($email, $effectiveness) {
                                     $message->to($email)
-                                        ->subject("Document is Sent By ".Auth::user()->name);
+                                        ->subject("QMS Notification: Effectiveness Check, Record #" . $effectiveness->record . " - Activity: More Information Required Performed");
                                 }
-                              );
-                            } catch (\Exception $e) {
-                                \log::error('Mail failed to send: ' . $e->getMessage());
-                            }
-                     }
-                  }
+                            );
+                        } catch (\Exception $e) {
+                            \Log::error('Mail failed to send: ' . $e->getMessage());
+                        }
+                    }
+                }
 
 
                 $effectiveness->update();

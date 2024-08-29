@@ -144,7 +144,7 @@ static function getFullDepartmentName($code)
         }
     }
 
-    public static function getInitiatorUserList($division = null){        
+    public static function getInitiatorUserList($division = null){
         if (!$division) {
             return $InitiatorUserList = DB::table('user_roles')->where(['q_m_s_roles_id' => '3'])->select(['user_id', DB::raw('MAX(q_m_s_divisions_id) as q_m_s_divisions_id')])->groupBy('user_id')->get();
         } else {
@@ -336,12 +336,12 @@ static function getFullDepartmentName($code)
 
         return $ReviewerUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'2'])->get();
     }
-    
+
     public static function getTrainerUserList(){
 
         return $TrainerUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'6'])->get();
-    }  
-    
+    }
+
     public static function getQCHeadUserList(){
 
         return $QCHeadUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'10'])->get();
@@ -353,12 +353,12 @@ static function getFullDepartmentName($code)
     public static function getLeadAuditorUserList(){
 
         return $LeadAuditorUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'12'])->get();
-    }    
+    }
     public static function getResponsibleUserList(){
 
         return $ResponsibleUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'15'])->get();
     }
-    
+
 
     public static function checkRoles($role)
     {
@@ -518,7 +518,7 @@ static function getFullDepartmentName($code)
     }
     public static function record($id)
     {
-        return   str_pad($id, 5, '0', STR_PAD_LEFT);
+        return   str_pad($id, 4, '0', STR_PAD_LEFT);
     }
     public static function getDepartmentWithString($id)
     {

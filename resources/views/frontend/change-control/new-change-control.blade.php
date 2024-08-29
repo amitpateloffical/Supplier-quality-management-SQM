@@ -30,6 +30,29 @@
         }
     </style>
 
+    <style>
+        /* #ui-datepicker-div > div{
+            display: none;
+        } */
+        #ui-datepicker-div>div>a.ui-datepicker-next.ui-corner-all {
+            margin-left: 67px;
+        }
+
+        #ui-datepicker-div>table>thead {
+            display: none;
+        }
+
+        #ui-datepicker-div>div>div {
+            display: flex;
+            justify-content: center;
+            border-top: 1px solid;
+        }
+
+        #ui-datepicker-div {
+            border: 2px solid black;
+        }
+    </style>
+
 
 
 
@@ -177,7 +200,7 @@
                                             <input type="text" name="due_date" readonly
                                                 value="{{ $dueDate }}" />
                                             <!-- <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('d-M-Y') }}" class="hide-input"
-                                                        oninput="handleDateInput(this, 'due_date')" /> -->
+                                                            oninput="handleDateInput(this, 'due_date')" /> -->
                                         </div>
                                     </div>
                                 </div>
@@ -546,7 +569,8 @@
                                 <button type="submit" class="saveButton">Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                 <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">Exit</a></button>
+                                <button type="button"> <a class="text-white"
+                                        href="{{ url('rcms/qms-dashboard') }}">Exit</a></button>
 
                             </div>
                         </div>
@@ -593,7 +617,8 @@
                                     <select multiple name="related_records[]" placeholder="Select Reference Records"
                                         data-search="false" data-silent-initial-value-set="true" id="related_records">
                                         @foreach ($pre as $prix)
-                                            <option value="{{ Helpers::getDivisionName($prix->division_id) . '/CC/' . date('Y') . '/' . Helpers::recordFormat($prix->record) }}"> 
+                                            <option
+                                                value="{{ Helpers::getDivisionName($prix->division_id) . '/CC/' . date('Y') . '/' . Helpers::recordFormat($prix->record) }}">
                                                 {{ Helpers::getDivisionName($prix->division_id) }}/CC/{{ date('Y') }}/{{ Helpers::recordFormat($prix->record) }}
                                             </option>
                                         @endforeach
@@ -983,7 +1008,7 @@
                     </div>
                 </div>
                 <!-- </div>
-        </div> -->
+            </div> -->
 
                 <div id="CCForm7" class="inner-block cctabcontent">
                     <div class="inner-block-content">
@@ -1166,7 +1191,8 @@
                                         {{-- <td><input type="date" name="implementation_date[]">
                                             </td> --}}
                                         <td>
-                                            <input type="text" name="implementation_date[]" class="agenda-dates" placeholder="DD-MM-YYYY">
+                                            <input type="text" name="implementation_date[]" class="agenda-dates"
+                                                placeholder="DD-MM-YYYY">
 
                                             {{-- <div class="group-input new-date-data-field mb-0">
                                                 <div class="input-date ">
@@ -1329,12 +1355,12 @@
                             </div>
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="cft_review_on"> CFT Review  Completed On</label>
+                                    <label for="cft_review_on"> CFT Review Completed On</label>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="cft_review_comment"> CFT Review  Completed Comment</label>
+                                    <label for="cft_review_comment"> CFT Review Completed Comment</label>
                                 </div>
                             </div>
                             <div class="col-lg-3">
@@ -1385,6 +1411,73 @@
                                     <label for="Cancelled On">Implemented Comment</label>
                                 </div>
                             </div>
+                            
+                            <div class="col-lg-3">
+                                <div class="group-input">
+                                    <label for="Cancelled By">Closed - Cancelled By</label>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="group-input">
+                                    <label for="Cancelled On">Closed - Cancelled On</label>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Cancelled On">Closed - Cancelled Comment</label>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <div class="group-input">
+                                    <label for="Cancelled By">Request More Information By</label>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="group-input">
+                                    <label for="Cancelled On">Request More Information On</label>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Cancelled On">Request More Information Comment</label>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <div class="group-input">
+                                    <label for="Cancelled By">More Information Required By</label>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="group-input">
+                                    <label for="Cancelled On">More Information Required On</label>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Cancelled On">More Information Required Comment</label>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <div class="group-input">
+                                    <label for="Cancelled By">More Information Required By</label>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="group-input">
+                                    <label for="Cancelled On">More Information Required On</label>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Cancelled On">More Information Required Comment</label>
+                                </div>
+                            </div>
+
+                            
+
                         </div>
                         <div class="button-block">
                             <!-- <button type="submit" value="save" name="submit" class="saveButton">Save</button> -->
@@ -1670,19 +1763,18 @@
         });
     </script>
     {{-- JQUERY DATEPICKER SCRIPT START --}}
-<script>
-    function initializeDatepicker()
-    {
-        $('.agenda-dates').datepicker({
-            dateFormat: 'dd M yy',
+    <script>
+        function initializeDatepicker() {
+            $('.agenda-dates').datepicker({
+                dateFormat: 'dd M yy',
+            });
+        }
+
+        $(document).ready(function() {
+            initializeDatepicker();
         });
-    }
-    
-    $(document).ready(function() {
-        initializeDatepicker();
-    });
-</script>
-{{-- JQUERY DATEPICKER SCRIPT END --}}
+    </script>
+    {{-- JQUERY DATEPICKER SCRIPT END --}}
 
 
 

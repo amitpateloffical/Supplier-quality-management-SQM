@@ -4568,10 +4568,16 @@ class SupplierSiteController extends Controller
                                  try {
                                   Mail::send(
                                       'mail.view-mail',
-                                       ['data' => $supplierSite],
-                                    function ($message) use ($email) {
+                                    //    ['data' => $supplierSite],
+                                    // function ($message) use ($email) {
+                                    //     $message->to($email)
+                                    //         ->subject("Document is Sent By".Auth::user()->name);
+                                    // }
+
+                                    ['data' => $supplierSite,'history'=>"Qualification Complete Performed",'process' => 'Supplier Site', 'comment' => $supplierSite->pending_qualification_comment,'user'=> Auth::user()->name],
+                                   function ($message) use ($email,$supplierSite) {
                                         $message->to($email)
-                                            ->subject("Document is Sent By".Auth::user()->name);
+                                        ->subject("QMS Notification: Supplier Site, Record " . $supplierSite->record . " - Activity: Qualification Complete Performed");
                                     }
                                   );
                                   } catch (\Exception $e) {
@@ -4634,11 +4640,17 @@ class SupplierSiteController extends Controller
                             try {
                               Mail::send(
                                   'mail.view-mail',
-                                   ['data' => $supplierSite],
-                                function ($message) use ($email) {
-                                    $message->to($email)
-                                        ->subject("Document is Sent By".Auth::user()->name);
-                                }
+                                //    ['data' => $supplierSite],
+                                // function ($message) use ($email) {
+                                //     $message->to($email)
+                                //         ->subject("Document is Sent By".Auth::user()->name);
+                                // }
+
+                                ['data' => $supplierSite,'history'=>"Audit Failed Performed",'process' => 'Supplier Site', 'comment' => $supplierSite->pending_supplier_audit_comment,'user'=> Auth::user()->name],
+                                   function ($message) use ($email,$supplierSite) {
+                                        $message->to($email)
+                                        ->subject("QMS Notification: Supplier Site, Record " . $supplierSite->record . " - Activity: Audit Failed Performed");
+                                    }
                                );
                             } catch (\Exception $e) {
                                     \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -4699,11 +4711,17 @@ class SupplierSiteController extends Controller
                             try {
                               Mail::send(
                                   'mail.view-mail',
-                                   ['data' => $supplierSite],
-                                function ($message) use ($email) {
-                                    $message->to($email)
-                                        ->subject("Document is Sent By".Auth::user()->name);
-                                }
+                                //    ['data' => $supplierSite],
+                                // function ($message) use ($email) {
+                                //     $message->to($email)
+                                //         ->subject("Document is Sent By".Auth::user()->name);
+                                // }
+
+                                ['data' => $supplierSite,'history'=>"Supplier Obsolete Performed",'process' => 'Supplier Site', 'comment' => $supplierSite->pending_rejection_comment,'user'=> Auth::user()->name],
+                                   function ($message) use ($email,$supplierSite) {
+                                        $message->to($email)
+                                        ->subject("QMS Notification: Supplier Site, Record " . $supplierSite->record . " - Activity: Supplier Obsolete Performed");
+                                    }
                                );
                             } catch (\Exception $e) {
                                     \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -4720,11 +4738,17 @@ class SupplierSiteController extends Controller
                             try {
                               Mail::send(
                                   'mail.view-mail',
-                                   ['data' => $supplierSite],
-                                function ($message) use ($email) {
-                                    $message->to($email)
-                                        ->subject("Document is Sent By".Auth::user()->name);
-                                }
+                                //    ['data' => $supplierSite],
+                                // function ($message) use ($email) {
+                                //     $message->to($email)
+                                //         ->subject("Document is Sent By".Auth::user()->name);
+                                // }
+
+                                ['data' => $supplierSite,'history'=>"Supplier Obsolete Performed",'process' => 'Supplier Site', 'comment' => $supplierSite->pending_rejection_comment,'user'=> Auth::user()->name],
+                                   function ($message) use ($email,$supplierSite) {
+                                        $message->to($email)
+                                        ->subject("QMS Notification: Supplier Site, Record " . $supplierSite->record . " - Activity: Supplier Obsolete Performed");
+                                    }
                                );
                             } catch (\Exception $e) {
                                     \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -4794,11 +4818,17 @@ class SupplierSiteController extends Controller
                     try {
                       Mail::send(
                           'mail.view-mail',
-                           ['data' => $supplierSite],
-                        function ($message) use ($email) {
-                            $message->to($email)
-                                ->subject("Document is Sent By".Auth::user()->name);
-                        }
+                        //    ['data' => $supplierSite],
+                        // function ($message) use ($email) {
+                        //     $message->to($email)
+                        //         ->subject("Document is Sent By".Auth::user()->name);
+                        // }
+
+                        ['data' => $supplierSite,'history'=>"Audit Passed Performed",'process' => 'Supplier Site', 'comment' => $supplierSite->supplier_approved_comment,'user'=> Auth::user()->name],
+                                   function ($message) use ($email,$supplierSite) {
+                                        $message->to($email)
+                                        ->subject("QMS Notification: Supplier Site, Record " . $supplierSite->record . " - Activity: Audit Passed Performed");
+                                    }
                        );
                     } catch (\Exception $e) {
                             \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -4870,11 +4900,17 @@ class SupplierSiteController extends Controller
                     try {
                       Mail::send(
                           'mail.view-mail',
-                           ['data' => $supplierSite],
-                        function ($message) use ($email) {
-                            $message->to($email)
-                                ->subject("Document is Sent By".Auth::user()->name);
-                        }
+                        //    ['data' => $supplierSite],
+                        // function ($message) use ($email) {
+                        //     $message->to($email)
+                        //         ->subject("Document is Sent By".Auth::user()->name);
+                        // }
+
+                        ['data' => $supplierSite,'history'=>"Supplier Obsolete Performed",'process' => 'Supplier Site', 'comment' => $supplierSite->supplier_approved_to_obselete_comment,'user'=> Auth::user()->name],
+                             function ($message) use ($email,$supplierSite) {
+                                        $message->to($email)
+                                        ->subject("QMS Notification: Supplier Site, Record " . $supplierSite->record . " - Activity: Supplier Obsolete Performed");
+                                }
                        );
                     } catch (\Exception $e) {
                             \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -4891,11 +4927,19 @@ class SupplierSiteController extends Controller
                     try {
                       Mail::send(
                           'mail.view-mail',
-                           ['data' => $supplierSite],
-                        function ($message) use ($email) {
-                            $message->to($email)
-                                ->subject("Document is Sent By".Auth::user()->name);
-                        }
+                        //    ['data' => $supplierSite],
+                        // function ($message) use ($email) {
+                        //     $message->to($email)
+                        //         ->subject("Document is Sent By".Auth::user()->name);
+                        // }
+
+                        ['data' => $supplierSite,'history'=>"Supplier Obsolete Performed",'process' => 'Supplier Site', 'comment' => $supplierSite->supplier_approved_to_obselete_comment,'user'=> Auth::user()->name],
+                             function ($message) use ($email,$supplierSite) {
+                                        $message->to($email)
+                                        ->subject("QMS Notification: Supplier Site, Record " . $supplierSite->record . " - Activity: Supplier Obsolete Performed");
+                                }
+
+                        
                        );
                     } catch (\Exception $e) {
                             \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -4988,11 +5032,17 @@ class SupplierSiteController extends Controller
                                  try {
                                   Mail::send(
                                       'mail.view-mail',
-                                       ['data' => $supplierSite],
-                                    function ($message) use ($email) {
-                                        $message->to($email)
-                                            ->subject("Document is Sent By".Auth::user()->name);
-                                    }
+                                    //    ['data' => $supplierSite],
+                                    // function ($message) use ($email) {
+                                    //     $message->to($email)
+                                    //         ->subject("Document is Sent By".Auth::user()->name);
+                                    // }
+
+                                    ['data' => $supplierSite,'history'=>"Cancel Performed",'process' => 'Supplier Site', 'comment' => $supplierSite->cancelled_comment,'user'=> Auth::user()->name],
+                                    function ($message) use ($email,$supplierSite) {
+                                               $message->to($email)
+                                               ->subject("QMS Notification: Supplier Site, Record " . $openState->record . " - Activity: Cancel Performed");
+                                       }
                                   );
                                   } catch (\Exception $e) {
                                     \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -5009,11 +5059,17 @@ class SupplierSiteController extends Controller
                                  try {
                                   Mail::send(
                                       'mail.view-mail',
-                                       ['data' => $supplierSite],
-                                    function ($message) use ($email) {
-                                        $message->to($email)
-                                            ->subject("Document is Sent By".Auth::user()->name);
-                                    }
+                                    //    ['data' => $supplierSite],
+                                    // function ($message) use ($email) {
+                                    //     $message->to($email)
+                                    //         ->subject("Document is Sent By".Auth::user()->name);
+                                    // }
+
+                                    ['data' => $supplierSite,'history'=>"Cancel Performed",'process' => 'Supplier Site', 'comment' => $supplierSite->cancelled_comment,'user'=> Auth::user()->name],
+                                    function ($message) use ($email,$supplierSite) {
+                                               $message->to($email)
+                                               ->subject("QMS Notification: Supplier Site, Record " . $supplierSite->record . " - Activity: Cancel Performed");
+                                       }
                                   );
                                   } catch (\Exception $e) {
                                     \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -5085,11 +5141,18 @@ class SupplierSiteController extends Controller
                                 try {
                                   Mail::send(
                                       'mail.view-mail',
-                                       ['data' => $supplierSite],
-                                    function ($message) use ($email) {
-                                        $message->to($email)
-                                            ->subject("Document is Sent By".Auth::user()->name);
-                                    }
+                                    //    ['data' => $supplierSite],
+                                    // function ($message) use ($email) {
+                                    //     $message->to($email)
+                                    //         ->subject("Document is Sent By".Auth::user()->name);
+                                    // }
+
+                                    
+                                    ['data' => $supplierSite,'history'=>"Re-Audit Performed",'process' => 'Supplier Site', 'comment' => $supplierSite->reAudit_comment,'user'=> Auth::user()->name],
+                                    function ($message) use ($email,$supplierSite) {
+                                               $message->to($email)
+                                               ->subject("QMS Notification: Supplier Site, Record " . $supplierSite->record . " - Activity: Re-Audit Performed");
+                                       }
                                   );
                                 } catch (\Exception $e) {
                                     \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -5149,11 +5212,17 @@ class SupplierSiteController extends Controller
                             try {
                               Mail::send(
                                   'mail.view-mail',
-                                   ['data' => $supplierSite],
-                                function ($message) use ($email) {
-                                    $message->to($email)
-                                        ->subject("Document is Sent By".Auth::user()->name);
-                                }
+                                //    ['data' => $supplierSite],
+                                // function ($message) use ($email) {
+                                //     $message->to($email)
+                                //         ->subject("Document is Sent By".Auth::user()->name);
+                                // }
+
+                                ['data' => $supplierSite,'history'=>"Reject Due To Quality Issues Performed",'process' => 'Supplier Site', 'comment' => $supplierSite->rejectedDueToQuality_comment,'user'=> Auth::user()->name],
+                                    function ($message) use ($email,$supplierSite) {
+                                               $message->to($email)
+                                               ->subject("QMS Notification: Supplier Site, Record " . $supplierSite->record . " - Activity: Reject Due To Quality Issues Performed");
+                                       }
                               );
                             } catch (\Exception $e) {
                                 \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -5217,11 +5286,20 @@ class SupplierSiteController extends Controller
                             try {
                               Mail::send(
                                   'mail.view-mail',
-                                   ['data' => $supplierSite],
-                                function ($message) use ($email) {
-                                    $message->to($email)
-                                        ->subject("Document is Sent By".Auth::user()->name);
-                                }
+                                //    ['data' => $supplierSite],
+                                // function ($message) use ($email) {
+                                //     $message->to($email)
+                                //         ->subject("Document is Sent By".Auth::user()->name);
+                                // }
+
+                                // ['data' => $riskAssessment, 'history' => 'Submit Performed', 'process' => 'Risk Assessment', 'comment' => $riskAssessment->submitted_comment,'user'=> Auth::user()->name],
+
+                                ['data' => $supplierSite,'history'=>"Conditionally Approved Performed",'process' => 'Supplier Site', 'comment' => $supplierSite->conditionally_approved_comments,'user'=> Auth::user()->name],
+                                
+                                function ($message) use ($email,$supplierSite) {
+                                           $message->to($email)
+                                           ->subject("QMS Notification: Supplier Site, Record " . $supplierSite->record . " - Activity: Conditionally Approved Performed");
+                                   }
                                );
                             } catch (\Exception $e) {
                                     \Log::error('Mail failed to send: ' . $e->getMessage());

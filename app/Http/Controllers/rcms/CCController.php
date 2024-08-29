@@ -3187,6 +3187,8 @@ class CCController extends Controller
                     $history->action_name = 'Update';
                 }
                 $history->save();
+
+           
                 
                  $list = Helpers::getHodUserList($changeControl->division_id);
                     foreach ($list as $u) {
@@ -3196,10 +3198,10 @@ class CCController extends Controller
                             try {
                               Mail::send(
                                   'mail.view-mail',
-                                   ['data' => $changeControl],
-                                function ($message) use ($email) {
+                                  ['data' => $changeControl,'history'=>"Submit Performed",'process' => 'Change Control', 'comment' => $changeControl->submitted_comment,'user'=> Auth::user()->name],
+                                function ($message) use ($email,$changeControl) {
                                     $message->to($email)
-                                        ->subject("Document is Sent By".Auth::user()->name);
+                                        ->subject("QMS Notification: Change Control, Record " . $changeControl->record . " - Activity: Submit Performed");
                                 }
                               );
                             } catch (\Exception $e) {
@@ -3254,10 +3256,15 @@ class CCController extends Controller
                                  try {
                               Mail::send(
                                   'mail.view-mail',
-                                   ['data' => $changeControl],
-                                function ($message) use ($email) {
+                                //    ['data' => $changeControl],
+                                // function ($message) use ($email) {
+                                //     $message->to($email)
+                                //         ->subject("Document is Sent By".Auth::user()->name);
+                                // }
+                                ['data' => $changeControl,'history'=>"HOD review Complete Performed",'process' => 'Change Control', 'comment' => $changeControl->hod_review_completed_comment,'user'=> Auth::user()->name],
+                                function ($message) use ($email,$changeControl) {
                                     $message->to($email)
-                                        ->subject("Document is Sent By".Auth::user()->name);
+                                        ->subject("QMS Notification: Change Control, Record " . $changeControl->record . " - Activity: HOD review Complete Performed");
                                 }
                               );
                                } catch (\Exception $e) {
@@ -3314,10 +3321,16 @@ class CCController extends Controller
                             try {
                               Mail::send(
                                   'mail.view-mail',
-                                   ['data' => $changeControl],
-                                function ($message) use ($email) {
+                                //    ['data' => $changeControl],
+                                // function ($message) use ($email) {
+                                //     $message->to($email)
+                                //         ->subject("Document is Sent By".Auth::user()->name);
+                                // }
+
+                                ['data' => $changeControl,'history'=>"Send to CFT/SME/QA Review Performed",'process' => 'Change Control', 'comment' => $changeControl->cft_review_comment,'user'=> Auth::user()->name],
+                                function ($message) use ($email,$changeControl) {
                                     $message->to($email)
-                                        ->subject("Document is Sent By".Auth::user()->name);
+                                        ->subject("QMS Notification: Change Control, Record " . $changeControl->record . " - Activity: Send to CFT/SME/QA Review Performed");
                                 }
                               );
                               } catch (\Exception $e) {
@@ -3335,10 +3348,16 @@ class CCController extends Controller
                             try {
                               Mail::send(
                                   'mail.view-mail',
-                                   ['data' => $changeControl],
-                                function ($message) use ($email) {
+                                //    ['data' => $changeControl],
+                                // function ($message) use ($email) {
+                                //     $message->to($email)
+                                //         ->subject("Document is Sent By".Auth::user()->name);
+                                // }
+
+                                ['data' => $changeControl,'history'=>"Send to CFT/SME/QA Review Performed",'process' => 'Change Control', 'comment' => $changeControl->cft_review_comment,'user'=> Auth::user()->name],
+                                function ($message) use ($email,$changeControl) {
                                     $message->to($email)
-                                        ->subject("Document is Sent By".Auth::user()->name);
+                                        ->subject("QMS Notification: Change Control, Record " . $changeControl->record . " - Activity: Send to CFT/SME/QA Review Performed");
                                 }
                               );
                               } catch (\Exception $e) {
@@ -3478,10 +3497,16 @@ class CCController extends Controller
                                 
                               Mail::send(
                                   'mail.view-mail',
-                                   ['data' => $changeControl],
-                                function ($message) use ($email) {
+                                //    ['data' => $changeControl],
+                                // function ($message) use ($email) {
+                                //     $message->to($email)
+                                //         ->subject("Document is Sent By".Auth::user()->name);
+                                // }
+
+                                ['data' => $changeControl,'history'=>"Implemented Performed",'process' => 'Change Control', 'comment' => $changeControl->implemented_comment,'user'=> Auth::user()->name],
+                                function ($message) use ($email,$changeControl) {
                                     $message->to($email)
-                                        ->subject("Document is Sent By".Auth::user()->name);
+                                        ->subject("QMS Notification: Change Control, Record " . $changeControl->record . " - Activity: Implemented Performed");
                                 }
                               );
 
@@ -3500,10 +3525,16 @@ class CCController extends Controller
                              try {
                               Mail::send(
                                   'mail.view-mail',
-                                   ['data' => $changeControl],
-                                function ($message) use ($email) {
+                                //    ['data' => $changeControl],
+                                // function ($message) use ($email) {
+                                //     $message->to($email)
+                                //         ->subject("Document is Sent By".Auth::user()->name);
+                                // }
+
+                                ['data' => $changeControl,'history'=>"Implemented Performed",'process' => 'Change Control', 'comment' => $changeControl->implemented_comment,'user'=> Auth::user()->name],
+                                function ($message) use ($email,$changeControl) {
                                     $message->to($email)
-                                        ->subject("Document is Sent By".Auth::user()->name);
+                                        ->subject("QMS Notification: Change Control, Record " . $changeControl->record . " - Activity: Implemented Performed");
                                 }
                               );
                             } catch (\Exception $e) {
@@ -3521,10 +3552,16 @@ class CCController extends Controller
                                  try {
                               Mail::send(
                                   'mail.view-mail',
-                                   ['data' => $changeControl],
-                                function ($message) use ($email) {
+                                //    ['data' => $changeControl],
+                                // function ($message) use ($email) {
+                                //     $message->to($email)
+                                //         ->subject("Document is Sent By".Auth::user()->name);
+                                // }
+
+                                ['data' => $changeControl,'history'=>"Implemented Performed",'process' => 'Change Control', 'comment' => $changeControl->implemented_comment,'user'=> Auth::user()->name],
+                                function ($message) use ($email,$changeControl) {
                                     $message->to($email)
-                                        ->subject("Document is Sent By".Auth::user()->name);
+                                        ->subject("QMS Notification: Change Control, Record " . $changeControl->record . " - Activity: Implemented Performed");
                                 }
                               );
                             } catch (\Exception $e) {
@@ -3616,10 +3653,16 @@ class CCController extends Controller
                                  try {
                               Mail::send(
                                   'mail.view-mail',
-                                   ['data' => $changeControl],
-                                function ($message) use ($email) {
+                                //    ['data' => $changeControl],
+                                // function ($message) use ($email) {
+                                //     $message->to($email)
+                                //         ->subject("Document is Sent By".Auth::user()->name);
+                                // }.
+
+                                ['data' => $changeControl,'history'=>"More Information Required Performed",'process' => 'Change Control', 'comment' => $changeControl->sent_to_opened_comment,'user'=> Auth::user()->name],
+                                function ($message) use ($email,$changeControl) {
                                     $message->to($email)
-                                        ->subject("Document is Sent By".Auth::user()->name);
+                                        ->subject("QMS Notification: Change Control, Record " . $changeControl->record . " - Activity: More Information Required Performed");
                                 }
                               );
                              } catch (\Exception $e) {
@@ -3674,11 +3717,17 @@ class CCController extends Controller
                             try {
                           Mail::send(
                               'mail.view-mail',
-                               ['data' => $changeControl],
-                            function ($message) use ($email) {
-                                $message->to($email)
-                                    ->subject("Document is Sent By".Auth::user()->name);
-                            }
+                            //    ['data' => $changeControl],
+                            // function ($message) use ($email) {
+                            //     $message->to($email)
+                            //         ->subject("Document is Sent By".Auth::user()->name);
+                            // }
+
+                            ['data' => $changeControl,'history'=>"More Information Required Performed",'process' => 'Change Control', 'comment' => $changeControl->requested_to_hod_comment,'user'=> Auth::user()->name],
+                                function ($message) use ($email,$changeControl) {
+                                    $message->to($email)
+                                        ->subject("QMS Notification: Change Control, Record " . $changeControl->record . " - Activity: More Information Required Performed");
+                                }
                           );
                           } catch (\Exception $e) {
                                 \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -3733,10 +3782,16 @@ class CCController extends Controller
                                 try {
                               Mail::send(
                                   'mail.view-mail',
-                                   ['data' => $changeControl],
-                                function ($message) use ($email) {
+                                //    ['data' => $changeControl],
+                                // function ($message) use ($email) {
+                                //     $message->to($email)
+                                //         ->subject("Document is Sent By".Auth::user()->name);
+                                // }
+
+                                ['data' => $changeControl,'history'=>"Request More Information Performed",'process' => 'Change Control', 'comment' => $changeControl->requested_to_hod_comment,'user'=> Auth::user()->name],
+                                function ($message) use ($email,$changeControl) {
                                     $message->to($email)
-                                        ->subject("Document is Sent By".Auth::user()->name);
+                                        ->subject("QMS Notification: Change Control, Record " . $changeControl->record . " - Activity: Request More Information Performed");
                                 }
                               );
                               } catch (\Exception $e) {
@@ -3869,11 +3924,17 @@ class CCController extends Controller
                         try {
                           Mail::send(
                               'mail.view-mail',
-                               ['data' => $changeControl],
-                            function ($message) use ($email) {
-                                $message->to($email)
-                                    ->subject("Document is Sent By".Auth::user()->name);
-                            }
+                            // ['data' => $changeControl],
+                            // function ($message) use ($email) {
+                            //     $message->to($email)
+                            //         ->subject("Document is Sent By".Auth::user()->name);
+                            // }
+
+                            ['data' => $changeControl,'history'=>"CFT/SME/QA Review Not Required Performed",'process' => 'Change Control', 'comment' => $changeControl->cftNot_required_comment,'user'=> Auth::user()->name],
+                                function ($message) use ($email,$changeControl) {
+                                    $message->to($email)
+                                        ->subject("QMS Notification: Change Control, Record " . $changeControl->record . " - Activity: CFT/SME/QA Review Not Required Performed");
+                                }
                           );
                           } catch (\Exception $e) {
                                 \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -3890,11 +3951,19 @@ class CCController extends Controller
                         try {
                           Mail::send(
                               'mail.view-mail',
-                               ['data' => $changeControl],
-                            function ($message) use ($email) {
-                                $message->to($email)
-                                    ->subject("Document is Sent By".Auth::user()->name);
-                            }
+                            //    ['data' => $changeControl],
+                            // function ($message) use ($email) {
+                            //     $message->to($email)
+                            //         ->subject("Document is Sent By".Auth::user()->name);
+                            // }
+
+                            ['data' => $changeControl,'history'=>"CFT/SME/QA Review Not Required Performed",'process' => 'Change Control', 'comment' => $changeControl->cftNot_required_comment,'user'=> Auth::user()->name],
+                                function ($message) use ($email,$changeControl) {
+                                    $message->to($email)
+                                        ->subject("QMS Notification: Change Control, Record " . $changeControl->record . " - Activity: CFT/SME/QA Review Not Required Performed");
+                                }
+
+                            
                           );
                           } catch (\Exception $e) {
                                 \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -3964,10 +4033,16 @@ class CCController extends Controller
                                 try {
                               Mail::send(
                                   'mail.view-mail',
-                                   ['data' => $changeControl],
-                                function ($message) use ($email) {
+                                //    ['data' => $changeControl],
+                                // function ($message) use ($email) {
+                                //     $message->to($email)
+                                //         ->subject("Document is Sent By".Auth::user()->name);
+                                // }
+
+                                ['data' => $changeControl,'history'=>"Cancel Performed",'process' => 'Change Control', 'comment' => $changeControl->cancelled_comment,'user'=> Auth::user()->name],
+                                function ($message) use ($email,$changeControl) {
                                     $message->to($email)
-                                        ->subject("Document is Sent By".Auth::user()->name);
+                                        ->subject("QMS Notification: Change Control, Record " . $changeControl->record . " - Activity: Cancel Performed");
                                 }
                               );
                                } catch (\Exception $e) {
@@ -3985,10 +4060,16 @@ class CCController extends Controller
                                 try {
                               Mail::send(
                                   'mail.view-mail',
-                                   ['data' => $changeControl],
-                                function ($message) use ($email) {
+                                //    ['data' => $changeControl],
+                                // function ($message) use ($email) {
+                                //     $message->to($email)
+                                //         ->subject("Document is Sent By".Auth::user()->name);
+                                // }
+
+                                ['data' => $changeControl,'history'=>"Cancel Performed",'process' => 'Change Control', 'comment' => $changeControl->cancelled_comment,'user'=> Auth::user()->name],
+                                function ($message) use ($email,$changeControl) {
                                     $message->to($email)
-                                        ->subject("Document is Sent By".Auth::user()->name);
+                                        ->subject("QMS Notification: Change Control, Record " . $changeControl->record . " - Activity: Cancel Performed");
                                 }
                               );
                                } catch (\Exception $e) {
@@ -4006,11 +4087,17 @@ class CCController extends Controller
                               try {
                             Mail::send(
                                 'mail.view-mail',
-                                 ['data' => $changeControl],
-                              function ($message) use ($email) {
-                                  $message->to($email)
-                                      ->subject("Document is Sent By".Auth::user()->name);
-                              }
+                            //      ['data' => $changeControl],
+                            //   function ($message) use ($email) {
+                            //       $message->to($email)
+                            //           ->subject("Document is Sent By".Auth::user()->name);
+                            //   }
+
+                            ['data' => $changeControl,'history'=>"Cancel Performed",'process' => 'Change Control', 'comment' => $changeControl->cancelled_comment,'user'=> Auth::user()->name],
+                                function ($message) use ($email,$changeControl) {
+                                    $message->to($email)
+                                        ->subject("QMS Notification: Change Control, Record " . $changeControl->record . " - Activity: Cancel Performed");
+                                }
                             );
                              } catch (\Exception $e) {
                                   \Log::error('Mail failed to send: ' . $e->getMessage());

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\Log;
 
 use App\Models\ActionItem;
 use App\Models\Capa;
@@ -312,7 +313,7 @@ class RiskManagementController extends Controller
         if (!empty($request->why_5)) {
             $data3->why_5 = serialize($request->why_5);
         }
-    //    dd($request->why_root_cause);
+        //    dd($request->why_root_cause);
         if (!empty($request->why_root_cause)) {
             $data3->why_root_cause = $request->why_root_cause;
         }
@@ -357,13 +358,14 @@ class RiskManagementController extends Controller
         }
         if (!empty($request->who_rationable)) {
             $data4->who_rationable = $request->who_rationable;
-        } if (!empty($request->when_will_be)) {
+        }
+        if (!empty($request->when_will_be)) {
             $data4->when_will_be = $request->when_will_be;
         }
-         if (!empty($request->when_will_not_be)) {
+        if (!empty($request->when_will_not_be)) {
             $data4->when_will_not_be = $request->when_will_not_be;
         }
-         if (!empty($request->when_rationable)) {
+        if (!empty($request->when_rationable)) {
             $data4->when_rationable = $request->when_rationable;
         }
         $data4->save();
@@ -415,7 +417,7 @@ class RiskManagementController extends Controller
             $history->risk_id = $data->id;
             $history->activity_type = 'Site/Location Code';
             $history->previous = "Null";
-            $history->current =$data->division_code;
+            $history->current = $data->division_code;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1260,13 +1262,13 @@ class RiskManagementController extends Controller
             $history->activity_type = 'Severity Rate';
             $history->previous = "Null";
             // $history->current = $data->severity_rate;
-            if($request->severity_rate == 1){
+            if ($request->severity_rate == 1) {
                 $history->current = "Negligible";
-            } elseif($request->severity_rate == 2){
+            } elseif ($request->severity_rate == 2) {
                 $history->current = "Moderate";
-            } elseif($request->severity_rate == 3){
+            } elseif ($request->severity_rate == 3) {
                 $history->current = "Major";
-            }else{
+            } else {
                 $history->current = "Fatal";
             }
             $history->comment = "Not Applicable";
@@ -1286,15 +1288,15 @@ class RiskManagementController extends Controller
             $history->activity_type = 'Occurrence';
             $history->previous = "Null";
             // $history->current = $data->occurrence;
-            if($request->occurrence == 1){
+            if ($request->occurrence == 1) {
                 $history->current = "Very Likely";
-            } elseif($request->occurrence == 2){
+            } elseif ($request->occurrence == 2) {
                 $history->current = "Likely";
-            } elseif($request->occurrence == 3){
+            } elseif ($request->occurrence == 3) {
                 $history->current = "Unlikely";
-            }elseif($request->occurrence == 4){
+            } elseif ($request->occurrence == 4) {
                 $history->current = "Rare";
-            }else{
+            } else {
                 $history->current = "Extremely Unlikely";
             }
             $history->comment = "Not Applicable";
@@ -1313,15 +1315,15 @@ class RiskManagementController extends Controller
             $history->risk_id = $data->id;
             $history->activity_type = 'Detection';
             $history->previous = "Null";
-            if($request->detection == 1){
+            if ($request->detection == 1) {
                 $history->current = "Very Likely";
-            } elseif($request->detection == 2){
+            } elseif ($request->detection == 2) {
                 $history->current = "Likely";
-            } elseif($request->detection == 3){
+            } elseif ($request->detection == 3) {
                 $history->current = "Unlikely";
-            }elseif($request->detection == 4){
+            } elseif ($request->detection == 4) {
                 $history->current = "Rare";
-            }else{
+            } else {
                 $history->current = "Impossible";
             }
             $history->comment = "Not Applicable";
@@ -1375,13 +1377,13 @@ class RiskManagementController extends Controller
             $history->activity_type = 'Residual Risk Impact';
             $history->previous = "Null";
             // $history->current = $data->residual_risk_impact;
-            if($request->residual_risk_impact == 1){
+            if ($request->residual_risk_impact == 1) {
                 $history->current = "High";
-            } elseif($request->residual_risk_impact == 2){
+            } elseif ($request->residual_risk_impact == 2) {
                 $history->current = "Low";
-            } elseif($request->residual_risk_impact == 3){
+            } elseif ($request->residual_risk_impact == 3) {
                 $history->current = "Medium";
-            }else{
+            } else {
                 $history->current = "None";
             }
             $history->comment = "Not Applicable";
@@ -1401,11 +1403,11 @@ class RiskManagementController extends Controller
             $history->activity_type = 'Residual Risk Probability';
             $history->previous = "Null";
             // $history->current = $data->residual_risk_probability;
-            if($request->residual_risk_probability == 1){
+            if ($request->residual_risk_probability == 1) {
                 $history->current = "High";
-            } elseif($request->residual_risk_probability == 2){
+            } elseif ($request->residual_risk_probability == 2) {
                 $history->current = "Medium";
-            }else{
+            } else {
                 $history->current = "Low";
             }
             $history->comment = "Not Applicable";
@@ -1425,15 +1427,15 @@ class RiskManagementController extends Controller
             $history->activity_type = 'Residual Detection';
             $history->previous = "Null";
             // $history->current = $data->detection2;
-            if($request->detection2 == 1){
+            if ($request->detection2 == 1) {
                 $history->current = "Very Likely";
-            } elseif($request->detection2 == 2){
+            } elseif ($request->detection2 == 2) {
                 $history->current = "Likely";
-            } elseif($request->detection2 == 3){
+            } elseif ($request->detection2 == 3) {
                 $history->current = "Unlikely";
-            }elseif($request->detection2 == 4){
+            } elseif ($request->detection2 == 4) {
                 $history->current = "Rare";
-            }else{
+            } else {
                 $history->current = "Impossible";
             }
             $history->comment = "Not Applicable";
@@ -1794,271 +1796,272 @@ class RiskManagementController extends Controller
         // }
         // return $data;
         $data->update();
-             // -----------grid=------
-            //  $data1 = new RiskAssesmentGrid();
-            //  $data1->risk_id = $data->id;
-            //  $data1->type = "effect_analysis";
+        // -----------grid=------
+        //  $data1 = new RiskAssesmentGrid();
+        //  $data1->risk_id = $data->id;
+        //  $data1->type = "effect_analysis";
 
-             $data1 = RiskAssesmentGrid::where('risk_id',$data->id)->where('type','effect_analysis')->first();
+        $data1 = RiskAssesmentGrid::where('risk_id', $data->id)->where('type', 'effect_analysis')->first();
 
-             if (!empty($request->risk_factor)) {
-                 $data1->risk_factor = serialize($request->risk_factor);
-             }
-             if (!empty($request->risk_element)) {
-                 $data1->risk_element = serialize($request->risk_element);
-             }
-             if (!empty($request->problem_cause)) {
-                 $data1->problem_cause = serialize($request->problem_cause);
-             }
-             if (!empty($request->existing_risk_control)) {
-                 $data1->existing_risk_control = serialize($request->existing_risk_control);
-             }
-             if (!empty($request->initial_severity)) {
-                 $data1->initial_severity = serialize($request->initial_severity);
-             }
-             if (!empty($request->initial_detectability)) {
-                 $data1->initial_detectability = serialize($request->initial_detectability);
-             }
-             if (!empty($request->initial_probability)) {
-                 $data1->initial_probability = serialize($request->initial_probability);
-             }
-             if (!empty($request->initial_rpn)) {
-                 $data1->initial_rpn = serialize($request->initial_rpn);
-             }
-             if (!empty($request->risk_acceptance)) {
-                 $data1->risk_acceptance = serialize($request->risk_acceptance);
-             }
-             if (!empty($request->risk_control_measure)) {
-                 $data1->risk_control_measure = serialize($request->risk_control_measure);
-             }
-             if (!empty($request->residual_severity)) {
-                 $data1->residual_severity = serialize($request->residual_severity);
-             }
-             if (!empty($request->residual_probability)) {
-                 $data1->residual_probability = serialize($request->residual_probability);
-             }
-             if (!empty($request->residual_detectability)) {
-                 $data1->residual_detectability = serialize($request->residual_detectability);
-             }
-             if (!empty($request->residual_rpn)) {
-                 $data1->residual_rpn = serialize($request->residual_rpn);
-             }
-             if (!empty($request->risk_acceptance2)) {
-                 $data1->risk_acceptance2 = serialize($request->risk_acceptance2);
-             }
-             if (!empty($request->mitigation_proposal)) {
-                 $data1->mitigation_proposal = serialize($request->mitigation_proposal);
-             }
+        if (!empty($request->risk_factor)) {
+            $data1->risk_factor = serialize($request->risk_factor);
+        }
+        if (!empty($request->risk_element)) {
+            $data1->risk_element = serialize($request->risk_element);
+        }
+        if (!empty($request->problem_cause)) {
+            $data1->problem_cause = serialize($request->problem_cause);
+        }
+        if (!empty($request->existing_risk_control)) {
+            $data1->existing_risk_control = serialize($request->existing_risk_control);
+        }
+        if (!empty($request->initial_severity)) {
+            $data1->initial_severity = serialize($request->initial_severity);
+        }
+        if (!empty($request->initial_detectability)) {
+            $data1->initial_detectability = serialize($request->initial_detectability);
+        }
+        if (!empty($request->initial_probability)) {
+            $data1->initial_probability = serialize($request->initial_probability);
+        }
+        if (!empty($request->initial_rpn)) {
+            $data1->initial_rpn = serialize($request->initial_rpn);
+        }
+        if (!empty($request->risk_acceptance)) {
+            $data1->risk_acceptance = serialize($request->risk_acceptance);
+        }
+        if (!empty($request->risk_control_measure)) {
+            $data1->risk_control_measure = serialize($request->risk_control_measure);
+        }
+        if (!empty($request->residual_severity)) {
+            $data1->residual_severity = serialize($request->residual_severity);
+        }
+        if (!empty($request->residual_probability)) {
+            $data1->residual_probability = serialize($request->residual_probability);
+        }
+        if (!empty($request->residual_detectability)) {
+            $data1->residual_detectability = serialize($request->residual_detectability);
+        }
+        if (!empty($request->residual_rpn)) {
+            $data1->residual_rpn = serialize($request->residual_rpn);
+        }
+        if (!empty($request->risk_acceptance2)) {
+            $data1->risk_acceptance2 = serialize($request->risk_acceptance2);
+        }
+        if (!empty($request->mitigation_proposal)) {
+            $data1->mitigation_proposal = serialize($request->mitigation_proposal);
+        }
 
-             $data1->save();
+        $data1->save();
 
-             // ---------------------------------------
-            //  $data2 = new RiskAssesmentGrid();
-            //  $data2->risk_id = $data->id;
-            //  $data2->type = "fishbone";
-                 $data2 = RiskAssesmentGrid::where('risk_id',$data->id)->where('type','fishbone')->first();
+        // ---------------------------------------
+        //  $data2 = new RiskAssesmentGrid();
+        //  $data2->risk_id = $data->id;
+        //  $data2->type = "fishbone";
+        $data2 = RiskAssesmentGrid::where('risk_id', $data->id)->where('type', 'fishbone')->first();
 
-                 if (!empty($request->measurement)) {
-                    $data2->measurement = serialize($request->measurement);
-                } else {
-                    $data2->measurement = serialize([]);
-                }
-                if (!empty($request->materials)) {
-                    $data2->materials = serialize($request->materials);
-                } else {
-                   $data2->materials = serialize([]);
-               }
-                if (!empty($request->methods)) {
-                    $data2->methods = serialize($request->methods);
-                } else {
-                   $data2->methods = serialize([]);
-               }
-                if (!empty($request->environment)) {
-                    $data2->environment = serialize($request->environment);
-                } else {
-                   $data2->environment = serialize([]);
-               }
-                if (!empty($request->manpower)) {
-                    $data2->manpower = serialize($request->manpower);
-                } else {
-                   $data2->manpower = serialize([]);
-               }
-                if (!empty($request->machine)) {
-                    $data2->machine = serialize($request->machine);
-                } else {
-                   $data2->machine = serialize([]);
-               }
-                if (!empty($request->problem_statement)) {
-                    $data2->problem_statement = $request->problem_statement;
-                }
-                $data2->save();
-             // =-------------------------------
-               $data3 = RiskAssesmentGrid::where('risk_id',$data->id)->where('type','why_chart')->first();
-            //  $data3 = new RiskAssesmentGrid();
-            //  $data3->risk_id = $data->id;
-            //  $data3->type = "why_chart";
+        if (!empty($request->measurement)) {
+            $data2->measurement = serialize($request->measurement);
+        } else {
+            $data2->measurement = serialize([]);
+        }
+        if (!empty($request->materials)) {
+            $data2->materials = serialize($request->materials);
+        } else {
+            $data2->materials = serialize([]);
+        }
+        if (!empty($request->methods)) {
+            $data2->methods = serialize($request->methods);
+        } else {
+            $data2->methods = serialize([]);
+        }
+        if (!empty($request->environment)) {
+            $data2->environment = serialize($request->environment);
+        } else {
+            $data2->environment = serialize([]);
+        }
+        if (!empty($request->manpower)) {
+            $data2->manpower = serialize($request->manpower);
+        } else {
+            $data2->manpower = serialize([]);
+        }
+        if (!empty($request->machine)) {
+            $data2->machine = serialize($request->machine);
+        } else {
+            $data2->machine = serialize([]);
+        }
+        if (!empty($request->problem_statement)) {
+            $data2->problem_statement = $request->problem_statement;
+        }
+        $data2->save();
+        // =-------------------------------
+        $data3 = RiskAssesmentGrid::where('risk_id', $data->id)->where('type', 'why_chart')->first();
+        //  $data3 = new RiskAssesmentGrid();
+        //  $data3->risk_id = $data->id;
+        //  $data3->type = "why_chart";
 
-             if (!empty($request->why_problem_statement)) {
-                 $data3->why_problem_statement = $request->why_problem_statement;
-             }
-             if (!empty($request->why_1)) {
-                 $data3->why_1 = serialize($request->why_1);
-             }
-             if (!empty($request->why_2)) {
-                 $data3->why_2 = serialize($request->why_2);
-             }
-             if (!empty($request->why_3)) {
-                 $data3->why_3 = serialize($request->why_3);
-             }
-             if (!empty($request->why_4)) {
-                 $data3->why_4 = serialize($request->why_4);
-             }
-             if (!empty($request->why_5)) {
-                 $data3->why_5 = serialize($request->why_5);
-             }
-             if (!empty($request->why_root_cause)) {
-                 $data3->why_root_cause = $request->why_root_cause;
-             }
-             $data3->save();
+        if (!empty($request->why_problem_statement)) {
+            $data3->why_problem_statement = $request->why_problem_statement;
+        }
+        if (!empty($request->why_1)) {
+            $data3->why_1 = serialize($request->why_1);
+        }
+        if (!empty($request->why_2)) {
+            $data3->why_2 = serialize($request->why_2);
+        }
+        if (!empty($request->why_3)) {
+            $data3->why_3 = serialize($request->why_3);
+        }
+        if (!empty($request->why_4)) {
+            $data3->why_4 = serialize($request->why_4);
+        }
+        if (!empty($request->why_5)) {
+            $data3->why_5 = serialize($request->why_5);
+        }
+        if (!empty($request->why_root_cause)) {
+            $data3->why_root_cause = $request->why_root_cause;
+        }
+        $data3->save();
 
-             // --------------------------------------------
-            //  $data4 = new RiskAssesmentGrid();
-            //  $data4->risk_id = $data->id;
-            //  $data4->type = "what_who_where";
-              $data4 = RiskAssesmentGrid::where('risk_id',$data->id)->where('type','what_who_where')->first();
+        // --------------------------------------------
+        //  $data4 = new RiskAssesmentGrid();
+        //  $data4->risk_id = $data->id;
+        //  $data4->type = "what_who_where";
+        $data4 = RiskAssesmentGrid::where('risk_id', $data->id)->where('type', 'what_who_where')->first();
 
-             if (!empty($request->what_will_be)) {
-                 $data4->what_will_be = $request->what_will_be;
-             }
-             if (!empty($request->what_will_not_be)) {
-                 $data4->what_will_not_be = $request->what_will_not_be;
-             }
-             if (!empty($request->what_rationable)) {
-                 $data4->what_rationable = $request->what_rationable;
-             }
-             if (!empty($request->where_will_be)) {
-                 $data4->where_will_be = $request->where_will_be;
-             }
-             if (!empty($request->where_will_not_be)) {
-                 $data4->where_will_not_be = $request->where_will_not_be;
-             }
-             if (!empty($request->where_rationable)) {
-                 $data4->where_rationable = $request->where_rationable;
-             }
-             if (!empty($request->coverage_will_be)) {
-                 $data4->coverage_will_be = $request->coverage_will_be;
-             }
-             if (!empty($request->coverage_will_not_be)) {
-                 $data4->coverage_will_not_be = $request->coverage_will_not_be;
-             }
-             if (!empty($request->coverage_rationable)) {
-                 $data4->coverage_rationable = $request->coverage_rationable;
-             }
-             if (!empty($request->who_will_be)) {
-                 $data4->who_will_be = $request->who_will_be;
-             }
-             if (!empty($request->who_will_not_be)) {
-                 $data4->who_will_not_be = $request->who_will_not_be;
-             }
-             if (!empty($request->who_rationable)) {
-                 $data4->who_rationable = $request->who_rationable;
-             } if (!empty($request->when_will_be)) {
-                 $data4->when_will_be = $request->when_will_be;
-             }
-              if (!empty($request->when_will_not_be)) {
-                 $data4->when_will_not_be = $request->when_will_not_be;
-             }
-              if (!empty($request->when_rationable)) {
-                 $data4->when_rationable = $request->when_rationable;
-             }
-             $data4->save();
+        if (!empty($request->what_will_be)) {
+            $data4->what_will_be = $request->what_will_be;
+        }
+        if (!empty($request->what_will_not_be)) {
+            $data4->what_will_not_be = $request->what_will_not_be;
+        }
+        if (!empty($request->what_rationable)) {
+            $data4->what_rationable = $request->what_rationable;
+        }
+        if (!empty($request->where_will_be)) {
+            $data4->where_will_be = $request->where_will_be;
+        }
+        if (!empty($request->where_will_not_be)) {
+            $data4->where_will_not_be = $request->where_will_not_be;
+        }
+        if (!empty($request->where_rationable)) {
+            $data4->where_rationable = $request->where_rationable;
+        }
+        if (!empty($request->coverage_will_be)) {
+            $data4->coverage_will_be = $request->coverage_will_be;
+        }
+        if (!empty($request->coverage_will_not_be)) {
+            $data4->coverage_will_not_be = $request->coverage_will_not_be;
+        }
+        if (!empty($request->coverage_rationable)) {
+            $data4->coverage_rationable = $request->coverage_rationable;
+        }
+        if (!empty($request->who_will_be)) {
+            $data4->who_will_be = $request->who_will_be;
+        }
+        if (!empty($request->who_will_not_be)) {
+            $data4->who_will_not_be = $request->who_will_not_be;
+        }
+        if (!empty($request->who_rationable)) {
+            $data4->who_rationable = $request->who_rationable;
+        }
+        if (!empty($request->when_will_be)) {
+            $data4->when_will_be = $request->when_will_be;
+        }
+        if (!empty($request->when_will_not_be)) {
+            $data4->when_will_not_be = $request->when_will_not_be;
+        }
+        if (!empty($request->when_rationable)) {
+            $data4->when_rationable = $request->when_rationable;
+        }
+        $data4->save();
 
-      $data5 = RiskAssesmentGrid::where('risk_id',$data->id)->where('type','Action_Plan')->first();
-            //  $data5 = new RiskAssesmentGrid();
-            //  $data5->risk_id = $data->id;
-            //  $data5->type = "Action_Plan";
+        $data5 = RiskAssesmentGrid::where('risk_id', $data->id)->where('type', 'Action_Plan')->first();
+        //  $data5 = new RiskAssesmentGrid();
+        //  $data5->risk_id = $data->id;
+        //  $data5->type = "Action_Plan";
 
-             if (!empty($request->action)) {
-                 $data5->action = serialize($request->action);
-             }
-             if (!empty($request->responsible)) {
-                 $data5->responsible = serialize($request->responsible);
-             }
-             if (!empty($request->deadline)) {
-                 $data5->deadline = serialize($request->deadline);
-             }
-             if (!empty($request->item_static)) {
-                 $data5->item_static = serialize($request->item_static);
-             }
+        if (!empty($request->action)) {
+            $data5->action = serialize($request->action);
+        }
+        if (!empty($request->responsible)) {
+            $data5->responsible = serialize($request->responsible);
+        }
+        if (!empty($request->deadline)) {
+            $data5->deadline = serialize($request->deadline);
+        }
+        if (!empty($request->item_static)) {
+            $data5->item_static = serialize($request->item_static);
+        }
 
-             $data5->save();
+        $data5->save();
 
-            //  $data6 = new RiskAssesmentGrid();
-            //  $data6->risk_id = $data->id;
-            //  $data6->type = "Mitigation_Plan_Details";
-              $data6 = RiskAssesmentGrid::where('risk_id',$data->id)->where('type','Mitigation_Plan_Details')->first();
-             if (!empty($request->mitigation_steps)) {
-                 $data6->mitigation_steps = serialize($request->mitigation_steps);
-             }
-             if (!empty($request->deadline2)) {
-                 $data6->deadline2 = serialize($request->deadline2);
-             }
-             if (!empty($request->responsible_person)) {
-                 $data6->responsible_person = serialize($request->responsible_person);
-             }
-             if (!empty($request->status)) {
-                 $data6->status = serialize($request->status);
-             }
-             if (!empty($request->remark)) {
-                 $data6->remark = serialize($request->remark);
-             }
+        //  $data6 = new RiskAssesmentGrid();
+        //  $data6->risk_id = $data->id;
+        //  $data6->type = "Mitigation_Plan_Details";
+        $data6 = RiskAssesmentGrid::where('risk_id', $data->id)->where('type', 'Mitigation_Plan_Details')->first();
+        if (!empty($request->mitigation_steps)) {
+            $data6->mitigation_steps = serialize($request->mitigation_steps);
+        }
+        if (!empty($request->deadline2)) {
+            $data6->deadline2 = serialize($request->deadline2);
+        }
+        if (!empty($request->responsible_person)) {
+            $data6->responsible_person = serialize($request->responsible_person);
+        }
+        if (!empty($request->status)) {
+            $data6->status = serialize($request->status);
+        }
+        if (!empty($request->remark)) {
+            $data6->remark = serialize($request->remark);
+        }
 
-             $data6->save();
+        $data6->save();
 
-            //  if ($lastDocument->due_date != $data->due_date || !empty($request->due_date_comment)) {
-            //     $lastDocumentAuditTrail = RiskAuditTrail::where('risk_id', $data->id)
-            //     ->where('activity_type', 'Due Date')
-            //     ->exists();
-            //     $history = new RiskAuditTrail();
-            //     $history->risk_id = $id;
-            //     $history->activity_type = 'Due Date';
-            //     $history->previous = $lastDocument->due_date;
-            //     $history->current = $data->due_date;
-            //     $history->comment = $request->due_date_comment;
-            //     $history->user_id = Auth::user()->id;
-            //     $history->user_name = Auth::user()->name;
-            //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            //     $history->origin_state = $lastDocument->status;
-            //     $history->change_to = 'Not Applicable';
-            //     $history->change_from = $lastDocument->status;
-            //     $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
-            //     $history->save();
-            // }
+        //  if ($lastDocument->due_date != $data->due_date || !empty($request->due_date_comment)) {
+        //     $lastDocumentAuditTrail = RiskAuditTrail::where('risk_id', $data->id)
+        //     ->where('activity_type', 'Due Date')
+        //     ->exists();
+        //     $history = new RiskAuditTrail();
+        //     $history->risk_id = $id;
+        //     $history->activity_type = 'Due Date';
+        //     $history->previous = $lastDocument->due_date;
+        //     $history->current = $data->due_date;
+        //     $history->comment = $request->due_date_comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to = 'Not Applicable';
+        //     $history->change_from = $lastDocument->status;
+        //     $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+        //     $history->save();
+        // }
 
         if ($lastDocument->assign_to != $data->assign_to || !empty($request->assign_id_comment)) {
-                $lastDocumentAuditTrail = RiskAuditTrail::where('risk_id', $data->id)
+            $lastDocumentAuditTrail = RiskAuditTrail::where('risk_id', $data->id)
                 ->where('activity_type', 'Assigned To')
                 ->exists();
-                $history = new RiskAuditTrail();
-                $history->risk_id = $id;
-                $history->activity_type = 'Assigned To';
-                $history->previous = Helpers::getInitiatorName($lastDocument->assign_to);;
-                $history->current = Helpers::getInitiatorName($data->assign_to);
-                $history->comment = $request->assign_id_comment;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state = $lastDocument->status;
-                $history->change_to = 'Not Applicable';
-                $history->change_from = $lastDocument->status;
-                $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
-                $history->save();
-            }
+            $history = new RiskAuditTrail();
+            $history->risk_id = $id;
+            $history->activity_type = 'Assigned To';
+            $history->previous = Helpers::getInitiatorName($lastDocument->assign_to);;
+            $history->current = Helpers::getInitiatorName($data->assign_to);
+            $history->comment = $request->assign_id_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to = 'Not Applicable';
+            $history->change_from = $lastDocument->status;
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+            $history->save();
+        }
 
         if ($lastDocument->Initiator_Group != $data->Initiator_Group || !empty($request->Initiator_Group_comment)) {
             $lastDocumentAuditTrail = RiskAuditTrail::where('risk_id', $data->id)
-            ->where('activity_type', 'Initiator Group')
-            ->exists();
+                ->where('activity_type', 'Initiator Group')
+                ->exists();
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
             $history->activity_type = 'Initiator Group';
@@ -2077,8 +2080,8 @@ class RiskManagementController extends Controller
 
         if ($lastDocument->initiator_group_code != $data->initiator_group_code || !empty($request->initiator_group_code_comment)) {
             $lastDocumentAuditTrail = RiskAuditTrail::where('risk_id', $data->id)
-            ->where('activity_type', 'Initiator Group Code')
-            ->exists();
+                ->where('activity_type', 'Initiator Group Code')
+                ->exists();
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
             $history->activity_type = 'Initiator Group Code';
@@ -2097,8 +2100,8 @@ class RiskManagementController extends Controller
 
         if ($lastDocument->short_description != $data->short_description || !empty($request->short_description_comment)) {
             $lastDocumentAuditTrail = RiskAuditTrail::where('risk_id', $data->id)
-            ->where('activity_type', 'Short Description')
-            ->exists();
+                ->where('activity_type', 'Short Description')
+                ->exists();
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
             $history->activity_type = 'Short Description';
@@ -2117,8 +2120,8 @@ class RiskManagementController extends Controller
 
         if ($lastDocument->severity2_level != $data->severity2_level || !empty($request->severity2_level_comment)) {
             $lastDocumentAuditTrail = RiskAuditTrail::where('risk_id', $data->id)
-            ->where('activity_type', 'Severity Level')
-            ->exists();
+                ->where('activity_type', 'Severity Level')
+                ->exists();
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
             $history->activity_type = 'Severity Level';
@@ -2138,8 +2141,8 @@ class RiskManagementController extends Controller
 
         if ($lastDocument->departments != $data->departments || !empty($request->departments_comment)) {
             $lastDocumentAuditTrail = RiskAuditTrail::where('risk_id', $data->id)
-            ->where('activity_type', 'Department(s)')
-            ->exists();
+                ->where('activity_type', 'Department(s)')
+                ->exists();
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
             $history->activity_type = 'Department(s)';
@@ -2176,8 +2179,8 @@ class RiskManagementController extends Controller
 
         if ($lastDocument->source_of_risk != $data->source_of_risk || !empty($request->source_of_risk_comment)) {
             $lastDocumentAuditTrail = RiskAuditTrail::where('risk_id', $data->id)
-            ->where('activity_type', 'Source of Risk/Opportunity')
-            ->exists();
+                ->where('activity_type', 'Source of Risk/Opportunity')
+                ->exists();
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
             $history->activity_type = 'Source of Risk/Opportunity';
@@ -2196,8 +2199,8 @@ class RiskManagementController extends Controller
 
         if ($lastDocument->type != $data->type || !empty($request->type_comment)) {
             $lastDocumentAuditTrail = RiskAuditTrail::where('risk_id', $data->id)
-            ->where('activity_type', 'Type')
-            ->exists();
+                ->where('activity_type', 'Type')
+                ->exists();
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
             $history->activity_type = 'Type';
@@ -2216,8 +2219,8 @@ class RiskManagementController extends Controller
 
         if ($lastDocument->priority_level != $data->priority_level || !empty($request->priority_level_comment)) {
             $lastDocumentAuditTrail = RiskAuditTrail::where('risk_id', $data->id)
-            ->where('activity_type', 'Priority Level')
-            ->exists();
+                ->where('activity_type', 'Priority Level')
+                ->exists();
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
             $history->activity_type = 'Priority Level';
@@ -2236,8 +2239,8 @@ class RiskManagementController extends Controller
 
         if ($lastDocument->description != $data->description || !empty($request->description_comment)) {
             $lastDocumentAuditTrail = RiskAuditTrail::where('risk_id', $data->id)
-            ->where('activity_type', 'Risk/Opportunity Description')
-            ->exists();
+                ->where('activity_type', 'Risk/Opportunity Description')
+                ->exists();
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
             $history->activity_type = 'Risk/Opportunity Description';
@@ -2310,8 +2313,8 @@ class RiskManagementController extends Controller
 
         if ($lastDocument->comments != $data->comments || !empty($request->comments_comment)) {
             $lastDocumentAuditTrail = RiskAuditTrail::where('risk_id', $data->id)
-            ->where('activity_type', 'Risk/Opportunity Comments')
-            ->exists();
+                ->where('activity_type', 'Risk/Opportunity Comments')
+                ->exists();
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
             $history->activity_type = 'Risk/Opportunity Comments';
@@ -2330,8 +2333,8 @@ class RiskManagementController extends Controller
 
         if ($lastDocument->departments2 != $data->departments2 || !empty($request->departments2_comment)) {
             $lastDocumentAuditTrail = RiskAuditTrail::where('risk_id', $data->id)
-            ->where('activity_type', 'Department(s.)')
-            ->exists();
+                ->where('activity_type', 'Department(s.)')
+                ->exists();
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
             $history->activity_type = 'Department(s.)';
@@ -2350,8 +2353,8 @@ class RiskManagementController extends Controller
 
         if ($lastDocument->source_of_risk2 != $data->source_of_risk2 || !empty($request->source_of_risk2_comment)) {
             $lastDocumentAuditTrail = RiskAuditTrail::where('risk_id', $data->id)
-            ->where('activity_type', 'Source of Risk')
-            ->exists();
+                ->where('activity_type', 'Source of Risk')
+                ->exists();
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
             $history->activity_type = 'Source of Risk';
@@ -2370,8 +2373,8 @@ class RiskManagementController extends Controller
 
         if ($lastDocument->site_name != $data->site_name || !empty($request->site_name_comment)) {
             $lastDocumentAuditTrail = RiskAuditTrail::where('risk_id', $data->id)
-            ->where('activity_type', 'Site Name')
-            ->exists();
+                ->where('activity_type', 'Site Name')
+                ->exists();
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
             $history->activity_type = 'Site Name';
@@ -2390,8 +2393,8 @@ class RiskManagementController extends Controller
 
         if ($lastDocument->building != $data->building || !empty($request->building_comment)) {
             $lastDocumentAuditTrail = RiskAuditTrail::where('risk_id', $data->id)
-            ->where('activity_type', 'Building')
-            ->exists();
+                ->where('activity_type', 'Building')
+                ->exists();
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
             $history->activity_type = 'Building';
@@ -2410,8 +2413,8 @@ class RiskManagementController extends Controller
 
         if ($lastDocument->floor != $data->floor || !empty($request->floor_comment)) {
             $lastDocumentAuditTrail = RiskAuditTrail::where('risk_id', $data->id)
-            ->where('activity_type', 'Floor')
-            ->exists();
+                ->where('activity_type', 'Floor')
+                ->exists();
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
             $history->activity_type = 'Floor';
@@ -2429,8 +2432,8 @@ class RiskManagementController extends Controller
         }
         if ($lastDocument->room != $data->room || !empty($request->room_comment)) {
             $lastDocumentAuditTrail = RiskAuditTrail::where('risk_id', $data->id)
-            ->where('activity_type', 'Room.')
-            ->exists();
+                ->where('activity_type', 'Room.')
+                ->exists();
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
             $history->activity_type = 'Room.';
@@ -2448,8 +2451,8 @@ class RiskManagementController extends Controller
         }
         if ($lastDocument->duration != $data->duration || !empty($request->duration_comment)) {
             $lastDocumentAuditTrail = RiskAuditTrail::where('risk_id', $data->id)
-            ->where('activity_type', 'Duration')
-            ->exists();
+                ->where('activity_type', 'Duration')
+                ->exists();
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
             $history->activity_type = 'Duration';
@@ -2467,8 +2470,8 @@ class RiskManagementController extends Controller
         }
         if ($lastDocument->hazard != $data->hazard || !empty($request->hazard_comment)) {
             $lastDocumentAuditTrail = RiskAuditTrail::where('risk_id', $data->id)
-            ->where('activity_type', 'Hazard')
-            ->exists();
+                ->where('activity_type', 'Hazard')
+                ->exists();
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
             $history->activity_type = 'Hazard';
@@ -2486,8 +2489,8 @@ class RiskManagementController extends Controller
         }
         if ($lastDocument->room2 != $data->room2 || !empty($request->room2_comment)) {
             $lastDocumentAuditTrail = RiskAuditTrail::where('risk_id', $data->id)
-            ->where('activity_type', 'Room')
-            ->exists();
+                ->where('activity_type', 'Room')
+                ->exists();
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
             $history->activity_type = 'Room';
@@ -2505,8 +2508,8 @@ class RiskManagementController extends Controller
         }
         if ($lastDocument->regulatory_climate != $data->regulatory_climate || !empty($request->regulatory_climate_comment)) {
             $lastDocumentAuditTrail = RiskAuditTrail::where('risk_id', $data->id)
-            ->where('activity_type', 'Regulatory Climate')
-            ->exists();
+                ->where('activity_type', 'Regulatory Climate')
+                ->exists();
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
             $history->activity_type = 'Regulatory Climate';
@@ -2524,8 +2527,8 @@ class RiskManagementController extends Controller
         }
         if ($lastDocument->Number_of_employees != $data->Number_of_employees || !empty($request->Number_of_employees_comment)) {
             $lastDocumentAuditTrail = RiskAuditTrail::where('risk_id', $data->id)
-            ->where('activity_type', 'Number Of Employees')
-            ->exists();
+                ->where('activity_type', 'Number Of Employees')
+                ->exists();
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
             $history->activity_type = 'Number Of Employees';
@@ -2558,8 +2561,8 @@ class RiskManagementController extends Controller
 
         if ($lastDocument->risk_management_strategy != $data->risk_management_strategy || !empty($request->risk_management_strategy_comment)) {
             $lastDocumentAuditTrail = RiskAuditTrail::where('risk_id', $data->id)
-            ->where('activity_type', 'Risk Management Strategy')
-            ->exists();
+                ->where('activity_type', 'Risk Management Strategy')
+                ->exists();
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
             $history->activity_type = 'Risk Management Strategy';
@@ -2578,8 +2581,8 @@ class RiskManagementController extends Controller
 
         if ($lastDocument->schedule_start_date1 != $data->schedule_start_date1 || !empty($request->schedule_start_date1_comment)) {
             $lastDocumentAuditTrail = RiskAuditTrail::where('risk_id', $data->id)
-            ->where('activity_type', 'Scheduled Start Date')
-            ->exists();
+                ->where('activity_type', 'Scheduled Start Date')
+                ->exists();
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
             $history->activity_type = 'Scheduled Start Date';
@@ -2598,8 +2601,8 @@ class RiskManagementController extends Controller
 
         if ($lastDocument->schedule_end_date1 != $data->schedule_end_date1 || !empty($request->schedule_end_date1_comment)) {
             $lastDocumentAuditTrail = RiskAuditTrail::where('risk_id', $data->id)
-            ->where('activity_type', 'Scheduled End Date')
-            ->exists();
+                ->where('activity_type', 'Scheduled End Date')
+                ->exists();
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
             $history->activity_type = 'Scheduled End Date';
@@ -2618,8 +2621,8 @@ class RiskManagementController extends Controller
 
         if ($lastDocument->estimated_man_hours != $data->estimated_man_hours || !empty($request->estimated_man_hours_comment)) {
             $lastDocumentAuditTrail = RiskAuditTrail::where('risk_id', $data->id)
-            ->where('activity_type', 'Estimated Man Hours')
-            ->exists();
+                ->where('activity_type', 'Estimated Man Hours')
+                ->exists();
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
             $history->activity_type = 'Estimated Man Hours';
@@ -2637,8 +2640,8 @@ class RiskManagementController extends Controller
         }
         if ($lastDocument->estimated_cost != $data->estimated_cost || !empty($request->estimated_cost_comment)) {
             $lastDocumentAuditTrail = RiskAuditTrail::where('risk_id', $data->id)
-            ->where('activity_type', 'Estimated Cost')
-            ->exists();
+                ->where('activity_type', 'Estimated Cost')
+                ->exists();
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
             $history->activity_type = 'Estimated Cost';
@@ -2656,8 +2659,8 @@ class RiskManagementController extends Controller
         }
         if ($lastDocument->currency != $data->currency || !empty($request->currency_comment)) {
             $lastDocumentAuditTrail = RiskAuditTrail::where('risk_id', $data->id)
-            ->where('activity_type', 'Currency')
-            ->exists();
+                ->where('activity_type', 'Currency')
+                ->exists();
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
             $history->activity_type = 'Currency';
@@ -2692,8 +2695,8 @@ class RiskManagementController extends Controller
         // }
         if ($lastDocument->justification != $data->justification || !empty($request->justification_comment)) {
             $lastDocumentAuditTrail = RiskAuditTrail::where('risk_id', $data->id)
-            ->where('activity_type', 'Justification')
-            ->exists();
+                ->where('activity_type', 'Justification')
+                ->exists();
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
             $history->activity_type = 'Justification';
@@ -2712,8 +2715,8 @@ class RiskManagementController extends Controller
 
         if ($lastDocument->reference != $data->reference || !empty($request->reference_comment)) {
             $lastDocumentAuditTrail = RiskAuditTrail::where('risk_id', $data->id)
-            ->where('activity_type', 'Work Group Attachments')
-            ->exists();
+                ->where('activity_type', 'Work Group Attachments')
+                ->exists();
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
             $history->activity_type = 'Work Group Attachments';
@@ -2787,8 +2790,8 @@ class RiskManagementController extends Controller
 
         if ($lastDocument->root_cause_methodology != $data->root_cause_methodology || !empty($request->root_cause_methodology_comment)) {
             $lastDocumentAuditTrail = RiskAuditTrail::where('risk_id', $data->id)
-            ->where('activity_type', 'Root Cause Methodology')
-            ->exists();
+                ->where('activity_type', 'Root Cause Methodology')
+                ->exists();
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
             $history->activity_type = 'Root Cause Methodology';
@@ -2807,8 +2810,8 @@ class RiskManagementController extends Controller
 
         if ($lastDocument->root_cause_description != $data->root_cause_description || !empty($request->root_cause_description_comment)) {
             $lastDocumentAuditTrail = RiskAuditTrail::where('risk_id', $data->id)
-            ->where('activity_type', 'Root Cause Description')
-            ->exists();
+                ->where('activity_type', 'Root Cause Description')
+                ->exists();
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
             $history->activity_type = 'Root Cause Description';
@@ -2827,8 +2830,8 @@ class RiskManagementController extends Controller
 
         if ($lastDocument->investigation_summary != $data->investigation_summary || !empty($request->investigation_summary_comment)) {
             $lastDocumentAuditTrail = RiskAuditTrail::where('risk_id', $data->id)
-            ->where('activity_type', 'Investigation Summary')
-            ->exists();
+                ->where('activity_type', 'Investigation Summary')
+                ->exists();
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
             $history->activity_type = 'Investigation Summary';
@@ -2883,31 +2886,31 @@ class RiskManagementController extends Controller
         // }
         if ($lastDocument->severity_rate != $data->severity_rate || !empty($request->severity_rate_comment)) {
             $lastDocumentAuditTrail = RiskAuditTrail::where('risk_id', $data->id)
-            ->where('activity_type', 'Severity Rate')
-            ->exists();
+                ->where('activity_type', 'Severity Rate')
+                ->exists();
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
             $history->activity_type = 'Severity Rate';
             // $history->previous = $lastDocument->severity_rate;
-            if($lastDocument->severity_rate == 1){
+            if ($lastDocument->severity_rate == 1) {
                 $history->previous = "Negligible";
-            } elseif($lastDocument->severity_rate == 2){
+            } elseif ($lastDocument->severity_rate == 2) {
                 $history->previous = "Moderate";
-            } elseif($lastDocument->severity_rate == 3){
+            } elseif ($lastDocument->severity_rate == 3) {
                 $history->previous = "Major";
-            } elseif($lastDocument->severity_rate == 4){
+            } elseif ($lastDocument->severity_rate == 4) {
                 $history->previous = "Fatal";
-            } else{
+            } else {
                 $history->previous = "Null";
             }
             // $history->current = $data->severity_rate;
-            if($request->severity_rate == 1){
+            if ($request->severity_rate == 1) {
                 $history->current = "Negligible";
-            } elseif($request->severity_rate == 2){
+            } elseif ($request->severity_rate == 2) {
                 $history->current = "Moderate";
-            } elseif($request->severity_rate == 3){
+            } elseif ($request->severity_rate == 3) {
                 $history->current = "Major";
-            }else{
+            } else {
                 $history->current = "Fatal";
             }
             $history->comment = $request->severity_rate_comment;
@@ -2922,35 +2925,35 @@ class RiskManagementController extends Controller
         }
         if ($lastDocument->occurrence != $data->occurrence || !empty($request->occurrence_comment)) {
             $lastDocumentAuditTrail = RiskAuditTrail::where('risk_id', $data->id)
-            ->where('activity_type', 'Occurrence')
-            ->exists();
+                ->where('activity_type', 'Occurrence')
+                ->exists();
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
             $history->activity_type = 'Occurrence';
             // $history->previous = $lastDocument->occurrence;
-            if($lastDocument->occurrence == 1){
+            if ($lastDocument->occurrence == 1) {
                 $history->previous = "Very Likely";
-            } elseif($lastDocument->occurrence == 2){
+            } elseif ($lastDocument->occurrence == 2) {
                 $history->previous = "Likely";
-            } elseif($lastDocument->occurrence == 3){
+            } elseif ($lastDocument->occurrence == 3) {
                 $history->previous = "Unlikely";
-            } elseif($lastDocument->occurrence == 4){
+            } elseif ($lastDocument->occurrence == 4) {
                 $history->previous = "Rare";
-            } elseif($lastDocument->occurrence == 5){
+            } elseif ($lastDocument->occurrence == 5) {
                 $history->previous = "Extremely Unlikely";
-            } else{
+            } else {
                 $history->previous = "Null";
             }
             // $history->current = $data->occurrence;
-            if($request->occurrence == 1){
+            if ($request->occurrence == 1) {
                 $history->current = "Very Likely";
-            } elseif($request->occurrence == 2){
+            } elseif ($request->occurrence == 2) {
                 $history->current = "Likely";
-            } elseif($request->occurrence == 3){
+            } elseif ($request->occurrence == 3) {
                 $history->current = "Unlikely";
-            }elseif($request->occurrence == 4){
+            } elseif ($request->occurrence == 4) {
                 $history->current = "Rare";
-            }else{
+            } else {
                 $history->current = "Extremely Unlikely";
             }
             $history->comment = $request->occurrence_comment;
@@ -2965,35 +2968,35 @@ class RiskManagementController extends Controller
         }
         if ($lastDocument->detection != $data->detection || !empty($request->detection_comment)) {
             $lastDocumentAuditTrail = RiskAuditTrail::where('risk_id', $data->id)
-            ->where('activity_type', 'Detection')
-            ->exists();
+                ->where('activity_type', 'Detection')
+                ->exists();
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
             $history->activity_type = 'Detection';
             // $history->previous = $lastDocument->detection;
-            if($lastDocument->detection == 1){
+            if ($lastDocument->detection == 1) {
                 $history->previous = "Very Likely";
-            } elseif($lastDocument->detection == 2){
+            } elseif ($lastDocument->detection == 2) {
                 $history->previous = "Likely";
-            } elseif($lastDocument->detection == 3){
+            } elseif ($lastDocument->detection == 3) {
                 $history->previous = "Unlikely";
-            } elseif($lastDocument->detection == 4){
+            } elseif ($lastDocument->detection == 4) {
                 $history->previous = "Rare";
-            } elseif($lastDocument->detection == 5){
+            } elseif ($lastDocument->detection == 5) {
                 $history->previous = "Impossible";
-            } else{
+            } else {
                 $history->previous = "Null";
             }
             // $history->current = $data->detection;
-            if($request->detection == 1){
+            if ($request->detection == 1) {
                 $history->current = "Very Likely";
-            } elseif($request->detection == 2){
+            } elseif ($request->detection == 2) {
                 $history->current = "Likely";
-            } elseif($request->detection == 3){
+            } elseif ($request->detection == 3) {
                 $history->current = "Unlikely";
-            }elseif($request->detection == 4){
+            } elseif ($request->detection == 4) {
                 $history->current = "Rare";
-            }else{
+            } else {
                 $history->current = "Impossible";
             }
             $history->comment = $request->detection_comment;
@@ -3008,8 +3011,8 @@ class RiskManagementController extends Controller
         }
         if ($lastDocument->rpn != $data->rpn || !empty($request->rpn_comment)) {
             $lastDocumentAuditTrail = RiskAuditTrail::where('risk_id', $data->id)
-            ->where('activity_type', 'Rpn')
-            ->exists();
+                ->where('activity_type', 'Rpn')
+                ->exists();
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
             $history->activity_type = 'Rpn';
@@ -3028,8 +3031,8 @@ class RiskManagementController extends Controller
 
         if ($lastDocument->residual_risk != $data->residual_risk || !empty($request->residual_risk_comment)) {
             $lastDocumentAuditTrail = RiskAuditTrail::where('risk_id', $data->id)
-            ->where('activity_type', 'Residual Risk')
-            ->exists();
+                ->where('activity_type', 'Residual Risk')
+                ->exists();
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
             $history->activity_type = 'Residual Risk';
@@ -3048,31 +3051,31 @@ class RiskManagementController extends Controller
 
         if ($lastDocument->residual_risk_impact != $data->residual_risk_impact || !empty($request->residual_risk_impact_comment)) {
             $lastDocumentAuditTrail = RiskAuditTrail::where('risk_id', $data->id)
-            ->where('activity_type', 'Residual Risk Impact')
-            ->exists();
+                ->where('activity_type', 'Residual Risk Impact')
+                ->exists();
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
             $history->activity_type = 'Residual Risk Impact';
             // $history->previous = $lastDocument->residual_risk_impact;
-            if($lastDocument->residual_risk_impact == 1){
+            if ($lastDocument->residual_risk_impact == 1) {
                 $history->previous = "High";
-            } elseif($lastDocument->residual_risk_impact == 2){
+            } elseif ($lastDocument->residual_risk_impact == 2) {
                 $history->previous = "Low";
-            } elseif($lastDocument->residual_risk_impact == 3){
+            } elseif ($lastDocument->residual_risk_impact == 3) {
                 $history->previous = "Medium";
-            } elseif($lastDocument->residual_risk_impact == 4){
+            } elseif ($lastDocument->residual_risk_impact == 4) {
                 $history->previous = "None";
-            } else{
+            } else {
                 $history->previous = "Null";
             }
             // $history->current = $data->residual_risk_impact;
-            if($request->residual_risk_impact == 1){
+            if ($request->residual_risk_impact == 1) {
                 $history->current = "High";
-            } elseif($request->residual_risk_impact == 2){
+            } elseif ($request->residual_risk_impact == 2) {
                 $history->current = "Low";
-            } elseif($request->residual_risk_impact == 3){
+            } elseif ($request->residual_risk_impact == 3) {
                 $history->current = "Medium";
-            }else{
+            } else {
                 $history->current = "None";
             }
             $history->comment = $request->residual_risk_impact_comment;
@@ -3088,28 +3091,28 @@ class RiskManagementController extends Controller
 
         if ($lastDocument->residual_risk_probability != $data->residual_risk_probability || !empty($request->residual_risk_probability_comment)) {
             $lastDocumentAuditTrail = RiskAuditTrail::where('risk_id', $data->id)
-            ->where('activity_type', 'Residual Risk Probability')
-            ->exists();
+                ->where('activity_type', 'Residual Risk Probability')
+                ->exists();
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
             $history->activity_type = 'Residual Risk Probability';
             // $history->previous = $lastDocument->residual_risk_probability;
-            if($lastDocument->residual_risk_probability == 1){
+            if ($lastDocument->residual_risk_probability == 1) {
                 $history->previous = "High";
-            } elseif($lastDocument->residual_risk_probability == 2){
+            } elseif ($lastDocument->residual_risk_probability == 2) {
                 $history->previous = "Medium";
-            } elseif($lastDocument->residual_risk_probability == 3){
+            } elseif ($lastDocument->residual_risk_probability == 3) {
                 $history->previous = "Low";
-            } else{
+            } else {
                 $history->previous = "Null";
             }
 
             // $history->current = $data->residual_risk_probability;
-            if($request->residual_risk_probability == 1){
+            if ($request->residual_risk_probability == 1) {
                 $history->current = "High";
-            } elseif($request->residual_risk_probability == 2){
+            } elseif ($request->residual_risk_probability == 2) {
                 $history->current = "Medium";
-            }else{
+            } else {
                 $history->current = "Low";
             }
             $history->comment = $request->residual_risk_probability_comment;
@@ -3125,35 +3128,35 @@ class RiskManagementController extends Controller
 
         if ($lastDocument->detection2 != $data->detection2 || !empty($request->detection2_comment)) {
             $lastDocumentAuditTrail = RiskAuditTrail::where('risk_id', $data->id)
-            ->where('activity_type', 'Residual Detection')
-            ->exists();
+                ->where('activity_type', 'Residual Detection')
+                ->exists();
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
             $history->activity_type = 'Residual Detection';
             // $history->previous = $lastDocument->detection2;
-            if($lastDocument->detection2 == 1){
+            if ($lastDocument->detection2 == 1) {
                 $history->previous = "Very Likely";
-            } elseif($lastDocument->detection2 == 2){
+            } elseif ($lastDocument->detection2 == 2) {
                 $history->previous = "Likely";
-            } elseif($lastDocument->detection2 == 3){
+            } elseif ($lastDocument->detection2 == 3) {
                 $history->previous = "Unlikely";
-            } elseif($lastDocument->detection2 == 4){
+            } elseif ($lastDocument->detection2 == 4) {
                 $history->previous = "Rare";
-            } elseif($lastDocument->detection2 == 5){
+            } elseif ($lastDocument->detection2 == 5) {
                 $history->previous = "Impossible";
-            } else{
+            } else {
                 $history->previous = "Null";
             }
             // $history->current = $data->detection2;
-            if($request->detection2 == 1){
+            if ($request->detection2 == 1) {
                 $history->current = "Very Likely";
-            } elseif($request->detection2 == 2){
+            } elseif ($request->detection2 == 2) {
                 $history->current = "Likely";
-            } elseif($request->detection2 == 3){
+            } elseif ($request->detection2 == 3) {
                 $history->current = "Unlikely";
-            } elseif($request->detection2 == 4){
+            } elseif ($request->detection2 == 4) {
                 $history->current = "Rare";
-            } else{
+            } else {
                 $history->current = "Impossible";
             }
             $history->comment = $request->detection2_comment;
@@ -3169,8 +3172,8 @@ class RiskManagementController extends Controller
 
         if ($lastDocument->rpn2 != $data->rpn2 || !empty($request->rpn2_comment)) {
             $lastDocumentAuditTrail = RiskAuditTrail::where('risk_id', $data->id)
-            ->where('activity_type', 'Residual RPN')
-            ->exists();
+                ->where('activity_type', 'Residual RPN')
+                ->exists();
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
             $history->activity_type = 'Residual RPN';
@@ -3189,8 +3192,8 @@ class RiskManagementController extends Controller
 
         if ($lastDocument->comments2 != $data->comments2 || !empty($request->comments2_comment)) {
             $lastDocumentAuditTrail = RiskAuditTrail::where('risk_id', $data->id)
-            ->where('activity_type', 'Comments')
-            ->exists();
+                ->where('activity_type', 'Comments')
+                ->exists();
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
             $history->activity_type = 'Comments';
@@ -3209,8 +3212,8 @@ class RiskManagementController extends Controller
 
         if ($lastDocument->mitigation_required != $data->mitigation_required || !empty($request->mitigation_required_comment)) {
             $lastDocumentAuditTrail = RiskAuditTrail::where('risk_id', $data->id)
-            ->where('activity_type', 'Mitigation Required')
-            ->exists();
+                ->where('activity_type', 'Mitigation Required')
+                ->exists();
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
             $history->activity_type = 'Mitigation Required';
@@ -3229,8 +3232,8 @@ class RiskManagementController extends Controller
 
         if ($lastDocument->mitigation_plan != $data->mitigation_plan || !empty($request->mitigation_plan_comment)) {
             $lastDocumentAuditTrail = RiskAuditTrail::where('risk_id', $data->id)
-            ->where('activity_type', 'Mitigation Plan')
-            ->exists();
+                ->where('activity_type', 'Mitigation Plan')
+                ->exists();
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
             $history->activity_type = 'Mitigation Plan';
@@ -3249,8 +3252,8 @@ class RiskManagementController extends Controller
 
         if ($lastDocument->mitigation_due_date != $data->mitigation_due_date || !empty($request->mitigation_due_date_comment)) {
             $lastDocumentAuditTrail = RiskAuditTrail::where('risk_id', $data->id)
-            ->where('activity_type', 'Scheduled End-Date')
-            ->exists();
+                ->where('activity_type', 'Scheduled End-Date')
+                ->exists();
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
             $history->activity_type = 'Scheduled End-Date';
@@ -3269,8 +3272,8 @@ class RiskManagementController extends Controller
 
         if ($lastDocument->mitigation_status != $data->mitigation_status || !empty($request->mitigation_status_comment)) {
             $lastDocumentAuditTrail = RiskAuditTrail::where('risk_id', $data->id)
-            ->where('activity_type', 'Status of Mitigation')
-            ->exists();
+                ->where('activity_type', 'Status of Mitigation')
+                ->exists();
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
             $history->activity_type = 'Status of Mitigation';
@@ -3289,8 +3292,8 @@ class RiskManagementController extends Controller
 
         if ($lastDocument->mitigation_status_comments != $data->mitigation_status_comments || !empty($request->mitigation_status_comments_comment)) {
             $lastDocumentAuditTrail = RiskAuditTrail::where('risk_id', $data->id)
-            ->where('activity_type', 'Mitigation Status Comments')
-            ->exists();
+                ->where('activity_type', 'Mitigation Status Comments')
+                ->exists();
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
             $history->activity_type = 'Mitigation Status Comments';
@@ -3308,8 +3311,8 @@ class RiskManagementController extends Controller
         }
         if ($lastDocument->impact != $data->impact || !empty($request->impact_comment)) {
             $lastDocumentAuditTrail = RiskAuditTrail::where('risk_id', $data->id)
-            ->where('activity_type', 'Impact')
-            ->exists();
+                ->where('activity_type', 'Impact')
+                ->exists();
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
             $history->activity_type = 'Impact';
@@ -3327,8 +3330,8 @@ class RiskManagementController extends Controller
         }
         if ($lastDocument->criticality != $data->criticality || !empty($request->criticality_comment)) {
             $lastDocumentAuditTrail = RiskAuditTrail::where('risk_id', $data->id)
-            ->where('activity_type', 'Criticality')
-            ->exists();
+                ->where('activity_type', 'Criticality')
+                ->exists();
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
             $history->activity_type = 'Criticality';
@@ -3347,8 +3350,8 @@ class RiskManagementController extends Controller
 
         if ($lastDocument->impact_analysis != $data->impact_analysis || !empty($request->impact_analysis_comment)) {
             $lastDocumentAuditTrail = RiskAuditTrail::where('risk_id', $data->id)
-            ->where('activity_type', 'Impact Analysis')
-            ->exists();
+                ->where('activity_type', 'Impact Analysis')
+                ->exists();
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
             $history->activity_type = 'Impact Analysis';
@@ -3367,8 +3370,8 @@ class RiskManagementController extends Controller
 
         if ($lastDocument->risk_analysis != $data->risk_analysis || !empty($request->risk_analysis_comment)) {
             $lastDocumentAuditTrail = RiskAuditTrail::where('risk_id', $data->id)
-            ->where('activity_type', 'Risk Analysis')
-            ->exists();
+                ->where('activity_type', 'Risk Analysis')
+                ->exists();
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
             $history->activity_type = 'Risk Analysis';
@@ -3387,8 +3390,8 @@ class RiskManagementController extends Controller
 
         if ($lastDocument->refrence_record != $data->refrence_record || !empty($request->refrence_record_comment)) {
             $lastDocumentAuditTrail = RiskAuditTrail::where('risk_id', $data->id)
-            ->where('activity_type', 'Reference Record')
-            ->exists();
+                ->where('activity_type', 'Reference Record')
+                ->exists();
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
             $history->activity_type = 'Reference Record';
@@ -3407,8 +3410,8 @@ class RiskManagementController extends Controller
 
         if ($lastDocument->due_date_extension != $data->due_date_extension || !empty($request->due_date_extension_comment)) {
             $lastDocumentAuditTrail = RiskAuditTrail::where('risk_id', $data->id)
-            ->where('activity_type', 'Due Date Extension Justification')
-            ->exists();
+                ->where('activity_type', 'Due Date Extension Justification')
+                ->exists();
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
             $history->activity_type = 'Due Date Extension Justification';
@@ -3436,14 +3439,14 @@ class RiskManagementController extends Controller
         $data->record = str_pad($data->record, 4, '0', STR_PAD_LEFT);
         $data->assign_to_name = User::where('id', $data->assign_to)->value('name');
         $data->initiator_name = User::where('id', $data->initiator_id)->value('name');
-        $riskEffectAnalysis = RiskAssesmentGrid::where('risk_id',$id)->where('type',"effect_analysis")->first();
-        $fishbone = RiskAssesmentGrid::where('risk_id',$id)->where('type',"fishbone")->first();
-        $whyChart = RiskAssesmentGrid::where('risk_id',$id)->where('type',"why_chart")->first();
-        $what_who_where = RiskAssesmentGrid::where('risk_id',$id)->where('type',"what_who_where")->first();
-        $action_plan = RiskAssesmentGrid::where('risk_id',$id)->where('type',"Action_Plan")->first();
-        $mitigation_plan_details = RiskAssesmentGrid::where('risk_id',$id)->where('type',"Mitigation_Plan_Details")->first();
+        $riskEffectAnalysis = RiskAssesmentGrid::where('risk_id', $id)->where('type', "effect_analysis")->first();
+        $fishbone = RiskAssesmentGrid::where('risk_id', $id)->where('type', "fishbone")->first();
+        $whyChart = RiskAssesmentGrid::where('risk_id', $id)->where('type', "why_chart")->first();
+        $what_who_where = RiskAssesmentGrid::where('risk_id', $id)->where('type', "what_who_where")->first();
+        $action_plan = RiskAssesmentGrid::where('risk_id', $id)->where('type', "Action_Plan")->first();
+        $mitigation_plan_details = RiskAssesmentGrid::where('risk_id', $id)->where('type', "Mitigation_Plan_Details")->first();
 
-        return view('frontend.riskAssesment.view', compact('data','riskEffectAnalysis','fishbone','whyChart','what_who_where', 'old_record', 'action_plan', 'mitigation_plan_details'));
+        return view('frontend.riskAssesment.view', compact('data', 'riskEffectAnalysis', 'fishbone', 'whyChart', 'what_who_where', 'old_record', 'action_plan', 'mitigation_plan_details'));
     }
 
 
@@ -3487,32 +3490,36 @@ class RiskManagementController extends Controller
 
                 $history->save();
 
-                 $list = Helpers::getHodUserList($riskAssessment->division_id);
+                $list = Helpers::getHodUserList($riskAssessment->division_id);
                 //  return $list;
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $riskAssessment->division_id){
-                        $email = Helpers::getInitiatorEmail($u->user_id);
-                        if (!empty($email)) {
-                            try {
-                                Mail::send(
-                                    'mail.view-mail',
-                                     ['data' => $riskAssessment],
-                                  function ($message) use ($email) {
-                                      $message->to($email)
-                                          ->subject("Document is Sent By".Auth::user()->name);
-                                  }
-                                );
-                            } catch (\Exception $e) {
-                                \log::error('Mail failed to send: ' . $e->getMessage());
-                            }
+                    $email = Helpers::getInitiatorEmail($u->user_id);
+                    if (!empty($email)) {
+                        try {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $riskAssessment, 'history' => 'Submit Performed', 'process' => 'Risk Assessment', 'comment' => $riskAssessment->submitted_comment, 'user' => Auth::user()->name],
+                                //   function ($message) use ($email) {
+                                //       $message->to($email)
+                                //         //   ->subject("Document is Sent By".Auth::user()->name);
+                                //   }
+                                function ($message) use ($email, $riskAssessment, $history) {
+                                    $message->to($email)
+                                        ->subject("QMS Notification: Risk Assessment, Record #" . $riskAssessment->record . " - Activity: Submit Performed");
+                                }
+                            );
+                        } catch (\Exception $e) {
+                            \Log::error('Mail failed to send: ' . $e->getMessage());
+                        }
                         // }
-                 }
-              }
+                    }
+                }
                 $riskAssessment->update();
 
                 toastr()->success('Document Sent');
                 return back();
-        }
+            }
             if ($riskAssessment->stage == 2) {
                 $riskAssessment->stage = "3";
                 $riskAssessment->status = 'Risk Processing & Action Plan';
@@ -3536,7 +3543,7 @@ class RiskManagementController extends Controller
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->stage='Evaluation Complete';
+                $history->stage = 'Evaluation Complete';
                 $history->change_to = 'Risk Processing & Action Plan';
                 $history->change_from = $lastDocument->status;
                 if (is_null($lastDocument->evaluated_by) || $lastDocument->evaluated_by === '') {
@@ -3549,23 +3556,23 @@ class RiskManagementController extends Controller
                 $list = Helpers::getWorkGroupUserList($riskAssessment->division_id);
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $riskAssessment->division_id){
-                        $email = Helpers::getInitiatorEmail($u->user_id);
-                         if (!empty($email)) {
-                            try {
-                                Mail::send(
-                                    'mail.view-mail',
-                                     ['data' => $riskAssessment],
-                                  function ($message) use ($email) {
-                                      $message->to($email)
-                                          ->subject("Document is Sent By".Auth::user()->name);
-                                  }
-                                );
-                            } catch (\Exception $e) {
-                                \log::error('Mail failed to send: ' . $e->getMessage());
-                            }
+                    $email = Helpers::getInitiatorEmail($u->user_id);
+                    if (!empty($email)) {
+                        try {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $riskAssessment, 'history' => 'Evaluation Complete Performed', 'process' => 'Risk Assessment', 'comment' => $riskAssessment->evaluated_comment, 'user' => Auth::user()->name],
+                                function ($message) use ($email, $riskAssessment) {
+                                    $message->to($email)
+                                        ->subject("QMS Notification: Risk Assessment, Record #" . $riskAssessment->record . " - Activity: Evaluation Complete Performed");
+                                }
+                            );
+                        } catch (\Exception $e) {
+                            \Log::error('Mail failed to send: ' . $e->getMessage());
                         }
-                //  }
-              }
+                    }
+                    //  }
+                }
                 $riskAssessment->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -3602,32 +3609,32 @@ class RiskManagementController extends Controller
                 }
                 $history->save();
 
-                 $list = Helpers::getHodUserList($riskAssessment->division_id);
-                    foreach ($list as $u) {
-                        // if($u->q_m_s_divisions_id == $riskAssessment->division_id){
-                            $email = Helpers::getInitiatorEmail($u->user_id);
-                            if (!empty($email)) {
-                                try{
-                              Mail::send(
-                                  'mail.view-mail',
-                                   ['data' => $riskAssessment],
-                                function ($message) use ($email) {
+                $list = Helpers::getHodUserList($riskAssessment->division_id);
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $riskAssessment->division_id){
+                    $email = Helpers::getInitiatorEmail($u->user_id);
+                    if (!empty($email)) {
+                        try {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $riskAssessment, 'history' => 'Action Plan Complete Performed', 'process' => 'Risk Assessment', 'comment' => $riskAssessment->plan_approved_comment, 'user' => Auth::user()->name],
+                                function ($message) use ($email, $riskAssessment) {
                                     $message->to($email)
-                                        ->subject("Document is Sent By".Auth::user()->name);
+                                        ->subject("QMS Notification: Risk Assessment, Record #" . $riskAssessment->record . " - Activity: Action Plan Complete Performed");
                                 }
-                              );
-                            } catch (\Exception $e) {
-                                \log::error('Mail failed to send: ' . $e->getMessage());
-                            }
-                    //  }
-                  }
+                            );
+                        } catch (\Exception $e) {
+                            \Log::error('Mail failed to send: ' . $e->getMessage());
+                        }
+                        //  }
+                    }
                 }
 
                 $riskAssessment->update();
 
                 toastr()->success('Document Sent');
                 return back();
-        }
+            }
 
             if ($riskAssessment->stage == 4) {
                 $riskAssessment->stage = "5";
@@ -3665,23 +3672,23 @@ class RiskManagementController extends Controller
                 $list = Helpers::getQAUserList($riskAssessment->division_id);
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $riskAssessment->division_id){
-                        $email = Helpers::getInitiatorEmail($u->user_id);
-                        if (!empty($email)) {
-                            try {
-                                Mail::send(
-                                    'mail.view-mail',
-                                     ['data' => $riskAssessment],
-                                  function ($message) use ($email) {
-                                      $message->to($email)
-                                          ->subject("Document is Sent By".Auth::user()->name);
-                                  }
-                                );
-                            } catch (\Exception $e) {
-                                \log::error('Mail failed to send: ' . $e->getMessage());
-                            }
+                    $email = Helpers::getInitiatorEmail($u->user_id);
+                    if (!empty($email)) {
+                        try {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $riskAssessment, 'history' => 'Action Plan Approved Performed', 'process' => 'Risk Assessment', 'comment' => $riskAssessment->action_plan_approved_comment, 'user' => Auth::user()->name],
+                                function ($message) use ($email, $riskAssessment) {
+                                    $message->to($email)
+                                        ->subject("QMS Notification: Risk Assessment, Record #" . $riskAssessment->record . " - Activity: Action Plan Approved Performed");
+                                }
+                            );
+                        } catch (\Exception $e) {
+                            \Log::error('Mail failed to send: ' . $e->getMessage());
                         }
-                //  }
-              }
+                    }
+                    //  }
+                }
 
                 $riskAssessment->update();
 
@@ -3748,7 +3755,7 @@ class RiskManagementController extends Controller
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->stage='Residual Risk Evaluation Completed';
+                $history->stage = 'Residual Risk Evaluation Completed';
                 $history->change_to = "Closed - Done";
                 $history->change_from = $lastDocument->status;
                 if (is_null($lastDocument->residual_risk_completed_by) || $lastDocument->residual_risk_completed_by === '') {
@@ -3761,67 +3768,67 @@ class RiskManagementController extends Controller
                 $list = Helpers::getInitiatorUserList($riskAssessment->division_id);
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $riskAssessment->division_id){
-                        $email = Helpers::getInitiatorEmail($u->user_id);
-                        if (!empty($email)) {
+                    $email = Helpers::getInitiatorEmail($u->user_id);
+                    if (!empty($email)) {
 
-                            try {
-                                Mail::send(
-                                    'mail.view-mail',
-                                     ['data' => $riskAssessment],
-                                  function ($message) use ($email) {
-                                      $message->to($email)
-                                          ->subject("Document is Sent By".Auth::user()->name);
-                                  }
-                                );
-                            } catch (\Exception $e) {
-                                \log::error('Mail failed to send: ' . $e->getMessage());
-                            }
+                        try {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $riskAssessment, 'history' => 'Residual Risk Evaluation Completed Performed', 'process' => 'Risk Assessment', 'comment' => $riskAssessment->residual_risk_completed_comment, 'user' => Auth::user()->name],
+                                function ($message) use ($email, $riskAssessment) {
+                                    $message->to($email)
+                                        ->subject("QMS Notification: Risk Assessment, Record #" . $riskAssessment->record . " - Activity: Residual Risk Evaluation Completed Performed");
+                                }
+                            );
+                        } catch (\Exception $e) {
+                            \Log::error('Mail failed to send: ' . $e->getMessage());
                         }
-                //  }
-              }
+                    }
+                    //  }
+                }
 
                 $list = Helpers::getHodUserList($riskAssessment->division_id);
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $riskAssessment->division_id){
-                        $email = Helpers::getInitiatorEmail($u->user_id);
-                        if (!empty($email)) {
+                    $email = Helpers::getInitiatorEmail($u->user_id);
+                    if (!empty($email)) {
 
-                            try {
-                                Mail::send(
-                                    'mail.view-mail',
-                                     ['data' => $riskAssessment],
-                                  function ($message) use ($email) {
-                                      $message->to($email)
-                                          ->subject("Document is Sent By".Auth::user()->name);
-                                  }
-                                );
-                            } catch (\Exception $e) {
-                                \log::error('Mail failed to send: ' . $e->getMessage());
-                            }
+                        try {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $riskAssessment, 'history' => "Residual Risk Evaluation Completed Performed", 'process' => 'Risk Assessment', 'comment' => $riskAssessment->residual_risk_completed_comment, 'user' => Auth::user()->name],
+                                function ($message) use ($email, $riskAssessment) {
+                                    $message->to($email)
+                                        ->subject("QMS Notification: Risk Assessment, Record #" . $riskAssessment->record . " - Activity: Residual Risk Evaluation Completed Performed");
+                                }
+                            );
+                        } catch (\Exception $e) {
+                            \Log::error('Mail failed to send: ' . $e->getMessage());
                         }
-                //  }
-              }
+                    }
+                    //  }
+                }
 
-              $list = Helpers::getWorkGroupUserList($riskAssessment->division_id);
+                $list = Helpers::getWorkGroupUserList($riskAssessment->division_id);
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $riskAssessment->division_id){
-                        $email = Helpers::getInitiatorEmail($u->user_id);
-                         if (!empty($email)) {
-                            try {
-                                Mail::send(
-                                    'mail.view-mail',
-                                     ['data' => $riskAssessment],
-                                  function ($message) use ($email) {
-                                      $message->to($email)
-                                          ->subject("Document is Sent By".Auth::user()->name);
-                                  }
-                                );
-                            } catch (\Exception $e) {
-                                \log::error('Mail failed to send: ' . $e->getMessage());
-                            }
+                    $email = Helpers::getInitiatorEmail($u->user_id);
+                    if (!empty($email)) {
+                        try {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $riskAssessment, 'history' => 'Residual Risk Evaluation Completed Performed', 'process' => 'Risk Assessment', 'comment' => $riskAssessment->residual_risk_completed_comment, 'user' => Auth::user()->name],
+                                function ($message) use ($email, $riskAssessment) {
+                                    $message->to($email)
+                                        ->subject("QMS Notification: Risk Assessment, Record #" . $riskAssessment->record . " - Activity: Residual Risk Evaluation Completed Performed");
+                                }
+                            );
+                        } catch (\Exception $e) {
+                            \Log::error('Mail failed to send: ' . $e->getMessage());
                         }
-                //  }
-              }
+                    }
+                    //  }
+                }
 
                 $riskAssessment->update();
                 toastr()->success('Document Sent');
@@ -3862,7 +3869,7 @@ class RiskManagementController extends Controller
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->stage='Cancel';
+                $history->stage = 'Cancel';
                 $history->change_to = 'Closed - Cancelled';
                 $history->change_from = 'Opened';
                 if (is_null($lastDocument->cancelled_by) || $lastDocument->cancelled_by === '') {
@@ -3875,66 +3882,66 @@ class RiskManagementController extends Controller
                 $list = Helpers::getWorkGroupUserList($riskAssessment->division_id);
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $riskAssessment->division_id){
-                        $email = Helpers::getInitiatorEmail($u->user_id);
-                         if (!empty($email)) {
-                            try {
-                                Mail::send(
-                                    'mail.view-mail',
-                                     ['data' => $riskAssessment],
-                                  function ($message) use ($email) {
-                                      $message->to($email)
-                                          ->subject("Document is Sent By".Auth::user()->name);
-                                  }
-                                );
-                            } catch (\Exception $e) {
-                                \log::error('Mail failed to send: ' . $e->getMessage());
-                            }
+                    $email = Helpers::getInitiatorEmail($u->user_id);
+                    if (!empty($email)) {
+                        try {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $riskAssessment, 'history' => 'Cancel Performed', 'process' => 'Risk Assessment', 'comment' => $riskAssessment->cancelled_comment, 'user' => Auth::user()->name],
+                                function ($message) use ($email, $riskAssessment) {
+                                    $message->to($email)
+                                        ->subject("QMS Notification: Risk Assessment, Record #" . $riskAssessment->record . " - Activity: Cancel Performed");
+                                }
+                            );
+                        } catch (\Exception $e) {
+                            \Log::error('Mail failed to send: ' . $e->getMessage());
                         }
-                //  }
-              }
+                    }
+                    //  }
+                }
 
                 $list = Helpers::getHodUserList($riskAssessment->division_id);
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $riskAssessment->division_id){
-                        $email = Helpers::getInitiatorEmail($u->user_id);
-                        if (!empty($email)) {
+                    $email = Helpers::getInitiatorEmail($u->user_id);
+                    if (!empty($email)) {
 
-                            try {
-                                Mail::send(
-                                    'mail.view-mail',
-                                     ['data' => $riskAssessment],
-                                  function ($message) use ($email) {
-                                      $message->to($email)
-                                          ->subject("Document is Sent By".Auth::user()->name);
-                                  }
-                                );
-                            } catch (\Exception $e) {
-                                \log::error('Mail failed to send: ' . $e->getMessage());
-                            }
+                        try {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $riskAssessment, 'history' => 'Cancel Performed', 'process' => 'Risk Assessment', 'comment' => $riskAssessment->cancelled_comment, 'user' => Auth::user()->name],
+                                function ($message) use ($email, $riskAssessment) {
+                                    $message->to($email)
+                                        ->subject("QMS Notification: Risk Assessment, Record #" . $riskAssessment->record . " - Activity: Cancel Performed");
+                                }
+                            );
+                        } catch (\Exception $e) {
+                            \Log::error('Mail failed to send: ' . $e->getMessage());
                         }
-                //  }
-              }
+                    }
+                    //  }
+                }
 
-              $list = Helpers::getQAUserList($riskAssessment->division_id);
+                $list = Helpers::getQAUserList($riskAssessment->division_id);
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $riskAssessment->division_id){
-                        $email = Helpers::getInitiatorEmail($u->user_id);
-                        if (!empty($email)) {
-                            try {
-                                Mail::send(
-                                    'mail.view-mail',
-                                     ['data' => $riskAssessment],
-                                  function ($message) use ($email) {
-                                      $message->to($email)
-                                          ->subject("Document is Sent By".Auth::user()->name);
-                                  }
-                                );
-                            } catch (\Exception $e) {
-                                \log::error('Mail failed to send: ' . $e->getMessage());
-                            }
+                    $email = Helpers::getInitiatorEmail($u->user_id);
+                    if (!empty($email)) {
+                        try {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $riskAssessment, 'history' => 'Cancel Performed', 'process' => 'Risk Assessment', 'comment' => $riskAssessment->cancelled_comment, 'user' => Auth::user()->name],
+                                function ($message) use ($email, $riskAssessment) {
+                                    $message->to($email)
+                                        ->subject("QMS Notification: Risk Assessment, Record #" . $riskAssessment->record . " - Activity: Cancel Performed");
+                                }
+                            );
+                        } catch (\Exception $e) {
+                            \Log::error('Mail failed to send: ' . $e->getMessage());
                         }
-                //  }
-              }
+                    }
+                    //  }
+                }
 
                 $riskAssessment->update();
                 toastr()->success('Document Sent');
@@ -3963,7 +3970,7 @@ class RiskManagementController extends Controller
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->stage='Cancel';
+                $history->stage = 'Cancel';
                 $history->change_to = 'Closed - Cancelled';
                 $history->change_from = 'Risk Analysis & Work Group Assignment';
                 if (is_null($lastDocument->cancelled_by) || $lastDocument->cancelled_by === '') {
@@ -3976,72 +3983,71 @@ class RiskManagementController extends Controller
                 $list = Helpers::getWorkGroupUserList($riskAssessment->division_id);
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $riskAssessment->division_id){
-                        $email = Helpers::getInitiatorEmail($u->user_id);
-                         if (!empty($email)) {
-                            try {
-                                Mail::send(
-                                    'mail.view-mail',
-                                     ['data' => $riskAssessment],
-                                  function ($message) use ($email) {
-                                      $message->to($email)
-                                          ->subject("Document is Sent By".Auth::user()->name);
-                                  }
-                                );
-                            } catch (\Exception $e) {
-                                \log::error('Mail failed to send: ' . $e->getMessage());
-                            }
+                    $email = Helpers::getInitiatorEmail($u->user_id);
+                    if (!empty($email)) {
+                        try {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $riskAssessment, 'history' => 'Cancel Performed', 'process' => 'Risk Assessment', 'comment' => $riskAssessment->cancelled_comment, 'user' => Auth::user()->name],
+                                function ($message) use ($email, $riskAssessment) {
+                                    $message->to($email)
+                                        ->subject("QMS Notification: Risk Assessment, Record #" . $riskAssessment->record . " - Activity: Cancel Performed");
+                                }
+                            );
+                        } catch (\Exception $e) {
+                            \Log::error('Mail failed to send: ' . $e->getMessage());
                         }
-                //  }
-              }
+                    }
+                    //  }
+                }
 
                 $list = Helpers::getHodUserList($riskAssessment->division_id);
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $riskAssessment->division_id){
-                        $email = Helpers::getInitiatorEmail($u->user_id);
-                        if (!empty($email)) {
+                    $email = Helpers::getInitiatorEmail($u->user_id);
+                    if (!empty($email)) {
 
-                            try {
-                                Mail::send(
-                                    'mail.view-mail',
-                                     ['data' => $riskAssessment],
-                                  function ($message) use ($email) {
-                                      $message->to($email)
-                                          ->subject("Document is Sent By".Auth::user()->name);
-                                  }
-                                );
-                            } catch (\Exception $e) {
-                                \log::error('Mail failed to send: ' . $e->getMessage());
-                            }
+                        try {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $riskAssessment, 'history' => 'Cancel Performed', 'process' => 'Risk Assessment', 'comment' => $riskAssessment->cancelled_comment, 'user' => Auth::user()->name],
+                                function ($message) use ($email, $riskAssessment) {
+                                    $message->to($email)
+                                        ->subject("QMS Notification: Risk Assessment, Record #" . $riskAssessment->record . " - Activity: Cancel Performed");
+                                }
+                            );
+                        } catch (\Exception $e) {
+                            \Log::error('Mail failed to send: ' . $e->getMessage());
                         }
-                //  }
-              }
+                    }
+                    //  }
+                }
 
-              $list = Helpers::getQAUserList($riskAssessment->division_id);
+                $list = Helpers::getQAUserList($riskAssessment->division_id);
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $riskAssessment->division_id){
-                        $email = Helpers::getInitiatorEmail($u->user_id);
-                        if (!empty($email)) {
-                            try {
-                                Mail::send(
-                                    'mail.view-mail',
-                                     ['data' => $riskAssessment],
-                                  function ($message) use ($email) {
-                                      $message->to($email)
-                                          ->subject("Document is Sent By".Auth::user()->name);
-                                  }
-                                );
-                            } catch (\Exception $e) {
-                                \log::error('Mail failed to send: ' . $e->getMessage());
-                            }
+                    $email = Helpers::getInitiatorEmail($u->user_id);
+                    if (!empty($email)) {
+                        try {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $riskAssessment, 'history' => 'Cancel Performed', 'process' => 'Risk Assessment', 'comment' => $riskAssessment->cancelled_comment, 'user' => Auth::user()->name],
+                                function ($message) use ($email, $riskAssessment) {
+                                    $message->to($email)
+                                        ->subject("QMS Notification: Risk Assessment, Record #" . $riskAssessment->record . " - Activity: Cancel Performed");
+                                }
+                            );
+                        } catch (\Exception $e) {
+                            \Log::error('Mail failed to send: ' . $e->getMessage());
                         }
-                //  }
-              }
+                    }
+                    //  }
+                }
 
                 $riskAssessment->update();
                 toastr()->success('Document Sent');
                 return back();
             }
-
         } else {
             toastr()->error('E-signature Not match');
             return back();
@@ -4077,7 +4083,7 @@ class RiskManagementController extends Controller
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->stage='More Information Required';
+                $history->stage = 'More Information Required';
                 $history->change_to = 'Opened';
                 $history->change_from = 'Risk Analysis & Work Group Assignment';
                 if (is_null($lastDocument->analysis_more_info_by) || $lastDocument->analysis_more_info_by === '') {
@@ -4091,23 +4097,23 @@ class RiskManagementController extends Controller
                 //  return $list;
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $riskAssessment->division_id){
-                        $email = Helpers::getInitiatorEmail($u->user_id);
-                        if (!empty($email)) {
-                            try {
-                                Mail::send(
-                                    'mail.view-mail',
-                                     ['data' => $riskAssessment],
-                                  function ($message) use ($email) {
-                                      $message->to($email)
-                                          ->subject("Document is Sent By".Auth::user()->name);
-                                  }
-                                );
-                            } catch (\Exception $e) {
-                                \log::error('Mail failed to send: ' . $e->getMessage());
-                            }
+                    $email = Helpers::getInitiatorEmail($u->user_id);
+                    if (!empty($email)) {
+                        try {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $riskAssessment, 'history' => 'More Information Required Performed', 'process' => 'Risk Assessment', 'comment' => $riskAssessment->analysis_more_info_comment, 'user' => Auth::user()->name],
+                                function ($message) use ($email, $riskAssessment) {
+                                    $message->to($email)
+                                        ->subject("QMS Notification: Risk Assessment, Record #" . $riskAssessment->record . " - Activity: More Information Required Performed");
+                                }
+                            );
+                        } catch (\Exception $e) {
+                            \Log::error('Mail failed to send: ' . $e->getMessage());
+                        }
                         // }
-                 }
-              }
+                    }
+                }
 
                 $riskAssessment->update();
                 toastr()->success('Document Sent');
@@ -4136,7 +4142,7 @@ class RiskManagementController extends Controller
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->stage='Request More-Info';
+                $history->stage = 'Request More-Info';
                 $history->change_to = 'Risk Analysis & Work Group Assignment';
                 $history->change_from = 'Risk Processing & Action Plan';
                 if (is_null($lastDocument->request_more_info_by) || $lastDocument->request_more_info_by === '') {
@@ -4150,23 +4156,23 @@ class RiskManagementController extends Controller
                 //  return $list;
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $riskAssessment->division_id){
-                        $email = Helpers::getInitiatorEmail($u->user_id);
-                        if (!empty($email)) {
-                            try {
-                                Mail::send(
-                                    'mail.view-mail',
-                                     ['data' => $riskAssessment],
-                                  function ($message) use ($email) {
-                                      $message->to($email)
-                                          ->subject("Document is Sent By".Auth::user()->name);
-                                  }
-                                );
-                            } catch (\Exception $e) {
-                                \log::error('Mail failed to send: ' . $e->getMessage());
-                            }
+                    $email = Helpers::getInitiatorEmail($u->user_id);
+                    if (!empty($email)) {
+                        try {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $riskAssessment, 'history' => 'Request More-Info Performed', 'process' => 'Risk Assessment', 'comment' => $riskAssessment->request_more_info_comment, 'user' => Auth::user()->name],
+                                function ($message) use ($email, $riskAssessment) {
+                                    $message->to($email)
+                                        ->subject("QMS Notification: Risk Assessment, Record #" . $riskAssessment->record . " - Activity: Request More-Info Performed");
+                                }
+                            );
+                        } catch (\Exception $e) {
+                            \Log::error('Mail failed to send: ' . $e->getMessage());
+                        }
                         // }
-                 }
-              }
+                    }
+                }
 
                 $riskAssessment->update();
                 toastr()->success('Document Sent');
@@ -4194,7 +4200,7 @@ class RiskManagementController extends Controller
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->stage='Reject Action Plan';
+                $history->stage = 'Reject Action Plan';
                 $history->change_to = 'Risk Processing & Action Plan';
                 $history->change_from = 'Pending HOD Approval';
                 if (is_null($lastDocument->reject_action_by) || $lastDocument->reject_action_by === '') {
@@ -4208,23 +4214,23 @@ class RiskManagementController extends Controller
                 //  return $list;
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $riskAssessment->division_id){
-                        $email = Helpers::getInitiatorEmail($u->user_id);
-                        if (!empty($email)) {
-                            try {
-                                Mail::send(
-                                    'mail.view-mail',
-                                     ['data' => $riskAssessment],
-                                  function ($message) use ($email) {
-                                      $message->to($email)
-                                          ->subject("Document is Sent By".Auth::user()->name);
-                                  }
-                                );
-                            } catch (\Exception $e) {
-                                \log::error('Mail failed to send: ' . $e->getMessage());
-                            }
+                    $email = Helpers::getInitiatorEmail($u->user_id);
+                    if (!empty($email)) {
+                        try {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $riskAssessment, 'history' => 'Reject Action Plan Performed', 'process' => 'Risk Assessment', 'comment' => $riskAssessment->reject_action_comment, 'user' => Auth::user()->name],
+                                function ($message) use ($email, $riskAssessment) {
+                                    $message->to($email)
+                                        ->subject("QMS Notification: Risk Assessment, Record #" . $riskAssessment->record . " - Activity: Reject Action Plan Performed");
+                                }
+                            );
+                        } catch (\Exception $e) {
+                            \Log::error('Mail failed to send: ' . $e->getMessage());
+                        }
                         // }
-                 }
-              }
+                    }
+                }
 
                 $riskAssessment->update();
                 toastr()->success('Document Sent');
@@ -4252,7 +4258,7 @@ class RiskManagementController extends Controller
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->stage='Request More Info';
+                $history->stage = 'Request More Info';
                 $history->change_to = 'Pending HOD Approval';
                 $history->change_from = 'Actions Items in Progress';
                 if (is_null($lastDocument->action_request_action_by) || $lastDocument->action_request_action_by === '') {
@@ -4266,23 +4272,23 @@ class RiskManagementController extends Controller
                 //  return $list;
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $riskAssessment->division_id){
-                        $email = Helpers::getInitiatorEmail($u->user_id);
-                        if (!empty($email)) {
-                            try {
-                                Mail::send(
-                                    'mail.view-mail',
-                                     ['data' => $riskAssessment],
-                                  function ($message) use ($email) {
-                                      $message->to($email)
-                                          ->subject("Document is Sent By".Auth::user()->name);
-                                  }
-                                );
-                            } catch (\Exception $e) {
-                                \log::error('Mail failed to send: ' . $e->getMessage());
-                            }
+                    $email = Helpers::getInitiatorEmail($u->user_id);
+                    if (!empty($email)) {
+                        try {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $riskAssessment, 'history' => 'Request More Info Performed', 'process' => 'Risk Assessment', 'comment' => $riskAssessment->action_request_action_comment, 'user' => Auth::user()->name],
+                                function ($message) use ($email, $riskAssessment) {
+                                    $message->to($email)
+                                        ->subject("QMS Notification: Risk Assessment, Record #" . $riskAssessment->record . " - Activity: Request More Info Performed");
+                                }
+                            );
+                        } catch (\Exception $e) {
+                            \Log::error('Mail failed to send: ' . $e->getMessage());
+                        }
                         // }
-                 }
-              }
+                    }
+                }
 
                 $riskAssessment->update();
                 toastr()->success('Document Sent');
@@ -4310,7 +4316,7 @@ class RiskManagementController extends Controller
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->stage='More Actions Needed';
+                $history->stage = 'More Actions Needed';
                 $history->change_to = 'Actions Items in Progress';
                 $history->change_from = 'Residual Risk Evaluation';
                 if (is_null($lastDocument->more_action_needed_by) || $lastDocument->more_action_needed_by === '') {
@@ -4323,7 +4329,6 @@ class RiskManagementController extends Controller
                 toastr()->success('Document Sent');
                 return back();
             }
-
         } else {
             toastr()->error('E-signature Not match');
             return back();
@@ -4357,18 +4362,18 @@ class RiskManagementController extends Controller
         $data = RiskManagement::find($id);
         if (!empty($data)) {
 
-            $riskgrdfishbone = RiskAssesmentGrid::where('risk_id', $data->id)->where('type','fishbone')->first();
+            $riskgrdfishbone = RiskAssesmentGrid::where('risk_id', $data->id)->where('type', 'fishbone')->first();
 
-            $riskgrdwhy_chart = RiskAssesmentGrid::where('risk_id', $data->id)->where('type','why_chart')->first();
-            $riskgrdwhat_who_where = RiskAssesmentGrid::where('risk_id', $data->id)->where('type','what_who_where')->first();
-            $riskEffectAnalysis = RiskAssesmentGrid::where('risk_id', $data->id)->where('type','effect_analysis')->first();
-            $data5 = RiskAssesmentGrid::where('risk_id', $data->id)->where('type','Action_Plan')->first();
-            $data6 = RiskAssesmentGrid::where('risk_id', $data->id)->where('type','Mitigation_Plan_Details')->first();
-             //dd($riskgrd);
+            $riskgrdwhy_chart = RiskAssesmentGrid::where('risk_id', $data->id)->where('type', 'why_chart')->first();
+            $riskgrdwhat_who_where = RiskAssesmentGrid::where('risk_id', $data->id)->where('type', 'what_who_where')->first();
+            $riskEffectAnalysis = RiskAssesmentGrid::where('risk_id', $data->id)->where('type', 'effect_analysis')->first();
+            $data5 = RiskAssesmentGrid::where('risk_id', $data->id)->where('type', 'Action_Plan')->first();
+            $data6 = RiskAssesmentGrid::where('risk_id', $data->id)->where('type', 'Mitigation_Plan_Details')->first();
+            //dd($riskgrd);
             $data->originator = User::where('id', $data->initiator_id)->value('name');
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
-            $pdf = PDF::loadview('frontend.riskAssesment.singleReport', compact('data','riskgrdfishbone','riskgrdwhy_chart','riskgrdwhat_who_where','riskEffectAnalysis', 'data5', 'data6'))
+            $pdf = PDF::loadview('frontend.riskAssesment.singleReport', compact('data', 'riskgrdfishbone', 'riskgrdwhy_chart', 'riskgrdwhat_who_where', 'riskEffectAnalysis', 'data5', 'data6'))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,
@@ -4395,7 +4400,7 @@ class RiskManagementController extends Controller
             $data = RiskAuditTrail::where('risk_id', $id)->orderbyDesc('id')->get();
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
-            $pdf = PDF::loadview('frontend.riskAssesment.auditReport', compact('data', 'doc','audit'))
+            $pdf = PDF::loadview('frontend.riskAssesment.auditReport', compact('data', 'doc', 'audit'))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,
@@ -4434,16 +4439,13 @@ class RiskManagementController extends Controller
         if ($request->revision == "Action-Item") {
             $old_record = ActionItem::all();
             $RM->originator = User::where('id', $RM->initiator_id)->value('name');
-            return view('frontend.forms.action-item', compact('record_number','old_record', 'due_date','parent_division_id','parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
-
+            return view('frontend.forms.action-item', compact('record_number', 'old_record', 'due_date', 'parent_division_id', 'parent_id', 'parent_type', 'parent_intiation_date', 'parent_record', 'parent_initiator_id'));
         }
 
         if ($request->revision == "CAPA") {
             $old_record = Capa::all();
             $RM->originator = User::where('id', $RM->initiator_id)->value('name');
-           return view('frontend.forms.capa', compact('record_number','old_record', 'due_date','parent_division_id','parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
-
+            return view('frontend.forms.capa', compact('record_number', 'old_record', 'due_date', 'parent_division_id', 'parent_id', 'parent_type', 'parent_intiation_date', 'parent_record', 'parent_initiator_id'));
         }
-
     }
 }

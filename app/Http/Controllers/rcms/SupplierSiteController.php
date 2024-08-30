@@ -4563,7 +4563,7 @@ class SupplierSiteController extends Controller
                      $list = Helpers::getSupplierAuditorDepartmentList($supplierSite->division_id);
                         foreach ($list as $u) {
                             // if($u->q_m_s_divisions_id == $supplierSite->division_id){
-                                $email = Helpers::getInitiatorEmail($u->user_id);
+                                $email = Helpers::getSupplierAuditorEmail($u->user_id);
                                  if ($email !== null) {
                                  try {
                                   Mail::send(
@@ -4635,7 +4635,7 @@ class SupplierSiteController extends Controller
                  $list = Helpers::getSupplierContactDepartmentList($supplierSite->division_id);
                     foreach ($list as $u) {
                         // if($u->q_m_s_divisions_id == $supplierSite->division_id){
-                            $email = Helpers::getInitiatorEmail($u->user_id);
+                            $email = Helpers::getSupplierContactDeptEmail($u->user_id);
                             if ($email !== null) {
                             try {
                               Mail::send(
@@ -4706,7 +4706,7 @@ class SupplierSiteController extends Controller
                     $list = Helpers::getSupplierAuditorDepartmentList($supplierSite->division_id);
                     foreach ($list as $u) {
                         // if($u->q_m_s_divisions_id == $supplierSite->division_id){
-                            $email = Helpers::getInitiatorEmail($u->user_id);
+                            $email = Helpers::getSupplierAuditorEmail($u->user_id);
                             if ($email !== null) {
                             try {
                               Mail::send(
@@ -4813,7 +4813,7 @@ class SupplierSiteController extends Controller
             $list = Helpers::getSupplierContactDepartmentList($supplierSite->division_id);
             foreach ($list as $u) {
                 // if($u->q_m_s_divisions_id == $supplierSite->division_id){
-                    $email = Helpers::getInitiatorEmail($u->user_id);
+                    $email = Helpers::getSupplierContactDeptEmail($u->user_id);
                     if ($email !== null) {
                     try {
                       Mail::send(
@@ -4922,7 +4922,7 @@ class SupplierSiteController extends Controller
           $list = Helpers::getSupplierAuditorDepartmentList($supplierSite->division_id);
             foreach ($list as $u) {
                 // if($u->q_m_s_divisions_id == $supplierSite->division_id){
-                    $email = Helpers::getInitiatorEmail($u->user_id);
+                    $email = Helpers::getSupplierAuditorEmail($u->user_id);
                     if ($email !== null) {
                     try {
                       Mail::send(
@@ -5027,7 +5027,7 @@ class SupplierSiteController extends Controller
                 $list = Helpers::getSupplierAuditorDepartmentList($supplierSite->division_id);
                         foreach ($list as $u) {
                             // if($u->q_m_s_divisions_id == $supplierSite->division_id){
-                                $email = Helpers::getInitiatorEmail($u->user_id);
+                                $email = Helpers::getSupplierAuditorEmail($u->user_id);
                                  if ($email !== null) {
                                  try {
                                   Mail::send(
@@ -5054,7 +5054,7 @@ class SupplierSiteController extends Controller
                    $list = Helpers::getSupplierContactDepartmentList($supplierSite->division_id);
                         foreach ($list as $u) {
                             // if($u->q_m_s_divisions_id == $supplierSite->division_id){
-                                $email = Helpers::getInitiatorEmail($u->user_id);
+                                $email = Helpers::getSupplierContactDeptEmail($u->user_id);
                                  if ($email !== null) {
                                  try {
                                   Mail::send(
@@ -5136,7 +5136,7 @@ class SupplierSiteController extends Controller
                      $list = Helpers::getSupplierAuditorDepartmentList($supplierSite->division_id);
                         foreach ($list as $u) {
                             // if($u->q_m_s_divisions_id == $supplierSite->division_id){
-                                $email = Helpers::getInitiatorEmail($u->user_id);
+                                $email = Helpers::getSupplierAuditorEmail($u->user_id);
                                  if ($email !== null) {
                                 try {
                                   Mail::send(
@@ -5207,7 +5207,7 @@ class SupplierSiteController extends Controller
                     $list = Helpers::getSupplierAuditorDepartmentList($supplierSite->division_id);
                     foreach ($list as $u) {
                         // if($u->q_m_s_divisions_id == $supplierSite->division_id){
-                            $email = Helpers::getInitiatorEmail($u->user_id);
+                            $email = Helpers::getSupplierAuditorEmail($u->user_id);
                              if ($email !== null) {
                             try {
                               Mail::send(
@@ -5281,7 +5281,7 @@ class SupplierSiteController extends Controller
                     $list = Helpers::getSupplierContactDepartmentList($supplierSite->division_id);
                     foreach ($list as $u) {
                         // if($u->q_m_s_divisions_id == $supplierSite->division_id){
-                            $email = Helpers::getInitiatorEmail($u->user_id);
+                            $email = Helpers::getSupplierContactDeptEmail($u->user_id);
                             if ($email !== null) {
                             try {
                               Mail::send(

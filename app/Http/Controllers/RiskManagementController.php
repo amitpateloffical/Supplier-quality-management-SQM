@@ -3494,7 +3494,7 @@ class RiskManagementController extends Controller
                 //  return $list;
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $riskAssessment->division_id){
-                    $email = Helpers::getInitiatorEmail($u->user_id);
+                    $email = Helpers::getHODEmail($u->user_id);
                     if (!empty($email)) {
                         try {
                             Mail::send(
@@ -3556,7 +3556,7 @@ class RiskManagementController extends Controller
                 $list = Helpers::getWorkGroupUserList($riskAssessment->division_id);
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $riskAssessment->division_id){
-                    $email = Helpers::getInitiatorEmail($u->user_id);
+                    $email = Helpers::getWorkGroupEmail($u->user_id);
                     if (!empty($email)) {
                         try {
                             Mail::send(
@@ -3612,7 +3612,7 @@ class RiskManagementController extends Controller
                 $list = Helpers::getHodUserList($riskAssessment->division_id);
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $riskAssessment->division_id){
-                    $email = Helpers::getInitiatorEmail($u->user_id);
+                    $email = Helpers::getHODEmail($u->user_id);
                     if (!empty($email)) {
                         try {
                             Mail::send(
@@ -3672,7 +3672,7 @@ class RiskManagementController extends Controller
                 $list = Helpers::getQAUserList($riskAssessment->division_id);
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $riskAssessment->division_id){
-                    $email = Helpers::getInitiatorEmail($u->user_id);
+                    $email = Helpers::getQAEmail($u->user_id);
                     if (!empty($email)) {
                         try {
                             Mail::send(
@@ -3790,7 +3790,7 @@ class RiskManagementController extends Controller
                 $list = Helpers::getHodUserList($riskAssessment->division_id);
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $riskAssessment->division_id){
-                    $email = Helpers::getInitiatorEmail($u->user_id);
+                    $email = Helpers::getHODEmail($u->user_id);
                     if (!empty($email)) {
 
                         try {
@@ -3812,7 +3812,7 @@ class RiskManagementController extends Controller
                 $list = Helpers::getWorkGroupUserList($riskAssessment->division_id);
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $riskAssessment->division_id){
-                    $email = Helpers::getInitiatorEmail($u->user_id);
+                    $email = Helpers::getWorkGroupEmail($u->user_id);
                     if (!empty($email)) {
                         try {
                             Mail::send(
@@ -3882,7 +3882,7 @@ class RiskManagementController extends Controller
                 $list = Helpers::getWorkGroupUserList($riskAssessment->division_id);
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $riskAssessment->division_id){
-                    $email = Helpers::getInitiatorEmail($u->user_id);
+                    $email = Helpers::getWorkGroupEmail($u->user_id);
                     if (!empty($email)) {
                         try {
                             Mail::send(
@@ -3903,7 +3903,7 @@ class RiskManagementController extends Controller
                 $list = Helpers::getHodUserList($riskAssessment->division_id);
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $riskAssessment->division_id){
-                    $email = Helpers::getInitiatorEmail($u->user_id);
+                    $email = Helpers::getHODEmail($u->user_id);
                     if (!empty($email)) {
 
                         try {
@@ -3925,7 +3925,7 @@ class RiskManagementController extends Controller
                 $list = Helpers::getQAUserList($riskAssessment->division_id);
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $riskAssessment->division_id){
-                    $email = Helpers::getInitiatorEmail($u->user_id);
+                    $email = Helpers::getQAEmail($u->user_id);
                     if (!empty($email)) {
                         try {
                             Mail::send(
@@ -3983,7 +3983,7 @@ class RiskManagementController extends Controller
                 $list = Helpers::getWorkGroupUserList($riskAssessment->division_id);
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $riskAssessment->division_id){
-                    $email = Helpers::getInitiatorEmail($u->user_id);
+                    $email = Helpers::getWorkGroupEmail($u->user_id);
                     if (!empty($email)) {
                         try {
                             Mail::send(
@@ -4004,7 +4004,7 @@ class RiskManagementController extends Controller
                 $list = Helpers::getHodUserList($riskAssessment->division_id);
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $riskAssessment->division_id){
-                    $email = Helpers::getInitiatorEmail($u->user_id);
+                    $email = Helpers::getHODEmail($u->user_id);
                     if (!empty($email)) {
 
                         try {
@@ -4026,7 +4026,7 @@ class RiskManagementController extends Controller
                 $list = Helpers::getQAUserList($riskAssessment->division_id);
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $riskAssessment->division_id){
-                    $email = Helpers::getInitiatorEmail($u->user_id);
+                    $email = Helpers::getQAEmail($u->user_id);
                     if (!empty($email)) {
                         try {
                             Mail::send(
@@ -4156,7 +4156,7 @@ class RiskManagementController extends Controller
                 //  return $list;
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $riskAssessment->division_id){
-                    $email = Helpers::getInitiatorEmail($u->user_id);
+                    $email = Helpers::getHODEmail($u->user_id);
                     if (!empty($email)) {
                         try {
                             Mail::send(
@@ -4214,7 +4214,7 @@ class RiskManagementController extends Controller
                 //  return $list;
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $riskAssessment->division_id){
-                    $email = Helpers::getInitiatorEmail($u->user_id);
+                    $email = Helpers::getWorkGroupEmail($u->user_id);
                     if (!empty($email)) {
                         try {
                             Mail::send(
@@ -4272,7 +4272,7 @@ class RiskManagementController extends Controller
                 //  return $list;
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $riskAssessment->division_id){
-                    $email = Helpers::getInitiatorEmail($u->user_id);
+                    $email = Helpers::getHODEmail($u->user_id);
                     if (!empty($email)) {
                         try {
                             Mail::send(

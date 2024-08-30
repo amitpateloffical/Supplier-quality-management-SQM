@@ -1123,7 +1123,7 @@ class ActionItemController extends Controller
                   
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $root->division_id){
-                        $email = Helpers::getInitiatorEmail($u->user_id);
+                        $email = Helpers::getActionOwnerEmail($u->user_id);
                         if ($email !== null) {
                             try {
                                 Mail::send(
@@ -1326,7 +1326,7 @@ class ActionItemController extends Controller
                   
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $root->division_id){
-                        $email = Helpers::getInitiatorEmail($u->user_id);
+                        $email = Helpers::getActionOwnerEmail($u->user_id);
                         if ($email !== null) {
                             try {
                                 Mail::send(

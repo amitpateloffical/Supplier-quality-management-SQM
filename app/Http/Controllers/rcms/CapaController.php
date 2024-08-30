@@ -2210,7 +2210,7 @@ class CapaController extends Controller
                     $list = Helpers::getHodUserList($capa->division_id);
                     foreach ($list as $u) {
                         // if($u->q_m_s_divisions_id == $capa->division_id){
-                            $email = Helpers::getInitiatorEmail($u->user_id);
+                            $email = Helpers::getHODEmail($u->user_id);
                              if ($email !== null) {
                                 try {
                               Mail::send(
@@ -2278,7 +2278,7 @@ class CapaController extends Controller
                     $list = Helpers::getQAUserList($capa->division_id);
                         foreach ($list as $u) {
                             // if($u->q_m_s_divisions_id == $capa->division_id){
-                                $email = Helpers::getInitiatorEmail($u->user_id);
+                                $email = Helpers::getQAEmail($u->user_id);
                                 if ($email !== null) {
                                     try {
 
@@ -2380,7 +2380,7 @@ class CapaController extends Controller
                         $list = Helpers::getQAHeadUserList($capa->division_id);
                         foreach ($list as $u) {
                             // if($u->q_m_s_divisions_id == $capa->division_id){
-                                $email = Helpers::getInitiatorEmail($u->user_id);
+                                $email = Helpers::getQAHeadEmail($u->user_id);
                                  if ($email !== null) {
                                     try {
     
@@ -2443,7 +2443,7 @@ class CapaController extends Controller
                                 $list = Helpers::getQAUserList($capa->division_id);
                                 foreach ($list as $u) {
                                     // if($u->q_m_s_divisions_id == $capa->division_id){
-                                        $email = Helpers::getInitiatorEmail($u->user_id);
+                                        $email = Helpers::getQAEmail($u->user_id);
                                         if ($email !== null) {
                                             try {
             
@@ -2469,7 +2469,7 @@ class CapaController extends Controller
                                 $list = Helpers::getHodUserList($capa->division_id);
                                 foreach ($list as $u) {
                                     // if($u->q_m_s_divisions_id == $capa->division_id){
-                                        $email = Helpers::getInitiatorEmail($u->user_id);
+                                        $email = Helpers::getHODEmail($u->user_id);
                                         if ($email !== null) {
                                             try {
             
@@ -2595,7 +2595,7 @@ class CapaController extends Controller
                     $list = Helpers::getQAHeadUserList($capa->division_id);
                                 foreach ($list as $u) {
                                     // if($u->q_m_s_divisions_id == $capa->division_id){
-                                        $email = Helpers::getInitiatorEmail($u->user_id);
+                                        $email = Helpers::getQAHeadEmail($u->user_id);
                                         if ($email !== null) {
                                             try {
             
@@ -2763,7 +2763,7 @@ class CapaController extends Controller
                     $list = Helpers::getHodUserList($capa->division_id);
                     foreach ($list as $u) {
                         // if($u->q_m_s_divisions_id == $capa->division_id){
-                            $email = Helpers::getInitiatorEmail($u->user_id);
+                            $email = Helpers::getHODEmail($u->user_id);
                              if ($email !== null) {
                                 try {
 

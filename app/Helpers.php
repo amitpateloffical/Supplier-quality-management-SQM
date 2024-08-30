@@ -637,6 +637,11 @@ static function getFullDepartmentName($code)
         return DB::table('users')->whereRaw("FIND_IN_SET(47, role)")->pluck('email');
     }
 
+    public static function getAuditorsEmail($id)
+    {
+        return DB::table('users')->whereRaw("FIND_IN_SET(41, role)")->pluck('email');
+    }
+
     /************ User Role Email ends **************/
 
 

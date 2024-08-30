@@ -58,7 +58,7 @@ class SupplierAuditController extends Controller
         $internalAudit->parent_type = $request->parent_type;
         $internalAudit->parent_id = $request->parent_id;
         $internalAudit->division_id = $request->division_id;
-        // $internalAudit->division_code = $request->division_code;
+        $internalAudit->division_code = $request->division_code;
         // dd($request->division_id);
         $internalAudit->intiation_date = $request->intiation_date;
         $internalAudit->assign_to = $request->assign_to;
@@ -371,6 +371,23 @@ class SupplierAuditController extends Controller
         $history->origin_state = $internalAudit->status;
         $history->save();
 
+        if (!empty($internalAudit->division_id)){
+         $history = new ExternalAuditTrailSupplier();
+        $history->supplier_id = $internalAudit->id;
+        $history->activity_type = 'Site/Location Code';
+        $history->previous = "Null";
+        $history->current = $internalAudit->division_id;
+        $history->comment = "Not Applicable";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->change_to = 'Opened';
+        $history->change_from = 'Initiation';
+        $history->action_name = "Create";
+        $history->origin_state = $internalAudit->status;
+        $history->save();
+
+        }
         if (!empty($internalAudit->severity_level)) {
             $history = new ExternalAuditTrailSupplier();
             $history->supplier_id = $internalAudit->id;
@@ -657,6 +674,23 @@ class SupplierAuditController extends Controller
             $history->origin_state = $internalAudit->status;
             $history->save();
         }
+            
+        // if (!empty($$internalAudit->division_code)){ 
+        //     $history = new $ExternalAuditTrailSupplier();
+        //     $history->supplier_id = $internalAudit->id;
+        //     $history->activity_type = 'Site/Location code';
+        //     $history->previous = "Null";
+        //     $history->current = $internalAudit->division_code;
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $internalAudit->status;
+        //     $history->change_to =   "Opened";
+        //     $history->change_from = "Initiation";
+        //     $history->action_name = 'Create';
+        //     $history->save();
+        // }
 
         if (!empty($internalAudit->date)) {
             $history = new ExternalAuditTrailSupplier();
@@ -676,6 +710,7 @@ class SupplierAuditController extends Controller
         }
         $previousAssignedToName = User::find($lastDocument->assign_to);
         $currentAssignedToName = User::find($internalAudit['assign_to']);
+       
 
 
         if (!empty($internalAudit->assign_to)) {
@@ -1701,34 +1736,65 @@ class SupplierAuditController extends Controller
 
 
 
-        $history->change_from = $lastDocument->status;
-        //  $history->action_name = "Update";
+        // $history->change_from = $lastDocument->status;
+        // //  $history->action_name = "Update";
         
-        if ($existingHistory) {
+        // if ($existingHistory) {
+        //     $history->action_name = "Update";
+        // } else {
+        //         if ($lastDocument->short_description != $internalAudit->short_description || !empty($request->short_description_comment)) {
+        
+        //             $existingHistory = ExternalAuditTrailSupplier::where('supplier_id', $id)
+        //                 ->where('activity_type', 'Short Description')
+        //                 ->exists();
+        
+        //             $history = new ExternalAuditTrailSupplier();
+        //             $history->supplier_id = $id;
+        //             $history->activity_type = 'Short Description';
+        //             $history->previous = $lastDocument->short_description;
+        //             $history->current = $internalAudit->short_description;
+        //             $history->comment = $request->date_comment;
+        //             $history->user_id = Auth::user()->id;
+        //             $history->user_name = Auth::user()->name;
+        //             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //             $history->origin_state = $lastDocument->status;
+        //             $history->change_to = "Not Applicable";
+        //            $history->action_name = "New";
+        //     }
+
+        //     $history->save();
+        // }
+
+        
+        if ($lastDocument->short_description != $internalAudit->short_description || !empty($request->short_description_comment)) {
+
+            $existingHistory = ExternalAuditTrailSupplier::where('supplier_id', $id)
+                ->where('activity_type', 'Short Description')
+                ->exists();
+
+            $history = new ExternalAuditTrailSupplier();
+            $history->supplier_id = $id;
+            $history->activity_type = 'Short Description';
+            $history->previous = $lastDocument->short_description;
+            $history->current = $internalAudit->short_description;
+            $history->comment = $request->date_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastDocument->status;
             $history->action_name = "Update";
-        } else {
-                if ($lastDocument->short_description != $internalAudit->short_description || !empty($request->short_description_comment)) {
-        
-                    $existingHistory = ExternalAuditTrailSupplier::where('supplier_id', $id)
-                        ->where('activity_type', 'Short Description')
-                        ->exists();
-        
-                    $history = new ExternalAuditTrailSupplier();
-                    $history->supplier_id = $id;
-                    $history->activity_type = 'Short Description';
-                    $history->previous = $lastDocument->short_description;
-                    $history->current = $internalAudit->short_description;
-                    $history->comment = $request->date_comment;
-                    $history->user_id = Auth::user()->id;
-                    $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    $history->origin_state = $lastDocument->status;
-                    $history->change_to = "Not Applicable";
+
+            if ($existingHistory) {
+                $history->action_name = "Update";
+            } else {
                 $history->action_name = "New";
             }
 
             $history->save();
         }
+        
 
         if ($lastDocument->refrence_record != $internalAudit->refrence_record || !empty($request->refrence_record_comment)) {
 
@@ -2938,7 +3004,7 @@ class SupplierAuditController extends Controller
                   
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $supplier->division_id){
-                    $email = Helpers::getInitiatorEmail($u->user_id);
+                    $email = Helpers::getSupplierAuditorEmail($u->user_id);
                     if (!empty($email)) {
                         try {
                             Mail::send(
@@ -3037,7 +3103,7 @@ class SupplierAuditController extends Controller
                 $list = Helpers::getAuditeeDepartmentList($changeControl->division_id);
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $supplier->division_id){
-                    $email = Helpers::getInitiatorEmail($u->user_id);
+                    $email = Helpers::getAuditeesEmail($u->user_id);
                     if (!empty($email)) {
                         try {
                             Mail::send(
@@ -3140,7 +3206,7 @@ class SupplierAuditController extends Controller
                 $list = Helpers::getAuditeeDepartmentList($changeControl->division_id);
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $supplier->division_id){
-                    $email = Helpers::getInitiatorEmail($u->user_id);
+                    $email = Helpers::getAuditeesEmail($u->user_id);
                     if (!empty($email)) {
                         try {
                             Mail::send(
@@ -3154,7 +3220,7 @@ class SupplierAuditController extends Controller
                             // );
                             function ($message) use ($email, $changeControl) {
                                 $message->to($email)
-                                ->subject("QMS Notification: Supplier Audit , Record " . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: All Capa Closed Performed"); }
+                                ->subject("QMS Notification: Supplier Audit , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: All Capa Closed Performed"); }
                             );
                         } catch (\Exception $e) {
                             \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -3166,7 +3232,7 @@ class SupplierAuditController extends Controller
                 $list = Helpers::getSupplierAuditorDepartmentList($changeControl->division_id);
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $supplier->division_id){
-                    $email = Helpers::getInitiatorEmail($u->user_id);
+                    $email = Helpers::getSupplierAuditorEmail($u->user_id);
                     if (!empty($email)) {
                         try {
                             Mail::send(
@@ -3191,7 +3257,7 @@ class SupplierAuditController extends Controller
                 $list = Helpers::getAuditManagerDepartmentList($changeControl->division_id);
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $supplier->division_id){
-                    $email = Helpers::getInitiatorEmail($u->user_id);
+                    $email = Helpers::getAuditManagerEmail($u->user_id);
                     if (!empty($email)) {
                         try {
                             Mail::send(
@@ -3299,7 +3365,7 @@ class SupplierAuditController extends Controller
                 $list = Helpers::getAuditManagerDepartmentList($changeControl->division_id);
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $supplier->division_id){
-                    $email = Helpers::getInitiatorEmail($u->user_id);
+                    $email = Helpers::getAuditManagerEmail($u->user_id);
                     if (!empty($email)) {
                         try {
                             Mail::send(
@@ -3357,7 +3423,7 @@ class SupplierAuditController extends Controller
                 $list = Helpers::getAuditManagerDepartmentList($changeControl->division_id);
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $supplier->division_id){
-                    $email = Helpers::getInitiatorEmail($u->user_id);
+                    $email = Helpers::getAuditManagerEmail($u->user_id);
                     if (!empty($email)) {
                         try {
                             Mail::send(
@@ -3428,7 +3494,7 @@ class SupplierAuditController extends Controller
                 $list = Helpers::getSupplierAuditorDepartmentList($changeControl->division_id);
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $supplier->division_id){
-                    $email = Helpers::getInitiatorEmail($u->user_id);
+                    $email = Helpers::getSupplierAuditorEmail($u->user_id);
                     if (!empty($email)) {
                         try {
                             Mail::send(
@@ -3448,7 +3514,7 @@ class SupplierAuditController extends Controller
                 $list = Helpers::getAuditeeDepartmentList($changeControl->division_id);
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $supplier->division_id){
-                    $email = Helpers::getInitiatorEmail($u->user_id);
+                    $email = Helpers::getAuditeesEmail($u->user_id);
                     if (!empty($email)) {
                         try {
                             Mail::send(
@@ -3501,7 +3567,7 @@ class SupplierAuditController extends Controller
                 $list = Helpers::getSupplierAuditorDepartmentList($changeControl->division_id);
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $supplier->division_id){
-                    $email = Helpers::getInitiatorEmail($u->user_id);
+                    $email = Helpers::getSupplierAuditorEmail($u->user_id);
                     if (!empty($email)) {
                         try {
                             Mail::send(
@@ -3522,7 +3588,7 @@ class SupplierAuditController extends Controller
                 $list = Helpers::getAuditeeDepartmentList($changeControl->division_id);
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $supplier->division_id){
-                    $email = Helpers::getInitiatorEmail($u->user_id);
+                    $email = Helpers::getAuditeeEmail($u->user_id);
                     if (!empty($email)) {
                         try {
                             Mail::send(
@@ -3531,7 +3597,7 @@ class SupplierAuditController extends Controller
                                 ['data' => $changeControl, 'site'=>'SA','history' => 'Cancel ', 'process' => 'Supplier Audit', 'comment' => $changeControl->comment_cancelled_comment,'user'=> Auth::user()->name],
                                 function ($message) use ($email, $changeControl ) {
                                     $message->to($email)
-                                    ->subject("QMS Notification: Supplier Audit , Record " . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel performed"); }
+                                    ->subject("QMS Notification: Supplier Audit , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel performed"); }
                                 );
                         } catch (\Exception $e) {
                             \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -3569,7 +3635,7 @@ class SupplierAuditController extends Controller
                 $list = Helpers::getSupplierAuditorDepartmentList($changeControl->division_id);
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $supplier->division_id){
-                    $email = Helpers::getInitiatorEmail($u->user_id);
+                    $email = Helpers::getSupplierAuditorEmail($u->user_id);
                     if (!empty($email)) {
                         try {
                             Mail::send(
@@ -3589,7 +3655,7 @@ class SupplierAuditController extends Controller
                 $list = Helpers::getAuditeeDepartmentList($changeControl->division_id);
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $supplier->division_id){
-                    $email = Helpers::getInitiatorEmail($u->user_id);
+                    $email = Helpers::getAuditeesEmail($u->user_id);
                     if (!empty($email)) {
                         try {
                             Mail::send(
@@ -3597,7 +3663,7 @@ class SupplierAuditController extends Controller
                                 ['data' => $changeControl, 'site'=>'SA','history' => 'Cancel', 'process' => 'Supplier Audit', 'comment' => $changeControl->comment_cancelled_comment,'user'=> Auth::user()->name],
                                 function ($message) use ($email, $changeControl ) {
                                     $message->to($email)
-                                    ->subject("QMS Notification: Supplier Audit , Record " .str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel performed"); }
+                                    ->subject("QMS Notification: Supplier Audit , Record # " .str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel performed"); }
                                 );
                         } catch (\Exception $e) {
                             \Log::error('Mail failed to send: ' . $e->getMessage());

@@ -2232,7 +2232,7 @@ class CapaController extends Controller
                     //  }
                   }
 
- 
+
                 $capa->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -2383,7 +2383,7 @@ class CapaController extends Controller
                                 $email = Helpers::getQAHeadEmail($u->user_id);
                                  if ($email !== null) {
                                     try {
-    
+
                                   Mail::send(
                                       'mail.view-mail',
                                       ['data' => $capa, 'site' => "CAPA", 'history' => "Approve ", 'process' => 'CAPA', 'comment' => $capa->approved_comment, 'user'=> Auth::user()->name],
@@ -2402,7 +2402,7 @@ class CapaController extends Controller
                                 }
                             // }
                         }
-    
+
                     $capa->update();
                     toastr()->success('Document Sent');
                     return back();
@@ -2446,7 +2446,7 @@ class CapaController extends Controller
                                         $email = Helpers::getQAEmail($u->user_id);
                                         if ($email !== null) {
                                             try {
-            
+
                                         Mail::send(
                                             'mail.view-mail',
                                             ['data' => $capa, 'site' => "CAPA", 'history' => "All Action Completed", 'process' => 'CAPA', 'comment' => $capa->all_actions_completed_comment, 'user'=> Auth::user()->name],
@@ -2472,7 +2472,7 @@ class CapaController extends Controller
                                         $email = Helpers::getHODEmail($u->user_id);
                                         if ($email !== null) {
                                             try {
-            
+
                                         Mail::send(
                                             'mail.view-mail',
                                             ['data' => $capa, 'site' => "CAPA", 'history' => "All Action Completed", 'process' => 'CAPA', 'comment' => $capa->all_actions_completed_comment, 'user'=> Auth::user()->name],
@@ -2484,7 +2484,7 @@ class CapaController extends Controller
                                                 $message->to($email)
                                                 ->subject("QMS Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: All Action Completed Performed");
                                             }
-                                            
+
                                         );
                                         } catch (\Exception $e) {
                                             \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -2499,7 +2499,7 @@ class CapaController extends Controller
                                         $email = Helpers::getInitiatorEmail($u->user_id);
                                         if ($email !== null) {
                                             try {
-            
+
                                         Mail::send(
                                             'mail.view-mail',
                                              ['data' => $capa, 'site' => "CAPA", 'history' => "All Action Completed", 'process' => 'CAPA', 'comment' => $capa->all_actions_completed_comment, 'user'=> Auth::user()->name],
@@ -2518,7 +2518,7 @@ class CapaController extends Controller
                                         }
                                     // }
                                 }
-                        
+
                     $capa->update();
                     toastr()->success('Document Sent');
                     return back();
@@ -2526,7 +2526,7 @@ class CapaController extends Controller
                 toastr()->error('E-signature Not match');
                 return back();
             }
-            
+
          }
      }
 
@@ -2598,7 +2598,7 @@ class CapaController extends Controller
                                         $email = Helpers::getQAHeadEmail($u->user_id);
                                         if ($email !== null) {
                                             try {
-            
+
                                         Mail::send(
                                             'mail.view-mail',
                                             ['data' => $capa, 'site' => "CAPA", 'history' => "Cancelled", 'process' => 'CAPA', 'comment' => $capa->cancelled_comment, 'user'=> Auth::user()->name],
@@ -2617,7 +2617,7 @@ class CapaController extends Controller
                                         }
                                     // }
                                 }
-                                
+
 
             $capa->update();
             $history = new CapaHistory();
@@ -2695,7 +2695,7 @@ class CapaController extends Controller
                         $history->action_name = 'Update';
                     }
                     $history->save();
-                     
+
                     $list = Helpers::getInitiatorUserList($capa->division_id);
                             foreach ($list as $u) {
                                 // if($u->q_m_s_divisions_id == $capa->division_id){
@@ -3012,18 +3012,19 @@ class CapaController extends Controller
         if ($request->child_type == "Change_control") {
             return view('frontend.change-control.new-change-control', compact('cft','pre','hod','parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id', 'parent_record', 'record_number', 'due_date', 'parent_id', 'parent_type'));
         }
-        if ($request->child_type == "extension") 
+        if ($request->child_type == "extension")
         {
             $parent_due_date = "";
             $parent_id = $id;
             $parent_name = $request->parent_name;
+            $parent_division_id = Capa::where('id', $id)->value('division_id');
             if ($request->due_date) {
                 $parent_due_date = $request->due_date;
             }
             $parentDivisionId = Capa::where('id', $id)->value('division_id');
             $record_number = ((RecordNumber::first()->value('counter')) + 1);
             $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
-            return view('frontend.extension.extension_new', compact('parent_id','parent_record','parentDivisionId', 'parent_name','parent_type', 'record_number', 'parent_due_date'));
+            return view('frontend.extension.extension_new', compact('parent_id','parent_record','parentDivisionId','parent_division_id', 'parent_name','parent_type', 'record_number', 'parent_due_date'));
         }
         $old_record = ActionItem::select('id', 'division_id', 'record')->get();
         if ($request->child_type == "Action_Item") {
@@ -3040,9 +3041,10 @@ class CapaController extends Controller
                 $due_date = $request->due_date;
             }
             $parentDivisionId = Capa::where('id', $id)->value('division_id');
+            $parent_division_id = Capa::where('id', $id)->value('division_id');
             $record_number = ((RecordNumber::first()->value('counter')) + 1);
             $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
-            return view('frontend.forms.root-cause-analysis', compact('parent_id','parent_record','parentDivisionId', 'parent_name','parent_type', 'record_number', 'parent_due_date','due_date'));
+            return view('frontend.forms.root-cause-analysis', compact('parent_id','parent_record','parentDivisionId','parent_division_id', 'parent_name','parent_type', 'record_number', 'parent_due_date','due_date'));
         }
 
         else {

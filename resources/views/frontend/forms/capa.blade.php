@@ -1,6 +1,6 @@
 @extends('frontend.layout.main')
 @section('container')
-@php
+    @php
         $users = DB::table('users')->get();
     @endphp
     <style>
@@ -14,214 +14,251 @@
     </style>
 
 
-<style>
-    .mic-btn {
-        background: none;
-        border: none;
-        outline: none;
-        cursor: pointer;
-        position: absolute;
-        right: 10px; /* Position the button at the right corner */
-        top: 50%; /* Center the button vertically */
-        transform: translateY(-50%); /* Adjust for the button's height */
-        box-shadow: none; /* Remove shadow */
-    }
-    .mic-btn i {
-        color: black; /* Set the color of the icon */
-        box-shadow: none; /* Remove shadow */
-    }
-    .mic-btn:focus,
-    .mic-btn:hover,
-    .mic-btn:active {
-        box-shadow: none; /* Remove shadow on hover/focus/active */
-    }
+    <style>
+        .mic-btn {
+            background: none;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            position: absolute;
+            right: 10px;
+            /* Position the button at the right corner */
+            top: 50%;
+            /* Center the button vertically */
+            transform: translateY(-50%);
+            /* Adjust for the button's height */
+            box-shadow: none;
+            /* Remove shadow */
+        }
 
-    .relative-container {
-        position: relative;
-    }
+        .mic-btn i {
+            color: black;
+            /* Set the color of the icon */
+            box-shadow: none;
+            /* Remove shadow */
+        }
 
-    .relative-container textarea {
-        width: 100%;
-        padding-right: 40px; /* Ensure the text does not overlap the button */
-    }
-</style>
+        .mic-btn:focus,
+        .mic-btn:hover,
+        .mic-btn:active {
+            box-shadow: none;
+            /* Remove shadow on hover/focus/active */
+        }
+
+        .relative-container {
+            position: relative;
+        }
+
+        .relative-container textarea {
+            width: 100%;
+            padding-right: 40px;
+            /* Ensure the text does not overlap the button */
+        }
+    </style>
 
     <style>
-    #start-record-btn {
-        background: none;
-        border: none;
-        outline: none;
-        cursor: pointer;
-    }
-    #start-record-btn i {
-        color: black; /* Set the color of the icon */
-        box-shadow: none; /* Remove shadow */
-    }
-    #start-record-btn:focus,
-    #start-record-btn:hover,
-    #start-record-btn:active {
-        box-shadow: none; /* Remove shadow on hover/focus/active */
-    }
-</style>
+        #start-record-btn {
+            background: none;
+            border: none;
+            outline: none;
+            cursor: pointer;
+        }
+
+        #start-record-btn i {
+            color: black;
+            /* Set the color of the icon */
+            box-shadow: none;
+            /* Remove shadow */
+        }
+
+        #start-record-btn:focus,
+        #start-record-btn:hover,
+        #start-record-btn:active {
+            box-shadow: none;
+            /* Remove shadow on hover/focus/active */
+        }
+    </style>
 
 
-<style>
-    .mic-btn {
-        background: none;
-        border: none;
-        outline: none;
-        cursor: pointer;
-        position: absolute;
-        right: 10px; /* Position the button at the right corner */
-        top: 50%; /* Center the button vertically */
-        transform: translateY(-50%); /* Adjust for the button's height */
-        box-shadow: none; /* Remove shadow */
-    }
-    .mic-btn i {
-        color: black; /* Set the color of the icon */
-        box-shadow: none; /* Remove shadow */
-    }
-    .mic-btn:focus,
-    .mic-btn:hover,
-    .mic-btn:active {
-        box-shadow: none; /* Remove shadow on hover/focus/active */
-    }
+    <style>
+        .mic-btn {
+            background: none;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            position: absolute;
+            right: 10px;
+            /* Position the button at the right corner */
+            top: 50%;
+            /* Center the button vertically */
+            transform: translateY(-50%);
+            /* Adjust for the button's height */
+            box-shadow: none;
+            /* Remove shadow */
+        }
 
-    .relative-container {
-        position: relative;
-    }
+        .mic-btn i {
+            color: black;
+            /* Set the color of the icon */
+            box-shadow: none;
+            /* Remove shadow */
+        }
 
-    .relative-container textarea {
-        width: 100%;
-        padding-right: 40px; /* Ensure the text does not overlap the button */
-    }
-</style>
-<style>
-    .w-5 {
-        width: 5%;
-    }
-    .w-10 {
-        width: 10%;
-    }
+        .mic-btn:focus,
+        .mic-btn:hover,
+        .mic-btn:active {
+            box-shadow: none;
+            /* Remove shadow on hover/focus/active */
+        }
 
-    .w-20 {
-        width: 20%;
-    }
+        .relative-container {
+            position: relative;
+        }
 
-    .w-25 {
-        width: 25%;
-    }
+        .relative-container textarea {
+            width: 100%;
+            padding-right: 40px;
+            /* Ensure the text does not overlap the button */
+        }
+    </style>
+    <style>
+        .w-5 {
+            width: 5%;
+        }
 
-    .w-30 {
-        width: 30%;
-    }
+        .w-10 {
+            width: 10%;
+        }
 
-    .w-40 {
-        width: 40%;
-    }
+        .w-20 {
+            width: 20%;
+        }
 
-    .w-50 {
-        width: 50%;
-    }
+        .w-25 {
+            width: 25%;
+        }
 
-    .w-60 {
-        width: 60%;
-    }
+        .w-30 {
+            width: 30%;
+        }
 
-    .w-70 {
-        width: 70%;
-    }
+        .w-40 {
+            width: 40%;
+        }
 
-    .w-80 {
-        width: 80%;
-    }
+        .w-50 {
+            width: 50%;
+        }
 
-    .w-90 {
-        width: 90%;
-    }
+        .w-60 {
+            width: 60%;
+        }
 
-    .w-100 {
-        width: 100%;
-    }
+        .w-70 {
+            width: 70%;
+        }
 
-</style>
-<style>
-    .group-input {
-        margin-bottom: 20px;
-    }
-    .mic-btn, .speak-btn {
-        background: none;
-        border: none;
-        outline: none;
-        cursor: pointer;
-        position: absolute;
-        right: 16px;
-        top: 50%;
-        transform: translateY(-50%);
-        box-shadow: none;
-    }
-    .mic-btn i, .speak-btn i {
-        color: black;
-    }
-    .mic-btn:focus,
-    .mic-btn:hover,
-    .mic-btn:active,
-    .speak-btn:focus,
-    .speak-btn:hover,
-    .speak-btn:active {
-        /* box-shadow: none; */
-    }
-    .relative-container {
-        position: relative;
-    }
-    .relative-container input {
-        width: 100%;
-        padding-right: 40px;
-    }
-</style>
+        .w-80 {
+            width: 80%;
+        }
 
-<style>
-    .mini-modal {
-      display: none;
-      position: absolute;
-      z-index: 1;
-      padding: 10px;
-      background-color: #fefefe;
-      border: 1px solid #888;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      width: 200px; /* Adjust width as needed */
-  }
-  .mini-modal-content {
-      background-color: #fefefe;
-      padding: 10px;
-      border-radius: 4px;
-  }
-  .mini-modal-content h2 {
-      font-size: 16px;
-      margin-top: 0;
-  }
-  .close {
-      color: #aaa;
-      float: right;
-      font-size: 20px;
-      font-weight: bold;
-      cursor: pointer;
-  }
-  .close:hover,
-  .close:focus {
-      color: black;
-      text-decoration: none;
-  }
+        .w-90 {
+            width: 90%;
+        }
 
-  .mic-btn {
-            right: 50px; /* Adjust position to avoid overlap with speaker button */
+        .w-100 {
+            width: 100%;
+        }
+    </style>
+    <style>
+        .group-input {
+            margin-bottom: 20px;
+        }
+
+        .mic-btn,
+        .speak-btn {
+            background: none;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            box-shadow: none;
+        }
+
+        .mic-btn i,
+        .speak-btn i {
+            color: black;
+        }
+
+        .mic-btn:focus,
+        .mic-btn:hover,
+        .mic-btn:active,
+        .speak-btn:focus,
+        .speak-btn:hover,
+        .speak-btn:active {
+            /* box-shadow: none; */
+        }
+
+        .relative-container {
+            position: relative;
+        }
+
+        .relative-container input {
+            width: 100%;
+            padding-right: 40px;
+        }
+    </style>
+
+    <style>
+        .mini-modal {
+            display: none;
+            position: absolute;
+            z-index: 1;
+            padding: 10px;
+            background-color: #fefefe;
+            border: 1px solid #888;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 200px;
+            /* Adjust width as needed */
+        }
+
+        .mini-modal-content {
+            background-color: #fefefe;
+            padding: 10px;
+            border-radius: 4px;
+        }
+
+        .mini-modal-content h2 {
+            font-size: 16px;
+            margin-top: 0;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+        }
+
+        .mic-btn {
+            right: 50px;
+            /* Adjust position to avoid overlap with speaker button */
         }
 
         .speak-btn {
             right: 16px;
         }
-
-</style>
+    </style>
     <script>
         function otherController(value, checkValue, blockID) {
             let block = document.getElementById(blockID)
@@ -236,7 +273,7 @@
             }
         }
     </script>
-      <!-- <script>
+    <!-- <script>
         $(document).ready(function() {
             $('#material').click(function(e) {
                 function generateTableRow(serialNumber) {
@@ -249,10 +286,24 @@
                         '<td><input type="text" name="material_name[]"></td>' +
                         '<td><input type="text" name="material_batch_no[]"></td>' +
 
-                        '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="material_mfg_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="material_mfg_date[]" id="material_mfg_date' + serialNumber +'_checkdate"  class="hide-input" oninput="handleDateInput(this, `material_mfg_date' + serialNumber +'`);checkDate(`material_mfg_date1' + serialNumber +'_checkdate`,`material_expiry_date' + serialNumber +'_checkdate`)" /></div></div></div></td>' +
+                        '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="material_mfg_date' +
+                        serialNumber +
+                        '" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="material_mfg_date[]" id="material_mfg_date' +
+                        serialNumber +
+                        '_checkdate"  class="hide-input" oninput="handleDateInput(this, `material_mfg_date' +
+                    serialNumber + '`);checkDate(`material_mfg_date1' + serialNumber +
+                    '_checkdate`,`material_expiry_date' + serialNumber +
+                    '_checkdate`)" /></div></div></div></td>' +
 
 
-                        '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="material_expiry_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="material_expiry_date[]" id="material_expiry_date'+ serialNumber +'_checkdate" class="hide-input" oninput="handleDateInput(this, `material_expiry_date' + serialNumber +'`);checkDate(`material_mfg_date' + serialNumber +'_checkdate`,`material_expiry_date' + serialNumber +'_checkdate`)" /></div></div></div></td>' +
+                        '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="material_expiry_date' +
+                        serialNumber +
+                        '" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="material_expiry_date[]" id="material_expiry_date' +
+                        serialNumber +
+                        '_checkdate" class="hide-input" oninput="handleDateInput(this, `material_expiry_date' +
+                    serialNumber + '`);checkDate(`material_mfg_date' + serialNumber +
+                    '_checkdate`,`material_expiry_date' + serialNumber +
+                    '_checkdate`)" /></div></div></div></td>' +
 
                         '<td><input type="text" name="material_batch_desposition[]"></td>' +
                         '<td><input type="text" name="material_remark[]"></td>' +
@@ -283,7 +334,11 @@
 
         <div class="division-bar">
             <strong>Site Division/Project</strong> :
-            {{ Helpers::getDivisionName(session()->get('division')) }} / CAPA
+            @if (!empty($parent_division_id))
+                {{ Helpers::getDivisionName($parent_division_id) }} / CAPA
+            @else
+                {{ Helpers::getDivisionName(session()->get('division')) }} / CAPA
+            @endif
         </div>
     </div>
 
@@ -324,19 +379,35 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="RLS Record Number">Record Number</label>
-                                        <input type="text" value="{{ Helpers::getDivisionName(session()->get('division')) }}/CAPA/{{ date('Y') }}/{{ $record_number }}" readonly>                                            
-                                        <input type="hidden" id="record_number" name="record_number" value="{{ Helpers::getDivisionName(session()->get('division')) }}/CAPA/{{ date('Y') }}/{{ $record_number }}" > 
-                                        {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
+                                        @if (!empty($parent_division_id))
+                                            <input type="text"
+                                                value="{{ Helpers::getDivisionName($parent_division_id) }}/CAPA/{{ date('Y') }}/{{ $record_number }}"
+                                                readonly>
+                                            <input type="hidden" id="record_number" name="record_number"
+                                                value="{{ Helpers::getDivisionName($parent_division_id) }}/CAPA/{{ date('Y') }}/{{ $record_number }}">
+                                        @else
+                                            <input type="text"
+                                                value="{{ Helpers::getDivisionName(session()->get('division')) }}/CAPA/{{ date('Y') }}/{{ $record_number }}"
+                                                readonly>
+                                            <input type="hidden" id="record_number" name="record_number"
+                                                value="{{ Helpers::getDivisionName(session()->get('division')) }}/CAPA/{{ date('Y') }}/{{ $record_number }}">
+                                        @endif
                                     </div>
                                 </div>
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Division Code">Site/Location Code</label>
-                                        <input readonly type="text" name="division_code"
-                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}">
-                                        <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
-                                        {{-- <div class="static">QMS-North America</div> --}}
+                                        @if ($parent_division_id)
+                                            <input readonly type="text" name="division_code"
+                                                value="{{ Helpers::getDivisionName($parent_division_id) }}">
+                                            <input type="hidden" name="division_id" value="{{ $parent_division_id }}">
+                                        @else
+                                            <input readonly type="text" name="division_code"
+                                                value="{{ Helpers::getDivisionName(session()->get('division')) }}">
+                                            <input type="hidden" name="division_id"
+                                                value="{{ session()->get('division') }}">
+                                        @endif
                                     </div>
                                 </div>
 
@@ -345,7 +416,8 @@
                                         <label for="Initiator">Initiator</label>
                                         {{-- <div class="static">{{ Auth::user()->name }}</div> --}}
                                         <input readonly type="text" value="{{ Auth::user()->name }}">
-                                        <input type="hidden" id="initiator_name" name="initiator_name" value="{{ Auth::user()->name }}">    
+                                        <input type="hidden" id="initiator_name" name="initiator_name"
+                                            value="{{ Auth::user()->name }}">
                                     </div>
                                 </div>
 
@@ -374,19 +446,19 @@
                                     </div>
                                 </div>
                                 <!-- <div class="col-md-6 new-date-data-field">
-                                    <div class="group-input input-date ">
-                                        <label for="due-date">Due Date<span class="text-danger">*</span></label>
-                                        <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small>
-                                        </div>
-                                        <div class="calenderauditee">
-                                            <input type="text" id="due_date" readonly
-                                                placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="due_date" class="hide-input"
-                                                oninput="handleDateInput(this, 'due_date')" />
-                                        </div>
-                                    </div>
-                                </div> -->
-                                 @php
+                                                <div class="group-input input-date ">
+                                                    <label for="due-date">Due Date<span class="text-danger">*</span></label>
+                                                    <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small>
+                                                    </div>
+                                                    <div class="calenderauditee">
+                                                        <input type="text" id="due_date" readonly
+                                                            placeholder="DD-MMM-YYYY" />
+                                                        <input type="date" name="due_date" class="hide-input"
+                                                            oninput="handleDateInput(this, 'due_date')" />
+                                                    </div>
+                                                </div>
+                                            </div> -->
+                                @php
                                     $initiationDate = date('Y-m-d');
                                     $dueDate = date('Y-m-d', strtotime($initiationDate . '+30 days'));
                                 @endphp
@@ -394,11 +466,13 @@
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="Date Due"> Due Date</label>
-                                         <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div>
+                                        <div><small class="text-primary">If revising Due Date, kindly mention revision
+                                                reason in "Due Date Extension Justification" data field.</small></div>
                                         <div class="calenderauditee">
                                             <input type="text" name="due_date" id="due_date" readonly
                                                 placeholder="DD-MMM-YYYY" />
-                                            <input disabled type="date"  disabled name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                            <input disabled type="date" disabled name="due_date"
+                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
                                                 oninput="handleDateInput(this, 'due_date')" />
                                         </div>
                                     </div>
@@ -437,9 +511,11 @@
                                             <option value="">-- Select --</option>
                                             <option value="CQA" @if (old('initiator_Group') == 'CQA') selected @endif>
                                                 Corporate Quality Assurance</option>
-                                            <option value="QAB" @if (old('initiator_Group') == 'QAB') selected @endif>Quality
+                                            <option value="QAB" @if (old('initiator_Group') == 'QAB') selected @endif>
+                                                Quality
                                                 Assurance Biopharma</option>
-                                            <option value="CQC" @if (old('initiator_Group') == 'CQC') selected @endif>Central
+                                            <option value="CQC" @if (old('initiator_Group') == 'CQC') selected @endif>
+                                                Central
                                                 Quality Control</option>
                                             <option value="MANU" @if (old('initiator_Group') == 'MANU') selected @endif>
                                                 Manufacturing</option>
@@ -479,7 +555,7 @@
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Initiator Group Code</label>
                                         <input type="text" name="initiator_group_code" id="initiator_group_code"
-                                            value="" >
+                                            value="">
                                     </div>
                                 </div>
                                 {{-- <div class="col-12">
@@ -492,10 +568,12 @@
                                 </div> --}}
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="short_description">Short Description<span class="text-danger">*</span></label>
+                                        <label for="short_description">Short Description<span
+                                                class="text-danger">*</span></label>
                                         <span id="rchars">255</span> characters remaining
                                         <div class="relative-container">
-                                            <input id="short_description" type="text" class="mic-input" name="short_description" maxlength="255" required>
+                                            <input id="short_description" type="text" class="mic-input"
+                                                name="short_description" maxlength="255" required>
                                             <button class="mic-btn" type="button" style="display: none;">
                                                 <i class="fas fa-microphone"></i>
                                             </button>
@@ -538,12 +616,14 @@
                                         </div>
                                     </div>
                                 </div>
-                                
+
 
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="severity-level">Severity Level</label>
-                                        <span class="text-primary">Severity levels in a QMS record gauge issue seriousness, guiding priority for corrective actions. Ranging from low to high, they ensure quality standards and mitigate critical risks.</span>
+                                        <span class="text-primary">Severity levels in a QMS record gauge issue seriousness,
+                                            guiding priority for corrective actions. Ranging from low to high, they ensure
+                                            quality standards and mitigate critical risks.</span>
                                         <select name="severity_level_form">
                                             <option value="">-- Select --</option>
                                             <option value="minor">Minor</option>
@@ -576,9 +656,10 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input" id="initiated_through_req">
-                                        <label for="initiated_through_req">Others<span class="text-danger d-none">*</span></label>
+                                        <label for="initiated_through_req">Others<span
+                                                class="text-danger d-none">*</span></label>
                                         <div class="relative-container">
-                                            <textarea name="initiated_through_req" id="initiated_through_req_textarea" class="mic-input"   ></textarea>
+                                            <textarea name="initiated_through_req" id="initiated_through_req_textarea" class="mic-input"></textarea>
                                             <button class="mic-btn" type="button" style="display:none;">
                                                 <i class="fas fa-microphone"></i>
                                             </button>
@@ -641,9 +722,10 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input" id="repeat_nature_group">
-                                        <label for="repeat_nature">Repeat Nature<span class="text-danger d-none">*</span></label>
+                                        <label for="repeat_nature">Repeat Nature<span
+                                                class="text-danger d-none">*</span></label>
                                         <div class="relative-container">
-                                            <textarea name="repeat_nature" id="repeat_nature_textarea" class="mic-input" ></textarea>
+                                            <textarea name="repeat_nature" id="repeat_nature_textarea" class="mic-input"></textarea>
                                             <button class="mic-btn" type="button" style="display:none;">
                                                 <i class="fas fa-microphone"></i>
                                             </button>
@@ -691,7 +773,7 @@
                                     <div class="group-input" id="problem_description_group">
                                         <label for="problem_description">Problem Description</label>
                                         <div class="relative-container">
-                                            <textarea name="problem_description" id="problem_description_textarea" class="mic-input" ></textarea>
+                                            <textarea name="problem_description" id="problem_description_textarea" class="mic-input"></textarea>
                                             <button class="mic-btn" type="button" style="display:none;">
                                                 <i class="fas fa-microphone"></i>
                                             </button>
@@ -736,7 +818,7 @@
                                     </div>
                                 </div>
 
-                                                      {{-- <div class="col-12">
+                                {{-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="CAPA Team">CAPA Team</label>
                                         <select multiple id="select-state" placeholder="Select..." name="capa_team[]">
@@ -796,7 +878,7 @@
                                             @foreach ($old_record as $new)
                                                 <option
                                                     value="{{ Helpers::getDivisionName($new->division_id) }}/CAPA/{{ date('Y') }}/{{ Helpers::recordFormat($new->record) }}">
-                                                   {{ Helpers::getDivisionName($new->division_id) }}/CAPA/{{ date('Y') }}/{{ Helpers::recordFormat($new->record) }}
+                                                    {{ Helpers::getDivisionName($new->division_id) }}/CAPA/{{ date('Y') }}/{{ Helpers::recordFormat($new->record) }}
                                                 </option>
                                             @endforeach
                                         </select>
@@ -807,7 +889,7 @@
                                     <div class="group-input" id="initial_observation_group">
                                         <label for="initial_observation">Initial Observation</label>
                                         <div class="relative-container">
-                                            <textarea name="initial_observation" id="initial_observation_textarea" class="mic-input" ></textarea>
+                                            <textarea name="initial_observation" id="initial_observation_textarea" class="mic-input"></textarea>
                                             <button class="mic-btn" type="button" style="display:none;">
                                                 <i class="fas fa-microphone"></i>
                                             </button>
@@ -865,9 +947,10 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input" id="containment_comments_group">
-                                        <label for="containment_comments">Containment Comments <span class="text-danger d-none">*</span></label>
+                                        <label for="containment_comments">Containment Comments <span
+                                                class="text-danger d-none">*</span></label>
                                         <div class="relative-container">
-                                            <textarea name="containment_comments" id="containment_comments_textarea" class="mic-input" ></textarea>
+                                            <textarea name="containment_comments" id="containment_comments_textarea" class="mic-input"></textarea>
                                             <button class="mic-btn" type="button" style="display:none;">
                                                 <i class="fas fa-microphone"></i>
                                             </button>
@@ -933,7 +1016,7 @@
                                     <div class="group-input" id="capa_qa_comments_group">
                                         <label for="capa_qa_comments">Comments</label>
                                         <div class="relative-container">
-                                            <textarea name="capa_qa_comments" id="capa_qa_comments_textarea" class="mic-input" ></textarea>
+                                            <textarea name="capa_qa_comments" id="capa_qa_comments_textarea" class="mic-input"></textarea>
                                             <button class="mic-btn" type="button" style="display:none;">
                                                 <i class="fas fa-microphone"></i>
                                             </button>
@@ -978,15 +1061,17 @@
                                 </div>
                             </div>
                             <div class="button-block">
-                                <button type="submit" id="ChangesaveButton" class="saveButton on-submit-disable-button">Save</button>
+                                <button type="submit" id="ChangesaveButton"
+                                    class="saveButton on-submit-disable-button">Save</button>
                                 <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
-                                <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                                <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                        Exit </a> </button>
 
                             </div>
 
                         </div>
                     </div>
-                   
+
 
                     <!-- Product Information content -->
                     <div id="CCForm2" class="inner-block cctabcontent">
@@ -998,7 +1083,8 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Product Details">
-                                            Product Details<button type="button" name="ann" id="product">+</button>
+                                            Product Details<button type="button" name="ann"
+                                                id="product">+</button>
                                         </label>
                                         <table class="table table-bordered" id="product_details">
                                             <thead>
@@ -1020,14 +1106,15 @@
                                         </table>
                                     </div>
                                 </div>
-                    
+
                                 <div class="col-12 sub-head">
                                     Material Details
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Material Details">
-                                            Material Details<button type="button" name="ann" id="material">+</button>
+                                            Material Details<button type="button" name="ann"
+                                                id="material">+</button>
                                         </label>
                                         <table class="table table-bordered" id="material_details">
                                             <thead>
@@ -1049,14 +1136,15 @@
                                         </table>
                                     </div>
                                 </div>
-                    
+
                                 <div class="col-12 sub-head">
                                     Equipment/Instruments Details
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Equipment Details">
-                                            Equipment/Instruments Details<button type="button" name="ann" id="equipment">+</button>
+                                            Equipment/Instruments Details<button type="button" name="ann"
+                                                id="equipment">+</button>
                                         </label>
                                         <table class="table table-bordered" id="equipment_details">
                                             <thead>
@@ -1069,12 +1157,12 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                
+
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
-                    
+
                                 <div class="col-12 sub-head">
                                     Other type CAPA Details
                                 </div>
@@ -1082,7 +1170,8 @@
                                     <div class="group-input" id="details_new_group">
                                         <label for="details_new">Details</label>
                                         <div class="relative-container">
-                                            <input type="text" name="details_new" id="details_new_input" class="mic-input">
+                                            <input type="text" name="details_new" id="details_new_input"
+                                                class="mic-input">
                                             <button class="mic-btn" type="button" style="display:none;">
                                                 <i class="fas fa-microphone"></i>
                                             </button>
@@ -1102,7 +1191,7 @@
                                         </div>
                                     </div>
                                 </div>
-                    
+
                                 <div class="col-12">
                                     <div class="group-input" id="capa_qa_comments2_group">
                                         <label for="capa_qa_comments2">CAPA QA Comments</label>
@@ -1127,7 +1216,7 @@
                                         </div>
                                     </div>
                                 </div>
-                    
+
                                 <div class="button-block">
                                     <button type="submit" class="saveButton on-submit-disable-button">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -1139,9 +1228,9 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <!-- Project Study content****************************** -->
-                  
+
 
                     <!-- CAPA Details content ****************************-->
                     <div id="CCForm3" class="inner-block cctabcontent">
@@ -1155,14 +1244,15 @@
                                             <option value="">Select a value</option>
                                             <option value="Corrective Action">Corrective Action</option>
                                             <option value="Preventive Action">Preventive Action</option>
-                                            <option value="Corrective & Preventive Action">Corrective & Preventive Action</option>
+                                            <option value="Corrective & Preventive Action">Corrective & Preventive Action
+                                            </option>
                                         </select>
                                         @error('assign_to')
                                             <p class="text-danger">{{ $message }}</p>
                                         @enderror
                                     </div>
                                 </div>
-                    
+
                                 <!-- Corrective Action -->
                                 <div class="col-12" id="corrective_action_group">
                                     <div class="group-input">
@@ -1189,7 +1279,7 @@
                                         </div>
                                     </div>
                                 </div>
-                    
+
                                 <!-- Preventive Action -->
                                 <div class="col-12" id="preventive_action_group">
                                     <div class="group-input">
@@ -1216,7 +1306,7 @@
                                         </div>
                                     </div>
                                 </div>
-                    
+
                                 <!-- Supervisor Review Comments -->
                                 <div class="col-12" id="supervisor_review_comments_group">
                                     <div class="group-input">
@@ -1243,19 +1333,20 @@
                                         </div>
                                     </div>
                                 </div>
-                    
+
                             </div>
-                    
+
                             <div class="button-block">
                                 <button type="submit" class="saveButton on-submit-disable-button">Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                 <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                                <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                        Exit </a> </button>
                             </div>
                         </div>
                     </div>
-                    
-                      {{-- <div id="CCForm5" class="inner-block cctabcontent">
+
+                    {{-- <div id="CCForm5" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="sub-head">
                                 CFT Information
@@ -1389,9 +1480,9 @@
                             </div>
                         </div>
                     </div> --}}
-                    
+
                     <!-- CAPA Closure content -->
-                    
+
                     <div id="CCForm4" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
@@ -1418,48 +1509,48 @@
                                     </div>
                                 </div>
                                 <!-- <div class="col-12 sub-head">
-                                    Effectiveness Check Details
-                                </div> -->
+                                                Effectiveness Check Details
+                                            </div> -->
                                 <!-- <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Effectiveness Check Required">Effectiveness Check
-                                            Required?</label>
-                                        <select name="effect_check" onChange="setCurrentDate(this.value)">
-                                            <option value="">Enter Your Selection Here</option>
-                                            <option value="yes">Yes</option>
-                                            <option value="no">No</option>
-                                        </select>
-                                    </div>
-                                </div> -->
+                                                <div class="group-input">
+                                                    <label for="Effectiveness Check Required">Effectiveness Check
+                                                        Required?</label>
+                                                    <select name="effect_check" onChange="setCurrentDate(this.value)">
+                                                        <option value="">Enter Your Selection Here</option>
+                                                        <option value="yes">Yes</option>
+                                                        <option value="no">No</option>
+                                                    </select>
+                                                </div>
+                                            </div> -->
                                 <!-- <div class="col-6 new-date-data-field">
-                                    <div class="group-input input-date">
-                                        <label for="EffectCheck Creation Date">Effectiveness Check Creation Date</label>
-                                        {{-- <input type="date" name="effect_check_date"> --}}
-                                        <div class="calenderauditee">
-                                            <input type="text" name="effect_check_date" id="effect_check_date" readonly
-                                                placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="effect_check_date" class="hide-input"
-                                                oninput="handleDateInput(this, 'effect_check_date')" />
-                                        </div>
-                                    </div>
-                                </div> -->
+                                                <div class="group-input input-date">
+                                                    <label for="EffectCheck Creation Date">Effectiveness Check Creation Date</label>
+                                                    {{-- <input type="date" name="effect_check_date"> --}}
+                                                    <div class="calenderauditee">
+                                                        <input type="text" name="effect_check_date" id="effect_check_date" readonly
+                                                            placeholder="DD-MMM-YYYY" />
+                                                        <input type="date" name="effect_check_date" class="hide-input"
+                                                            oninput="handleDateInput(this, 'effect_check_date')" />
+                                                    </div>
+                                                </div>
+                                            </div> -->
                                 <!-- <div class="col-6">
-                                    <div class="group-input">
-                                        <label for="Effectiveness_checker">Effectiveness Checker</label>
-                                        <select id="select-state" placeholder="Select..." name="Effectiveness_checker">
-                                            <option value="">Select a person</option>
-                                            @foreach ($users as $value)
-                                                <option value="{{ $value->id }}">{{ $value->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div> -->
+                                                <div class="group-input">
+                                                    <label for="Effectiveness_checker">Effectiveness Checker</label>
+                                                    <select id="select-state" placeholder="Select..." name="Effectiveness_checker">
+                                                        <option value="">Select a person</option>
+                                                        @foreach ($users as $value)
+    <option value="{{ $value->id }}">{{ $value->name }}</option>
+    @endforeach
+                                                    </select>
+                                                </div>
+                                            </div> -->
                                 <!-- <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="effective_check_plan">Effectiveness Check Plan</label>
-                                        <textarea name="effective_check_plan"></textarea>
-                                    </div>
-                                </div> -->
+                                                <div class="group-input">
+                                                    <label for="effective_check_plan">Effectiveness Check Plan</label>
+                                                    <textarea name="effective_check_plan"></textarea>
+                                                </div>
+                                            </div> -->
                                 <div class="col-12 sub-head">
                                     Extension Justification
                                 </div>
@@ -1476,7 +1567,8 @@
                                 <button type="submit" class="saveButton on-submit-disable-button">Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                 <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                                <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                        Exit </a> </button>
                             </div>
                         </div>
                     </div>
@@ -1645,7 +1737,7 @@
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                
+
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="Cancelled By">Cancelled By</label>
@@ -1667,12 +1759,13 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <div class="button-block">
                                 {{-- <button type="submit" class="saveButton">Save</button> --}}
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                 {{-- <button type="submit">Submit</button> --}}
-                                <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white" href="#"> Exit </a> </button>
+                                <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"
+                                        href="#"> Exit </a> </button>
                             </div>
                         </div>
                     </div>
@@ -1707,14 +1800,14 @@
             }
         }
     </script>
- <script>
-    $(document).ready(function() {
-        
-        $('#mainform').on('submit', function(e) {
-            $('.on-submit-disable-button').prop('disabled', true);
-        });
-    })
-</script>
+    <script>
+        $(document).ready(function() {
+
+            $('#mainform').on('submit', function(e) {
+                $('.on-submit-disable-button').prop('disabled', true);
+            });
+        })
+    </script>
     <script>
         VirtualSelect.init({
             ele: '#Facility, #Group, #Audit, #Auditee , #capa_related_record,#cft_reviewer'
@@ -1809,11 +1902,10 @@
             document.getElementById('initiator_group_code').value = selectedValue;
         });
 
-        function setCurrentDate(item){
-            if(item == 'yes'){
-                $('#effect_check_date').val('{{ date('d-M-Y')}}');
-            }
-            else{
+        function setCurrentDate(item) {
+            if (item == 'yes') {
+                $('#effect_check_date').val('{{ date('d-M-Y') }}');
+            } else {
                 $('#effect_check_date').val('');
             }
         }
@@ -1822,207 +1914,206 @@
         var maxLength = 255;
         $('#docname').keyup(function() {
             var textlen = maxLength - $(this).val().length;
-            $('#rchars').text(textlen);});
+            $('#rchars').text(textlen);
+        });
     </script>
 
 
 
 
-<script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-
+    <script>
+        < link rel = "stylesheet"
+        href = "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" >
     </script>
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Initialize speech recognition
-        const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-        recognition.continuous = false;
-        recognition.interimResults = false;
-        recognition.lang = 'en-US';
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize speech recognition
+            const recognition = new(window.SpeechRecognition || window.webkitSpeechRecognition)();
+            recognition.continuous = false;
+            recognition.interimResults = false;
+            recognition.lang = 'en-US';
 
-        // Function to start speech recognition and append result to the target element
-        function startRecognition(targetElement) {
-            recognition.start();
-            recognition.onresult = function(event) {
-                const transcript = event.results[0][0].transcript;
-                targetElement.value += transcript;
-            };
-            recognition.onerror = function(event) {
-                console.error(event.error);
-            };
-        }
+            // Function to start speech recognition and append result to the target element
+            function startRecognition(targetElement) {
+                recognition.start();
+                recognition.onresult = function(event) {
+                    const transcript = event.results[0][0].transcript;
+                    targetElement.value += transcript;
+                };
+                recognition.onerror = function(event) {
+                    console.error(event.error);
+                };
+            }
 
-        // Event delegation for all mic buttons
-        document.addEventListener('click', function(event) {
-            if (event.target.closest('.mic-btn')) {
-                const button = event.target.closest('.mic-btn');
-                const inputField = button.previousElementSibling;
-                if (inputField && inputField.classList.contains('mic-input')) {
-                    startRecognition(inputField);
+            // Event delegation for all mic buttons
+            document.addEventListener('click', function(event) {
+                if (event.target.closest('.mic-btn')) {
+                    const button = event.target.closest('.mic-btn');
+                    const inputField = button.previousElementSibling;
+                    if (inputField && inputField.classList.contains('mic-input')) {
+                        startRecognition(inputField);
+                    }
                 }
-            }
-        });
-    });
-</script>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Initialize speech recognition
-        const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-        recognition.continuous = false;
-        recognition.interimResults = false;
-        recognition.lang = 'en-US';
-
-        // Function to start speech recognition and append result to the target element
-        function startRecognition(targetElement) {
-            recognition.start();
-            recognition.onresult = function(event) {
-                const transcript = event.results[0][0].transcript;
-                targetElement.value += transcript;
-            };
-            recognition.onerror = function(event) {
-                console.error(event.error);
-            };
-        }
-
-        // Event delegation for all mic buttons
-        document.addEventListener('click', function(event) {
-            if (event.target.closest('.mic-btn')) {
-                const button = event.target.closest('.mic-btn');
-                const inputField = button.previousElementSibling;
-                if (inputField && inputField.classList.contains('mic-input')) {
-                    startRecognition(inputField);
-                }
-            }
-        });
-    });
-</script>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Initialize speech recognition
-    const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-    recognition.continuous = false;
-    recognition.interimResults = false;
-    recognition.lang = 'en-US';
-
-    // Function to start speech recognition and append result to the target element
-    function startRecognition(targetElement) {
-        recognition.start();
-        recognition.onresult = function(event) {
-            const transcript = event.results[0][0].transcript;
-            targetElement.value += transcript;
-        };
-        recognition.onerror = function(event) {
-            console.error(event.error);
-        };
-    }
-
-    // Event delegation for all mic buttons
-    document.addEventListener('click', function(event) {
-        if (event.target.closest('.mic-btn')) {
-            const button = event.target.closest('.mic-btn');
-            const inputField = button.previousElementSibling;
-            if (inputField && inputField.classList.contains('mic-input')) {
-                startRecognition(inputField);
-            }
-        }
-    });
-
-    // Show/hide the container based on user selection
-    function toggleOthersField(selectedValue) {
-        const container = document.getElementById('external_agencies_req');
-        if (selectedValue === 'others') {
-            container.classList.remove('d-none');
-        } else {
-            container.classList.add('d-none');
-        }
-    }
-});
-
-$(document).ready(function() {
-    let audio = null;
-    let selectedLanguage = 'en-us'; // Default language
-    const apiKey = '16f141b794484a71b679325faf2d5fc4'; // Use the provided API key
-
-    // When the user clicks the button, open the mini modal
-    $(document).on('click', '.speak-btn', function() {
-        let inputField = $(this).siblings('textarea, input');
-        let textToSpeak = inputField.val();
-        let modal = $(this).siblings('.mini-modal');
-        if (textToSpeak) {
-            // Store the input field element
-            $(modal).data('inputField', inputField);
-            modal.css({
-                display: 'block',
-                top: $(this).position().top - modal.outerHeight() - 10,
-                left: $(this).position().left + $(this).outerWidth() - modal.outerWidth()
             });
-        }
-    });
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize speech recognition
+            const recognition = new(window.SpeechRecognition || window.webkitSpeechRecognition)();
+            recognition.continuous = false;
+            recognition.interimResults = false;
+            recognition.lang = 'en-US';
 
-    // When the user clicks on <span> (x), close the mini modal
-    $(document).on('click', '.close', function() {
-        $(this).closest('.mini-modal').css('display', 'none');
-    });
-
-    // When the user selects a language and clicks the button
-    $(document).on('click', '#select-language-btn', function(event) {
-        event.preventDefault(); // Prevent form submission
-        let modal = $(this).closest('.mini-modal');
-        selectedLanguage = modal.find('#language-select').val();
-        let inputField = modal.data('inputField');
-        let textToSpeak = inputField.val();
-
-        if (textToSpeak) {
-            if (audio) {
-                audio.pause();
-                audio.currentTime = 0;
+            // Function to start speech recognition and append result to the target element
+            function startRecognition(targetElement) {
+                recognition.start();
+                recognition.onresult = function(event) {
+                    const transcript = event.results[0][0].transcript;
+                    targetElement.value += transcript;
+                };
+                recognition.onerror = function(event) {
+                    console.error(event.error);
+                };
             }
 
-            const url = `https://api.voicerss.org/?key=${apiKey}&hl=${selectedLanguage}&src=${encodeURIComponent(textToSpeak)}&r=0&c=WAV&f=44khz_16bit_stereo`;
-            audio = new Audio(url);
-            audio.play();
-            audio.onended = function() {
-                audio = null;
-            };
-        }
+            // Event delegation for all mic buttons
+            document.addEventListener('click', function(event) {
+                if (event.target.closest('.mic-btn')) {
+                    const button = event.target.closest('.mic-btn');
+                    const inputField = button.previousElementSibling;
+                    if (inputField && inputField.classList.contains('mic-input')) {
+                        startRecognition(inputField);
+                    }
+                }
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize speech recognition
+            const recognition = new(window.SpeechRecognition || window.webkitSpeechRecognition)();
+            recognition.continuous = false;
+            recognition.interimResults = false;
+            recognition.lang = 'en-US';
 
-        modal.css('display', 'none');
-    });
+            // Function to start speech recognition and append result to the target element
+            function startRecognition(targetElement) {
+                recognition.start();
+                recognition.onresult = function(event) {
+                    const transcript = event.results[0][0].transcript;
+                    targetElement.value += transcript;
+                };
+                recognition.onerror = function(event) {
+                    console.error(event.error);
+                };
+            }
 
-    // Speech-to-Text functionality
-    const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-    recognition.continuous = false;
-    recognition.interimResults = false;
-    recognition.lang = 'en-US';
+            // Event delegation for all mic buttons
+            document.addEventListener('click', function(event) {
+                if (event.target.closest('.mic-btn')) {
+                    const button = event.target.closest('.mic-btn');
+                    const inputField = button.previousElementSibling;
+                    if (inputField && inputField.classList.contains('mic-input')) {
+                        startRecognition(inputField);
+                    }
+                }
+            });
 
-    function startRecognition(targetElement) {
-        recognition.start();
-        recognition.onresult = function(event) {
-            const transcript = event.results[0][0].transcript;
-            targetElement.value += transcript;
-        };
-        recognition.onerror = function(event) {
-            console.error(event.error);
-        };
-    }
+            // Show/hide the container based on user selection
+            function toggleOthersField(selectedValue) {
+                const container = document.getElementById('external_agencies_req');
+                if (selectedValue === 'others') {
+                    container.classList.remove('d-none');
+                } else {
+                    container.classList.add('d-none');
+                }
+            }
+        });
 
-    $(document).on('click', '.mic-btn', function() {
-        const inputField = $(this).siblings('textarea, input');
-        startRecognition(inputField[0]);
-    });
+        $(document).ready(function() {
+            let audio = null;
+            let selectedLanguage = 'en-us'; // Default language
+            const apiKey = '16f141b794484a71b679325faf2d5fc4'; // Use the provided API key
 
-    // Show mic button on hover
-    $('.relative-container').hover(
-        function() {
-            $(this).find('.mic-btn').show();
-        },
-        function() {
-            $(this).find('.mic-btn').hide();
-        }
-    );
-});
-</script>
+            // When the user clicks the button, open the mini modal
+            $(document).on('click', '.speak-btn', function() {
+                let inputField = $(this).siblings('textarea, input');
+                let textToSpeak = inputField.val();
+                let modal = $(this).siblings('.mini-modal');
+                if (textToSpeak) {
+                    // Store the input field element
+                    $(modal).data('inputField', inputField);
+                    modal.css({
+                        display: 'block',
+                        top: $(this).position().top - modal.outerHeight() - 10,
+                        left: $(this).position().left + $(this).outerWidth() - modal.outerWidth()
+                    });
+                }
+            });
 
+            // When the user clicks on <span> (x), close the mini modal
+            $(document).on('click', '.close', function() {
+                $(this).closest('.mini-modal').css('display', 'none');
+            });
 
+            // When the user selects a language and clicks the button
+            $(document).on('click', '#select-language-btn', function(event) {
+                event.preventDefault(); // Prevent form submission
+                let modal = $(this).closest('.mini-modal');
+                selectedLanguage = modal.find('#language-select').val();
+                let inputField = modal.data('inputField');
+                let textToSpeak = inputField.val();
 
+                if (textToSpeak) {
+                    if (audio) {
+                        audio.pause();
+                        audio.currentTime = 0;
+                    }
+
+                    const url =
+                        `https://api.voicerss.org/?key=${apiKey}&hl=${selectedLanguage}&src=${encodeURIComponent(textToSpeak)}&r=0&c=WAV&f=44khz_16bit_stereo`;
+                    audio = new Audio(url);
+                    audio.play();
+                    audio.onended = function() {
+                        audio = null;
+                    };
+                }
+
+                modal.css('display', 'none');
+            });
+
+            // Speech-to-Text functionality
+            const recognition = new(window.SpeechRecognition || window.webkitSpeechRecognition)();
+            recognition.continuous = false;
+            recognition.interimResults = false;
+            recognition.lang = 'en-US';
+
+            function startRecognition(targetElement) {
+                recognition.start();
+                recognition.onresult = function(event) {
+                    const transcript = event.results[0][0].transcript;
+                    targetElement.value += transcript;
+                };
+                recognition.onerror = function(event) {
+                    console.error(event.error);
+                };
+            }
+
+            $(document).on('click', '.mic-btn', function() {
+                const inputField = $(this).siblings('textarea, input');
+                startRecognition(inputField[0]);
+            });
+
+            // Show mic button on hover
+            $('.relative-container').hover(
+                function() {
+                    $(this).find('.mic-btn').show();
+                },
+                function() {
+                    $(this).find('.mic-btn').hide();
+                }
+            );
+        });
+    </script>
 @endsection

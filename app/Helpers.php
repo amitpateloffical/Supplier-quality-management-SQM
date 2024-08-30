@@ -528,11 +528,113 @@ static function getFullDepartmentName($code)
         }
         return $response;
     }
+
+
+    /************ Get User Role Email **************/
+
     public static function getInitiatorEmail($id)
     {
-
-        return   DB::table('users')->where('id',$id)->value('email');
+        return DB::table('users')->whereRaw("FIND_IN_SET(3, role)")->pluck('email');
     }
+
+    public static function getCQAEmail($id)
+    {
+        return DB::table('users')->whereRaw("FIND_IN_SET(35, role)")->pluck('email');
+    }
+
+    public static function getFormulationDeptEmail($id)
+    {
+        return DB::table('users')->whereRaw("FIND_IN_SET(36, role)")->pluck('email');
+    }
+
+    public static function getPurchaseDeptEmail($id)
+    {
+        return DB::table('users')->whereRaw("FIND_IN_SET(34, role)")->pluck('email');
+    }
+
+    public static function getSupplierAuditorEmail($id)
+    {
+        return DB::table('users')->whereRaw("FIND_IN_SET(37, role)")->pluck('email');
+    } 
+
+    public static function getSupplierContactDeptEmail($id)
+    {
+        return DB::table('users')->whereRaw("FIND_IN_SET(38, role)")->pluck('email');
+    }
+
+    public static function getAuditeeEmail($id)
+    {
+        return DB::table('users')->whereRaw("FIND_IN_SET(39, role)")->pluck('email');
+    }
+
+    public static function getAuditManagerEmail($id)
+    {
+        return DB::table('users')->whereRaw("FIND_IN_SET(13, role)")->pluck('email');
+    }
+
+    public static function getHODEmail($id)
+    {
+        return DB::table('users')->whereRaw("FIND_IN_SET(4, role)")->pluck('email');
+    }
+
+    public static function getQAEmail($id)
+    {
+        return DB::table('users')->whereRaw("FIND_IN_SET(7, role)")->pluck('email');
+    }
+
+    public static function getWorkGroupEmail($id)
+    {
+        return DB::table('users')->whereRaw("FIND_IN_SET(16, role)")->pluck('email');
+    }
+
+    public static function getCFTEmail($id)
+    {
+        return DB::table('users')->whereRaw("FIND_IN_SET(5, role)")->pluck('email');
+    }
+
+    public static function getAuditeesEmail($id)
+    {
+        return DB::table('users')->whereRaw("FIND_IN_SET(42, role)")->pluck('email');
+    }
+
+    public static function getQualityEmail($id)
+    {
+        return DB::table('users')->whereRaw("FIND_IN_SET(43, role)")->pluck('email');
+    }
+
+    public static function getQAHeadEmail($id)
+    {
+        return DB::table('users')->whereRaw("FIND_IN_SET(9, role)")->pluck('email');
+    }
+
+    public static function getQAReviewerEmail($id)
+    {
+        return DB::table('users')->whereRaw("FIND_IN_SET(44, role)")->pluck('email');
+    }
+
+    public static function getActionOwnerEmail($id)
+    {
+        return DB::table('users')->whereRaw("FIND_IN_SET(8, role)")->pluck('email');
+    }
+
+    public static function getQAApproverEmail($id)
+    {
+        return DB::table('users')->whereRaw("FIND_IN_SET(45, role)")->pluck('email');
+    }
+
+    public static function getSupervisorEmail($id)
+    {
+        return DB::table('users')->whereRaw("FIND_IN_SET(14, role)")->pluck('email');
+    }
+
+    public static function getScarInitiatorEmail($id)
+    {
+        return DB::table('users')->whereRaw("FIND_IN_SET(46, role)")->pluck('email');
+    }
+
+    /************ User Role Email ends **************/
+
+
     public static function getDepartmentNameWithString($id)
     {
         $response = [];

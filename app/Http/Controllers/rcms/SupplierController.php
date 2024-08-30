@@ -6066,7 +6066,7 @@ class SupplierController extends Controller
                     $list = Helpers::getCqaDepartmentList($supplier->division_id);
                     foreach ($list as $u) {
                         // if($u->q_m_s_divisions_id == $supplier->division_id){
-                            $email = Helpers::getInitiatorEmail($u->user_id);
+                            $email = Helpers::getCQAEmail($u->user_id);
                             if (!empty($email)) {
                                 try {
                                     Mail::send(
@@ -6125,7 +6125,7 @@ class SupplierController extends Controller
                 $list = Helpers::getPurchaseDepartmentList($supplier->division_id);
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $supplier->division_id){
-                        $email = Helpers::getInitiatorEmail($u->user_id);
+                        $email = Helpers::getPurchaseDeptEmail($u->user_id);
                         if (!empty($email)) {
                             try {
                                 Mail::send(
@@ -6182,7 +6182,7 @@ class SupplierController extends Controller
                 $list = Helpers::getCqaDepartmentList($supplier->division_id);
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $supplier->division_id){
-                        $email = Helpers::getInitiatorEmail($u->user_id);
+                        $email = Helpers::getCQAEmail($u->user_id);
                         if (!empty($email)) {
                             try {
                                 Mail::send(
@@ -6242,7 +6242,7 @@ class SupplierController extends Controller
                 $list = Helpers::getFormulationDepartmentList($supplier->division_id);
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $supplier->division_id){
-                        $email = Helpers::getInitiatorEmail($u->user_id);
+                        $email = Helpers::getFormulationDeptEmail($u->user_id);
                         if (!empty($email)) {
                             try {
                                 Mail::send(
@@ -6300,7 +6300,7 @@ class SupplierController extends Controller
                 $list = Helpers::getPurchaseDepartmentList($supplier->division_id);
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $supplier->division_id){
-                        $email = Helpers::getInitiatorEmail($u->user_id);
+                        $email = Helpers::getPurchaseDeptEmail($u->user_id);
                         if (!empty($email)) {
                             try {
                                 Mail::send(
@@ -6357,7 +6357,7 @@ class SupplierController extends Controller
                 $list = Helpers::getCqaDepartmentList($supplier->division_id);
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $supplier->division_id){
-                        $email = Helpers::getInitiatorEmail($u->user_id);
+                        $email = Helpers::getCQAEmail($u->user_id);
                         if (!empty($email)) {
                             try {
                                 Mail::send(
@@ -6679,7 +6679,7 @@ class SupplierController extends Controller
                 $list = Helpers::getPurchaseDepartmentList($supplier->division_id);
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $supplier->division_id){
-                        $email = Helpers::getInitiatorEmail($u->user_id);
+                        $email = Helpers::getPurchaseDeptEmail($u->user_id);
                         if (!empty($email)) {
                             try {
                                 Mail::send(
@@ -6700,7 +6700,7 @@ class SupplierController extends Controller
                 $list = Helpers::getFormulationDepartmentList($supplier->division_id);
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $supplier->division_id){
-                        $email = Helpers::getInitiatorEmail($u->user_id);
+                        $email = Helpers::getFormulationDeptEmail($u->user_id);
                         if (!empty($email)) {
                             try {
                                 Mail::send(
@@ -7070,7 +7070,7 @@ class SupplierController extends Controller
                 $list = Helpers::getPurchaseDepartmentList($supplier->division_id);
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $supplier->division_id){
-                        $email = Helpers::getInitiatorEmail($u->user_id);
+                        $email = Helpers::getPurchaseDeptEmail($u->user_id);
                         if (!empty($email)) {
                             try {
                                 Mail::send(
@@ -7129,7 +7129,7 @@ class SupplierController extends Controller
                 $list = Helpers::getFormulationDepartmentList($supplier->division_id);
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $supplier->division_id){
-                        $email = Helpers::getInitiatorEmail($u->user_id);
+                        $email = Helpers::getFormulationDeptEmail($u->user_id);
                         if (!empty($email)) {
                             try {
                                 Mail::send(
@@ -7188,7 +7188,7 @@ class SupplierController extends Controller
                 $list = Helpers::getCqaDepartmentList($supplier->division_id);
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $supplier->division_id){
-                        $email = Helpers::getInitiatorEmail($u->user_id);
+                        $email = Helpers::getCQAEmail($u->user_id);
                         if (!empty($email)) {
                             try {
                                 Mail::send(
@@ -7247,7 +7247,7 @@ class SupplierController extends Controller
                 $list = Helpers::getPurchaseDepartmentList($supplier->division_id);
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $supplier->division_id){
-                        $email = Helpers::getInitiatorEmail($u->user_id);
+                        $email = Helpers::getPurchaseDeptEmail($u->user_id);
                         if (!empty($email)) {
                             try {
                                 Mail::send(
@@ -7304,7 +7304,7 @@ class SupplierController extends Controller
                 $list = Helpers::getCqaDepartmentList($supplier->division_id);
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $supplier->division_id){
-                        $email = Helpers::getInitiatorEmail($u->user_id);
+                        $email = Helpers::getCQAEmail($u->user_id);
                         if (!empty($email)) {
                             try {
                                 Mail::send(
@@ -7418,7 +7418,7 @@ class SupplierController extends Controller
                 $list = Helpers::getPurchaseDepartmentList($supplier->division_id);
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $supplier->division_id){
-                        $email = Helpers::getInitiatorEmail($u->user_id);
+                        $email = Helpers::getPurchaseDeptEmail($u->user_id);
                         if (!empty($email)) {
                             try {
                                 Mail::send(
@@ -7476,7 +7476,7 @@ class SupplierController extends Controller
                 $list = Helpers::getCqaDepartmentList($supplier->division_id);
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $supplier->division_id){
-                        $email = Helpers::getInitiatorEmail($u->user_id);
+                        $email = Helpers::getCQAEmail($u->user_id);
                         if (!empty($email)) {
                             try {
                                 Mail::send(
@@ -7518,7 +7518,7 @@ class SupplierController extends Controller
                 $list = Helpers::getFormulationDepartmentList($supplier->division_id);
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $supplier->division_id){
-                        $email = Helpers::getInitiatorEmail($u->user_id);
+                        $email = Helpers::getFormulationDeptEmail($u->user_id);
                         if (!empty($email)) {
                             try {
                                 Mail::send(
@@ -7587,7 +7587,7 @@ class SupplierController extends Controller
             $list = Helpers::getCqaDepartmentList($supplier->division_id);
             foreach ($list as $u) {
                 // if($u->q_m_s_divisions_id == $supplier->division_id){
-                    $email = Helpers::getInitiatorEmail($u->user_id);
+                    $email = Helpers::getCQAEmail($u->user_id);
                     if (!empty($email)) {
                         try {
                             Mail::send(
@@ -7723,7 +7723,7 @@ class SupplierController extends Controller
             $list = Helpers::getPurchaseDepartmentList($supplier->division_id);
             foreach ($list as $u) {
                 // if($u->q_m_s_divisions_id == $supplier->division_id){
-                    $email = Helpers::getInitiatorEmail($u->user_id);
+                    $email = Helpers::getPurchaseDeptEmail($u->user_id);
                     if (!empty($email)) {
                         try {
                             Mail::send(
@@ -7744,7 +7744,7 @@ class SupplierController extends Controller
             $list = Helpers::getFormulationDepartmentList($supplier->division_id);
             foreach ($list as $u) {
                 // if($u->q_m_s_divisions_id == $supplier->division_id){
-                    $email = Helpers::getInitiatorEmail($u->user_id);
+                    $email = Helpers::getFormulationDeptEmail($u->user_id);
                     if (!empty($email)) {
                         try {
                             Mail::send(
@@ -7832,7 +7832,7 @@ class SupplierController extends Controller
             $list = Helpers::getCqaDepartmentList($supplier->division_id);
             foreach ($list as $u) {
                 // if($u->q_m_s_divisions_id == $supplier->division_id){
-                    $email = Helpers::getInitiatorEmail($u->user_id);
+                    $email = Helpers::getCQAEmail($u->user_id);
                     if (!empty($email)) {
                         try {
                             Mail::send(
@@ -7874,7 +7874,7 @@ class SupplierController extends Controller
             $list = Helpers::getFormulationDepartmentList($supplier->division_id);
             foreach ($list as $u) {
                 // if($u->q_m_s_divisions_id == $supplier->division_id){
-                    $email = Helpers::getInitiatorEmail($u->user_id);
+                    $email = Helpers::getFormulationDeptEmail($u->user_id);
                     if (!empty($email)) {
                         try {
                             Mail::send(

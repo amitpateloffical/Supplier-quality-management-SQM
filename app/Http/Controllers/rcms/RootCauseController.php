@@ -304,7 +304,7 @@ use Illuminate\Support\Facades\Hash;
         if (!empty($root->division_code)){
             $history = new RootAuditTrial();
             $history->root_id = $root->id;
-            $history->activity_type = 'Division Code';
+            $history->activity_type = 'Site/Location code';
             $history->previous = "Null";
             $history->current = $root->division_code;
             $history->comment = "Not Applicable";
@@ -1676,7 +1676,7 @@ $history->save();
                 $list = Helpers::getInitiatorUserList($root->division_id);
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $root->division_id){
-                        $email = Helpers::getInitiatorEmail($u->user_id);
+                        $email = Helpers::getQAEmail($u->user_id);
                         if ($email !== null) {
                             try {
                                 Mail::send(
@@ -1855,7 +1855,7 @@ $history->save();
                   
                     foreach ($list as $u) {
                         // if($u->q_m_s_divisions_id == $root->division_id){
-                            $email = Helpers::getInitiatorEmail($u->user_id);
+                            $email = Helpers::getQAEmail($u->user_id);
                             if ($email !== null) {
                                 try {
                                     Mail::send(

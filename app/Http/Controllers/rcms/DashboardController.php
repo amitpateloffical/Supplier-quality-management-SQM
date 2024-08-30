@@ -790,22 +790,26 @@ class DashboardController extends Controller
 
         if ($type == "Supplier-Audit") {
             $data = SupplierAudit::find($id);
+            $record = $data->record;
             $audit =route('SupplierAuditTrialReport', $data->id);
             $single = route('SupplierSingleReport', $data->id);
             $parent = "childReport/". $data->id;
         }
         if ($type == "Change-Control") {
             $data = CC::find($id);
+            $record = $data->record;
             $single = "change_control_single_pdf/" . $data->id;
             $audit = "audit/" . $data->id;
             $parent = "#";
         } elseif ($type == "CAPA") {
             $data = Capa::find($id);
+            $record = $data->record;
             $single = "capaSingleReport/" . $data->id;
             $audit = "capaAuditReport/" . $data->id;
             $parent = "#";
         } elseif ($type == "Internal-Audit") {
             $data = InternalAudit::find($id);
+            $record = $data->record;
             $single = "internalSingleReport/" . $data->id;
             $audit = "internalauditReport/" . $data->id;
         } elseif ($type == "Risk-Assessment") {
@@ -815,64 +819,77 @@ class DashboardController extends Controller
             $parent = "#";
         } elseif ($type == "Lab-Incident") {
             $data = LabIncident::find($id);
+            $record = $data->record;
             $single = "LabIncidentSingleReport/" . $data->id;
             $audit = "LabIncidentAuditReport/" . $data->id;
         } elseif ($type == "External-Audit") {
             $data = Auditee::find($id);
+            $record = $data->record;
             $single = "ExternalAuditSingleReport/" . $data->id;
             $audit = "ExternalAuditTrialReport/" . $data->id;
         } elseif ($type == "Audit-Program") {
             $data = AuditProgram::find($id);
+            $record = $data->record;
             $single = "auditProgramSingleReport/" . $data->id;
             $audit = "auditProgramAuditReport/" . $data->id;
         } elseif ($type == "Action-Item") {
             $data = ActionItem::find($id);
+            $record = $data->record;
             $single = "actionitemSingleReport/"  . $data->id;
             $audit = "actionitemAuditReport/" . $data->id;
             $parent = "#". $data->id;
         } elseif ($type == "Extension") {
             $data = extension_new::find($id);
+            $record = $data->record_number;
             $single = "singleReportNew/" .$data->id;
             $audit = "auditReportext/" .$data->id;
             $parent = "#";
         } elseif ($type == "Observation") {
             $data = Observation::find($id);
+            $record = $data->record;
             $single = "ObservationSingleReport/" .$data->id;
             $audit = "showaudittrialobservation/" .$data->id;
             $parent = "#". $data->id;
         } elseif ($type == "Effectiveness-Check") {
             $data = EffectivenessCheck::find($id);
+            $record = $data->record;
             $single = "effectiveSingleReport/" .$data->id;
             $audit = "effectiveAuditReport/" .$data->id;
             $parent="#" . $data->id;
         } elseif ($type == "Management-Review") {
             $data = ManagementReview::find($id);
+            $record = $data->record;
             $single = "managementReview/" . $data->id;
             $audit = "managementReviewReport/" . $data->id;
         } elseif ($type == "Root-Cause-Analysis") {
             $data = RootCauseAnalysis::find($id);
+            $record = $data->record;
             $single = "rootSingleReport/" . $data->id;
             $audit = "rootAuditReport/" . $data->id;
             $parent="#";
         } elseif ($type == "Deviation") {
             $data = Deviation::find($id);
+            $record = $data->record;
             $single = "deviationSingleReport/". $data->id;
             $audit = "auditReport/" . $data->id;
             $parent="#";
         } elseif ($type == "Supplier") {
             $data = Supplier::find($id);
             // $single = "deviationSingleReport/". $data->id;
+            $record = $data->record;
             $single = "supplier-single-report/show/". $data->id;
             $audit = "supplier-audit-trail-pdf/". $data->id;
             $parent="#";
         } elseif ($type == "Supplier Site") {
             $data = SupplierSite::find($id);
             // $single = "deviationSingleReport/". $data->id;
+            $record = $data->record;
             $single = "supplier-site-single-report/". $data->id;
             $audit = "supplier-site-audit-trail-pdf/". $data->id;
             $parent="#";
         } elseif ($type == "SCAR") {
             $data = SCAR::find($id);
+            $record = $data->record;
             $single = "scar-single-report/". $data->id;
             $audit = "scar-audit-trail-pdf/". $data->id;
             $parent="#";
@@ -882,7 +899,7 @@ class DashboardController extends Controller
         $html = '';
         $html = '<div class="block">
         <div class="record_no">
-            Record No. ' . str_pad($data->record, 4, '0', STR_PAD_LEFT) .
+            Record No. ' . str_pad($record, 4, '0', STR_PAD_LEFT) .
             '</div>
         <div class="division">
         ' . Helpers::getDivisionName($data->division_id) . '/ ' . $type . '

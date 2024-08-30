@@ -143,8 +143,8 @@
                                                 class="text-danger">*</span></label>
                                         <span id="rchars">255</span> Characters remaining
                                         <div class="relative-container">
-                                            <input id="docname" maxlength="255" name="short_description"
-                                                class="mic-input">
+                                            <input id="docname" maxlength="255" name="short_description" class="mic-input"
+                                                required>
                                             @component('frontend.forms.language-model')
                                             @endcomponent
                                         </div>

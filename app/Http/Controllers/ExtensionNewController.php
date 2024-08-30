@@ -1099,7 +1099,7 @@ class ExtensionNewController extends Controller
                     }
                     $history->save();
 
-                    $list = Helpers::getInitiatorUserList($extensionNew->division_id);
+                    $list = Helpers::getInitiatorUserList($extensionNew->site_location_code);
                     foreach ($list as $u) {
                         // if ($u->q_m_s_divisions_id == $extensionNew->division_id) {
                         $email = Helpers::getInitiatorEmail($u->user_id);
@@ -1110,7 +1110,7 @@ class ExtensionNewController extends Controller
                                     ['data' => $extensionNew, 'site' => "EXT", 'history' => "More Info Required", 'process' => 'Extension', 'comment' => $request->comments, 'user'=> Auth::user()->name],
                                     function ($message) use ($email, $extensionNew) {
                                         $message->to($email)
-                                        ->subject("QMS Notification: Extension, Record #" . str_pad($extensionNew->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Info Required Performed");
+                                        ->subject("QMS Notification: Extension, Record #" . str_pad($extensionNew->record_number, 4, '0', STR_PAD_LEFT) . " - Activity: More Info Required Performed");
                                     }
                                 );
                             } catch (\Exception $e) {
@@ -1166,7 +1166,7 @@ class ExtensionNewController extends Controller
                                     ['data' => $extensionNew, 'site' => "EXT", 'history' => "More Info Required", 'process' => 'Extension', 'comment' => $request->comments, 'user'=> Auth::user()->name],
                                     function ($message) use ($email, $extensionNew) {
                                         $message->to($email)
-                                        ->subject("QMS Notification: Extension, Record #" . str_pad($extensionNew->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Info Required Performed");
+                                        ->subject("QMS Notification: Extension, Record #" . str_pad($extensionNew->record_number, 4, '0', STR_PAD_LEFT) . " - Activity: More Info Required Performed");
                                     }
                                 );
                             } catch (\Exception $e) {
@@ -1232,7 +1232,7 @@ class ExtensionNewController extends Controller
                     return back();
                 }
 
-                $list = Helpers::getHodUserList($extensionNew->division_id);
+                $list = Helpers::getHodUserList($extensionNew->site_location_code);
                 foreach ($list as $u) {
                     // if ($u->q_m_s_divisions_id == $extensionNew->division_id) {
                     $email = Helpers::getInitiatorEmail($u->user_id);
@@ -1244,7 +1244,7 @@ class ExtensionNewController extends Controller
                                 ['data' => $extensionNew, 'site' => "EXT", 'history' => "Submitted", 'process' => 'Extension', 'comment' => $request->comments, 'user'=> Auth::user()->name],
                                 function ($message) use ($email, $extensionNew) {
                                     $message->to($email)
-                                    ->subject("QMS Notification: Extension, Record #" . str_pad($extensionNew->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submitted Performed");
+                                    ->subject("QMS Notification: Extension, Record #" . str_pad($extensionNew->record_number, 4, '0', STR_PAD_LEFT) . " - Activity: Submitted Performed");
                                 }
                             );
                         } catch (\Exception $e) {
@@ -1306,7 +1306,7 @@ class ExtensionNewController extends Controller
                     }
                     $history->save();
 
-                    $list = Helpers::getQaApproverList($extensionNew->division_id);
+                    $list = Helpers::getQaApproverList($extensionNew->site_location_code);
                     foreach ($list as $u) {
                         // if ($u->q_m_s_divisions_id == $extensionNew->division_id) {
                         $email = Helpers::getInitiatorEmail($u->user_id);
@@ -1317,7 +1317,7 @@ class ExtensionNewController extends Controller
                                     ['data' => $extensionNew, 'site' => "EXT", 'history' => "Reviewed", 'process' => 'Extension', 'comment' => $request->comments, 'user'=> Auth::user()->name],
                                     function ($message) use ($email, $extensionNew) {
                                         $message->to($email)
-                                        ->subject("QMS Notification: Extension, Record #" . str_pad($extensionNew->record, 4, '0', STR_PAD_LEFT) . " - Activity: Reviewed Performed");
+                                        ->subject("QMS Notification: Extension, Record #" . str_pad($extensionNew->record_number, 4, '0', STR_PAD_LEFT) . " - Activity: Reviewed Performed");
                                     }
                                 );
                             } catch (\Exception $e) {
@@ -1386,7 +1386,7 @@ class ExtensionNewController extends Controller
                     //     // }
                     // }
 
-                    $list = Helpers::getHodUserList($extensionNew->division_id);
+                    $list = Helpers::getHodUserList($extensionNew->site_location_code);
                     foreach ($list as $u) {
                         // if ($u->q_m_s_divisions_id == $extensionNew->division_id) {
                         $email = Helpers::getInitiatorEmail($u->user_id);
@@ -1407,7 +1407,7 @@ class ExtensionNewController extends Controller
                         // }
                     }
 
-                    $list = Helpers::getInitiatorUserList($extensionNew->division_id);
+                    $list = Helpers::getInitiatorUserList($extensionNew->site_location_code);
                     foreach ($list as $u) {
                         // if ($u->q_m_s_divisions_id == $extensionNew->division_id) {
                         $email = Helpers::getInitiatorEmail($u->user_id);

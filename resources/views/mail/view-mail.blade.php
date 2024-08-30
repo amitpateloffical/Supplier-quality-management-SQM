@@ -210,13 +210,26 @@
                         <p>{{ $process }} No.:-
                             @if ($process == 'Supplier')
                                 RV/RP/{{ date('Y') }}/{{ Helpers::record($data->record) }}
+                            @elseif($process == 'Extension')
+                                {{ Helpers::getDivisionName($data->site_location_code) }}/{{ $site }}/{{ date('Y') }}/{{ Helpers::record($data->record_number) }}
                             @else
                                 {{ Helpers::getDivisionName($data->division_id) }}/{{ $site }}/{{ date('Y') }}/{{ Helpers::record($data->record) }}
                             @endif
                         </p>
+
                         <p>"{{ $history }}" activity was performed on the below listed {{ $process }}.</p>
-                        <p>Originator Name :- {{ Helpers::getInitiatorName($data->initiator_id) }}</p>
+
+                        <p>
+                            Originator Name :-
+                            @if ($data->initiator)
+                                {{ Helpers::getInitiatorName($data->initiator) }}
+                            @else
+                                {{ Helpers::getInitiatorName($data->initiator_id) }}
+                            @endif
+                        </p>
+
                         <p>Date Opened:- {{ $data->created_at->format('d-M-Y H:i:s') }}</p>
+
                         <p>Comment:- {{ $comment }}.</p>
 
                     </div>
@@ -238,10 +251,31 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>{{ Helpers::record($data->record) }}</td>
-                                    <td>{{ Helpers::getDivisionName($data->division_id) }}</td>
+                                    <td>
+                                        @if ($process == 'Extension')
+                                            {{ Helpers::record($data->record_number) }}
+                                        @else
+                                            {{ Helpers::record($data->record) }}
+                                        @endif
+                                    </td>
+
+                                    <td>
+                                        @if ($process == 'Extension')
+                                            {{ Helpers::getDivisionName($data->site_location_code) }}
+                                        @else
+                                            {{ Helpers::getDivisionName($data->division_id) }}
+                                        @endif
+                                    </td>
+
                                     <td>{{ $data->short_description }}</td>
-                                    <td>{{ Helpers::getDateFormat($data->due_date) }}</td>
+
+                                    <td>
+                                        @if ($process == 'Extension')
+                                            Not Applicable
+                                        @else
+                                            {{ Helpers::getDateFormat($data->due_date) }}
+                                        @endif
+                                    </td>
                                     <td>{{ $data->status }}</td>
                                 </tr>
                             </tbody>

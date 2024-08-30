@@ -280,7 +280,7 @@
                                         <label for="docname">Short Description<span class="text-danger">*</span></label>
                                         <span id="rchars">255</span> Characters remaining
                                         <div class="relative-container">
-                                            <input name="short_description" maxlength="255" class="mic-input"
+                                            <input name="short_description" maxlength="255" class="mic-input" required
                                                 {{ $extensionNew->stage == 0 || $extensionNew->stage == 4 ? 'disabled' : '' }}
                                                 id="docname" value="{{ $extensionNew->short_description }}">
                                             @component('frontend.forms.language-model', [
@@ -1032,9 +1032,9 @@
 
                     <!-- Modal footer -->
                     <!-- <div class="modal-footer">
-                                                                                                                                                        <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                                                        <button>Close</button>
-                                                                                                                                                    </div> -->
+                                                                                                                                                                        <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                                                                        <button>Close</button>
+                                                                                                                                                                    </div> -->
                     <div class="modal-footer">
                         <button type="submit">
                             Submit
@@ -1080,9 +1080,9 @@
 
                     <!-- Modal footer -->
                     <!-- <div class="modal-footer">
-                                                                                                                                                        <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                                                        <button>Close</button>
-                                                                                                                                                    </div> -->
+                                                                                                                                                                        <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                                                                        <button>Close</button>
+                                                                                                                                                                    </div> -->
                     <div class="modal-footer">
                         <button type="submit">
                             Submit

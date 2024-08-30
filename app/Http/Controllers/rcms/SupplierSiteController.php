@@ -36,7 +36,7 @@ ActionItem
 
 class SupplierSiteController extends Controller
 {
-    public function index(Request $request){        
+    public function index(Request $request){
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
@@ -60,7 +60,7 @@ class SupplierSiteController extends Controller
         $supplierSite->short_description = $request->short_description;
         $supplierSite->assign_to = $request->assign_to;
         $supplierSite->due_date = Carbon::now()->addDays(30)->format('d-M-Y');
-        $supplierSite->supplier_person = $request->supplier_person;        
+        $supplierSite->supplier_person = $request->supplier_person;
         $supplierSite->supplier_contact_person = $request->supplier_contact_person;
         $supplierSite->supplier_products = $request->supplier_products;
         $supplierSite->description = $request->description;
@@ -111,7 +111,7 @@ class SupplierSiteController extends Controller
         //     }
         //     $supplierSite->supplier_attachment = json_encode($files);
         // }
-        
+
         if (!empty($request->supplier_attachment)) {
             $files = [];
             if ($request->hasfile('supplier_attachment')) {
@@ -143,7 +143,7 @@ class SupplierSiteController extends Controller
 
         /****************** Supplier Details ********************/
         $supplierSite->supplier_name = $request->supplier_name;
-        $supplierSite->supplier_id = $request->supplier_id;        
+        $supplierSite->supplier_id = $request->supplier_id;
         $supplierSite->manufacturer_name = $request->manufacturer_name;
         $supplierSite->manufacturer_id = $request->manufacturer_id;
         $supplierSite->vendor_name = $request->vendor_name;
@@ -171,7 +171,7 @@ class SupplierSiteController extends Controller
 
         /****************** Score Card Content ********************/
         $supplierSite->cost_reduction = $request->cost_reduction;
-        $supplierSite->cost_reduction_weight = $request->cost_reduction_weight;        
+        $supplierSite->cost_reduction_weight = $request->cost_reduction_weight;
         $supplierSite->payment_term = $request->payment_term;
         $supplierSite->payment_term_weight = $request->payment_term_weight;
         $supplierSite->lead_time_days = $request->lead_time_days;
@@ -212,10 +212,10 @@ class SupplierSiteController extends Controller
         }
 
         /****************** Risk Assessment Content ********************/
-        
+
         $supplierSite->last_audit_date = $request->last_audit_date;
-        $supplierSite->next_audit_date = $request->next_audit_date;   
-              
+        $supplierSite->next_audit_date = $request->next_audit_date;
+
         $supplierSite->audit_frequency = $request->audit_frequency;
         $supplierSite->last_audit_result = $request->last_audit_result;
         $supplierSite->facility_type = $request->facility_type;
@@ -357,16 +357,16 @@ class SupplierSiteController extends Controller
         $certificationData->data = $request->certificationData;
         $certificationData->save();
 
-        
+
 
         /******************* Audit Trail Code ***********************/
-        
+
         $history = new SupplierSiteAuditTrail;
         $history->supplier_site_id = $supplierSite->id;
         $history->activity_type = 'Record Number';
         $history->previous = "Null";
        // $history->current = $supplierSite->record;
-    //    $history->current = Helpers::getDivisionName(session()->get('division')) }}/SS/{{ Helpers::year($supplierSite->created_at) }}/{{ str_pad($supplierSite->record, 4, '0', STR_PAD_LEFT); 
+    //    $history->current = Helpers::getDivisionName(session()->get('division')) }}/SS/{{ Helpers::year($supplierSite->created_at) }}/{{ str_pad($supplierSite->record, 4, '0', STR_PAD_LEFT);
 
         $history->current = Helpers::getDivisionName(session()->get('division')) . "/SS/" . Helpers::year($supplierSite->created_at) . "/" . str_pad($supplierSite->record, 4, '0', STR_PAD_LEFT);
 
@@ -394,7 +394,7 @@ class SupplierSiteController extends Controller
         $history->change_from = "Initiation";
         $history->action_name = 'Create';
         $history->save();
-        
+
         $history = new SupplierSiteAuditTrail;
         $history->supplier_site_id = $supplierSite->id;
         $history->activity_type = 'Initiator';
@@ -488,7 +488,7 @@ class SupplierSiteController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
-        
+
         if(!empty($supplierSite->logo_attachment)){
             $history = new SupplierSiteAuditTrail();
             $history->supplier_site_id = $supplierSite->id;
@@ -505,7 +505,7 @@ class SupplierSiteController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
-        
+
         if(!empty($request->supplier_contact_person)){
             $history = new SupplierSiteAuditTrail;
             $history->supplier_site_id = $supplierSite->id;
@@ -636,7 +636,7 @@ class SupplierSiteController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
-         
+
         if(!empty($request->supplier_website)){
             $history = new SupplierSiteAuditTrail;
             $history->supplier_site_id = $supplierSite->id;
@@ -704,7 +704,7 @@ class SupplierSiteController extends Controller
             $history->action_name="Create";
             $history->save();
         }
-        
+
         if(!empty($request->related_url)){
             $history = new SupplierSiteAuditTrail;
             $history->supplier_site_id = $supplierSite->id;
@@ -769,7 +769,7 @@ class SupplierSiteController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
-        
+
         if (!empty($supplierSite->HOD_attachment)) {
             $history = new SupplierSiteAuditTrail();
             $history->supplier_site_id = $supplierSite->id;
@@ -803,7 +803,7 @@ class SupplierSiteController extends Controller
             $history->action_name="Create";
             $history->save();
         }
-        
+
         if(!empty($request->supplier_name)){
             $history = new SupplierSiteAuditTrail;
             $history->supplier_site_id = $supplierSite->id;
@@ -1061,7 +1061,7 @@ class SupplierSiteController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
-        
+
         if (!empty($supplierSite->iso_certificate_attachment)) {
             $history = new SupplierSiteAuditTrail();
             $history->supplier_site_id = $supplierSite->id;
@@ -1078,7 +1078,7 @@ class SupplierSiteController extends Controller
             $history->action_name="Create";
             $history->save();
         }
-        
+
         if(!empty($request->suppplier_contacts)){
             $history = new SupplierSiteAuditTrail;
             $history->supplier_site_id = $supplierSite->id;
@@ -1239,7 +1239,7 @@ class SupplierSiteController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
-        
+
         if (!empty($supplierSite->supplier_detail_additional_attachment)) {
             $history = new SupplierSiteAuditTrail();
             $history->supplier_site_id = $supplierSite->id;
@@ -1577,7 +1577,7 @@ class SupplierSiteController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
-        
+
         if (!empty($supplierSite->score_card_additional_attachment)) {
             $history = new SupplierSiteAuditTrail();
             $history->supplier_site_id = $supplierSite->id;
@@ -1626,7 +1626,7 @@ class SupplierSiteController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
-        
+
         if (!empty($supplierSite->QA_reviewer_attachment)) {
             $history = new SupplierSiteAuditTrail();
             $history->supplier_site_id = $supplierSite->id;
@@ -1643,7 +1643,7 @@ class SupplierSiteController extends Controller
             $history->action_name="Create";
             $history->save();
         }
-        
+
         if (!empty($supplierSite->qa_reviewer_additional_attachment)) {
             $history = new SupplierSiteAuditTrail();
             $history->supplier_site_id = $supplierSite->id;
@@ -1852,7 +1852,7 @@ class SupplierSiteController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
-        
+
         if (!empty($supplierSite->risk_assessment_additional_attachment)) {
             $history = new SupplierSiteAuditTrail();
             $history->supplier_site_id = $supplierSite->id;
@@ -1885,7 +1885,7 @@ class SupplierSiteController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
-        
+
         if (!empty($supplierSite->QA_head_attachment)) {
             $history = new SupplierSiteAuditTrail();
             $history->supplier_site_id = $supplierSite->id;
@@ -1919,30 +1919,30 @@ class SupplierSiteController extends Controller
             $history->action_name="Create";
             $history->save();
         }
-        
+
         toastr()->success("Record is created Successfully");
         return redirect(url('rcms/qms-dashboard'));
     }
 
     public function show(Request $request, $id)
     {
-        
+
         $data = SupplierSite::find($id);
         $gridData = SupplierSiteGrid::where(['supplier_site_id' => $id, 'identifier' => "CertificationData"])->first();
         $certificationData = json_decode($gridData->data, true);
-        
+
         return view('frontend.supplier-site.suppliersite_view', compact('data', 'certificationData',));
     }
 
     public function update(Request $request, $id)
-    {      
+    {
         $lastDocument = SupplierSite::find($id);
         $supplierSite = SupplierSite::find($id);
-        
+
         $supplierSite->date_opened = $request->date_opened;
         $supplierSite->short_description = $request->short_description;
         $supplierSite->assign_to = $request->assign_to;
-        $supplierSite->supplier_person = $request->supplier_person;        
+        $supplierSite->supplier_person = $request->supplier_person;
         $supplierSite->supplier_contact_person = $request->supplier_contact_person;
         $supplierSite->supplier_products = $request->supplier_products;
         $supplierSite->description = $request->description;
@@ -1988,10 +1988,10 @@ class SupplierSiteController extends Controller
         }
 
         // If no files are attached, set to null
-        $supplierSite->logo_attachment = !empty($files) ? json_encode(array_values($files)) : null; 
+        $supplierSite->logo_attachment = !empty($files) ? json_encode(array_values($files)) : null;
 
 
-       
+
 
         // if (!empty($request->supplier_attachment))
         // {
@@ -2026,8 +2026,8 @@ class SupplierSiteController extends Controller
         }
 
         // If no files are attached, set to null
-        $supplierSite->supplier_attachment = !empty($files) ? json_encode(array_values($files)) : null; 
-        
+        $supplierSite->supplier_attachment = !empty($files) ? json_encode(array_values($files)) : null;
+
         /****************** HOD Review ********************/
         $supplierSite->HOD_feedback = $request->HOD_feedback;
         $supplierSite->HOD_comment = $request->HOD_comment;
@@ -2064,11 +2064,11 @@ class SupplierSiteController extends Controller
         }
 
         // If no files are attached, set to null
-        $supplierSite->HOD_attachment = !empty($files) ? json_encode(array_values($files)) : null; 
+        $supplierSite->HOD_attachment = !empty($files) ? json_encode(array_values($files)) : null;
 
         /****************** Supplier Details ********************/
         $supplierSite->supplier_name = $request->supplier_name;
-        $supplierSite->supplier_id = $request->supplier_id;        
+        $supplierSite->supplier_id = $request->supplier_id;
         $supplierSite->manufacturer_name = $request->manufacturer_name;
         $supplierSite->manufacturer_id = $request->manufacturer_id;
         $supplierSite->vendor_name = $request->vendor_name;
@@ -2096,7 +2096,7 @@ class SupplierSiteController extends Controller
 
         /****************** Score Card Content ********************/
         $supplierSite->cost_reduction = $request->cost_reduction;
-        $supplierSite->cost_reduction_weight = $request->cost_reduction_weight;        
+        $supplierSite->cost_reduction_weight = $request->cost_reduction_weight;
         $supplierSite->payment_term = $request->payment_term;
         $supplierSite->payment_term_weight = $request->payment_term_weight;
         $supplierSite->lead_time_days = $request->lead_time_days;
@@ -2156,12 +2156,12 @@ class SupplierSiteController extends Controller
         }
 
         // If no files are attached, set to null
-        $supplierSite->QA_reviewer_attachment = !empty($files) ? json_encode(array_values($files)) : null; 
+        $supplierSite->QA_reviewer_attachment = !empty($files) ? json_encode(array_values($files)) : null;
 
 
         /****************** Risk Assessment Content ********************/
         $supplierSite->last_audit_date = $request->last_audit_date;
-        $supplierSite->next_audit_date = $request->next_audit_date;        
+        $supplierSite->next_audit_date = $request->next_audit_date;
         $supplierSite->audit_frequency = $request->audit_frequency;
         $supplierSite->last_audit_result = $request->last_audit_result;
         $supplierSite->facility_type = $request->facility_type;
@@ -2212,7 +2212,7 @@ class SupplierSiteController extends Controller
         }
 
         // If no files are attached, set to null
-        $supplierSite->QA_head_attachment = !empty($files) ? json_encode(array_values($files)) : null; 
+        $supplierSite->QA_head_attachment = !empty($files) ? json_encode(array_values($files)) : null;
 
 
         /************ Additional Attchment Code ************/
@@ -2248,7 +2248,7 @@ class SupplierSiteController extends Controller
         }
 
         // If no files are attached, set to null
-        $supplierSite->iso_certificate_attachment = !empty($files) ? json_encode(array_values($files)) : null; 
+        $supplierSite->iso_certificate_attachment = !empty($files) ? json_encode(array_values($files)) : null;
 
 
         // if (!empty($request->gi_additional_attachment)) {
@@ -2283,7 +2283,7 @@ class SupplierSiteController extends Controller
         }
 
         // If no files are attached, set to null
-        $supplierSite->gi_additional_attachment = !empty($files) ? json_encode(array_values($files)) : null; 
+        $supplierSite->gi_additional_attachment = !empty($files) ? json_encode(array_values($files)) : null;
 
         // if (!empty($request->hod_additional_attachment)) {
         //     $files = [];
@@ -2317,10 +2317,10 @@ class SupplierSiteController extends Controller
         }
 
         // If no files are attached, set to null
-        $supplierSite->hod_additional_attachment =!empty($files) ? json_encode(array_values($files)) : null; 
+        $supplierSite->hod_additional_attachment =!empty($files) ? json_encode(array_values($files)) : null;
 
 
-        
+
 
         // if (!empty($request->supplier_detail_additional_attachment)) {
         //     $files = [];
@@ -2354,7 +2354,7 @@ class SupplierSiteController extends Controller
         }
 
         // If no files are attached, set to null
-        $supplierSite->supplier_detail_additional_attachment = !empty($files) ? json_encode(array_values($files)) : null; 
+        $supplierSite->supplier_detail_additional_attachment = !empty($files) ? json_encode(array_values($files)) : null;
 
 
         // if (!empty($request->score_card_additional_attachment)) {
@@ -2389,7 +2389,7 @@ class SupplierSiteController extends Controller
         }
 
         // If no files are attached, set to null
-        $supplierSite->score_card_additional_attachment = !empty($files) ? json_encode(array_values($files)) : null; 
+        $supplierSite->score_card_additional_attachment = !empty($files) ? json_encode(array_values($files)) : null;
 
 
         // if (!empty($request->qa_reviewer_additional_attachment)) {
@@ -2424,7 +2424,7 @@ class SupplierSiteController extends Controller
         }
 
         // If no files are attached, set to null
-        $supplierSite->qa_reviewer_additional_attachment = !empty($files) ? json_encode(array_values($files)) : null; 
+        $supplierSite->qa_reviewer_additional_attachment = !empty($files) ? json_encode(array_values($files)) : null;
 
 
         // if (!empty($request->risk_assessment_additional_attachment)) {
@@ -2459,7 +2459,7 @@ class SupplierSiteController extends Controller
         }
 
         // If no files are attached, set to null
-        $supplierSite->risk_assessment_additional_attachment = !empty($files) ? json_encode(array_values($files)) : null; 
+        $supplierSite->risk_assessment_additional_attachment = !empty($files) ? json_encode(array_values($files)) : null;
 
 
         // if (!empty($request->qa_head_additional_attachment)) {
@@ -2494,9 +2494,9 @@ class SupplierSiteController extends Controller
         }
 
         // If no files are attached, set to null
-        $supplierSite->qa_head_additional_attachment = !empty($files) ? json_encode(array_values($files)) : null; 
+        $supplierSite->qa_head_additional_attachment = !empty($files) ? json_encode(array_values($files)) : null;
 
-        
+
         $supplierSite->update();
 
         $certificationData = SupplierSiteGrid::where(['supplier_site_id' => $supplierSite->id, 'identifier' =>'CertificationData'])->firstOrCreate();
@@ -2588,7 +2588,7 @@ class SupplierSiteController extends Controller
                }
               $history->save();
         }
-        
+
         if($lastDocument->supplier_contact_person != $request->supplier_contact_person){
             $history = new SupplierSiteAuditTrail;
             $history->supplier_site_id = $lastDocument->id;
@@ -2790,7 +2790,7 @@ class SupplierSiteController extends Controller
             }
             $history->save();
         }
-        
+
         if($lastDocument->supplier_attachment != $supplierSite->supplier_attachment){
             $history = new SupplierSiteAuditTrail();
             $history->supplier_site_id = $lastDocument->id;
@@ -2811,8 +2811,8 @@ class SupplierSiteController extends Controller
             }
             $history->save();
         }
-        
-        if($lastDocument->gi_additional_attachment != $supplierSite->gi_additional_attachment){    
+
+        if($lastDocument->gi_additional_attachment != $supplierSite->gi_additional_attachment){
             $history = new SupplierSiteAuditTrail();
             $history->supplier_site_id = $lastDocument->id;
             $history->activity_type = 'Additional Attachment';
@@ -2832,7 +2832,7 @@ class SupplierSiteController extends Controller
             }
             $history->save();
         }
-        
+
         if($lastDocument->related_url != $request->related_url){
             $history = new SupplierSiteAuditTrail;
             $history->supplier_site_id = $lastDocument->id;
@@ -2891,7 +2891,7 @@ class SupplierSiteController extends Controller
             } else {
                 $history->action_name = 'Update';
             }
-            
+
             $history->save();
         }
         if($lastDocument->HOD_comment != $request->HOD_comment){
@@ -2935,7 +2935,7 @@ class SupplierSiteController extends Controller
             }
             $history->save();
         }
-        
+
         if($lastDocument->hod_additional_attachment != $supplierSite->hod_additional_attachment){
             $history = new SupplierSiteAuditTrail();
             $history->supplier_site_id = $lastDocument->id;
@@ -2956,7 +2956,7 @@ class SupplierSiteController extends Controller
             }
             $history->save();
         }
-        
+
         if($lastDocument->supplier_name != $request->supplier_name){
             $history = new SupplierSiteAuditTrail;
             $history->supplier_site_id = $lastDocument->id;
@@ -3412,7 +3412,7 @@ class SupplierSiteController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            
+
             if (is_null($lastDocument->manufacturing_sited) || $lastDocument->manufacturing_sited === '') {
                 $history->action_name = 'New';
             } else {
@@ -3433,13 +3433,13 @@ class SupplierSiteController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            
+
             if (is_null($lastDocument->quality_management) || $lastDocument->quality_management === '') {
                 $history->action_name = 'New';
             } else {
                 $history->action_name = 'Update';
             }
-            
+
             $history->save();
         }
         if($lastDocument->bussiness_history != $request->bussiness_history){
@@ -3495,7 +3495,7 @@ class SupplierSiteController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            
+
             if (is_null($lastDocument->compliance_risk) || $lastDocument->compliance_risk === '') {
                 $history->action_name = 'New';
             } else {
@@ -3503,7 +3503,7 @@ class SupplierSiteController extends Controller
             }
             $history->save();
         }
-        
+
         if($lastDocument->supplier_detail_additional_attachment != $supplierSite->supplier_detail_additional_attachment){
             $history = new SupplierSiteAuditTrail();
             $history->supplier_site_id = $lastDocument->id;
@@ -3537,7 +3537,7 @@ class SupplierSiteController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            
+
             if (is_null($lastDocument->cost_reduction) || $lastDocument->cost_reduction === '') {
                 $history->action_name = 'New';
             } else {
@@ -3658,7 +3658,7 @@ class SupplierSiteController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            
+
             if (is_null($lastDocument->ontime_delivery) || $lastDocument->ontime_delivery === '') {
                 $history->action_name = 'New';
             } else {
@@ -3759,7 +3759,7 @@ class SupplierSiteController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
-            
+
             if (is_null($lastDocument->rejection_ppm_weight) || $lastDocument->rejection_ppm_weight === '') {
                 $history->action_name = 'New';
             } else {
@@ -3927,7 +3927,7 @@ class SupplierSiteController extends Controller
             }
             $history->save();
         }
-        
+
         if($lastDocument->score_card_additional_attachment != $supplierSite->score_card_additional_attachment){
             $history = new SupplierSiteAuditTrail();
             $history->supplier_site_id = $lastDocument->id;
@@ -3988,7 +3988,7 @@ class SupplierSiteController extends Controller
             }
             $history->save();
         }
-        
+
         if($lastDocument->QA_reviewer_attachment != $supplierSite->QA_reviewer_attachment){
             $history = new SupplierSiteAuditTrail();
             $history->supplier_site_id = $lastDocument->id;
@@ -4009,7 +4009,7 @@ class SupplierSiteController extends Controller
             }
             $history->save();
         }
-        
+
         if($lastDocument->qa_reviewer_additional_attachment != $supplierSite->qa_reviewer_additional_attachment){
             $history = new SupplierSiteAuditTrail();
             $history->supplier_site_id = $lastDocument->id;
@@ -4271,7 +4271,7 @@ class SupplierSiteController extends Controller
             $history->save();
         }
 
-        
+
         if($lastDocument->risk_assessment_additional_attachment != $supplierSite->risk_assessment_additional_attachment){
             $history = new SupplierSiteAuditTrail();
             $history->supplier_site_id = $lastDocument->id;
@@ -4313,7 +4313,7 @@ class SupplierSiteController extends Controller
             $history->save();
         }
 
-        
+
         if($lastDocument->QA_head_attachment != $supplierSite->QA_head_attachment){
             $history = new SupplierSiteAuditTrail();
             $history->supplier_site_id = $lastDocument->id;
@@ -4335,7 +4335,7 @@ class SupplierSiteController extends Controller
             $history->save();
         }
 
-        
+
         if($lastDocument->qa_head_additional_attachment != $supplierSite->qa_head_additional_attachment){
             $history = new SupplierSiteAuditTrail();
             $history->supplier_site_id = $lastDocument->id;
@@ -4356,7 +4356,7 @@ class SupplierSiteController extends Controller
             }
             $history->save();
         }
-        
+
         toastr()->success("Record is updated Successfully");
         return redirect()->back();
     }
@@ -4364,7 +4364,7 @@ class SupplierSiteController extends Controller
     public function singleReport(Request $request, $id){
         $data = SupplierSite::find($id);
         $supplierData = SupplierSite::find($id);
-       
+
         if (!empty($data)) {
             $data->originator = User::where('id', $data->initiator_id)->value('name');
             $gridData = SupplierSiteGrid::where(['supplier_site_id' => $id, 'identifier' => "CertificationData"])->first();
@@ -4435,9 +4435,9 @@ class SupplierSiteController extends Controller
             $canvas = $pdf->getDomPDF()->getCanvas();
             $height = $canvas->get_height();
             $width = $canvas->get_width();
-    
+
             $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
-    
+
             $canvas->page_text(
                 $width / 2.5,
                 $height / 2,
@@ -4475,10 +4475,10 @@ class SupplierSiteController extends Controller
                         } else {
                            $history->previous = $lastDocument->submitted_by . ' , ' . $lastDocument->submitted_on;
                       }
-                    
+
                     $history->current = $supplierSite->submitted_by . ' , ' . $supplierSite->submitted_on;
 
-                    
+
                     // $history->previous = "";
                     $history->action = 'Submit Supplier Details';
                     // $history->current = "Not Applicable";
@@ -4497,7 +4497,7 @@ class SupplierSiteController extends Controller
                     } else {
                         $history->action_name = 'Update';
                     }
-                    
+
                     $history->save();
                     //  $list = Helpers::getHodUserList();
                     //     foreach ($list as $u) {
@@ -4537,7 +4537,7 @@ class SupplierSiteController extends Controller
                         } else {
                            $history->previous = $lastDocument->pending_qualification_by . ' , ' . $lastDocument->pending_qualification_on;
                       }
-                    
+
                     $history->current = $supplierSite->pending_qualification_by . ' , ' . $supplierSite->pending_qualification_on;
 
                     $history->action = 'Qualification Complete';
@@ -4550,7 +4550,7 @@ class SupplierSiteController extends Controller
                     $history->change_to =   "Pending Supplier Audit";
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Plan Proposed';
-                    
+
                     if (is_null($lastDocument->pending_qualification_by) || $lastDocument->pending_qualification_by === '')
                     {
                          $history->action_name = 'New';
@@ -4558,7 +4558,7 @@ class SupplierSiteController extends Controller
                         $history->action_name = 'Update';
                     }
 
-                    
+
                     $history->save();
                      $list = Helpers::getSupplierAuditorDepartmentList($supplierSite->division_id);
                         foreach ($list as $u) {
@@ -4587,7 +4587,7 @@ class SupplierSiteController extends Controller
                         //  }
                       }
                     $supplierSite->update();
-                    
+
                     toastr()->success('Document Sent');
                     return back();
             }
@@ -4602,17 +4602,17 @@ class SupplierSiteController extends Controller
                     $history->supplier_site_id = $id;
                     // $history->activity_type = 'Activity Log';
                     // $history->previous = "";
-                    
+
                     $history->activity_type = 'Audit Failed By, Audit Failed On';
                     if (is_null($lastDocument->pending_supplier_audit_by) || $lastDocument->pending_supplier_audit_by === '') {
                            $history->previous = "";
                         } else {
                            $history->previous = $lastDocument->pending_supplier_audit_by . ' , ' . $lastDocument->pending_supplier_audit_on;
                       }
-                    
+
                     $history->current = $supplierSite->pending_supplier_audit_by . ' , ' . $supplierSite->pending_supplier_audit_on;
 
-                    
+
                     $history->action = 'Audit Failed';
                     // $history->current = "Not Applicable";
                     $history->comment = $request->comments;
@@ -4681,7 +4681,7 @@ class SupplierSiteController extends Controller
                         } else {
                            $history->previous = $lastDocument->pending_rejection_by . ' , ' . $lastDocument->pending_rejection_on;
                       }
-                    
+
                     $history->current = $supplierSite->pending_rejection_by . ' , ' . $supplierSite->pending_rejection_on;
                     $history->action = 'Supplier Obsolete';
                     // $history->current = $supplierSite->submit_by;
@@ -4700,9 +4700,9 @@ class SupplierSiteController extends Controller
                     } else {
                         $history->action_name = 'Update';
                     }
-                    
+
                     $history->save();
-                    
+
                     $list = Helpers::getSupplierAuditorDepartmentList($supplierSite->division_id);
                     foreach ($list as $u) {
                         // if($u->q_m_s_divisions_id == $supplierSite->division_id){
@@ -4729,7 +4729,7 @@ class SupplierSiteController extends Controller
                             }
                     //  }
                   }
-                  
+
                     $list = Helpers::getInitiatorUserList($supplierSite->division_id);
                     foreach ($list as $u) {
                         // if($u->q_m_s_divisions_id == $supplierSite->division_id){
@@ -4776,7 +4776,7 @@ class SupplierSiteController extends Controller
             $supplierSite->supplier_approved_by = Auth::user()->name;
             $supplierSite->supplier_approved_on = Carbon::now()->format('d-M-Y H:i A');
             $supplierSite->supplier_approved_comment = $request->comments;
-        
+
             $history = new SupplierSiteAuditTrail();
             $history->supplier_site_id = $id;
             // $history->activity_type = 'Activity Log';
@@ -4788,9 +4788,9 @@ class SupplierSiteController extends Controller
                         } else {
                            $history->previous = $lastDocument->supplier_approved_by . ' , ' . $lastDocument->supplier_approved_on;
                       }
-                    
+
             $history->current = $supplierSite->supplier_approved_by . ' , ' . $supplierSite->supplier_approved_on;
-            
+
             $history->action = 'Audit Passed';
             // $history->current = "";
             $history->comment = $request->comments;
@@ -4807,9 +4807,9 @@ class SupplierSiteController extends Controller
             } else {
                 $history->action_name = 'Update';
             }
-                            
+
             $history->save();
-            
+
             $list = Helpers::getSupplierContactDepartmentList($supplierSite->division_id);
             foreach ($list as $u) {
                 // if($u->q_m_s_divisions_id == $supplierSite->division_id){
@@ -4836,7 +4836,7 @@ class SupplierSiteController extends Controller
                     }
             //  }
           }
-          
+
             $supplierSite->update();
             toastr()->success('Document Sent');
             return back();
@@ -4858,7 +4858,7 @@ class SupplierSiteController extends Controller
             $supplierSite->supplier_approved_to_obselete_by = Auth::user()->name;
             $supplierSite->supplier_approved_to_obselete_on = Carbon::now()->format('d-M-Y H:i A');
             $supplierSite->supplier_approved_to_obselete_comment = $request->comments;
-        
+
             $history = new SupplierSiteAuditTrail();
             $history->supplier_site_id = $id;
             // $history->activity_type = 'Activity Log';
@@ -4870,9 +4870,9 @@ class SupplierSiteController extends Controller
                         } else {
                            $history->previous = $lastDocument->supplier_approved_to_obselete_by . ' , ' . $lastDocument->supplier_approved_to_obselete_on;
                       }
-                    
+
             $history->current = $supplierSite->supplier_approved_to_obselete_by . ' , ' . $supplierSite->supplier_approved_to_obselete_on;
-            
+
             $history->action = 'Supplier Obsolete';
             // $history->current = "";
             $history->comment = $request->comments;
@@ -4882,8 +4882,8 @@ class SupplierSiteController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->change_to =   "Obsolete";
             $history->change_from = $lastDocument->status;
-            $history->stage = 'Plan Proposed'; 
-            
+            $history->stage = 'Plan Proposed';
+
             if (is_null($lastDocument->supplier_approved_to_obselete_by) || $lastDocument->supplier_approved_to_obselete_by === '')
             {
                  $history->action_name = 'New';
@@ -4891,7 +4891,7 @@ class SupplierSiteController extends Controller
                 $history->action_name = 'Update';
             }
             $history->save();
-            
+
             $list = Helpers::getInitiatorUserList($supplierSite->division_id);
             foreach ($list as $u) {
                 // if($u->q_m_s_divisions_id == $supplierSite->division_id){
@@ -4939,7 +4939,7 @@ class SupplierSiteController extends Controller
                                         ->subject("QMS Notification: Supplier Site, Record " . str_pad($supplierSite->record, 4, '0', STR_PAD_LEFT) . " - Activity: Supplier Obsolete Performed");
                                 }
 
-                        
+
                        );
                     } catch (\Exception $e) {
                             \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -4947,7 +4947,7 @@ class SupplierSiteController extends Controller
                     }
             //  }
           }
-          
+
             $supplierSite->update();
             toastr()->success('Document Sent');
             return back();
@@ -4968,7 +4968,7 @@ class SupplierSiteController extends Controller
             $supplierSite->cancelled_by = Auth::user()->name;
             $supplierSite->cancelled_on = Carbon::now()->format('d-M-Y H:i A');
             $supplierSite->cancelled_comment = $request->comments;
-        
+
             $history = new SupplierSiteAuditTrail();
             $history->supplier_site_id = $id;
             // $history->activity_type = 'Activity Log';
@@ -4980,9 +4980,9 @@ class SupplierSiteController extends Controller
                         } else {
                            $history->previous = $lastDocument->cancelled_by . ' , ' . $lastDocument->cancelled_on;
                       }
-                    
+
             $history->current = $supplierSite->cancelled_by . ' , ' . $supplierSite->cancelled_on;
-            
+
             $history->action = 'Cancel';
             // $history->current = "";
             $history->comment = $request->comments;
@@ -4991,15 +4991,15 @@ class SupplierSiteController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
             $history->change_to =  "Close - Cancelled";
-            $history->change_from = $lastDocument->status; 
-            
+            $history->change_from = $lastDocument->status;
+
             if (is_null($lastDocument->cancelled_by) || $lastDocument->cancelled_by === '')
             {
                  $history->action_name = 'New';
             } else {
                 $history->action_name = 'Update';
             }
-            
+
             $history->save();
             // $supplierSite->update();
 
@@ -5065,7 +5065,7 @@ class SupplierSiteController extends Controller
                                     //         ->subject("Document is Sent By".Auth::user()->name);
                                     // }
 
-                                    ['data' => $supplierSite,'site'=>"SS",'history'=>"Cancel Performed",'process' => 'Supplier Site', 'comment' => $supplierSite->cancelled_comment,'user'=> Auth::user()->name],
+                                    ['data' => $supplierSite,'site'=>"SS",'history'=>"Cancel",'process' => 'Supplier Site', 'comment' => $supplierSite->cancelled_comment,'user'=> Auth::user()->name],
                                     function ($message) use ($email,$supplierSite) {
                                                $message->to($email)
                                                ->subject("QMS Notification: Supplier Site, Record " . str_pad($supplierSite->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel Performed");
@@ -5079,7 +5079,7 @@ class SupplierSiteController extends Controller
                       }
 
 
-            
+
             $supplierSite->update();
             toastr()->success('Document Sent');
             return back();
@@ -5112,9 +5112,9 @@ class SupplierSiteController extends Controller
                         } else {
                            $history->previous = $lastDocument->reAudit_by . ' , ' . $lastDocument->reAudit_on;
                       }
-                    
+
                     $history->current = $supplierSite->reAudit_by . ' , ' . $supplierSite->reAudit_on;
-                    
+
                     $history->action = 'Re-Audit';
                     // $history->current = "Not Applicable";
                     $history->comment = $request->comments;
@@ -5147,7 +5147,7 @@ class SupplierSiteController extends Controller
                                     //         ->subject("Document is Sent By".Auth::user()->name);
                                     // }
 
-                                    
+
                                     ['data' => $supplierSite,'site'=>"SS",'history'=>"Re-Audit",'process' => 'Supplier Site', 'comment' => $supplierSite->reAudit_comment,'user'=> Auth::user()->name],
                                     function ($message) use ($email,$supplierSite) {
                                                $message->to($email)
@@ -5182,9 +5182,9 @@ class SupplierSiteController extends Controller
                         } else {
                            $history->previous = $lastDocument->rejectedDueToQuality_by . ' , ' . $lastDocument->rejectedDueToQuality_on;
                       }
-                    
+
                     $history->current = $supplierSite->rejectedDueToQuality_by . ' , ' . $supplierSite->rejectedDueToQuality_on;
-                    
+
                     $history->action = 'Reject Due To Quality Issues';
                     // $history->current = "Not Applicable";
                     $history->comment = $request->comments;
@@ -5195,14 +5195,14 @@ class SupplierSiteController extends Controller
                     $history->change_to =   "Pending Supplier Audit";
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Plan Proposed';
-                    
+
                     if (is_null($lastDocument->rejectedDueToQuality_by) || $lastDocument->rejectedDueToQuality_by === '')
                     {
                       $history->action_name = 'New';
                     } else {
                       $history->action_name = 'Update';
                     }
-                    
+
                     $history->save();
                     $list = Helpers::getSupplierAuditorDepartmentList($supplierSite->division_id);
                     foreach ($list as $u) {
@@ -5231,7 +5231,7 @@ class SupplierSiteController extends Controller
                     //  }
                   }
                     $supplierSite->update();
-                    
+
                     toastr()->success('Document Sent');
                     return back();
             }
@@ -5255,10 +5255,10 @@ class SupplierSiteController extends Controller
                         } else {
                            $history->previous = $lastDocument->conditionally_approved_by . ' , ' . $lastDocument->conditionally_approved_on;
                       }
-                    
+
                     $history->current = $supplierSite->conditionally_approved_by . ' , ' . $supplierSite->conditionally_approved_on;
 
-                    
+
                     $history->action = 'Conditionally Approved';
                     // $history->current = "Not Applicable";
                     $history->comment = $request->comments;
@@ -5276,7 +5276,7 @@ class SupplierSiteController extends Controller
                     } else {
                       $history->action_name = 'Update';
                     }
-                    
+
                     $history->save();
                     $list = Helpers::getSupplierContactDepartmentList($supplierSite->division_id);
                     foreach ($list as $u) {
@@ -5295,7 +5295,7 @@ class SupplierSiteController extends Controller
                                 // ['data' => $riskAssessment, 'history' => 'Submit Performed', 'process' => 'Risk Assessment', 'comment' => $riskAssessment->submitted_comment,'user'=> Auth::user()->name],
 
                                 ['data' => $supplierSite,'site'=>"SS",'history'=>"Conditionally Approved",'process' => 'Supplier Site', 'comment' => $supplierSite->conditionally_approved_comments,'user'=> Auth::user()->name],
-                                
+
                                 function ($message) use ($email,$supplierSite) {
                                            $message->to($email)
                                            ->subject("QMS Notification: Supplier Site, Record " . str_pad($supplierSite->record, 4, '0', STR_PAD_LEFT) . " - Activity: Conditionally Approved Performed");
@@ -5308,7 +5308,7 @@ class SupplierSiteController extends Controller
                     //  }
                   }
                     $supplierSite->update();
-                    
+
                     toastr()->success('Document Sent');
                     return back();
             }
@@ -5339,7 +5339,7 @@ class SupplierSiteController extends Controller
         $hod = User::get();
         $pre = CC::all();
         if (!empty($changeControl->cft)) $cft = explode(',', $changeControl->cft);
-        
+
         if ($request->revision == "Action-Item") {
             $old_record = ActionItem::all();
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');

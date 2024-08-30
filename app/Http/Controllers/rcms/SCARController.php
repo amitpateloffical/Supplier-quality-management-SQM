@@ -948,7 +948,7 @@ class SCARController extends Controller
                     //  return $list;
                     foreach ($list as $u) {
                         // if($u->q_m_s_divisions_id == $scar->division_id){
-                            $email = Helpers::getInitiatorEmail($u->user_id);
+                            $email = Helpers::getVendorEmail($u->user_id);
                             if (!empty($email)) {
                                 try {
                                     Mail::send(
@@ -1210,7 +1210,7 @@ class SCARController extends Controller
                     //  return $list;
                     foreach ($list as $u) {
                         // if($u->q_m_s_divisions_id == $scar->division_id){
-                            $email = Helpers::getInitiatorEmail($u->user_id);
+                            $email = Helpers::getVendorEmail($u->user_id);
                             if (!empty($email)) {
                                 try {
                                     Mail::send(
@@ -1337,7 +1337,7 @@ class SCARController extends Controller
             //  return $list;
             foreach ($list as $u) {
                 // if($u->q_m_s_divisions_id == $scar->division_id){
-                    $email = Helpers::getInitiatorEmail($u->user_id);
+                    $email = Helpers::getVendorEmail($u->user_id);
                     if (!empty($email)) {
                         try {
                             Mail::send(

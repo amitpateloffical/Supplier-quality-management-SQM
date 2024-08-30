@@ -308,7 +308,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 No CAPAs Required
                             </button>
-                        @elseif($data->stage == 5 && Helpers::check_roles($data->division_id, 'Supplier Audit', 18))
+                        @elseif($data->stage == 5 && Helpers::check_roles($data->division_id, 'Supplier Audit', 40))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 All CAPA Closed
                             </button>
@@ -573,34 +573,34 @@
 
                                         </div>
                                         <!-- <div class="col-12">
-                                                                <div class="group-input">
-                                                                    <label for="Short Description">Short Description <span
-                                                                            class="text-danger">*</span></label>
-                                                                            <div><small class="text-primary">Please mention brief summary</small></div>
-                                                                    <textarea name="short_description" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->short_description }}</textarea>
-                                                                </div>
-                                                            </div>  -->
+                                                            <div class="group-input">
+                                                                <label for="Short Description">Short Description <span
+                                                                        class="text-danger">*</span></label>
+                                                                        <div><small class="text-primary">Please mention brief summary</small></div>
+                                                                <textarea name="short_description" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->short_description }}</textarea>
+                                                            </div>
+                                                        </div>  -->
                                         <!-- <div class="col-12">
-                                                                <div class="group-input">
-                                                                    <label for="Short Description">Short Description<span
-                                                                            class="text-danger">*</span></label><span id="rchars">255</span>
-                                                                    characters remaining
+                                                            <div class="group-input">
+                                                                <label for="Short Description">Short Description<span
+                                                                        class="text-danger">*</span></label><span id="rchars">255</span>
+                                                                characters remaining
 
-                                                                    <textarea name="short_description" id="docname" type="text" maxlength="255" required
-                                                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->short_description }}</textarea>
-                                                                </div>
-                                                                <p id="docnameError" style="color:red">**Short Description is required</p>
+                                                                <textarea name="short_description" id="docname" type="text" maxlength="255" required
+                                                                    {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->short_description }}</textarea>
+                                                            </div>
+                                                            <p id="docnameError" style="color:red">**Short Description is required</p>
 
-                                                            </div> -->
+                                                        </div> -->
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Short Description">Short Description<span
                                                         class="text-danger">*</span></label>
                                                 <span id="rchars">255</span> characters remaining
                                                 <div class="relative-container">
-                                                    <textarea name="short_description" class="mic-input" id="docname" type="text" maxlength="255" required
-                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->short_description }}</textarea>
-                                                    @component('frontend.forms.language-model')
+                                                    <input name="short_description" class="mic-input" id="docname" type="text" maxlength="255" required
+                                                       value="{{ $data->short_description }}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                                    @component('frontend.forms.language-model',['disabled' => $data->stage == 0 || $data->stage == 6])
                                                     @endcomponent
 
                                                 </div>
@@ -2002,44 +2002,44 @@
                                         </div>
                                     </div>
                                     <!-- <div class="col-lg-6">
-                                                                <div class="group-input">
-                                                                    <label for="Audit Response Completed By">Audit Response Completed
-                                                                        By</label>
-                                                                    <div class="static">{{ $data->audit_response_completed_by }}</div>
-                                                                </div>
+                                                            <div class="group-input">
+                                                                <label for="Audit Response Completed By">Audit Response Completed
+                                                                    By</label>
+                                                                <div class="static">{{ $data->audit_response_completed_by }}</div>
                                                             </div>
-                                                            <div class="col-lg-6">
-                                                                <div class="group-input">
-                                                                    <label for="Audit Response Completed On">Audit Response Completed
-                                                                        On</label>
-                                                                    <div class="static">{{ $data->audit_response_completed_on }}</div>
-                                                                </div>
+                                                        </div>
+                                                        <div class="col-lg-6">
+                                                            <div class="group-input">
+                                                                <label for="Audit Response Completed On">Audit Response Completed
+                                                                    On</label>
+                                                                <div class="static">{{ $data->audit_response_completed_on }}</div>
                                                             </div>
-                                                            <div class="col-lg-6">
-                                                                <div class="group-input">
-                                                                    <label for="Response Feedback Verified By">Response Feedback Verified
-                                                                        By</label>
-                                                                    <div class="static">{{ $data->response_feedback_verified_by }}</div>
-                                                                </div>
+                                                        </div>
+                                                        <div class="col-lg-6">
+                                                            <div class="group-input">
+                                                                <label for="Response Feedback Verified By">Response Feedback Verified
+                                                                    By</label>
+                                                                <div class="static">{{ $data->response_feedback_verified_by }}</div>
                                                             </div>
-                                                            <div class="col-lg-6">
-                                                                <div class="group-input">
-                                                                    <label for="Response Feedback Verified On">Response Feedback Verified
-                                                                        On</label>
-                                                                    <div class="static">{{ $data->response_feedback_verified_on }}</div>
-                                                                </div>
-                                                            </div> -->
+                                                        </div>
+                                                        <div class="col-lg-6">
+                                                            <div class="group-input">
+                                                                <label for="Response Feedback Verified On">Response Feedback Verified
+                                                                    On</label>
+                                                                <div class="static">{{ $data->response_feedback_verified_on }}</div>
+                                                            </div>
+                                                        </div> -->
 
 
                                 </div>
                                 <div class="button-block">
                                     <!-- @if ($data->stage != 0)
     <button type="submit" id="ChangesaveButton" class="saveButton"
-                                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
+                                                                {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
     @endif -->
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     <!-- <button type="submit"
-                                                                {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Submit</button> -->
+                                                            {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Submit</button> -->
                                     <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}"
                                             class="text-white"> Exit </a> </button>
                                 </div>
@@ -2122,9 +2122,9 @@
 
                         <!-- Modal footer -->
                         <!-- <div class="modal-footer">
-                                                    <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                    <button>Close</button>
-                                                </div> -->
+                                                <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                <button>Close</button>
+                                            </div> -->
                         <div class="modal-footer">
                             <button class="on-submit-disable-button" type="submit">Submit</button>
                             <button type="button" data-bs-dismiss="modal">Close</button>
@@ -2170,9 +2170,9 @@
 
                         <!-- Modal footer -->
                         <!-- <div class="modal-footer">
-                                                    <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                    <button>Close</button>
-                                                </div> -->
+                                                <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                <button>Close</button>
+                                            </div> -->
                         <div class="modal-footer">
                             <button type="submit" class="on-submit-disable-button">Submit</button>
                             <button type="button" data-bs-dismiss="modal">Close</button>
@@ -2218,9 +2218,9 @@
 
                         <!-- Modal footer -->
                         <!-- <div class="modal-footer">
-                                                    <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                    <button>Close</button>
-                                                </div> -->
+                                                <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                <button>Close</button>
+                                            </div> -->
                         <div class="modal-footer">
                             <button class="on-submit-disable-button" type="submit">Submit</button>
                             <button data-bs-dismiss="modal">Close</button>

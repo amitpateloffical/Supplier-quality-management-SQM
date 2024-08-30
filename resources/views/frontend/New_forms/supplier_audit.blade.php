@@ -529,10 +529,10 @@
     <div class="col-12">
     <div class="group-input">
                         <label for="short_description">Short Description<span class="text-danger">*</span></label>
-                          <span class="text-primary">255  characters remaining<span>
+                          <span id='rchars' class="text-primary">255<span>  characters remaining
                                 <div class="relative-container">
                                    
-                                    <input id="short_description" type="text" class="mic-input" name="short_description" maxlength="255" required>
+                                    <input id="short_description" id="docname" type="text" class="mic-input" name="short_description" maxlength="255" required>
                                     @component('frontend.forms.language-model')
                                     @endcomponent
                                 </div>
@@ -1979,16 +1979,16 @@
                     const result = await response.json();
                     return result.data.translatedText;
                 }
-
+                
                 // Update remaining characters
                 $('#docname').on('input', function() {
-                    const remaining = 255 - $(this).val().length;
-                    $('#rchars').text(remaining);
-                });
+                        const remaining = 255 - $(this).val().length;
+                        $('#rchars').text(remaining);
+                    });
 
-                // Initialize remaining characters count
-                const remaining = 255 - $('#docname').val().length;
-                $('#rchars').text(remaining);
+                    // Initialize remaining characters count
+                    const remaining = 255 - $('#docname').val().length;
+                    $('#rchars').text(remaining);
    });
 
 

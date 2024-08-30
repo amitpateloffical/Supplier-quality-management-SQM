@@ -300,11 +300,11 @@
                                                     <select name="cft_reviewer"
                                                         {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                         <option value="">-- Select --</option>
-                                                        <option value="yes"
-                                                            {{ $data->cft_reviewer == 'yes' ? 'selected' : '' }}>Yes
+                                                        <option value="Yes"
+                                                            {{ $data->cft_reviewer == 'Yes' ? 'selected' : '' }}>Yes
                                                         </option>
-                                                        <option value="no"
-                                                            {{ $data->cft_reviewer == 'no' ? 'selected' : '' }}>No</option>
+                                                        <option value="No"
+                                                            {{ $data->cft_reviewer == 'No' ? 'selected' : '' }}>No</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -426,7 +426,7 @@
                                                         @endcomponent
                                                     </div>
                                                 </div>
-                                                <p id="docnameError" style="color:red">**Short Description is required</p>
+                                                {{--<p id="docnameError" style="color:red">**Short Description is required</p> --}}
                                             </div>
 
                                             <div class="col-12">
@@ -597,7 +597,7 @@
 
                                             <div class="col-lg-12">
                                                 <div class="group-input">
-                                                    <label for="others">Initial attachment</label>
+                                                    <label for="others">Initial Attachment</label>
                                                     <div><small class="text-primary">Please Attach all relevant or
                                                             supporting documents</small></div>
                                                     <div class="file-attachment-field">
@@ -1717,7 +1717,7 @@
 
                                         <div class="col-lg-12">
                                             <div class="group-input">
-                                                <label for="others">Change Clouser attachment</label>
+                                                <label for="others">Change Closure Attachments</label>
                                                 <div><small class="text-primary">Please Attach all relevant or supporting
                                                         documents</small></div>
                                                 <div class="file-attachment-field">
@@ -2317,7 +2317,7 @@
                             <input type="password" name="password" required>
                         </div>
                         <div class="group-input">
-                            <label for="comment">Comment <span class="text-danger">*</span></label>
+                            <label for="comment">Comment </label>
                             <input type="comment" name="comment">
                         </div>
                     </div>
@@ -2361,7 +2361,7 @@
                         </div>
                         <div class="group-input">
                             <label for="comment">Comment <span class="text-danger">*</span></label>
-                            <input type="comment" name="comment">
+                            <input type="comment" name="comment" required>
                         </div>
                     </div>
 

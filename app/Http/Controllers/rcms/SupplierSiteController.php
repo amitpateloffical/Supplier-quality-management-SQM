@@ -4577,7 +4577,7 @@ class SupplierSiteController extends Controller
                                     ['data' => $supplierSite,'site'=>'SS','history'=>"Qualification Complete",'process' => 'Supplier Site', 'comment' => $supplierSite->pending_qualification_comment,'user'=> Auth::user()->name],
                                    function ($message) use ($email,$supplierSite) {
                                         $message->to($email)
-                                        ->subject("QMS Notification: Supplier Site, Record " . str_pad($supplierSite->record, 4, '0', STR_PAD_LEFT) . " - Activity: Qualification Complete Performed");
+                                        ->subject("QMS Notification: Supplier Site, Record #" . str_pad($supplierSite->record, 4, '0', STR_PAD_LEFT) . " - Activity: Qualification Complete Performed");
                                     }
                                   );
                                   } catch (\Exception $e) {
@@ -4649,7 +4649,7 @@ class SupplierSiteController extends Controller
                                 ['data' => $supplierSite,'site'=>"SS",'history'=>"Audit Failed",'process' => 'Supplier Site', 'comment' => $supplierSite->pending_supplier_audit_comment,'user'=> Auth::user()->name],
                                    function ($message) use ($email,$supplierSite) {
                                         $message->to($email)
-                                        ->subject("QMS Notification: Supplier Site, Record " . str_pad($supplierSite->record, 4, '0', STR_PAD_LEFT) . " - Activity: Audit Failed Performed");
+                                        ->subject("QMS Notification: Supplier Site, Record #" . str_pad($supplierSite->record, 4, '0', STR_PAD_LEFT) . " - Activity: Audit Failed Performed");
                                     }
                                );
                             } catch (\Exception $e) {
@@ -4720,7 +4720,7 @@ class SupplierSiteController extends Controller
                                 ['data' => $supplierSite,'site'=>"SS",'history'=>"Supplier Obsolete",'process' => 'Supplier Site', 'comment' => $supplierSite->pending_rejection_comment,'user'=> Auth::user()->name],
                                    function ($message) use ($email,$supplierSite) {
                                         $message->to($email)
-                                        ->subject("QMS Notification: Supplier Site, Record " . str_pad($supplierSite->record, 4, '0', STR_PAD_LEFT) . " - Activity: Supplier Obsolete Performed");
+                                        ->subject("QMS Notification: Supplier Site, Record #" . str_pad($supplierSite->record, 4, '0', STR_PAD_LEFT) . " - Activity: Supplier Obsolete Performed");
                                     }
                                );
                             } catch (\Exception $e) {
@@ -4747,7 +4747,7 @@ class SupplierSiteController extends Controller
                                 ['data' => $supplierSite,'site'=>"SS",'history'=>"Supplier Obsolete",'process' => 'Supplier Site', 'comment' => $supplierSite->pending_rejection_comment,'user'=> Auth::user()->name],
                                    function ($message) use ($email,$supplierSite) {
                                         $message->to($email)
-                                        ->subject("QMS Notification: Supplier Site, Record " . str_pad($supplierSite->record, 4, '0', STR_PAD_LEFT) . " - Activity: Supplier Obsolete Performed");
+                                        ->subject("QMS Notification: Supplier Site, Record #" . str_pad($supplierSite->record, 4, '0', STR_PAD_LEFT) . " - Activity: Supplier Obsolete Performed");
                                     }
                                );
                             } catch (\Exception $e) {
@@ -4827,7 +4827,7 @@ class SupplierSiteController extends Controller
                         ['data' => $supplierSite,'site'=>"SS",'history'=>"Audit Passed",'process' => 'Supplier Site', 'comment' => $supplierSite->supplier_approved_comment,'user'=> Auth::user()->name],
                                    function ($message) use ($email,$supplierSite) {
                                         $message->to($email)
-                                        ->subject("QMS Notification: Supplier Site, Record " . str_pad($supplierSite->record, 4, '0', STR_PAD_LEFT) . " - Activity: Audit Passed Performed");
+                                        ->subject("QMS Notification: Supplier Site, Record #" . str_pad($supplierSite->record, 4, '0', STR_PAD_LEFT) . " - Activity: Audit Passed Performed");
                                     }
                        );
                     } catch (\Exception $e) {
@@ -4909,7 +4909,7 @@ class SupplierSiteController extends Controller
                         ['data' => $supplierSite,'site'=>"SS",'history'=>"Supplier Obsolete",'process' => 'Supplier Site', 'comment' => $supplierSite->supplier_approved_to_obselete_comment,'user'=> Auth::user()->name],
                              function ($message) use ($email,$supplierSite) {
                                         $message->to($email)
-                                        ->subject("QMS Notification: Supplier Site, Record " . str_pad($supplierSite->record, 4, '0', STR_PAD_LEFT) . " - Activity: Supplier Obsolete Performed");
+                                        ->subject("QMS Notification: Supplier Site, Record #" . str_pad($supplierSite->record, 4, '0', STR_PAD_LEFT) . " - Activity: Supplier Obsolete Performed");
                                 }
                        );
                     } catch (\Exception $e) {
@@ -4936,7 +4936,7 @@ class SupplierSiteController extends Controller
                         ['data' => $supplierSite,'site'=>"SS",'history'=>"Supplier Obsolete",'process' => 'Supplier Site', 'comment' => $supplierSite->supplier_approved_to_obselete_comment,'user'=> Auth::user()->name],
                              function ($message) use ($email,$supplierSite) {
                                         $message->to($email)
-                                        ->subject("QMS Notification: Supplier Site, Record " . str_pad($supplierSite->record, 4, '0', STR_PAD_LEFT) . " - Activity: Supplier Obsolete Performed");
+                                        ->subject("QMS Notification: Supplier Site, Record #" . str_pad($supplierSite->record, 4, '0', STR_PAD_LEFT) . " - Activity: Supplier Obsolete Performed");
                                 }
 
 
@@ -5041,7 +5041,7 @@ class SupplierSiteController extends Controller
                                     ['data' => $supplierSite,'site'=>"SS",'history'=>"Cancel",'process' => 'Supplier Site', 'comment' => $supplierSite->cancelled_comment,'user'=> Auth::user()->name],
                                     function ($message) use ($email,$supplierSite) {
                                                $message->to($email)
-                                               ->subject("QMS Notification: Supplier Site, Record " . str_pad($supplierSite->record, 4, '0', STR_PAD_LEFT). " - Activity: Cancel Performed");
+                                               ->subject("QMS Notification: Supplier Site, Record #" . str_pad($supplierSite->record, 4, '0', STR_PAD_LEFT). " - Activity: Cancel Performed");
                                        }
                                   );
                                   } catch (\Exception $e) {
@@ -5068,7 +5068,7 @@ class SupplierSiteController extends Controller
                                     ['data' => $supplierSite,'site'=>"SS",'history'=>"Cancel",'process' => 'Supplier Site', 'comment' => $supplierSite->cancelled_comment,'user'=> Auth::user()->name],
                                     function ($message) use ($email,$supplierSite) {
                                                $message->to($email)
-                                               ->subject("QMS Notification: Supplier Site, Record " . str_pad($supplierSite->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel Performed");
+                                               ->subject("QMS Notification: Supplier Site, Record #" . str_pad($supplierSite->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel Performed");
                                        }
                                   );
                                   } catch (\Exception $e) {
@@ -5151,7 +5151,7 @@ class SupplierSiteController extends Controller
                                     ['data' => $supplierSite,'site'=>"SS",'history'=>"Re-Audit",'process' => 'Supplier Site', 'comment' => $supplierSite->reAudit_comment,'user'=> Auth::user()->name],
                                     function ($message) use ($email,$supplierSite) {
                                                $message->to($email)
-                                               ->subject("QMS Notification: Supplier Site, Record " . str_pad($supplierSite->record, 4, '0', STR_PAD_LEFT) . " - Activity: Re-Audit Performed");
+                                               ->subject("QMS Notification: Supplier Site, Record #" . str_pad($supplierSite->record, 4, '0', STR_PAD_LEFT) . " - Activity: Re-Audit Performed");
                                        }
                                   );
                                 } catch (\Exception $e) {
@@ -5221,7 +5221,7 @@ class SupplierSiteController extends Controller
                                 ['data' => $supplierSite,'site'=>"SS",'history'=>"Reject Due To Quality Issues",'process' => 'Supplier Site', 'comment' => $supplierSite->rejectedDueToQuality_comment,'user'=> Auth::user()->name],
                                     function ($message) use ($email,$supplierSite) {
                                                $message->to($email)
-                                               ->subject("QMS Notification: Supplier Site, Record " . str_pad($supplierSite->record, 4, '0', STR_PAD_LEFT) . " - Activity: Reject Due To Quality Issues Performed");
+                                               ->subject("QMS Notification: Supplier Site, Record #" . str_pad($supplierSite->record, 4, '0', STR_PAD_LEFT) . " - Activity: Reject Due To Quality Issues Performed");
                                        }
                               );
                             } catch (\Exception $e) {
@@ -5298,7 +5298,7 @@ class SupplierSiteController extends Controller
 
                                 function ($message) use ($email,$supplierSite) {
                                            $message->to($email)
-                                           ->subject("QMS Notification: Supplier Site, Record " . str_pad($supplierSite->record, 4, '0', STR_PAD_LEFT) . " - Activity: Conditionally Approved Performed");
+                                           ->subject("QMS Notification: Supplier Site, Record #" . str_pad($supplierSite->record, 4, '0', STR_PAD_LEFT) . " - Activity: Conditionally Approved Performed");
                                    }
                                );
                             } catch (\Exception $e) {
@@ -5349,34 +5349,34 @@ class SupplierSiteController extends Controller
         // dd($request->revision,$request->revision == "changecontrol");
         if ($request->revision == "changecontrol") {
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-            return view('frontend.change-control.new-change-control', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','hod','cft','pre'));
+            return view('frontend.change-control.new-change-control', compact('record_number','parent_division_id', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','hod','cft','pre'));
         }
 
         if ($request->revision == "capa-child") {
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-           return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id', 'parent_type', 'old_record', 'cft'));
+           return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id','parent_division_id', 'parent_type', 'old_record', 'cft'));
         }
         if ($request->revision == "deviation") {
          $cc->originator = User::where('id', $cc->initiator_id)->value('name');
         $pre = Deviation::all();
-         return view('frontend.forms.deviation_new', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','pre'));
+         return view('frontend.forms.deviation_new', compact('record_number', 'due_date', 'parent_id','parent_division_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','pre'));
      }
      if ($request->revision == "RCA") {
         $cc->originator = User::where('id', $cc->initiator_id)->value('name');
     //    $pre = Deviation::all();
-        return view('frontend.forms.root-cause-analysis', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','pre'));
+        return view('frontend.forms.root-cause-analysis', compact('record_number', 'due_date','parent_division_id', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','pre'));
     }
     if ($request->revision == "RA") {
         $cc->originator = User::where('id', $cc->initiator_id)->value('name');
     //    $pre = Deviation::all();
     $old_record = RiskManagement::select('id', 'division_id', 'record')->get();
-        return view('frontend.forms.risk-management', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','pre','old_record','old_record'));
+        return view('frontend.forms.risk-management', compact('record_number', 'due_date','parent_division_id', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','pre','old_record','old_record'));
     }
     if ($request->revision == "SA") {
         $cc->originator = User::where('id', $cc->initiator_id)->value('name');
     //    $pre = Deviation::all();
     $old_record = RiskManagement::select('id', 'division_id', 'record')->get();
-        return view('frontend.New_forms.supplier_audit', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','pre','old_record','old_record'));
+        return view('frontend.New_forms.supplier_audit', compact('record_number','parent_division_id', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','pre','old_record','old_record'));
     }
     if ($request->revision == "SCAR") {
         $cc->originator = User::where('id', $cc->initiator_id)->value('name');
@@ -5385,7 +5385,7 @@ class SupplierSiteController extends Controller
         $supplierProduct = Supplier::where('supplier_products' , '!=' , "null")->get();
         $distributionSites = Supplier::where('distribution_sites', '!=', "null")->get();
         $old_record = SCAR::select('id', 'division_id', 'record')->get();
-        return view('frontend.scar.scar_new', compact('record_number','supplierName','supplierProduct','distributionSites', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','pre','old_record','old_record'));
+        return view('frontend.scar.scar_new', compact('record_number','supplierName','parent_division_id','supplierProduct','distributionSites', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','pre','old_record','old_record'));
     }
     }
 }

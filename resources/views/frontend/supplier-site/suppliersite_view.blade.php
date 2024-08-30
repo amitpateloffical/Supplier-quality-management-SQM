@@ -3152,8 +3152,8 @@
                                     <input type="password" name="password" required class="form-control">
                                 </div>
                                 <div class="group-input mt-4">
-                                    <label for="comment">Comment</label>
-                                    <input type="comment" name="comments" class="form-control">
+                                    <label for="comment">Comment <span class="text-danger">*</span></label>
+                                    <input type="comment" name="comments" class="form-control" required>
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -3272,8 +3272,8 @@
                                     <input type="password" name="password" required>
                                 </div>
                                 <div class="group-input">
-                                    <label for="comment">Comment</label>
-                                    <input type="comment" name="comments">
+                                    <label for="comment">Comment <span class="text-danger">*</span></label>
+                                    <input type="comment" name="comments" required>
                                 </div>
                             </div>
                             <div class="modal-footer">

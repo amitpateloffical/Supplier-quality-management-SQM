@@ -32,8 +32,8 @@
 
     <style>
         /* #ui-datepicker-div > div{
-            display: none;
-        } */
+                    display: none;
+                } */
         #ui-datepicker-div>div>a.ui-datepicker-next.ui-corner-all {
             margin-left: 67px;
         }
@@ -117,22 +117,36 @@
                                 <div class="col-6">
                                     <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>
-                                        <input disabled type="text" name="record_number"
-                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}/CC/{{ date('Y') }}/{{ $record_number }}">
+                                        @if (!empty($parent_division_id))
+                                            <input disabled type="text" name="record_number"
+                                                value="{{ Helpers::getDivisionName($parent_division_id) }}/CC/{{ date('Y') }}/{{ $record_number }}">
+                                        @else
+                                            <input disabled type="text" name="record_number"
+                                                value="{{ Helpers::getDivisionName(session()->get('division')) }}/CC/{{ date('Y') }}/{{ $record_number }}">
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Division Code"><b>Site/location Code</b></label>
-                                        <input disabled type="text" name="division_id"
-                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}">
-                                        <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
+                                        @if (!empty($parent_division_id))
+                                            <input disabled type="text" name="division_id"
+                                                value="{{ Helpers::getDivisionName($parent_division_id) }}">
+                                            <input type="hidden" name="division_id" value="{{ $parent_division_id }}">
+                                        @else
+                                            <input disabled type="text" name="division_id"
+                                                value="{{ Helpers::getDivisionName(session()->get('division')) }}">
+                                            <input type="hidden" name="division_id"
+                                                value="{{ session()->get('division') }}">
+                                        @endif
+
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator"><b>Initiator</b></label>
-                                        <input disabled type="text" name="initiator_id" value="{{ Auth::user()->name }}">
+                                        <input disabled type="text" name="initiator_id"
+                                            value="{{ Auth::user()->name }}">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -166,8 +180,8 @@
                                         <label for="Microbiology">CFT Reviewer</label>
                                         <select name="cft_reviewer">
                                             <option value="">-- Select --</option>
-                                            <option value="yes">Yes</option>
-                                            <option value="no">No</option>
+                                            <option value="Yes">Yes</option>
+                                            <option value="No">No</option>
                                         </select>
                                     </div>
                                 </div>
@@ -200,7 +214,7 @@
                                             <input type="text" name="due_date" readonly
                                                 value="{{ $dueDate }}" />
                                             <!-- <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('d-M-Y') }}" class="hide-input"
-                                                            oninput="handleDateInput(this, 'due_date')" /> -->
+                                                                    oninput="handleDateInput(this, 'due_date')" /> -->
                                         </div>
                                     </div>
                                 </div>
@@ -444,7 +458,7 @@
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="others">Initial attachment</label>
+                                        <label for="others">Initial Attachment</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
                                         <div class="file-attachment-field">
@@ -1008,7 +1022,7 @@
                     </div>
                 </div>
                 <!-- </div>
-            </div> -->
+                    </div> -->
 
                 <div id="CCForm7" class="inner-block cctabcontent">
                     <div class="inner-block-content">
@@ -1225,7 +1239,7 @@
                             </div>
                         </div>
                         <div class="group-input">
-                            <label for="attach-list">Change clouser Attachments</label>
+                            <label for="attach-list">Change Closure Attachments</label>
                             <div><small class="text-primary">Please Attach all relevant or supporting documents</small>
                             </div>
                             <div class="file-attachment-field">
@@ -1411,7 +1425,7 @@
                                     <label for="Cancelled On">Implemented Comment</label>
                                 </div>
                             </div>
-                            
+
                             <div class="col-lg-3">
                                 <div class="group-input">
                                     <label for="Cancelled By">Closed - Cancelled By</label>
@@ -1476,7 +1490,7 @@
                                 </div>
                             </div>
 
-                            
+
 
                         </div>
                         <div class="button-block">

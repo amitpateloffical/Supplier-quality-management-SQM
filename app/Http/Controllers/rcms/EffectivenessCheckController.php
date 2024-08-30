@@ -1141,7 +1141,7 @@ class EffectivenessCheckController extends Controller
                 $list = Helpers::getSupervisorUserList($effectiveness->division_id);
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $effectiveness->division_id){
-                    $email = Helpers::getInitiatorEmail($u->user_id);
+                    $email = Helpers::getSupervisorEmail($u->user_id);
                     if (!empty($email)) {
                         try {
                             Mail::send(
@@ -1224,7 +1224,7 @@ class EffectivenessCheckController extends Controller
                 $list = Helpers::getQAUserList($effectiveness->division_id);
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $effectiveness->division_id){
-                    $email = Helpers::getInitiatorEmail($u->user_id);
+                    $email = Helpers::getQAEmail($u->user_id);
                     if (!empty($email)) {
                         try {
                             Mail::send(
@@ -1292,7 +1292,7 @@ class EffectivenessCheckController extends Controller
                 $list = Helpers::getSupervisorUserList($effectiveness->division_id);
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $effectiveness->division_id){
-                    $email = Helpers::getInitiatorEmail($u->user_id);
+                    $email = Helpers::getSupervisorEmail($u->user_id);
                     if (!empty($email)) {
                         try {
                             Mail::send(
@@ -1394,7 +1394,7 @@ class EffectivenessCheckController extends Controller
                 $list = Helpers::getQAUserList($effectiveness->division_id);
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $effectiveness->division_id){
-                    $email = Helpers::getInitiatorEmail($u->user_id);
+                    $email = Helpers::getQAEmail($u->user_id);
                     if (!empty($email)) {
                         try {
                             Mail::send(
@@ -1463,7 +1463,7 @@ class EffectivenessCheckController extends Controller
                 $list = Helpers::getSupervisorUserList($effectiveness->division_id);
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $effectiveness->division_id){
-                    $email = Helpers::getInitiatorEmail($u->user_id);
+                    $email = Helpers::getSupervisorEmail($u->user_id);
                     if (!empty($email)) {
                         try {
                             Mail::send(
@@ -1564,7 +1564,7 @@ class EffectivenessCheckController extends Controller
                 $list = Helpers::getSupervisorUserList($effectiveness->division_id);
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $effectiveness->division_id){
-                    $email = Helpers::getInitiatorEmail($u->user_id);
+                    $email = Helpers::getSupervisorEmail($u->user_id);
                     if (!empty($email)) {
                         try {
                             Mail::send(
@@ -1635,7 +1635,7 @@ class EffectivenessCheckController extends Controller
                 $list = Helpers::getSupervisorUserList($effectiveness->division_id);
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $effectiveness->division_id){
-                    $email = Helpers::getInitiatorEmail($u->user_id);
+                    $email = Helpers::getSupervisorEmail($u->user_id);
                     if (!empty($email)) {
                         try {
                             Mail::send(

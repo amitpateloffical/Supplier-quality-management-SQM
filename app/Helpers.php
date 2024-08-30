@@ -555,7 +555,7 @@ static function getFullDepartmentName($code)
     public static function getSupplierAuditorEmail($id)
     {
         return DB::table('users')->whereRaw("FIND_IN_SET(37, role)")->pluck('email');
-    } 
+    }
 
     public static function getSupplierContactDeptEmail($id)
     {
@@ -630,6 +630,11 @@ static function getFullDepartmentName($code)
     public static function getScarInitiatorEmail($id)
     {
         return DB::table('users')->whereRaw("FIND_IN_SET(46, role)")->pluck('email');
+    }
+
+    public static function getVendorEmail($id)
+    {
+        return DB::table('users')->whereRaw("FIND_IN_SET(47, role)")->pluck('email');
     }
 
     /************ User Role Email ends **************/

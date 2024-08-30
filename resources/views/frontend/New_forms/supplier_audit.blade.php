@@ -345,7 +345,11 @@
 
         <div class="division-bar">
             <strong>Site Division/Project</strong> :
-            {{ Helpers::getDivisionName(session()->get('division')) }} / Supplier Audit
+            @if(!empty($parent_division_id))
+                {{ Helpers::getDivisionName($parent_division_id) }} / Supplier Audit
+            @else
+                {{ Helpers::getDivisionName(session()->get('division')) }} / Supplier Audit
+            @endif
         </div>
     </div>
 
@@ -387,18 +391,29 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>
-                                        <input disabled type="text" name="record_number"
-                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}/SA/{{ date('Y') }}/{{ $record_number }}">
-                                        <input type="hidden" name="recordNumber"
-                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}/SA/{{ date('Y') }}/{{ $record_number }}">
+                                        @if(!empty($parent_division_id))
+                                            <input disabled type="text" name="record_number"
+                                                value="{{ Helpers::getDivisionName($parent_division_id) }}/SA/{{ date('Y') }}/{{ $record_number }}">
+                                            <input type="hidden" name="recordNumber"
+                                                value="{{ Helpers::getDivisionName($parent_division_id) }}/SA/{{ date('Y') }}/{{ $record_number }}">
+                                        @else
+                                            <input disabled type="text" name="record_number"
+                                                value="{{ Helpers::getDivisionName(session()->get('division')) }}/SA/{{ date('Y') }}/{{ $record_number }}">
+                                            <input type="hidden" name="recordNumber"
+                                                value="{{ Helpers::getDivisionName(session()->get('division')) }}/SA/{{ date('Y') }}/{{ $record_number }}">
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                 <div class="group-input">
                                         <label for="Division Code"><b>Site/Location Code</b></label>
-                                        <input disabled type="text" name="division_id" value="{{ Helpers::getDivisionName(session()->get('division')) }}">
-                                    <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
-
+                                        @if(!empty($parent_division_id))
+                                            <input disabled type="text" value="{{ Helpers::getDivisionName($parent_division_id) }}">
+                                            <input type="hidden" name="division_id" value="{{ $parent_division_id }}">
+                                        @else
+                                            <input disabled type="text" value="{{ Helpers::getDivisionName(session()->get('division')) }}">
+                                            <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col-lg-6">

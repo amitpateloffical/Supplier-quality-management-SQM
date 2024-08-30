@@ -17,9 +17,11 @@
     <div class="form-field-head">
         <div class="division-bar">
             <strong>Site Division/Project</strong> :
-            {{ Helpers::getDivisionName(session()->get('division')) }} / Root Cause Analysis
-            {{-- KSA / Root Cause Analysis   --}}
-            {{-- EHS-North America --}}
+            @if(!empty($parent_division_id))
+                {{ Helpers::getDivisionName($parent_division_id) }} / Root Cause Analysis
+            @else
+                {{ Helpers::getDivisionName(session()->get('division')) }} / Root Cause Analysis
+            @endif
         </div>
     </div>
 
@@ -59,9 +61,13 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>
-                                        <input disabled type="text" name="record_number"
-                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}/RCA/{{ date('Y') }}/{{ $record_number }}">
-
+                                        @if(!empty($parent_division_id))
+                                            <input disabled type="text" name="record_number"
+                                                value="{{ Helpers::getDivisionName($parent_division_id) }}/RCA/{{ date('Y') }}/{{ $record_number }}">
+                                        @else
+                                            <input disabled type="text" name="record_number"
+                                                value="{{ Helpers::getDivisionName(session()->get('division')) }}/RCA/{{ date('Y') }}/{{ $record_number }}">
+                                        @endif
                                     </div>
                                 </div>
 
@@ -69,10 +75,15 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Division Code"><b>Site/Location Code </b></label>
-                                        <input readonly type="text" name="division_code"
-                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}">
-                                        <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
-                                        {{-- <div class="static">QMS-North America</div> --}}
+                                        @if(!empty($parent_division_id))
+                                            <input readonly type="text" name="division_code"
+                                                value="{{ Helpers::getDivisionName($parent_division_id) }}">
+                                            <input type="hidden" name="division_id" value="{{ $parent_division_id }}">
+                                        @else
+                                            <input readonly type="text" name="division_code"
+                                                value="{{ Helpers::getDivisionName(session()->get('division')) }}">
+                                            <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
+                                        @endif
                                     </div>
                                 </div>
 

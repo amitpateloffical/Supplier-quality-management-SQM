@@ -150,7 +150,11 @@
 
             <div class="division-bar">
                 <strong>Site Division/Project</strong> :
-                {{ Helpers::getDivisionName(session()->get('division')) }} / Risk Assessment
+                @if(!empty($parent_division_id))
+                    {{ Helpers::getDivisionName($parent_division_id) }} / Risk Assessment
+                @else
+                    {{ Helpers::getDivisionName(session()->get('division')) }} / Risk Assessment
+                @endif
             </div>
         </div>
         @php
@@ -190,24 +194,30 @@
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="RLS Record Number"><b>Record Number</b></label>
-                                            <input readonly type="text" name="record_number"
-                                                value="{{ Helpers::getDivisionName(session()->get('division')) }}/RA/{{ date('Y') }}/{{ $record_number }}">
-                                            {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
+                                            @if(!empty($parent_division_id))
+                                                <input readonly type="text" name="record_number"
+                                                    value="{{ Helpers::getDivisionName($parent_division_id) }}/RA/{{ date('Y') }}/{{ $record_number }}">
+                                            @else
+                                                <input readonly type="text" name="record_number"
+                                                    value="{{ Helpers::getDivisionName(session()->get('division')) }}/RA/{{ date('Y') }}/{{ $record_number }}">
+                                            @endif
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Division Code"><b>Site/Location Code</b></label>
-                                            <input readonly type="text" name="division_code"
-                                                value="{{ Helpers::getDivisionName(session()->get('division')) }}">
-                                            <input type="hidden" name="division_id"
-                                                value="{{ session()->get('division') }}">
+                                            @if(!empty($parent_division_id))
+                                                <input readonly type="text" name="division_code" value="{{ Helpers::getDivisionName($parent_division_id) }}">
+                                                <input type="hidden" name="division_id" value="{{ $parent_division_id }}">
+                                            @else
+                                                <input readonly type="text" name="division_code" value="{{ Helpers::getDivisionName(session()->get('division')) }}">
+                                                <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
+                                            @endif
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Initiator"><b>Initiator</b></label>
-                                            {{-- <div class="static">{{ Auth::user()->name }}</div> --}}
                                             <input disabled type="text" name="division_code"
                                                 value="{{ Auth::user()->name }}">
                                         </div>

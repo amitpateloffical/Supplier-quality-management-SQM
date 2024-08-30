@@ -1684,7 +1684,7 @@ $history->save();
                                     ['data' => $root , 'site'=>'RCA','history'=>" - Activity: Acknowledge "  ,'process' => ' Root Cause Analyses', 'comment' => $root->acknowledge_comment,'user'=> Auth::user()->name ],
                                 function ($message) use ($email, $root ) {
                                     $message->to($email)
-                                        ->subject("QMS Notification: Root Cause Analyses, Record " . str_pad( $root->record, 4, '0', STR_PAD_LEFT) . " - Activity: Acknowledge Permormed");
+                                        ->subject("QMS Notification: Root Cause Analyses, Record #" . str_pad( $root->record, 4, '0', STR_PAD_LEFT) . " - Activity: Acknowledge Permormed");
                                 }
                                 );
                             } catch (\Exception $e) {
@@ -1791,7 +1791,7 @@ $history->save();
                                     ['data' => $root , 'site'=>'RCA', 'history'=>" - Activity: QA Review Complete ",'process' => ' Root Cause Analyses', 'comment' => $root->qA_review_complete_comment,'user'=> Auth::user()->name ],
                                     function ($message) use ($email, $root ) {
                                         $message->to($email)
-                                            ->subject("QMS Notification: Root Cause Analyses, Record " . str_pad( $root->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA Review Complete Permormed");
+                                            ->subject("QMS Notification: Root Cause Analyses, Record #" . str_pad( $root->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA Review Complete Permormed");
                                     }
                                 );
                             } catch (\Exception $e) {
@@ -1868,7 +1868,7 @@ $history->save();
                                     ['data' => $root ,'site'=>'RCA', 'history'=>" - Activity: Cancel " ,'process' => ' Root Cause Analyses', 'comment' => $root->cancelled_comment,'user'=> Auth::user()->name ],
                                     function ($message) use ($email, $root ) {
                                         $message->to($email)
-                                            ->subject("QMS Notification: Root Cause Analyses, Record " . str_pad( $root->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel Permormed");
+                                            ->subject("QMS Notification: Root Cause Analyses, Record #" . str_pad( $root->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel Permormed");
                                     }
                                     );
                                 } catch (\Exception $e) {

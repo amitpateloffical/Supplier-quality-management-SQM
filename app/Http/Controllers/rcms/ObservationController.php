@@ -1911,7 +1911,7 @@ class ObservationController extends Controller
 
                 $history = new AuditTrialObservation();
                 $history->Observation_id = $id;
-                
+
                 $history->activity_type = 'Report Issued By, Report Issued On';
                 if (is_null($lastDocument->Report_Issued_By) || $lastDocument->Report_Issued_By === '') {
                     $history->previous = "";
@@ -1939,13 +1939,13 @@ class ObservationController extends Controller
                 $list = Helpers::getAuditeeDepartmentList($changestage->division_id);
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $supplier->division_id){
-                        $email = Helpers::getInitiatorEmail($u->user_id);
+                        $email = Helpers::getAuditeeEmail($u->user_id);
                         if (!empty($email)) {
                             try {
                                 Mail::send(
                                     'mail.view-mail',
                                     ['data' => $changestage, 'site' => "OBS", 'history' => "Report Issued", 'process' => 'Observation', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                                    function ($message) use ($email, $changestage) { 
+                                    function ($message) use ($email, $changestage) {
                                         $message->to($email)
                                         ->subject("QMS Notification: Observation, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Report Issued Performed");
                                     }
@@ -1998,7 +1998,7 @@ class ObservationController extends Controller
                 $list = Helpers::getQualityList($changestage->division_id);
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $supplier->division_id){
-                        $email = Helpers::getInitiatorEmail($u->user_id);
+                        $email = Helpers::getQualityEmail($u->user_id);
                         if (!empty($email)) {
                             try {
                                 Mail::send(
@@ -2100,7 +2100,7 @@ class ObservationController extends Controller
                 $history->stage = "All CAPA Closed";
                 $history->change_to = 'Pending Final Approval';
                 $history->change_from = 'CAPA Execution in Progress';
-                
+
                 if (is_null($lastDocument->All_CAPA_Closed_By) || $lastDocument->All_CAPA_Closed_By === '') {
                     $history->action_name = 'New';
                 } else {
@@ -2111,7 +2111,7 @@ class ObservationController extends Controller
                 $list = Helpers::getQualityList($changestage->division_id);
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $supplier->division_id){
-                        $email = Helpers::getInitiatorEmail($u->user_id);
+                        $email = Helpers::getQualityEmail($u->user_id);
                         if (!empty($email)) {
                             try {
                                 Mail::send(
@@ -2167,11 +2167,11 @@ class ObservationController extends Controller
                     $history->action_name = 'Update';
                 }
                 $history->save();
-                
+
                 $list = Helpers::getAuditeesList($changestage->division_id);
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $supplier->division_id){
-                        $email = Helpers::getInitiatorEmail($u->user_id);
+                        $email = Helpers::getAuditeesEmail($u->user_id);
                         if (!empty($email)) {
                             try {
                                 Mail::send(
@@ -2192,7 +2192,7 @@ class ObservationController extends Controller
                 $list = Helpers::getQualityList($changestage->division_id);
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $supplier->division_id){
-                        $email = Helpers::getInitiatorEmail($u->user_id);
+                        $email = Helpers::getQualityEmail($u->user_id);
                         if (!empty($email)) {
                             try {
                                 Mail::send(
@@ -2214,7 +2214,7 @@ class ObservationController extends Controller
                 $list = Helpers::getAuditorsList($changestage->division_id);
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $supplier->division_id){
-                        $email = Helpers::getInitiatorEmail($u->user_id);
+                        $email = Helpers::getAuditorsEmail($u->user_id);
                         if (!empty($email)) {
                             try {
                                 Mail::send(
@@ -2257,7 +2257,7 @@ class ObservationController extends Controller
 
                 $history = new AuditTrialObservation();
                 $history->Observation_id = $id;
-                
+
                 $history->activity_type = 'Cancelled By, Cancelled On';
                 if (is_null($lastDocument->Cancelled_By) || $lastDocument->Cancelled_By === '') {
                     $history->previous = "";
@@ -2285,7 +2285,7 @@ class ObservationController extends Controller
                 $list = Helpers::getQualityList($changestage->division_id);
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $supplier->division_id){
-                        $email = Helpers::getInitiatorEmail($u->user_id);
+                        $email = Helpers::getQualityEmail($u->user_id);
                         if (!empty($email)) {
                             try {
                                 Mail::send(
@@ -2306,7 +2306,7 @@ class ObservationController extends Controller
                 $list = Helpers::getAuditeesList($changestage->division_id);
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $supplier->division_id){
-                        $email = Helpers::getInitiatorEmail($u->user_id);
+                        $email = Helpers::getAuditeesEmail($u->user_id);
                         if (!empty($email)) {
                             try {
                                 Mail::send(
@@ -2428,11 +2428,11 @@ class ObservationController extends Controller
                 $history->save();
 
                 $changeControl->update();
-                
+
                 $list = Helpers::getAuditeeDepartmentList($changeControl->division_id);
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $supplier->division_id){
-                        $email = Helpers::getInitiatorEmail($u->user_id);
+                        $email = Helpers::getAuditeeEmail($u->user_id);
                         if (!empty($email)) {
                             try {
                                 Mail::send(
@@ -2480,14 +2480,30 @@ class ObservationController extends Controller
                 $history->stage = "Reject CAPA Plan";
                 $history->change_to = 'Pending CAPA Plan';
                 $history->change_from = 'Pending Final Approval';
-                
+
                 if (is_null($lastDocument->Reject_CAPA_Plan_By1) || $lastDocument->Reject_CAPA_Plan_By1 === '') {
                     $history->action_name = 'New';
                 } else {
                     $history->action_name = 'Update';
                 }
                 $history->save();
+                $list = Helpers::getAuditeeDepartmentList($changeControl->division_id);
+                foreach ($list as $u) {
+                    //if ($u->q_m_s_divisions_id == $changeControl->division_id) {
+                        $email = Helpers::getAuditeeEmail($u->user_id);
+                        if ($email !== null) {
 
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $changeControl, 'site' => "OBS", 'history' => "QA Approval Without CAPA", 'process' => 'Observation', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                function ($message) use ($email, $changeControl) {
+                                    $message->to($email)
+                                    ->subject("QMS Notification: Observation, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA Approval Without CAPA Performed");
+                                }
+                            );
+                        }
+                    //}
+                }
                 //     $list = Helpers::getLeadAuditeeUserList();
                 //     foreach ($list as $u) {
                 //         if($u->q_m_s_divisions_id == $changeControl->division_id){
@@ -2555,10 +2571,10 @@ class ObservationController extends Controller
                 }
                 $history->save();
 
-                $list = Helpers::getLeadAuditeeUserList();
+                $list = Helpers::getAuditeesList($changeControl->division_id);
                 foreach ($list as $u) {
-                    if ($u->q_m_s_divisions_id == $changeControl->division_id) {
-                        $email = Helpers::getInitiatorEmail($u->user_id);
+                    //if ($u->q_m_s_divisions_id == $changeControl->division_id) {
+                        $email = Helpers::getAuditeesEmail($u->user_id);
                         if ($email !== null) {
 
                             Mail::send(
@@ -2570,7 +2586,25 @@ class ObservationController extends Controller
                                 }
                             );
                         }
-                    }
+                    //}
+                }
+
+                $list = Helpers::getAuditorsList($changeControl->division_id);
+                foreach ($list as $u) {
+                    //if ($u->q_m_s_divisions_id == $changeControl->division_id) {
+                        $email = Helpers::getAuditorsEmail($u->user_id);
+                        if ($email !== null) {
+
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $changeControl, 'site' => "OBS", 'history' => "QA Approval Without CAPA", 'process' => 'Observation', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                function ($message) use ($email, $changeControl) {
+                                    $message->to($email)
+                                    ->subject("QMS Notification: Observation, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA Approval Without CAPA Performed");
+                                }
+                            );
+                        }
+                    //}
                 }
                 $changeControl->update();
                 toastr()->success('Document Sent');

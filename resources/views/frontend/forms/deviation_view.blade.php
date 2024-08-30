@@ -786,14 +786,16 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
                             </button>
-                        @elseif($data->stage == 4 && Helpers::check_roles($data->division_id, 'Deviation ', 5))
-
+                        @elseif(
+                        ($data->stage == 4 && Helpers::check_roles($data->division_id, 'Deviation ', 5)) || in_array(Auth::user()->id, $valueArray))
+                        <!-- @if(!$cftCompleteUser) -->
                                 <button class="button_theme1" data-bs-toggle="modal"data-bs-target="#more-info-required-modal">
                                     More Info Required
                                 </button>
                                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                     CFT Review Complete
                                 </button>
+                       <!-- @endif -->
 
                         @elseif($data->stage == 5 && Helpers::check_roles($data->division_id, 'Deviation ', 9))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#sendToInitiator">
@@ -3389,7 +3391,7 @@
                                                     does not require completion</small></div>
 
                                                     <div class="relative-container">
-                                                        <textarea @if ($data1->Production_Review == 'Yes' && $data->stage == 4) required @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Production_person || $data->stage == 11 ? 'tiny Production_assessment' : 'tiny-disable' }}
+                                                        <textarea @if ($data1->Production_Review == 'Yes' && $data->stage == 4) required @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Production_person || $data->stage == 11 ? 'Production_assessment' : 'tiny-disable' }}
                                                             @if ($data->stage == 3 || Auth::user()->id != $data1->Production_person) readonly @endif name="Production_assessment" id="summernote-17" class="mic-input">{{ $data1->Production_assessment }}</textarea>
 
                                                             @component('frontend.forms.language-model', [

@@ -3193,7 +3193,7 @@ class CCController extends Controller
                  $list = Helpers::getHodUserList($changeControl->division_id);
                     foreach ($list as $u) {
                         // if($u->q_m_s_divisions_id == $changeControl->division_id){
-                            $email = Helpers::getInitiatorEmail($u->user_id);
+                            $email = Helpers::getHODEmail($u->user_id);
                              if ($email !== null) {
                             try {
                               Mail::send(
@@ -3316,7 +3316,7 @@ class CCController extends Controller
                  $list = Helpers::getCFTUserList($changeControl->division_id);
                     foreach ($list as $u) {
                         // if($u->q_m_s_divisions_id == $changeControl->division_id){
-                            $email = Helpers::getInitiatorEmail($u->user_id);
+                            $email = Helpers::getCFTEmail($u->user_id);
                              if ($email !== null) {
                             try {
                               Mail::send(
@@ -3343,7 +3343,7 @@ class CCController extends Controller
                  $list = Helpers::getQAUserList($changeControl->division_id);
                     foreach ($list as $u) {
                         // if($u->q_m_s_divisions_id == $changeControl->division_id){
-                            $email = Helpers::getInitiatorEmail($u->user_id);
+                            $email = Helpers::getQAEmail($u->user_id);
                              if ($email !== null) {
                             try {
                               Mail::send(
@@ -3491,7 +3491,7 @@ class CCController extends Controller
                  $list = Helpers::getHodUserList($changeControl->division_id);
                     foreach ($list as $u) {
                         // if($u->q_m_s_divisions_id == $changeControl->division_id){
-                            $email = Helpers::getInitiatorEmail($u->user_id);
+                            $email = Helpers::getHODEmail($u->user_id);
                              if ($email !== null) {
                             try {
                                 
@@ -3547,7 +3547,7 @@ class CCController extends Controller
                  $list = Helpers::getCFTUserList( $changeControl->division_id);
                     foreach ($list as $u) {
                         // if($u->q_m_s_divisions_id == $changeControl->division_id){
-                            $email = Helpers::getInitiatorEmail($u->user_id);
+                            $email = Helpers::getCFTEmail($u->user_id);
                              if ($email !== null) {
                                  try {
                               Mail::send(
@@ -3712,7 +3712,7 @@ class CCController extends Controller
                 $list = Helpers::getHodUserList($changeControl->division_id);
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $changeControl->division_id){
-                        $email = Helpers::getInitiatorEmail($u->user_id);
+                        $email = Helpers::getHODEmail($u->user_id);
                          if ($email !== null) {
                             try {
                           Mail::send(
@@ -3777,7 +3777,7 @@ class CCController extends Controller
                 $list = Helpers::getHodUserList($changeControl->division_id);
                     foreach ($list as $u) {
                         // if($u->q_m_s_divisions_id == $changeControl->division_id){
-                            $email = Helpers::getInitiatorEmail($u->user_id);
+                            $email = Helpers::getHODEmail($u->user_id);
                              if ($email !== null) {
                                 try {
                               Mail::send(
@@ -3919,7 +3919,7 @@ class CCController extends Controller
                 $list = Helpers::getCFTUserList($changeControl->division_id);
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $changeControl->division_id){
-                        $email = Helpers::getInitiatorEmail($u->user_id);
+                        $email = Helpers::getCFTEmail($u->user_id);
                          if ($email !== null) {
                         try {
                           Mail::send(
@@ -3946,7 +3946,7 @@ class CCController extends Controller
                $list = Helpers::getQAUserList($changeControl->division_id);
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $changeControl->division_id){
-                        $email = Helpers::getInitiatorEmail($u->user_id);
+                        $email = Helpers::getQAEmail($u->user_id);
                          if ($email !== null) {
                         try {
                           Mail::send(
@@ -4028,7 +4028,7 @@ class CCController extends Controller
             $list = Helpers::getHodUserList($changeControl->division_id);
                     foreach ($list as $u) {
                         // if($u->q_m_s_divisions_id == $changeControl->division_id){
-                            $email = Helpers::getInitiatorEmail($u->user_id);
+                            $email = Helpers::getHODEmail($u->user_id);
                              if ($email !== null) {
                                 try {
                               Mail::send(
@@ -4055,7 +4055,7 @@ class CCController extends Controller
                   $list = Helpers::getCFTUserList($changeControl->division_id);
                     foreach ($list as $u) {
                         // if($u->q_m_s_divisions_id == $changeControl->division_id){
-                            $email = Helpers::getInitiatorEmail($u->user_id);
+                            $email = Helpers::getCFTEmail($u->user_id);
                              if ($email !== null) {
                                 try {
                               Mail::send(
@@ -4082,7 +4082,7 @@ class CCController extends Controller
                   $list = Helpers::getQAUserList($changeControl->division_id);
                   foreach ($list as $u) {
                       // if($u->q_m_s_divisions_id == $changeControl->division_id){
-                          $email = Helpers::getInitiatorEmail($u->user_id);
+                          $email = Helpers::getQAEmail($u->user_id);
                            if ($email !== null) {
                               try {
                             Mail::send(

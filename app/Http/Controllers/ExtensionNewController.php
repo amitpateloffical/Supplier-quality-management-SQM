@@ -1157,7 +1157,7 @@ class ExtensionNewController extends Controller
                     $list = Helpers::getHodUserList($extensionNew->division_id);
                     foreach ($list as $u) {
                         // if ($u->q_m_s_divisions_id == $extensionNew->division_id) {
-                        $email = Helpers::getInitiatorEmail($u->user_id);
+                        $email = Helpers::getHODEmail($u->user_id);
                         if (!empty($email)) {
 
                             try {
@@ -1235,7 +1235,7 @@ class ExtensionNewController extends Controller
                 $list = Helpers::getHodUserList($extensionNew->site_location_code);
                 foreach ($list as $u) {
                     // if ($u->q_m_s_divisions_id == $extensionNew->division_id) {
-                    $email = Helpers::getInitiatorEmail($u->user_id);
+                    $email = Helpers::getHODEmail($u->user_id);
                     if (!empty($email)) {
 
                         try {
@@ -1309,7 +1309,7 @@ class ExtensionNewController extends Controller
                     $list = Helpers::getQaApproverList($extensionNew->site_location_code);
                     foreach ($list as $u) {
                         // if ($u->q_m_s_divisions_id == $extensionNew->division_id) {
-                        $email = Helpers::getInitiatorEmail($u->user_id);
+                        $email = Helpers::getQAApproverEmail($u->user_id);
                         if ($email !== null) {
                             try {
                                 Mail::send(
@@ -1389,7 +1389,7 @@ class ExtensionNewController extends Controller
                     $list = Helpers::getHodUserList($extensionNew->site_location_code);
                     foreach ($list as $u) {
                         // if ($u->q_m_s_divisions_id == $extensionNew->division_id) {
-                        $email = Helpers::getInitiatorEmail($u->user_id);
+                        $email = Helpers::getHODEmail($u->user_id);
                         if ($email !== null) {
                             try {
                                 Mail::send(

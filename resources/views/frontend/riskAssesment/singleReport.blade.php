@@ -545,7 +545,7 @@
 
                     <tr class="table_bg">
                         <th class="w-20">S.N.</th>
-                        <th class="w-60">Batch No</th>
+                        <th class="w-60">Files</th>
                     </tr>
                     @if ($data->reference)
                         @foreach (json_decode($data->reference) as $key => $file)

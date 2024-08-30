@@ -376,7 +376,7 @@ class SupplierAuditController extends Controller
         $history->supplier_id = $internalAudit->id;
         $history->activity_type = 'Site/Location Code';
         $history->previous = "Null";
-        $history->current = $internalAudit->division_id;
+        $history->current = Helpers::getDivisionName($internalAudit->division_id);
         $history->comment = "Not Applicable";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
@@ -674,8 +674,8 @@ class SupplierAuditController extends Controller
             $history->origin_state = $internalAudit->status;
             $history->save();
         }
-            
-        // if (!empty($$internalAudit->division_code)){ 
+
+        // if (!empty($$internalAudit->division_code)){
         //     $history = new $ExternalAuditTrailSupplier();
         //     $history->supplier_id = $internalAudit->id;
         //     $history->activity_type = 'Site/Location code';
@@ -710,7 +710,7 @@ class SupplierAuditController extends Controller
         }
         $previousAssignedToName = User::find($lastDocument->assign_to);
         $currentAssignedToName = User::find($internalAudit['assign_to']);
-       
+
 
 
         if (!empty($internalAudit->assign_to)) {
@@ -1738,16 +1738,16 @@ class SupplierAuditController extends Controller
 
         // $history->change_from = $lastDocument->status;
         // //  $history->action_name = "Update";
-        
+
         // if ($existingHistory) {
         //     $history->action_name = "Update";
         // } else {
         //         if ($lastDocument->short_description != $internalAudit->short_description || !empty($request->short_description_comment)) {
-        
+
         //             $existingHistory = ExternalAuditTrailSupplier::where('supplier_id', $id)
         //                 ->where('activity_type', 'Short Description')
         //                 ->exists();
-        
+
         //             $history = new ExternalAuditTrailSupplier();
         //             $history->supplier_id = $id;
         //             $history->activity_type = 'Short Description';
@@ -1765,7 +1765,7 @@ class SupplierAuditController extends Controller
         //     $history->save();
         // }
 
-        
+
         if ($lastDocument->short_description != $internalAudit->short_description || !empty($request->short_description_comment)) {
 
             $existingHistory = ExternalAuditTrailSupplier::where('supplier_id', $id)
@@ -1794,7 +1794,7 @@ class SupplierAuditController extends Controller
 
             $history->save();
         }
-        
+
 
         if ($lastDocument->refrence_record != $internalAudit->refrence_record || !empty($request->refrence_record_comment)) {
 
@@ -3001,7 +3001,7 @@ class SupplierAuditController extends Controller
                 $history->save();
 
                 $list = Helpers::getSupplierAuditorDepartmentList($changeControl->division_id);
-                  
+
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $supplier->division_id){
                     $email = Helpers::getSupplierAuditorEmail($u->user_id);
@@ -3018,7 +3018,7 @@ class SupplierAuditController extends Controller
                                     $message->to($email)
                                     ->subject("QMS Notification: Supplier Audit , Record #" . str_pad($record_number, 4, '0', STR_PAD_LEFT) . " - Activity: Submit Performed"); }
                                 );
-                            
+
                         } catch (\Exception $e) {
                             \Log::error('Mail failed to send: ' . $e->getMessage());
                         }
@@ -3117,7 +3117,7 @@ class SupplierAuditController extends Controller
                                     $message->to($email)
                                     ->subject("QMS Notification: Supplier Audit , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Issue Report Performed"); }
                                 );
-                            
+
                         } catch (\Exception $e) {
                             \Log::error('Mail failed to send: ' . $e->getMessage());
                         }
@@ -3211,7 +3211,7 @@ class SupplierAuditController extends Controller
                         try {
                             Mail::send(
                                 'mail.view-mail',
-                               
+
                                 ['data' => $changeControl,'site'=>'SA' ,'history' => 'All Capa Closed ', 'process' => 'SCAR', 'comment' => $changeControl->comment_closed_done_by_comment,'user'=> Auth::user()->name],
                             //     function ($message) use ($email) {
                             //         $message->to($email)
@@ -3375,7 +3375,7 @@ class SupplierAuditController extends Controller
                                     $message->to($email)
                                     ->subject("QMS Notification: Supplier Audit , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Reject performed"); }
                                 );
-                            
+
                         } catch (\Exception $e) {
                             \Log::error('Mail failed to send: ' . $e->getMessage());
                         }
@@ -3524,7 +3524,7 @@ class SupplierAuditController extends Controller
                                     $message->to($email)
                                     ->subject("QMS Notification: Supplier Audit , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel Performed"); }
                                 );
-                            
+
                         } catch (\Exception $e) {
                             \Log::error('Mail failed to send: ' . $e->getMessage());
                         }
@@ -3577,7 +3577,7 @@ class SupplierAuditController extends Controller
                                     $message->to($email)
                                     ->subject("QMS Notification: Supplier Audit , Record # " . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel performed"); }
                                 );
-                            
+
                         } catch (\Exception $e) {
                             \Log::error('Mail failed to send: ' . $e->getMessage());
                         }

@@ -307,7 +307,7 @@
 
                                 <div class="col-md-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="Due Date">Date Due</label>
+                                        <label for="Due Date">Due Date</label>
                                         <div class="calenderauditee">
                                             <div class="calenderauditee">
                                                 <input type="text" id="due_date" readonly placeholder="DD-MM-YYYY"

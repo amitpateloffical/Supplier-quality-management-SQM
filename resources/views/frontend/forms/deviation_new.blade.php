@@ -562,7 +562,11 @@
 
         <div class="division-bar">
             <strong>Site Division/Project</strong>:
-            {{ Helpers::getDivisionName(session()->get('division')) }}/Deviation
+                @if(!empty($parent_division_id))
+                {{ Helpers::getDivisionName($parent_division_id) }}/Deviation
+                @else
+                {{ Helpers::getDivisionName(session()->get('division')) }}/Deviation
+                @endif
         </div>
     </div>
 
@@ -630,10 +634,15 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Division Code"><b>Site/Location Code</b></label>
-                                        <input disabled type="text" name="division_code"
-                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}">
-                                        <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
-                                        {{-- <div class="static">QMS-North America</div> --}}
+                                        @if(!empty($parent_division_id))
+                                            <input disabled type="text" name="division_code"
+                                                value="{{ Helpers::getDivisionName($parent_division_id) }}">
+                                            <input type="hidden" name="division_id" value="{{ $parent_division_id }}">
+                                        @else
+                                            <input disabled type="text" name="division_code"
+                                                value="{{ Helpers::getDivisionName(session()->get('division')) }}">
+                                            <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col-lg-6">

@@ -670,7 +670,7 @@
                 <div id="CCForm4" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="sub-head">
-                            Evaluation Detail
+                            Evaluation Details
                         </div>
                         <div class="group-input">
                             <label for="qa-eval-comments">QA Evaluation Comments</label>
@@ -1043,13 +1043,13 @@
 
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Severity Rate">Severity Rate</label>
+                                    <label for="Severity Rate">Severity</label>
                                     <select name="severity" id="analysisR" onchange='calculateRiskAnalysis(this)'>
                                         <option value="">Enter Your Selection Here</option>
-                                        <option value="1">Negligible</option>
-                                        <option value="2">Moderate</option>
-                                        <option value="3">Major</option>
-                                        <option value="4">Fatal</option>
+                                        <option value="Negligible">Negligible</option>
+                                        <option value="Moderate">Moderate</option>
+                                        <option value="Major">Major</option>
+                                        <option value="Fatal">Fatal</option>
                                     </select>
                                 </div>
                             </div>
@@ -1058,11 +1058,11 @@
                                     <label for="Occurrence">Occurrence</label>
                                     <select name="Occurance" id="analysisP" onchange='calculateRiskAnalysis(this)'>
                                         <option value="">Enter Your Selection Here</option>
-                                        <option value="1">Extremely Unlikely</option>
-                                        <option value="2">Rare</option>
-                                        <option value="3">Unlikely</option>
-                                        <option value="4">Likely</option>
-                                        <option value="5">Very Likely</option>
+                                        <option value="Extremely Unlikely">Extremely Unlikely</option>
+                                        <option value="Rare">Rare</option>
+                                        <option value="Unlikely">Unlikely</option>
+                                        <option value="Likely">Likely</option>
+                                        <option value="Very Likely">Very Likely</option>
                                     </select>
                                 </div>
                             </div>
@@ -1071,11 +1071,11 @@
                                     <label for="Detection">Detection</label>
                                     <select name="Detection" id="analysisN" onchange='calculateRiskAnalysis(this)'>
                                         <option value="">Enter Your Selection Here</option>
-                                        <option value="1">Impossible</option>
-                                        <option value="2">Rare</option>
-                                        <option value="3">Unlikely</option>
-                                        <option value="4">Likely</option>
-                                        <option value="5">Very Likely</option>
+                                        <option value="Impossible">Impossible</option>
+                                        <option value="Rare">Rare</option>
+                                        <option value="Unlikely">Unlikely</option>
+                                        <option value="Likely">Likely</option>
+                                        <option value="Very Likely">Very Likely</option>
                                     </select>
                                 </div>
                             </div>

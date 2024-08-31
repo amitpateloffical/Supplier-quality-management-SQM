@@ -795,7 +795,7 @@
                                         <div class="row">
                                             <div class="col-lg-12">
                                                 <div class="group-input">
-                                                    <label for="type_change">Type of Change</label>
+                                                    <label for="type_change"> Type of Change</label>
                                                     <select name="type_chnage"
                                                         {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                         <option value="">-- Select --</option>
@@ -918,7 +918,7 @@
                                 <div id="CCForm4" class="inner-block cctabcontent">
                                     <div class="inner-block-content">
                                         <div class="sub-head">
-                                            Evaluation Detail
+                                            Evaluation Details
                                         </div>
                                         <div class="group-input">
                                             <label for="qa-eval-comments">QA Evaluation Comments</label>
@@ -1418,20 +1418,20 @@
 
                                             <div class="col-lg-6">
                                                 <div class="group-input">
-                                                    <label for="Occurance">Occurance</label>
+                                                    <label for="Occurance">Occurrence</label>
                                                     <select name="Occurance" id="analysisP" onchange='deleteFishBone'
                                                         {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                         <option value="">-- Select --</option>
-                                                        <option {{ $data->Occurance == '1' ? 'selected' : '' }}
-                                                            value="1">Extremely Unlikely</option>
-                                                        <option {{ $data->Occurance == '2' ? 'selected' : '' }}
-                                                            value="2">Rare</option>
-                                                        <option {{ $data->Occurance == '3' ? 'selected' : '' }}
-                                                            value="3">Unlikely</option>
-                                                        <option {{ $data->Occurance == '4' ? 'selected' : '' }}
-                                                            value="4">Likely</option>
-                                                        <option {{ $data->Occurance == '5' ? 'selected' : '' }}
-                                                            value="5">Very Likely</option>
+                                                        <option {{ $data->Occurance == 'Extremely Unlikely' ? 'selected' : '' }}
+                                                            value="Extremely Unlikely">Extremely Unlikely</option>
+                                                        <option {{ $data->Occurance == 'Rare' ? 'selected' : '' }}
+                                                            value="Rare">Rare</option>
+                                                        <option {{ $data->Occurance == 'Unlikely' ? 'selected' : '' }}
+                                                            value="Unlikely">Unlikely</option>
+                                                        <option {{ $data->Occurance == 'Likely' ? 'selected' : '' }}
+                                                            value="Likely">Likely</option>
+                                                        <option {{ $data->Occurance == 'Very Likely' ? 'selected' : '' }}
+                                                            value="Very Likely">Very Likely</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -1443,14 +1443,14 @@
                                                         onchange='calculateRiskAnalysis(this)'
                                                         {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                         <option value="">-- Select --</option>
-                                                        <option {{ $data->Detection == '1' ? 'selected' : '' }}
-                                                            value="1">Impossible</option>
-                                                        <option {{ $data->Detection == '2' ? 'selected' : '' }}
-                                                            value="2">Rare</option>
-                                                        <option {{ $data->Detection == '3' ? 'selected' : '' }}
-                                                            value="3">Unlikely</option>
-                                                        <option {{ $data->Detection == '4' ? 'selected' : '' }}
-                                                            value="4">Likely</option>
+                                                        <option {{ $data->Detection == 'Impossible' ? 'selected' : '' }}
+                                                            value="Impossible">Impossible</option>
+                                                        <option {{ $data->Detection == 'Rare' ? 'selected' : '' }}
+                                                            value="Rare">Rare</option>
+                                                        <option {{ $data->Detection == 'Unlikely' ? 'selected' : '' }}
+                                                            value="Unlikely">Unlikely</option>
+                                                        <option {{ $data->Detection == 'Likely' ? 'selected' : '' }}
+                                                            value="Likely">Likely</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -1643,10 +1643,7 @@
                                                                     </div>
                                                                 </div> --}}
                                                                 </td>
-
-
-
-
+                                                                
                                                                 <td><input type="text" name="new_document_no[]"
                                                                         {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                                         value="{{ unserialize($closure->new_doc_no)[$key] ? unserialize($closure->new_doc_no)[$key] : '' }}"

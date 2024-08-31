@@ -1145,7 +1145,7 @@ class CCController extends Controller
         if(!empty($request->Occurance)){
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
-            $history->activity_type = 'Occurance';
+            $history->activity_type = 'Occurrence';
             $history->previous = "Null";
             $history->current = $openState->Occurance;
             $history->comment = "Not Applicable";
@@ -2513,11 +2513,11 @@ class CCController extends Controller
 
         if ($areCftAttachmentsSame != true) {
             $existingHistory = RcmDocHistory::where('cc_id', $id)
-            ->where('activity_type', 'Feedback Atttachments')
+            ->where('activity_type', 'Feedback Attachment')
             ->exists();
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'Feedback Atttachments';
+            $history->activity_type = 'Feedback Attachment';
             $history->previous = $previousCftAttachments;
             $history->current = $openState->cft_attchament;
             $history->comment = "Not Appplicable";
@@ -2830,11 +2830,11 @@ class CCController extends Controller
 
         if ($lastDocument->Occurance != $request->Occurance) {
             $existingHistory = RcmDocHistory::where('cc_id', $id)
-            ->where('activity_type', 'Occurance')
+            ->where('activity_type', 'Occurrence')
             ->exists();
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'Occurance';
+            $history->activity_type = 'Occurrence';
             
             if ($lastDocument->Occurance == 1){
                 $history->previous = "Extremely Unlikely";

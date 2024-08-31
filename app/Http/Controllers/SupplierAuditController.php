@@ -3759,9 +3759,10 @@ class SupplierAuditController extends Controller
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $division = SupplierAudit::find($id);
         $divisionId = $division->division_id;
+        $parent_division_id = SupplierAudit::where('id', $id)->value('division_id');
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('d-M-Y');
-        return view('frontend.forms.observation', compact('record_number', 'due_date', 'parent_id', 'parent_type', 'divisionId'));
+        return view('frontend.forms.observation', compact('record_number', 'parent_division_id', 'due_date', 'parent_id', 'parent_type', 'divisionId'));
     }
 }

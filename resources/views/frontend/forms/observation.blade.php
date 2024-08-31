@@ -120,7 +120,7 @@
     <div class="form-field-head">
 
         <div class="division-bar">
-            <strong>Site Division/Project</strong> : {{ Helpers::getDivisionName($divisionId) }} /Observation
+            <strong>Site Division/Project</strong> : {{ Helpers::getDivisionName($parent_division_id) }} /Observation
         </div>
     </div>
 
@@ -160,15 +160,15 @@
                                     <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>
                                         <input disabled type="text" name="record_number"
-                                            value="{{ Helpers::getDivisionName($divisionId) }}/OBS/{{ date('Y') }}/{{ $record_number }}">
+                                            value="{{ Helpers::getDivisionName($parent_division_id) }}/OBS/{{ date('Y') }}/{{ $record_number }}">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Division Code"><b>Site/Location Code</b></label>
                                         <input readonly type="text" name="division_id"
-                                            value="{{ Helpers::getDivisionName($divisionId) }}">
-                                        <input type="hidden" name="division_id" value="{{ $divisionId }}">
+                                            value="{{ Helpers::getDivisionName($parent_division_id) }}">
+                                        <input type="hidden" name="division_id" value="{{ $parent_division_id }}">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">

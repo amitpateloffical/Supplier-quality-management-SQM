@@ -18,6 +18,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
+
 use PDF;
 
 class ExtensionNewController extends Controller
@@ -995,7 +997,7 @@ class ExtensionNewController extends Controller
                             }
                         );
                     } catch (\Exception $e) {
-                        \log::error('Mail failed to send: ' . $e->getMessage());
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
                     }
                 }
                 // }
@@ -1016,7 +1018,7 @@ class ExtensionNewController extends Controller
                             }
                         );
                     } catch (\Exception $e) {
-                        \log::error('Mail failed to send: ' . $e->getMessage());
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
                     }
                 }
                 // }
@@ -1114,7 +1116,7 @@ class ExtensionNewController extends Controller
                                     }
                                 );
                             } catch (\Exception $e) {
-                                \log::error('Mail failed to send: ' . $e->getMessage());
+                                \Log::error('Mail failed to send: ' . $e->getMessage());
                             }
                         }
                         // }
@@ -1170,7 +1172,7 @@ class ExtensionNewController extends Controller
                                     }
                                 );
                             } catch (\Exception $e) {
-                                \log::error('Mail failed to send: ' . $e->getMessage());
+                                \Log::error('Mail failed to send: ' . $e->getMessage());
                             }
                         }
                         // }
@@ -1248,7 +1250,7 @@ class ExtensionNewController extends Controller
                                 }
                             );
                         } catch (\Exception $e) {
-                            \log::error('Mail failed to send: ' . $e->getMessage());
+                            \Log::error('Mail failed to send: ' . $e->getMessage());
                         }
                     }
                     // }
@@ -1321,7 +1323,7 @@ class ExtensionNewController extends Controller
                                     }
                                 );
                             } catch (\Exception $e) {
-                                \log::error('Mail failed to send: ' . $e->getMessage());
+                                \Log::error('Mail failed to send: ' . $e->getMessage());
                             }
                         }
                         // }
@@ -1380,7 +1382,7 @@ class ExtensionNewController extends Controller
                     //                     }
                     //                 );
                     //             } catch (\Exception $e) {
-                    //                 \log::error('Mail failed to send: ' . $e->getMessage());
+                    //                 \Log::error('Mail failed to send: ' . $e->getMessage());
                     //             }
                     //         }
                     //     // }
@@ -1401,7 +1403,7 @@ class ExtensionNewController extends Controller
                                     }
                                 );
                             } catch (\Exception $e) {
-                                \log::error('Mail failed to send: ' . $e->getMessage());
+                                \Log::error('Mail failed to send: ' . $e->getMessage());
                             }
                         }
                         // }
@@ -1422,7 +1424,7 @@ class ExtensionNewController extends Controller
                                     }
                                 );
                             } catch (\Exception $e) {
-                                \log::error('Mail failed to send: ' . $e->getMessage());
+                                \Log::error('Mail failed to send: ' . $e->getMessage());
                             }
                         }
                         // }

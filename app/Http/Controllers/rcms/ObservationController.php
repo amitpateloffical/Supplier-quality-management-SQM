@@ -2625,11 +2625,12 @@ class ObservationController extends Controller
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
+        $parent_division_id = Observation::where('id', $id)->value('division_id');
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('d-M-Y');
         $changeControl = OpenStage::find(1);
         if (!empty($changeControl->cft)) $cft = explode(',', $changeControl->cft);
-        return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id', 'parent_type', 'old_record', 'cft'));
+        return view('frontend.forms.capa', compact('record_number', 'parent_division_id', 'due_date', 'parent_id', 'parent_type', 'old_record', 'cft'));
     }
 
 

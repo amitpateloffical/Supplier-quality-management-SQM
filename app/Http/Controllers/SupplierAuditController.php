@@ -3001,22 +3001,44 @@ class SupplierAuditController extends Controller
                 $history->save();
 
                 $list = Helpers::getSupplierAuditorDepartmentList($changeControl->division_id);
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if(!empty($users)){
+                    try {
+                        $history = new ExternalAuditTrailSupplier();
+                        $history->supplier_id = $id;
+                        $history->activity_type = "Not Applicable";
+                        $history->previous = "Not Applicable";
+                        $history->current = "Not Applicable";
+                        $history->action = 'Notification';
+                        $history->comment = "";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable";
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = "Audit Preparation";
+                        $history->stage = "";
+                        $history->action_name = "";
+                        $history->mailUserId = $userId;
+                        $history->role_name = "Supplier Auditor";
+                        $history->save(); 
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
 
                 foreach ($list as $u) {
-                    // if($u->q_m_s_divisions_id == $supplier->division_id){
                     $email = Helpers::getSupplierAuditorEmail($u->user_id);
                     if (!empty($email)) {
                         try {
                             Mail::send(
                                 'mail.view-mail',
                                 ['data' => $changeControl,'site'=>'SA','history' => 'Submit', 'process' => 'SCAR', 'comment' => $changeControl->comment,'user'=> Auth::user()->name],
-                                // function ($message) use ($email) {
-                                //     $message->to($email)
-                                //         ->subject("Document is Sent By " . Auth::user()->name);
-                                // }
                                 function ($message) use ($email, $changeControl) {
-                                    $message->to($email)
-                                    ->subject("QMS Notification: Supplier Audit , Record #" . str_pad($record_number, 4, '0', STR_PAD_LEFT) . " - Activity: Submit Performed"); }
+                                 $message->to($email)
+                                 ->subject("QMS Notification: Supplier Audit , Record #" . str_pad($record_number, 4, '0', STR_PAD_LEFT) . " - Activity: Submit Performed"); }
                                 );
 
                         } catch (\Exception $e) {
@@ -3101,18 +3123,42 @@ class SupplierAuditController extends Controller
                 $history->save();
 
                 $list = Helpers::getAuditeeDepartmentList($changeControl->division_id);
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if(!empty($users)){
+                    try {
+                        $history = new ExternalAuditTrailSupplier();
+                        $history->supplier_id = $id;
+                        $history->activity_type = "Not Applicable";
+                        $history->previous = "Not Applicable";
+                        $history->current = "Not Applicable";
+                        $history->action = 'Notification';
+                        $history->comment = "";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable";
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = "Pending Response ";
+                        $history->stage = "";
+                        $history->action_name = "";
+                        $history->mailUserId = $userId;
+                        $history->role_name = "Auditee";
+                        $history->save(); 
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+
                 foreach ($list as $u) {
-                    // if($u->q_m_s_divisions_id == $supplier->division_id){
+                   
                     $email = Helpers::getAuditeesEmail($u->user_id);
                     if (!empty($email)) {
                         try {
                             Mail::send(
                                 'mail.view-mail',
                                 ['data' => $changeControl,'site'=>'SA', 'history' => 'Issue Report ', 'process' => 'SCAR', 'comment' => $changeControl->pending_response_comment,'user'=> Auth::user()->name],
-                                // function ($message) use ($email) {
-                                //     $message->to($email)
-                                //         ->subject("Document is Sent By " . Auth::user()->name);
-                                // }
                                 function ($message) use ($email, $changeControl) {
                                     $message->to($email)
                                     ->subject("QMS Notification: Supplier Audit , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Issue Report Performed"); }
@@ -3122,7 +3168,7 @@ class SupplierAuditController extends Controller
                             \Log::error('Mail failed to send: ' . $e->getMessage());
                         }
                     }
-                    // }
+                    
                 }
 
                 $changeControl->update();
@@ -3138,7 +3184,7 @@ class SupplierAuditController extends Controller
 
                 $history = new ExternalAuditTrailSupplier();
                 $history->supplier_id = $id;
-                //  $history->activity_type = 'Activity Log';
+                
                 $history->activity_type = 'CAPA  Plan Proposed by,CAPA  Plan Proposed on';
                 if (is_null($lastDocument->audit_observation_submitted_by) || $lastDocument->audit_observation_submitted_by  === '') {
                     $history->previous = "";
@@ -3146,8 +3192,7 @@ class SupplierAuditController extends Controller
                     $history->previous = $lastDocument->audit_observation_submitted_by   . ' , ' . $lastDocument->audit_observation_submitted_on;
                 }
                 $history->current = $changeControl->audit_observation_submitted_by   . ' , ' .  $changeControl->audit_observation_submitted_on;
-                // $history->activity_type = 'Activity Log';
-                //$history->current = $changeControl->rejected_by ;
+                
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -3204,8 +3249,36 @@ class SupplierAuditController extends Controller
                 $history->save();
 
                 $list = Helpers::getAuditeeDepartmentList($changeControl->division_id);
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if(!empty($users)){
+                    try {
+                        $history = new ExternalAuditTrailSupplier();
+                        $history->supplier_id = $id;
+                        $history->activity_type = "Not Applicable";
+                        $history->previous = "Not Applicable";
+                        $history->current = "Not Applicable";
+                        $history->action = 'Notification';
+                        $history->comment = "";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable";
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = "Closed - Done";
+                        $history->stage = "";
+                        $history->action_name = "";
+                        $history->mailUserId = $userId;
+                        $history->role_name = "Auditee";
+                        $history->save(); 
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+
                 foreach ($list as $u) {
-                    // if($u->q_m_s_divisions_id == $supplier->division_id){
+                   
                     $email = Helpers::getAuditeesEmail($u->user_id);
                     if (!empty($email)) {
                         try {
@@ -3230,6 +3303,34 @@ class SupplierAuditController extends Controller
                 }
 
                 $list = Helpers::getSupplierAuditorDepartmentList($changeControl->division_id);
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if(!empty($users)){
+                    try {
+                        $history = new ExternalAuditTrailSupplier();
+                        $history->supplier_id = $id;
+                        $history->activity_type = "Not Applicable";
+                        $history->previous = "Not Applicable";
+                        $history->current = "Not Applicable";
+                        $history->action = 'Notification';
+                        $history->comment = "";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable";
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = "Closed - Done";
+                        $history->stage = "";
+                        $history->action_name = "";
+                        $history->mailUserId = $userId;
+                        $history->role_name = "Supplier Auditor";
+                        $history->save(); 
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $supplier->division_id){
                     $email = Helpers::getSupplierAuditorEmail($u->user_id);
@@ -3238,11 +3339,7 @@ class SupplierAuditController extends Controller
                             Mail::send(
                                 'mail.view-mail',
                                 ['data' => $changeControl, 'site'=>'SA' ,'history' => 'All Capa Closed ', 'process' => 'Supplier Audit', 'comment' => $changeControl->comment_closed_done_by_comment,'user'=> Auth::user()->name],
-                            //     function ($message) use ($email) {
-                            //         $message->to($email)
-                            //             ->subject("Document is Sent By " . Auth::user()->name);
-                            //     }
-                            // );
+                           
                             function ($message) use ($email, $changeControl) {
                                 $message->to($email)
                                 ->subject("QMS Notification: Supplier Audit , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: All Capa Closed Performed"); }
@@ -3255,6 +3352,33 @@ class SupplierAuditController extends Controller
                 }
 
                 $list = Helpers::getAuditManagerDepartmentList($changeControl->division_id);
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if(!empty($users)){
+                    try {
+                        $history = new ExternalAuditTrailSupplier();
+                        $history->supplier_id = $id;
+                        $history->activity_type = "Not Applicable";
+                        $history->previous = "Not Applicable";
+                        $history->current = "Not Applicable";
+                        $history->action = 'Notification';
+                        $history->comment = "";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable";
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = "Closed - Done";
+                        $history->stage = "";
+                        $history->action_name = "";
+                        $history->mailUserId = $userId;
+                        $history->role_name = "Audit Manager";
+                        $history->save(); 
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $supplier->division_id){
                     $email = Helpers::getAuditManagerEmail($u->user_id);
@@ -3363,6 +3487,33 @@ class SupplierAuditController extends Controller
                 $history->save();
 
                 $list = Helpers::getAuditManagerDepartmentList($changeControl->division_id);
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if(!empty($users)){
+                    try {
+                        $history = new ExternalAuditTrailSupplier();
+                        $history->supplier_id = $id;
+                        $history->activity_type = "Not Applicable";
+                        $history->previous = "Not Applicable";
+                        $history->current = "Not Applicable";
+                        $history->action = 'Notification';
+                        $history->comment = "";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable";
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = "Opened";
+                        $history->stage = "";
+                        $history->action_name = "";
+                        $history->mailUserId = $userId;
+                        $history->role_name = "Audit Manager";
+                        $history->save(); 
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $supplier->division_id){
                     $email = Helpers::getAuditManagerEmail($u->user_id);
@@ -3421,9 +3572,64 @@ class SupplierAuditController extends Controller
                 $history->save();
 
                 $list = Helpers::getAuditManagerDepartmentList($changeControl->division_id);
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if(!empty($users)){
+                    try {
+                        $history = new ExternalAuditTrailSupplier();
+                        $history->supplier_id = $id;
+                        $history->activity_type = "Not Applicable";
+                        $history->previous = "Not Applicable";
+                        $history->current = "Not Applicable";
+                        $history->action = 'Notification';
+                        $history->comment = "";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable";
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = "Opened";
+                        $history->stage = "";
+                        $history->action_name = "";
+                        $history->mailUserId = $userId;
+                        $history->role_name = "Audit Manager";
+                        $history->save(); 
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $supplier->division_id){
                     $email = Helpers::getAuditManagerEmail($u->user_id);
+                    $userIds = collect($list)->pluck('user_id')->toArray();
+                    $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                    $userId = $users->pluck('id')->implode(',');
+                    if(!empty($users)){
+                        try {
+                            $history = new ExternalAuditTrailSupplier();
+                            $history->supplier_id = $id;
+                            $history->activity_type = "Not Applicable";
+                            $history->previous = "Not Applicable";
+                            $history->current = "Not Applicable";
+                            $history->action = 'Notification';
+                            $history->comment = "";
+                            $history->user_id = Auth::user()->id;
+                            $history->user_name = Auth::user()->name;
+                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->origin_state = "Not Applicable";
+                            $history->change_to = "Not Applicable";
+                            $history->change_from = "Opened";
+                            $history->stage = "";
+                            $history->action_name = "";
+                            $history->mailUserId = $userId;
+                            $history->role_name = "Audit Manager";
+                            $history->save(); 
+                        } catch (\Throwable $e) {
+                            \Log::error('Mail failed to send: ' . $e->getMessage());
+                        }
+                    }
                     if (!empty($email)) {
                         try {
                             Mail::send(
@@ -3492,6 +3698,34 @@ class SupplierAuditController extends Controller
                 $history->save();
 
                 $list = Helpers::getSupplierAuditorDepartmentList($changeControl->division_id);
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if(!empty($users)){
+                    try {
+                        $history = new ExternalAuditTrailSupplier();
+                        $history->supplier_id = $id;
+                        $history->activity_type = "Not Applicable";
+                        $history->previous = "Not Applicable";
+                        $history->current = "Not Applicable";
+                        $history->action = 'Notification';
+                        $history->comment = "";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable";
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = "Closed-Cancelled";
+                        $history->stage = "";
+                        $history->action_name = "";
+                        $history->mailUserId = $userId;
+                        $history->role_name = "Supplier Auditor";
+                        $history->save(); 
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $supplier->division_id){
                     $email = Helpers::getSupplierAuditorEmail($u->user_id);
@@ -3512,6 +3746,35 @@ class SupplierAuditController extends Controller
                 }
 
                 $list = Helpers::getAuditeeDepartmentList($changeControl->division_id);
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if(!empty($users)){
+                    try {
+                        $history = new ExternalAuditTrailSupplier();
+                        $history->supplier_id = $id;
+                        $history->activity_type = "Not Applicable";
+                        $history->previous = "Not Applicable";
+                        $history->current = "Not Applicable";
+                        $history->action = 'Notification';
+                        $history->comment = "";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable";
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = "Closed-Cancelled";
+                        $history->stage = "";
+                        $history->action_name = "";
+                        $history->mailUserId = $userId;
+                        $history->role_name = "Auditee";
+                        $history->save(); 
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+
+
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $supplier->division_id){
                     $email = Helpers::getAuditeesEmail($u->user_id);
@@ -3565,6 +3828,33 @@ class SupplierAuditController extends Controller
                 $history->save();
 
                 $list = Helpers::getSupplierAuditorDepartmentList($changeControl->division_id);
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if(!empty($users)){
+                    try {
+                        $history = new ExternalAuditTrailSupplier();
+                        $history->supplier_id = $id;
+                        $history->activity_type = "Not Applicable";
+                        $history->previous = "Not Applicable";
+                        $history->current = "Not Applicable";
+                        $history->action = 'Notification';
+                        $history->comment = "";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable";
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = "Closed-Cancelled";
+                        $history->stage = "";
+                        $history->action_name = "";
+                        $history->mailUserId = $userId;
+                        $history->role_name = "Auditee";
+                        $history->save(); 
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $supplier->division_id){
                     $email = Helpers::getSupplierAuditorEmail($u->user_id);
@@ -3586,6 +3876,33 @@ class SupplierAuditController extends Controller
                 }
 
                 $list = Helpers::getAuditeeDepartmentList($changeControl->division_id);
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if(!empty($users)){
+                    try {
+                        $history = new ExternalAuditTrailSupplier();
+                        $history->supplier_id = $id;
+                        $history->activity_type = "Not Applicable";
+                        $history->previous = "Not Applicable";
+                        $history->current = "Not Applicable";
+                        $history->action = 'Notification';
+                        $history->comment = "";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable";
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = "Closed-Cancelled";
+                        $history->stage = "";
+                        $history->action_name = "";
+                        $history->mailUserId = $userId;
+                        $history->role_name = "Auditee";
+                        $history->save(); 
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $supplier->division_id){
                     $email = Helpers::getAuditeeEmail($u->user_id);
@@ -3633,6 +3950,33 @@ class SupplierAuditController extends Controller
                 $history->save();
 
                 $list = Helpers::getSupplierAuditorDepartmentList($changeControl->division_id);
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if(!empty($users)){
+                    try {
+                        $history = new ExternalAuditTrailSupplier();
+                        $history->supplier_id = $id;
+                        $history->activity_type = "Not Applicable";
+                        $history->previous = "Not Applicable";
+                        $history->current = "Not Applicable";
+                        $history->action = 'Notification';
+                        $history->comment = "";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable";
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = "Closed-Cancelled";
+                        $history->stage = "";
+                        $history->action_name = "";
+                        $history->mailUserId = $userId;
+                        $history->role_name = "Supplier Auditor";
+                        $history->save(); 
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $supplier->division_id){
                     $email = Helpers::getSupplierAuditorEmail($u->user_id);
@@ -3653,6 +3997,33 @@ class SupplierAuditController extends Controller
                 }
 
                 $list = Helpers::getAuditeeDepartmentList($changeControl->division_id);
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if(!empty($users)){
+                    try {
+                        $history = new ExternalAuditTrailSupplier();
+                        $history->supplier_id = $id;
+                        $history->activity_type = "Not Applicable";
+                        $history->previous = "Not Applicable";
+                        $history->current = "Not Applicable";
+                        $history->action = 'Notification';
+                        $history->comment = "";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable";
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = "Closed-Cancelled";
+                        $history->stage = "";
+                        $history->action_name = "";
+                        $history->mailUserId = $userId;
+                        $history->role_name = "Supplier Auditor";
+                        $history->save(); 
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $supplier->division_id){
                     $email = Helpers::getAuditeesEmail($u->user_id);

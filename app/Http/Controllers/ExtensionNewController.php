@@ -982,7 +982,35 @@ class ExtensionNewController extends Controller
             }
             $history->save();
 
-            $list = Helpers::getHodUserList($extensionNew->division_id);
+            $list = Helpers::getInitiatorEmail($extensionNew->division_id);
+            $userIds = collect($list)->pluck('user_id')->toArray();
+            $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+            $userId = $users->pluck('id')->implode(',');
+            if(!empty($users)){
+                try {
+                    $history = new ExtensionNewAuditTrail();
+                    $history->extension_id = $id;
+                    $history->activity_type = "Not Applicable";
+                    $history->previous = "Not Applicable";
+                    $history->current = "Not Applicable";
+                    $history->action = 'Notification';
+                    $history->comment = "";
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = "Not Applicable";
+                    $history->change_to = "Not Applicable";
+                    $history->change_from = "Close - Cancelled";
+                    $history->stage = "";
+                    $history->action_name = "";
+                    $history->mailUserId = $userId;
+                    $history->role_name = "Initiator";
+                    $history->save(); 
+                } catch (\Throwable $e) {
+                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                }
+            }
+
             foreach ($list as $u) {
                 // if ($u->q_m_s_divisions_id == $extensionNew->division_id) {
                 $email = Helpers::getInitiatorEmail($u->user_id);
@@ -1004,9 +1032,37 @@ class ExtensionNewController extends Controller
             }
 
             $list = Helpers::getQaApproverList($extensionNew->division_id);
+            $userIds = collect($list)->pluck('user_id')->toArray();
+            $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+            $userId = $users->pluck('id')->implode(',');
+            if(!empty($users)){
+                try {
+                    $history = new ExtensionNewAuditTrail();
+                    $history->extension_id = $id;
+                    $history->activity_type = "Not Applicable";
+                    $history->previous = "Not Applicable";
+                    $history->current = "Not Applicable";
+                    $history->action = 'Notification';
+                    $history->comment = "";
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = "Not Applicable";
+                    $history->change_to = "Not Applicable";
+                    $history->change_from = "Close - Cancelled";
+                    $history->stage = "";
+                    $history->action_name = "";
+                    $history->mailUserId = $userId;
+                    $history->role_name = "QA Approver";
+                    $history->save(); 
+                } catch (\Throwable $e) {
+                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                }
+            }
+
             foreach ($list as $u) {
                 // if ($u->q_m_s_divisions_id == $extensionNew->division_id) {
-                $email = Helpers::getInitiatorEmail($u->user_id);
+                $email = Helpers::getQAApproverEmail($u->user_id);
                 if ($email !== null) {
                     try {
                         Mail::send(
@@ -1102,6 +1158,34 @@ class ExtensionNewController extends Controller
                     $history->save();
 
                     $list = Helpers::getInitiatorUserList($extensionNew->site_location_code);
+                    $userIds = collect($list)->pluck('user_id')->toArray();
+                    $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                    $userId = $users->pluck('id')->implode(',');
+                    if(!empty($users)){
+                        try {
+                            $history = new ExtensionNewAuditTrail();
+                            $history->extension_id = $id;
+                            $history->activity_type = "Not Applicable";
+                            $history->previous = "Not Applicable";
+                            $history->current = "Not Applicable";
+                            $history->action = 'Notification';
+                            $history->comment = "";
+                            $history->user_id = Auth::user()->id;
+                            $history->user_name = Auth::user()->name;
+                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->origin_state = "Not Applicable";
+                            $history->change_to = "Not Applicable";
+                            $history->change_from = "Opened";
+                            $history->stage = "";
+                            $history->action_name = "";
+                            $history->mailUserId = $userId;
+                            $history->role_name = "Initiator";
+                            $history->save(); 
+                        } catch (\Throwable $e) {
+                            \Log::error('Mail failed to send: ' . $e->getMessage());
+                        }
+                    }
+
                     foreach ($list as $u) {
                         // if ($u->q_m_s_divisions_id == $extensionNew->division_id) {
                         $email = Helpers::getInitiatorEmail($u->user_id);
@@ -1157,6 +1241,34 @@ class ExtensionNewController extends Controller
                     $history->save();
 
                     $list = Helpers::getHodUserList($extensionNew->division_id);
+                    $userIds = collect($list)->pluck('user_id')->toArray();
+                    $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                    $userId = $users->pluck('id')->implode(',');
+                    if(!empty($users)){
+                        try {
+                            $history = new ExtensionNewAuditTrail();
+                            $history->extension_id = $id;
+                            $history->activity_type = "Not Applicable";
+                            $history->previous = "Not Applicable";
+                            $history->current = "Not Applicable";
+                            $history->action = 'Notification';
+                            $history->comment = "";
+                            $history->user_id = Auth::user()->id;
+                            $history->user_name = Auth::user()->name;
+                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->origin_state = "Not Applicable";
+                            $history->change_to = "Not Applicable";
+                            $history->change_from = "In Review";
+                            $history->stage = "";
+                            $history->action_name = "";
+                            $history->mailUserId = $userId;
+                            $history->role_name = "HOD";
+                            $history->save(); 
+                        } catch (\Throwable $e) {
+                            \Log::error('Mail failed to send: ' . $e->getMessage());
+                        }
+                    }
+
                     foreach ($list as $u) {
                         // if ($u->q_m_s_divisions_id == $extensionNew->division_id) {
                         $email = Helpers::getHODEmail($u->user_id);
@@ -1235,6 +1347,34 @@ class ExtensionNewController extends Controller
                 }
 
                 $list = Helpers::getHodUserList($extensionNew->site_location_code);
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if(!empty($users)){
+                    try {
+                        $history = new ExtensionNewAuditTrail();
+                        $history->extension_id = $id;
+                        $history->activity_type = "Not Applicable";
+                        $history->previous = "Not Applicable";
+                        $history->current = "Not Applicable";
+                        $history->action = 'Notification';
+                        $history->comment = "";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable";
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = "In Review";
+                        $history->stage = "";
+                        $history->action_name = "";
+                        $history->mailUserId = $userId;
+                        $history->role_name = "HOD";
+                        $history->save(); 
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+
                 foreach ($list as $u) {
                     // if ($u->q_m_s_divisions_id == $extensionNew->division_id) {
                     $email = Helpers::getHODEmail($u->user_id);
@@ -1309,6 +1449,34 @@ class ExtensionNewController extends Controller
                     $history->save();
 
                     $list = Helpers::getQaApproverList($extensionNew->site_location_code);
+                    $userIds = collect($list)->pluck('user_id')->toArray();
+                    $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                    $userId = $users->pluck('id')->implode(',');
+                    if(!empty($users)){
+                        try {
+                            $history = new ExtensionNewAuditTrail();
+                            $history->extension_id = $id;
+                            $history->activity_type = "Not Applicable";
+                            $history->previous = "Not Applicable";
+                            $history->current = "Not Applicable";
+                            $history->action = 'Notification';
+                            $history->comment = "";
+                            $history->user_id = Auth::user()->id;
+                            $history->user_name = Auth::user()->name;
+                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->origin_state = "Not Applicable";
+                            $history->change_to = "Not Applicable";
+                            $history->change_from = "In Approved";
+                            $history->stage = "";
+                            $history->action_name = "";
+                            $history->mailUserId = $userId;
+                            $history->role_name = "QA Approver";
+                            $history->save(); 
+                        } catch (\Throwable $e) {
+                            \Log::error('Mail failed to send: ' . $e->getMessage());
+                        }
+                    }
+
                     foreach ($list as $u) {
                         // if ($u->q_m_s_divisions_id == $extensionNew->division_id) {
                         $email = Helpers::getQAApproverEmail($u->user_id);
@@ -1389,6 +1557,34 @@ class ExtensionNewController extends Controller
                     // }
 
                     $list = Helpers::getHodUserList($extensionNew->site_location_code);
+                    $userIds = collect($list)->pluck('user_id')->toArray();
+                    $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                    $userId = $users->pluck('id')->implode(',');
+                    if(!empty($users)){
+                        try {
+                            $history = new ExtensionNewAuditTrail();
+                            $history->extension_id = $id;
+                            $history->activity_type = "Not Applicable";
+                            $history->previous = "Not Applicable";
+                            $history->current = "Not Applicable";
+                            $history->action = 'Notification';
+                            $history->comment = "";
+                            $history->user_id = Auth::user()->id;
+                            $history->user_name = Auth::user()->name;
+                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->origin_state = "Not Applicable";
+                            $history->change_to = "Not Applicable";
+                            $history->change_from = "Closed - Reject";
+                            $history->stage = "";
+                            $history->action_name = "";
+                            $history->mailUserId = $userId;
+                            $history->role_name = "HOD";
+                            $history->save(); 
+                        } catch (\Throwable $e) {
+                            \Log::error('Mail failed to send: ' . $e->getMessage());
+                        }
+                    }
+
                     foreach ($list as $u) {
                         // if ($u->q_m_s_divisions_id == $extensionNew->division_id) {
                         $email = Helpers::getHODEmail($u->user_id);
@@ -1410,6 +1606,34 @@ class ExtensionNewController extends Controller
                     }
 
                     $list = Helpers::getInitiatorUserList($extensionNew->site_location_code);
+                    $userIds = collect($list)->pluck('user_id')->toArray();
+                    $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                    $userId = $users->pluck('id')->implode(',');
+                    if(!empty($users)){
+                        try {
+                            $history = new ExtensionNewAuditTrail();
+                            $history->extension_id = $id;
+                            $history->activity_type = "Not Applicable";
+                            $history->previous = "Not Applicable";
+                            $history->current = "Not Applicable";
+                            $history->action = 'Notification';
+                            $history->comment = "";
+                            $history->user_id = Auth::user()->id;
+                            $history->user_name = Auth::user()->name;
+                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->origin_state = "Not Applicable";
+                            $history->change_to = "Not Applicable";
+                            $history->change_from = "Closed - Reject";
+                            $history->stage = "";
+                            $history->action_name = "";
+                            $history->mailUserId = $userId;
+                            $history->role_name = "Initiator";
+                            $history->save(); 
+                        } catch (\Throwable $e) {
+                            \Log::error('Mail failed to send: ' . $e->getMessage());
+                        }
+                    }
+
                     foreach ($list as $u) {
                         // if ($u->q_m_s_divisions_id == $extensionNew->division_id) {
                         $email = Helpers::getInitiatorEmail($u->user_id);

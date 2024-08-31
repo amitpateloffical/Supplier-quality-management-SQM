@@ -6090,6 +6090,34 @@ class SupplierController extends Controller
                     $history->save();
 
                     $list = Helpers::getCqaDepartmentList($supplier->division_id);
+                    $userIds = collect($list)->pluck('user_id')->toArray();
+                    $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                    $userId = $users->pluck('id')->implode(',');
+                    if(!empty($users)){
+                        try {
+                            $history = new SupplierAuditTrail();
+                            $history->supplier_id = $id;
+                            $history->activity_type = "Not Applicable";
+                            $history->previous = "Not Applicable";
+                            $history->current = "Not Applicable";
+                            $history->action = 'Notification';
+                            $history->comment = "";
+                            $history->user_id = Auth::user()->id;
+                            $history->user_name = Auth::user()->name;
+                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->origin_state = "Not Applicable";
+                            $history->change_to = "Not Applicable";
+                            $history->change_from = "Pending Update FROM CQA";
+                            $history->stage = "";
+                            $history->action_name = "";
+                            $history->mailUserId = $userId;
+                            $history->role_name = "CQA";
+                            $history->save(); 
+                        } catch (\Throwable $e) {
+                            \Log::error('Mail failed to send: ' . $e->getMessage());
+                        }
+                    }
+
                     foreach ($list as $u) {
                         // if($u->q_m_s_divisions_id == $supplier->division_id){
                             $email = Helpers::getCQAEmail($u->user_id);
@@ -6149,6 +6177,34 @@ class SupplierController extends Controller
                 $history->save();
                 
                 $list = Helpers::getPurchaseDepartmentList($supplier->division_id);
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if(!empty($users)){
+                    try {
+                        $history = new SupplierAuditTrail();
+                        $history->supplier_id = $id;
+                        $history->activity_type = "Not Applicable";
+                        $history->previous = "Not Applicable";
+                        $history->current = "Not Applicable";
+                        $history->action = 'Notification';
+                        $history->comment = "";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable";
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = "Pending Purchase Sample Request";
+                        $history->stage = "";
+                        $history->action_name = "";
+                        $history->mailUserId = $userId;
+                        $history->role_name = "Purchase Department";
+                        $history->save(); 
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $supplier->division_id){
                         $email = Helpers::getPurchaseDeptEmail($u->user_id);
@@ -6206,6 +6262,34 @@ class SupplierController extends Controller
                 $history->save();
 
                 $list = Helpers::getCqaDepartmentList($supplier->division_id);
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if(!empty($users)){
+                    try {
+                        $history = new SupplierAuditTrail();
+                        $history->supplier_id = $id;
+                        $history->activity_type = "Not Applicable";
+                        $history->previous = "Not Applicable";
+                        $history->current = "Not Applicable";
+                        $history->action = 'Notification';
+                        $history->comment = "";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable";
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = "Pending CQA Review After Purchase Sample Request";
+                        $history->stage = "";
+                        $history->action_name = "";
+                        $history->mailUserId = $userId;
+                        $history->role_name = "CQA";
+                        $history->save(); 
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $supplier->division_id){
                         $email = Helpers::getCQAEmail($u->user_id);
@@ -6249,7 +6333,6 @@ class SupplierController extends Controller
                 }
                 $history->current = $supplier->purchaseSampleanalysis_by . ' , ' . $supplier->purchaseSampleanalysis_on;
                 $history->action = 'Purchase Sample Analysis Satisfactory';
-                // $history->current = $supplier->submit_by;
                 $history->comment = $request->comments;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -6266,6 +6349,34 @@ class SupplierController extends Controller
                 $history->save();
                 
                 $list = Helpers::getFormulationDepartmentList($supplier->division_id);
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if(!empty($users)){
+                    try {
+                        $history = new SupplierAuditTrail();
+                        $history->supplier_id = $id;
+                        $history->activity_type = "Not Applicable";
+                        $history->previous = "Not Applicable";
+                        $history->current = "Not Applicable";
+                        $history->action = 'Notification';
+                        $history->comment = "";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable";
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = "Pending F&D Review";
+                        $history->stage = "";
+                        $history->action_name = "";
+                        $history->mailUserId = $userId;
+                        $history->role_name = "Formulation Department";
+                        $history->save(); 
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $supplier->division_id){
                         $email = Helpers::getFormulationDeptEmail($u->user_id);
@@ -6324,6 +6435,34 @@ class SupplierController extends Controller
                 $history->save();
                 
                 $list = Helpers::getPurchaseDepartmentList($supplier->division_id);
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if(!empty($users)){
+                    try {
+                        $history = new SupplierAuditTrail();
+                        $history->supplier_id = $id;
+                        $history->activity_type = "Not Applicable";
+                        $history->previous = "Not Applicable";
+                        $history->current = "Not Applicable";
+                        $history->action = 'Notification';
+                        $history->comment = "";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable";
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = "Pending Acknowledgement By Purchase Department";
+                        $history->stage = "";
+                        $history->action_name = "";
+                        $history->mailUserId = $userId;
+                        $history->role_name = "Purchase Department";
+                        $history->save(); 
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $supplier->division_id){
                         $email = Helpers::getPurchaseDeptEmail($u->user_id);
@@ -6381,6 +6520,34 @@ class SupplierController extends Controller
                 $history->save();
                 
                 $list = Helpers::getCqaDepartmentList($supplier->division_id);
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if(!empty($users)){
+                    try {
+                        $history = new SupplierAuditTrail();
+                        $history->supplier_id = $id;
+                        $history->activity_type = "Not Applicable";
+                        $history->previous = "Not Applicable";
+                        $history->current = "Not Applicable";
+                        $history->action = 'Notification';
+                        $history->comment = "";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable";
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = "Pending CQA Final Review";
+                        $history->stage = "";
+                        $history->action_name = "";
+                        $history->mailUserId = $userId;
+                        $history->role_name = "CQA";
+                        $history->save(); 
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $supplier->division_id){
                         $email = Helpers::getCQAEmail($u->user_id);
@@ -6703,6 +6870,34 @@ class SupplierController extends Controller
                 $history->save();
 
                 $list = Helpers::getPurchaseDepartmentList($supplier->division_id);
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if(!empty($users)){
+                    try {
+                        $history = new SupplierAuditTrail();
+                        $history->supplier_id = $id;
+                        $history->activity_type = "Not Applicable";
+                        $history->previous = "Not Applicable";
+                        $history->current = "Not Applicable";
+                        $history->action = 'Notification';
+                        $history->comment = "";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable";
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = "Manufacturer Rejected";
+                        $history->stage = "";
+                        $history->action_name = "";
+                        $history->mailUserId = $userId;
+                        $history->role_name = "Purchase Department";
+                        $history->save(); 
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $supplier->division_id){
                         $email = Helpers::getPurchaseDeptEmail($u->user_id);
@@ -6724,6 +6919,34 @@ class SupplierController extends Controller
                 }
 
                 $list = Helpers::getFormulationDepartmentList($supplier->division_id);
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if(!empty($users)){
+                    try {
+                        $history = new SupplierAuditTrail();
+                        $history->supplier_id = $id;
+                        $history->activity_type = "Not Applicable";
+                        $history->previous = "Not Applicable";
+                        $history->current = "Not Applicable";
+                        $history->action = 'Notification';
+                        $history->comment = "";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable";
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = "Manufacturer Rejected";
+                        $history->stage = "";
+                        $history->action_name = "";
+                        $history->mailUserId = $userId;
+                        $history->role_name = "Formulation Department";
+                        $history->save(); 
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $supplier->division_id){
                         $email = Helpers::getFormulationDeptEmail($u->user_id);
@@ -6745,6 +6968,34 @@ class SupplierController extends Controller
                 }
 
                 $list = Helpers::getInitiatorUserList($supplier->division_id);
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if(!empty($users)){
+                    try {
+                        $history = new SupplierAuditTrail();
+                        $history->supplier_id = $id;
+                        $history->activity_type = "Not Applicable";
+                        $history->previous = "Not Applicable";
+                        $history->current = "Not Applicable";
+                        $history->action = 'Notification';
+                        $history->comment = "";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable";
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = "Manufacturer Rejected";
+                        $history->stage = "";
+                        $history->action_name = "";
+                        $history->mailUserId = $userId;
+                        $history->role_name = "Initiator";
+                        $history->save(); 
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $supplier->division_id){
                         $email = Helpers::getInitiatorEmail($u->user_id);
@@ -7094,6 +7345,34 @@ class SupplierController extends Controller
                 $history->save();
                 
                 $list = Helpers::getPurchaseDepartmentList($supplier->division_id);
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if(!empty($users)){
+                    try {
+                        $history = new SupplierAuditTrail();
+                        $history->supplier_id = $id;
+                        $history->activity_type = "Not Applicable";
+                        $history->previous = "Not Applicable";
+                        $history->current = "Not Applicable";
+                        $history->action = 'Notification';
+                        $history->comment = "";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable";
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = "Pending Acknowledgement By Purchase Department";
+                        $history->stage = "";
+                        $history->action_name = "";
+                        $history->mailUserId = $userId;
+                        $history->role_name = "Purchase Department";
+                        $history->save(); 
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $supplier->division_id){
                         $email = Helpers::getPurchaseDeptEmail($u->user_id);
@@ -7153,6 +7432,34 @@ class SupplierController extends Controller
                 $history->save();
                 
                 $list = Helpers::getFormulationDepartmentList($supplier->division_id);
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if(!empty($users)){
+                    try {
+                        $history = new SupplierAuditTrail();
+                        $history->supplier_id = $id;
+                        $history->activity_type = "Not Applicable";
+                        $history->previous = "Not Applicable";
+                        $history->current = "Not Applicable";
+                        $history->action = 'Notification';
+                        $history->comment = "";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable";
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = "Pending F&D Review";
+                        $history->stage = "";
+                        $history->action_name = "";
+                        $history->mailUserId = $userId;
+                        $history->role_name = "Formulation Department";
+                        $history->save(); 
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $supplier->division_id){
                         $email = Helpers::getFormulationDeptEmail($u->user_id);
@@ -7212,6 +7519,34 @@ class SupplierController extends Controller
                 $history->save();
                 
                 $list = Helpers::getCqaDepartmentList($supplier->division_id);
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if(!empty($users)){
+                    try {
+                        $history = new SupplierAuditTrail();
+                        $history->supplier_id = $id;
+                        $history->activity_type = "Not Applicable";
+                        $history->previous = "Not Applicable";
+                        $history->current = "Not Applicable";
+                        $history->action = 'Notification';
+                        $history->comment = "";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable";
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = "Pending CQA Review After Purchase Sample Request";
+                        $history->stage = "";
+                        $history->action_name = "";
+                        $history->mailUserId = $userId;
+                        $history->role_name = "CQA";
+                        $history->save(); 
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $supplier->division_id){
                         $email = Helpers::getCQAEmail($u->user_id);
@@ -7271,6 +7606,34 @@ class SupplierController extends Controller
                 $history->save();
 
                 $list = Helpers::getPurchaseDepartmentList($supplier->division_id);
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if(!empty($users)){
+                    try {
+                        $history = new SupplierAuditTrail();
+                        $history->supplier_id = $id;
+                        $history->activity_type = "Not Applicable";
+                        $history->previous = "Not Applicable";
+                        $history->current = "Not Applicable";
+                        $history->action = 'Notification';
+                        $history->comment = "";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable";
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = "Pending Purchase Sample Request";
+                        $history->stage = "";
+                        $history->action_name = "";
+                        $history->mailUserId = $userId;
+                        $history->role_name = "Purchase Department";
+                        $history->save(); 
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $supplier->division_id){
                         $email = Helpers::getPurchaseDeptEmail($u->user_id);
@@ -7328,6 +7691,34 @@ class SupplierController extends Controller
                 $history->save();
 
                 $list = Helpers::getCqaDepartmentList($supplier->division_id);
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if(!empty($users)){
+                    try {
+                        $history = new SupplierAuditTrail();
+                        $history->supplier_id = $id;
+                        $history->activity_type = "Not Applicable";
+                        $history->previous = "Not Applicable";
+                        $history->current = "Not Applicable";
+                        $history->action = 'Notification';
+                        $history->comment = "";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable";
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = "Pending Update FROM CQA";
+                        $history->stage = "";
+                        $history->action_name = "";
+                        $history->mailUserId = $userId;
+                        $history->role_name = "CQA";
+                        $history->save(); 
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $supplier->division_id){
                         $email = Helpers::getCQAEmail($u->user_id);
@@ -7385,6 +7776,34 @@ class SupplierController extends Controller
                 $history->save();
                 
                 $list = Helpers::getInitiatorUserList($supplier->division_id);
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if(!empty($users)){
+                    try {
+                        $history = new SupplierAuditTrail();
+                        $history->supplier_id = $id;
+                        $history->activity_type = "Not Applicable";
+                        $history->previous = "Not Applicable";
+                        $history->current = "Not Applicable";
+                        $history->action = 'Notification';
+                        $history->comment = "";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable";
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = "Pending Initiating Department Update";
+                        $history->stage = "";
+                        $history->action_name = "";
+                        $history->mailUserId = $userId;
+                        $history->role_name = "Initiator";
+                        $history->save(); 
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $supplier->division_id){
                         $email = Helpers::getInitiatorEmail($u->user_id);
@@ -7442,6 +7861,34 @@ class SupplierController extends Controller
                 $history->save();
                 
                 $list = Helpers::getPurchaseDepartmentList($supplier->division_id);
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if(!empty($users)){
+                    try {
+                        $history = new SupplierAuditTrail();
+                        $history->supplier_id = $id;
+                        $history->activity_type = "Not Applicable";
+                        $history->previous = "Not Applicable";
+                        $history->current = "Not Applicable";
+                        $history->action = 'Notification';
+                        $history->comment = "";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable";
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = "Opened";
+                        $history->stage = "";
+                        $history->action_name = "";
+                        $history->mailUserId = $userId;
+                        $history->role_name = "Purchase Department";
+                        $history->save(); 
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $supplier->division_id){
                         $email = Helpers::getPurchaseDeptEmail($u->user_id);
@@ -7500,6 +7947,34 @@ class SupplierController extends Controller
                     
 
                 $list = Helpers::getCqaDepartmentList($supplier->division_id);
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if(!empty($users)){
+                    try {
+                        $history = new SupplierAuditTrail();
+                        $history->supplier_id = $id;
+                        $history->activity_type = "Not Applicable";
+                        $history->previous = "Not Applicable";
+                        $history->current = "Not Applicable";
+                        $history->action = 'Notification';
+                        $history->comment = "";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable";
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = "Closed - Cancelled";
+                        $history->stage = "";
+                        $history->action_name = "";
+                        $history->mailUserId = $userId;
+                        $history->role_name = "CQA";
+                        $history->save(); 
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $supplier->division_id){
                         $email = Helpers::getCQAEmail($u->user_id);
@@ -7521,6 +7996,34 @@ class SupplierController extends Controller
                 }
 
                 $list = Helpers::getInitiatorUserList($supplier->division_id);
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if(!empty($users)){
+                    try {
+                        $history = new SupplierAuditTrail();
+                        $history->supplier_id = $id;
+                        $history->activity_type = "Not Applicable";
+                        $history->previous = "Not Applicable";
+                        $history->current = "Not Applicable";
+                        $history->action = 'Notification';
+                        $history->comment = "";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable";
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = "Closed - Cancelled";
+                        $history->stage = "";
+                        $history->action_name = "";
+                        $history->mailUserId = $userId;
+                        $history->role_name = "Initiator";
+                        $history->save(); 
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $supplier->division_id){
                         $email = Helpers::getInitiatorEmail($u->user_id);
@@ -7542,6 +8045,34 @@ class SupplierController extends Controller
                 }
 
                 $list = Helpers::getFormulationDepartmentList($supplier->division_id);
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if(!empty($users)){
+                    try {
+                        $history = new SupplierAuditTrail();
+                        $history->supplier_id = $id;
+                        $history->activity_type = "Not Applicable";
+                        $history->previous = "Not Applicable";
+                        $history->current = "Not Applicable";
+                        $history->action = 'Notification';
+                        $history->comment = "";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable";
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = "Closed - Cancelled";
+                        $history->stage = "";
+                        $history->action_name = "";
+                        $history->mailUserId = $userId;
+                        $history->role_name = "Formulation Department";
+                        $history->save(); 
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $supplier->division_id){
                         $email = Helpers::getFormulationDeptEmail($u->user_id);
@@ -7611,6 +8142,34 @@ class SupplierController extends Controller
             $history->save();
            
             $list = Helpers::getCqaDepartmentList($supplier->division_id);
+            $userIds = collect($list)->pluck('user_id')->toArray();
+            $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+            $userId = $users->pluck('id')->implode(',');
+            if(!empty($users)){
+                try {
+                    $history = new SupplierAuditTrail();
+                    $history->supplier_id = $id;
+                    $history->activity_type = "Not Applicable";
+                    $history->previous = "Not Applicable";
+                    $history->current = "Not Applicable";
+                    $history->action = 'Notification';
+                    $history->comment = "";
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = "Not Applicable";
+                    $history->change_to = "Not Applicable";
+                    $history->change_from = "Pending CQA Review After Purchase Sample Request";
+                    $history->stage = "";
+                    $history->action_name = "";
+                    $history->mailUserId = $userId;
+                    $history->role_name = "CQA";
+                    $history->save(); 
+                } catch (\Throwable $e) {
+                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                }
+            }
+
             foreach ($list as $u) {
                 // if($u->q_m_s_divisions_id == $supplier->division_id){
                     $email = Helpers::getCQAEmail($u->user_id);
@@ -7747,6 +8306,34 @@ class SupplierController extends Controller
             $history->save();
 
             $list = Helpers::getPurchaseDepartmentList($supplier->division_id);
+            $userIds = collect($list)->pluck('user_id')->toArray();
+            $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+            $userId = $users->pluck('id')->implode(',');
+            if(!empty($users)){
+                try {
+                    $history = new SupplierAuditTrail();
+                    $history->supplier_id = $id;
+                    $history->activity_type = "Not Applicable";
+                    $history->previous = "Not Applicable";
+                    $history->current = "Not Applicable";
+                    $history->action = 'Notification';
+                    $history->comment = "";
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = "Not Applicable";
+                    $history->change_to = "Not Applicable";
+                    $history->change_from = "Manufacturer Rejected";
+                    $history->stage = "";
+                    $history->action_name = "";
+                    $history->mailUserId = $userId;
+                    $history->role_name = "Purchase Department";
+                    $history->save(); 
+                } catch (\Throwable $e) {
+                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                }
+            }
+
             foreach ($list as $u) {
                 // if($u->q_m_s_divisions_id == $supplier->division_id){
                     $email = Helpers::getPurchaseDeptEmail($u->user_id);
@@ -7768,6 +8355,34 @@ class SupplierController extends Controller
             }
 
             $list = Helpers::getFormulationDepartmentList($supplier->division_id);
+            $userIds = collect($list)->pluck('user_id')->toArray();
+            $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+            $userId = $users->pluck('id')->implode(',');
+            if(!empty($users)){
+                try {
+                    $history = new SupplierAuditTrail();
+                    $history->supplier_id = $id;
+                    $history->activity_type = "Not Applicable";
+                    $history->previous = "Not Applicable";
+                    $history->current = "Not Applicable";
+                    $history->action = 'Notification';
+                    $history->comment = "";
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = "Not Applicable";
+                    $history->change_to = "Not Applicable";
+                    $history->change_from = "Manufacturer Rejected";
+                    $history->stage = "";
+                    $history->action_name = "";
+                    $history->mailUserId = $userId;
+                    $history->role_name = "Formulation Department";
+                    $history->save(); 
+                } catch (\Throwable $e) {
+                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                }
+            }
+
             foreach ($list as $u) {
                 // if($u->q_m_s_divisions_id == $supplier->division_id){
                     $email = Helpers::getFormulationDeptEmail($u->user_id);
@@ -7789,6 +8404,34 @@ class SupplierController extends Controller
             }
 
             $list = Helpers::getInitiatorUserList($supplier->division_id);
+            $userIds = collect($list)->pluck('user_id')->toArray();
+            $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+            $userId = $users->pluck('id')->implode(',');
+            if(!empty($users)){
+                try {
+                    $history = new SupplierAuditTrail();
+                    $history->supplier_id = $id;
+                    $history->activity_type = "Not Applicable";
+                    $history->previous = "Not Applicable";
+                    $history->current = "Not Applicable";
+                    $history->action = 'Notification';
+                    $history->comment = "";
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = "Not Applicable";
+                    $history->change_to = "Not Applicable";
+                    $history->change_from = "Manufacturer Rejected";
+                    $history->stage = "";
+                    $history->action_name = "";
+                    $history->mailUserId = $userId;
+                    $history->role_name = "Initiator";
+                    $history->save(); 
+                } catch (\Throwable $e) {
+                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                }
+            }
+
             foreach ($list as $u) {
                 // if($u->q_m_s_divisions_id == $supplier->division_id){
                     $email = Helpers::getInitiatorEmail($u->user_id);
@@ -7856,6 +8499,34 @@ class SupplierController extends Controller
             $history->save();
             
             $list = Helpers::getCqaDepartmentList($supplier->division_id);
+            $userIds = collect($list)->pluck('user_id')->toArray();
+            $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+            $userId = $users->pluck('id')->implode(',');
+            if(!empty($users)){
+                try {
+                    $history = new SupplierAuditTrail();
+                    $history->supplier_id = $id;
+                    $history->activity_type = "Not Applicable";
+                    $history->previous = "Not Applicable";
+                    $history->current = "Not Applicable";
+                    $history->action = 'Notification';
+                    $history->comment = "";
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = "Not Applicable";
+                    $history->change_to = "Not Applicable";
+                    $history->change_from = "Closed - Cancelled";
+                    $history->stage = "";
+                    $history->action_name = "";
+                    $history->mailUserId = $userId;
+                    $history->role_name = "CQA";
+                    $history->save(); 
+                } catch (\Throwable $e) {
+                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                }
+            }
+
             foreach ($list as $u) {
                 // if($u->q_m_s_divisions_id == $supplier->division_id){
                     $email = Helpers::getCQAEmail($u->user_id);
@@ -7877,6 +8548,34 @@ class SupplierController extends Controller
             }
 
             $list = Helpers::getInitiatorUserList($supplier->division_id);
+            $userIds = collect($list)->pluck('user_id')->toArray();
+            $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+            $userId = $users->pluck('id')->implode(',');
+            if(!empty($users)){
+                try {
+                    $history = new SupplierAuditTrail();
+                    $history->supplier_id = $id;
+                    $history->activity_type = "Not Applicable";
+                    $history->previous = "Not Applicable";
+                    $history->current = "Not Applicable";
+                    $history->action = 'Notification';
+                    $history->comment = "";
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = "Not Applicable";
+                    $history->change_to = "Not Applicable";
+                    $history->change_from = "Closed - Cancelled";
+                    $history->stage = "";
+                    $history->action_name = "";
+                    $history->mailUserId = $userId;
+                    $history->role_name = "Initiator";
+                    $history->save(); 
+                } catch (\Throwable $e) {
+                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                }
+            }
+
             foreach ($list as $u) {
                 // if($u->q_m_s_divisions_id == $supplier->division_id){
                     $email = Helpers::getInitiatorEmail($u->user_id);
@@ -7898,6 +8597,34 @@ class SupplierController extends Controller
             }
 
             $list = Helpers::getFormulationDepartmentList($supplier->division_id);
+            $userIds = collect($list)->pluck('user_id')->toArray();
+            $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+            $userId = $users->pluck('id')->implode(',');
+            if(!empty($users)){
+                try {
+                    $history = new SupplierAuditTrail();
+                    $history->supplier_id = $id;
+                    $history->activity_type = "Not Applicable";
+                    $history->previous = "Not Applicable";
+                    $history->current = "Not Applicable";
+                    $history->action = 'Notification';
+                    $history->comment = "";
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = "Not Applicable";
+                    $history->change_to = "Not Applicable";
+                    $history->change_from = "Closed - Cancelled";
+                    $history->stage = "";
+                    $history->action_name = "";
+                    $history->mailUserId = $userId;
+                    $history->role_name = "Formulation Department";
+                    $history->save(); 
+                } catch (\Throwable $e) {
+                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                }
+            }
+
             foreach ($list as $u) {
                 // if($u->q_m_s_divisions_id == $supplier->division_id){
                     $email = Helpers::getFormulationDeptEmail($u->user_id);

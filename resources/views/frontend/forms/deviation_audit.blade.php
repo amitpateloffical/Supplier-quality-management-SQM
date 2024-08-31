@@ -435,12 +435,18 @@
                             <div style="margin-top: 5px;"><strong>Change Type :</strong>{{$dataDemo->action_name ? $dataDemo->action_name  : "Not Applicable"}}
                             </div>
                         </td>
-                        <td>
-                        <div>
-                       <strong> Action Name :</strong>{{$dataDemo->action ? $dataDemo->action  : "Not Applicable"}}
 
-                        </div>
+                        <td>
+                            <div>
+                                <strong> Action Name :</strong>
+                                @if($dataDemo->action == "Notification")
+                                    <a href="{{ route('notification-detail', ['slug' => 'Deviation', 'id' => $dataDemo->id]) }}" target = "_blank">{{ $dataDemo->action ? $dataDemo->action : 'Not Applicable' }}<a>
+                                @else
+                                    {{ $dataDemo->action ? $dataDemo->action : 'Not Applicable' }}
+                                @endif
+                            </div>
                         </td>
+
                         <td>
                        <div ><strong> Performed By :</strong>{{$dataDemo->user_name ? $dataDemo->user_name  : "Not Applicable"}}</div>
                       <div style="margin-top: 5px;">  <strong>Performed On :</strong>{{$dataDemo->created_at ? \Carbon\Carbon::parse($dataDemo->created_at)->format('d-M-Y H:i:s') : 'Not Applicable'}}</div>

@@ -22,7 +22,7 @@ return new class extends Migration
             $table->longtext('Production_feedback')->nullable();
             $table->string('production_attachment')->nullable();
             $table->text('Production_by')->nullable();
-            $table->date('production_on')->nullable();
+            $table->text('production_on')->nullable();
 
             $table->text('Warehouse_review')->nullable();
             $table->text('Warehouse_notification')->nullable();
@@ -30,7 +30,7 @@ return new class extends Migration
             $table->longtext('Warehouse_feedback')->nullable();
             $table->string('Warehouse_attachment')->nullable();
             $table->text('Warehouse_by')->nullable();
-            $table->date('Warehouse_on')->nullable();
+            $table->text('Warehouse_on')->nullable();
 
             $table->text('Quality_review')->nullable();
             $table->text('Quality_Control_Person')->nullable();
@@ -38,7 +38,7 @@ return new class extends Migration
             $table->longtext('Quality_Control_feedback')->nullable();
             $table->string('Quality_Control_attachment')->nullable();
             $table->text('Quality_Control_by')->nullable();
-            $table->date('Quality_Control_on')->nullable();
+            $table->text('Quality_Control_on')->nullable();
 
             $table->text('Quality_Assurance_Review')->nullable();
             $table->text('QualityAssurance_person')->nullable();
@@ -46,7 +46,7 @@ return new class extends Migration
             $table->longtext('QualityAssurance_feedback')->nullable();
             $table->string('Quality_Assurance_attachment')->nullable();
             $table->text('QualityAssurance_by')->nullable();
-            $table->date('QualityAssurance_on')->nullable();
+            $table->text('QualityAssurance_on')->nullable();
 
             $table->text('Engineering_review')->nullable();
             $table->text('Engineering_person')->nullable();
@@ -54,7 +54,7 @@ return new class extends Migration
             $table->longtext('Engineering_feedback')->nullable();
             $table->string('Engineering_attachment')->nullable();
             $table->text('Engineering_by')->nullable();
-            $table->date('Engineering_on')->nullable();
+            $table->text('Engineering_on')->nullable();
 
             $table->text('Analytical_Development_review')->nullable();
             $table->text('Analytical_Development_person')->nullable();
@@ -62,7 +62,7 @@ return new class extends Migration
             $table->longtext('Analytical_Development_feedback')->nullable();
             $table->string('Analytical_Development_attachment')->nullable();
             $table->text('Analytical_Development_by')->nullable();
-            $table->date('Analytical_Development_on')->nullable();
+            $table->text('Analytical_Development_on')->nullable();
 
             $table->text('Kilo_Lab_review')->nullable();
             $table->text('Kilo_Lab_person')->nullable();
@@ -70,7 +70,7 @@ return new class extends Migration
             $table->longtext('Kilo_Lab_feedback')->nullable();
             $table->string('Kilo_Lab_attachment')->nullable();
             $table->text('Kilo_Lab_attachment_by')->nullable();
-            $table->date('Kilo_Lab_attachment_on')->nullable();
+            $table->text('Kilo_Lab_attachment_on')->nullable();
 
             $table->text('Technology_transfer_review')->nullable();
             $table->text('Technology_transfer_person')->nullable();
@@ -78,7 +78,7 @@ return new class extends Migration
             $table->longtext('Technology_transfer_feedback')->nullable();
             $table->string('Technology_transfer_attachment')->nullable();
             $table->text('Technology_transfer_by')->nullable();
-            $table->date('Technology_transfer_on')->nullable();
+            $table->text('Technology_transfer_on')->nullable();
 
             $table->text('Environment_Health_review')->nullable();
             $table->text('Environment_Health_Safety_person')->nullable();
@@ -86,7 +86,7 @@ return new class extends Migration
             $table->longtext('Health_Safety_feedback')->nullable();
             $table->string('Environment_Health_Safety_attachment')->nullable();
             $table->text('Environment_Health_Safety_by')->nullable();
-            $table->date('Environment_Health_Safety_on')->nullable();
+            $table->text('Environment_Health_Safety_on')->nullable();
 
             $table->text('Human_Resource_review')->nullable();
             $table->text('Human_Resource_person')->nullable();
@@ -94,7 +94,7 @@ return new class extends Migration
             $table->longtext('Human_Resource_feedback')->nullable();
             $table->longtext('Human_Resource_attachment')->nullable();
             $table->string('Human_Resource_by')->nullable();
-            $table->date('Human_Resource_on')->nullable();
+            $table->text('Human_Resource_on')->nullable();
 
             $table->text('Information_Technology_review')->nullable();
             $table->text('Information_Technology_person')->nullable();
@@ -102,7 +102,7 @@ return new class extends Migration
             $table->longtext('Information_Technology_feedback')->nullable();
             $table->string('Information_Technology_attachment')->nullable();
             $table->text('Information_Technology_by')->nullable();
-            $table->date('Information_Technology_on')->nullable();
+            $table->text('Information_Technology_on')->nullable();
 
             $table->text('Project_management_review')->nullable();
             $table->text('Project_management_person')->nullable();
@@ -110,7 +110,7 @@ return new class extends Migration
             $table->longtext('Project_management_feedback')->nullable();
             $table->string('Project_management_attachment')->nullable();
             $table->string('Project_management_by')->nullable();
-            $table->date('Project_management_on')->nullable();
+            $table->text('Project_management_on')->nullable();
 
             $table->text('Other1_review')->nullable();
             $table->text('Other1_person')->nullable();
@@ -119,7 +119,7 @@ return new class extends Migration
             $table->longtext('Other1_feedback')->nullable();
             $table->string('Other1_attachment')->nullable();
             $table->text('Other1_by')->nullable();
-            $table->date('Other1_on')->nullable();
+            $table->text('Other1_on')->nullable();
 
             $table->text('Other2_review')->nullable();
             $table->text('Other2_person')->nullable();
@@ -128,7 +128,7 @@ return new class extends Migration
             $table->longtext('Other2_feedback')->nullable();
             $table->string('Other2_attachment')->nullable();
             $table->text('Other2_by')->nullable();
-            $table->date('Other2_on')->nullable();
+            $table->text('Other2_on')->nullable();
 
             $table->text('Other3_review')->nullable();
             $table->text('Other3_person')->nullable();
@@ -137,7 +137,7 @@ return new class extends Migration
             $table->longtext('Other3_feedback')->nullable();
             $table->string('Other3_attachment')->nullable();
             $table->text('Other3_by')->nullable();
-            $table->date('Other3_on')->nullable();
+            $table->text('Other3_on')->nullable();
 
             $table->text('Other4_review')->nullable();
             $table->text('Other4_person')->nullable();
@@ -146,7 +146,7 @@ return new class extends Migration
             $table->longtext('Other4_feedback')->nullable();
             $table->string('Other4_attachment')->nullable();
             $table->text('Other4_by')->nullable();
-            $table->date('Other4_on')->nullable();
+            $table->text('Other4_on')->nullable();
 
             $table->text('Other5_review')->nullable();
             $table->text('Other5_person')->nullable();
@@ -155,7 +155,7 @@ return new class extends Migration
             $table->longtext('Other5_feedback')->nullable();
             $table->string('Other5_attachment')->nullable();
             $table->text('Other5_by')->nullable();
-            $table->date('Other5_on')->nullable();
+            $table->text('Other5_on')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -163,7 +163,7 @@ return new class extends Migration
 
     /**
      * Reverse the migrations.
-     * 
+     *
      * @return void
      */
     public function down()

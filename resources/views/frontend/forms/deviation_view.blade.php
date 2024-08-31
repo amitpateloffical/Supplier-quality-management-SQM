@@ -756,14 +756,14 @@
                                 href="{{ url('DeviationAuditTrial', $data->id) }}"> {{-- add here url for auditTrail i.e. href="{{ url('CapaAuditTrial', $data->id) }}" --}}
                                 Audit Trail </a> </button>
 
-                        @if ($data->stage == 1 && Helpers::check_roles($data->division_id, 'Deviation ', 3))
+                        @if ($data->stage == 1 && Helpers::check_roles($data->division_id, 'Deviation', 3))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Submit
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
                             </button>
-                        @elseif($data->stage == 2 && Helpers::check_roles($data->division_id, 'Deviation ', 4))
+                        @elseif($data->stage == 2 && Helpers::check_roles($data->division_id, 'Deviation', 4))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
                                 More Info Required
                             </button>
@@ -773,7 +773,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
                             </button>
-                        @elseif($data->stage == 3 && Helpers::check_roles($data->division_id, 'Deviation ', 7))
+                        @elseif($data->stage == 3 && Helpers::check_roles($data->division_id, 'Deviation', 7))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
                                 More Info Required
                             </button>
@@ -787,7 +787,7 @@
                                 Child
                             </button>
                         @elseif(
-                        ($data->stage == 4 && Helpers::check_roles($data->division_id, 'Deviation ', 5)) || in_array(Auth::user()->id, $valuesArray))
+                        ($data->stage == 4 && Helpers::check_roles($data->division_id, 'Deviation', 5)) || in_array(Auth::user()->id, $valuesArray))
                         <!-- @if(!$cftCompleteUser) -->
                                 <button class="button_theme1" data-bs-toggle="modal"data-bs-target="#more-info-required-modal">
                                     More Info Required
@@ -797,7 +797,7 @@
                                 </button>
                        <!-- @endif -->
 
-                        @elseif($data->stage == 5 && Helpers::check_roles($data->division_id, 'Deviation ', 9))
+                        @elseif($data->stage == 5 && Helpers::check_roles($data->division_id, 'Deviation', 9))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#sendToInitiator">
                                 Send to Opened
                             </button>
@@ -813,7 +813,7 @@
                             {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
                             </button> --}}
-                        @elseif($data->stage == 6 && Helpers::check_roles($data->division_id, 'Deviation ', 9))
+                        @elseif($data->stage == 6 && Helpers::check_roles($data->division_id, 'Deviation', 9))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
                                 More Info Required
                             </button>
@@ -833,7 +833,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Initiator Updated Complete
                             </button>
-                            @elseif($data->stage == 8 && Helpers::check_roles($data->division_id, 'Deviation ', 4))
+                            @elseif($data->stage == 8 && Helpers::check_roles($data->division_id, 'Deviation', 4))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#sendToInitiator">
                                 Send to Opened
 
@@ -857,7 +857,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 QA Final Review Complete
                             </button>
-                        @elseif($data->stage == 10 && Helpers::check_roles($data->division_id, 'Deviation ', 9))
+                        @elseif($data->stage == 10 && Helpers::check_roles($data->division_id, 'Deviation', 9))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#sendToInitiator">
                                 Send to Opened
                             </button>

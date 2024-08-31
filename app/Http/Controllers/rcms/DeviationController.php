@@ -5425,6 +5425,35 @@ class DeviationController extends Controller
 
 //===========================uncomment karna hai =============
                  $list = Helpers::getHodUserList($deviation->division_id);
+
+                 $userIds = collect($list)->pluck('user_id')->toArray();
+                 $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                 $userId = $users->pluck('id')->implode(',');
+                 if(!empty($users)){
+                     try {
+                         $history = new DeviationAuditTrail();
+                         $history->deviation_id = $id;
+                         $history->activity_type = "Not Applicable";
+                         $history->previous = "Not Applicable";
+                         $history->current = "Not Applicable";
+                         $history->action = 'Notification';
+                         $history->comment = "";
+                         $history->user_id = Auth::user()->id;
+                         $history->user_name = Auth::user()->name;
+                         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                         $history->origin_state = "Not Applicable";
+                         $history->change_to = "Not Applicable";
+                         $history->change_from = "Opened";
+                         $history->stage = "";
+                         $history->action_name = "";
+                         $history->mailUserId = $userId;
+                         $history->role_name = "Initiator";
+                         $history->save();
+                     } catch (\Throwable $e) {
+                         \Log::error('Mail failed to send: ' . $e->getMessage());
+                     }
+                 }
+
                  foreach ($list as $u) {
                     // if ($u->q_m_s_divisions_id == $deviation->division_id) {
                          $email = Helpers::getHODEmail($u->user_id);
@@ -5525,6 +5554,35 @@ class DeviationController extends Controller
                 $history->save();
                 // dd($history->action);
                 $list = Helpers::getQAUserList($deviation->division_id);
+
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if(!empty($users)){
+                    try {
+                        $history = new DeviationAuditTrail();
+                        $history->deviation_id = $id;
+                        $history->activity_type = "Not Applicable";
+                        $history->previous = "Not Applicable";
+                        $history->current = "Not Applicable";
+                        $history->action = 'Notification';
+                        $history->comment = "";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable";
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = "HOD Review";
+                        $history->stage = "";
+                        $history->action_name = "";
+                        $history->mailUserId = $userId;
+                        $history->role_name = "Initiator";
+                        $history->save();
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+
                 foreach ($list as $u) {
                     //if ($u->q_m_s_divisions_id == $deviation->division_id) {
                         $email = Helpers::getQAEmail($u->user_id);
@@ -5651,6 +5709,34 @@ class DeviationController extends Controller
 
                 $history->save();
                 $list = Helpers::getCFTUserList($deviation->division_id);
+
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if(!empty($users)){
+                    try {
+                        $history = new DeviationAuditTrail();
+                        $history->deviation_id = $id;
+                        $history->activity_type = "Not Applicable";
+                        $history->previous = "Not Applicable";
+                        $history->current = "Not Applicable";
+                        $history->action = 'Notification';
+                        $history->comment = "";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable";
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = "QA Initial Review";
+                        $history->stage = "";
+                        $history->action_name = "";
+                        $history->mailUserId = $userId;
+                        $history->role_name = "Initiator";
+                        $history->save();
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
                 foreach ($list as $u) {
                     //if ($u->q_m_s_divisions_id == $deviation->division_id) {
                         $email = Helpers::getCFTEmail($u->user_id);
@@ -5852,42 +5938,6 @@ class DeviationController extends Controller
                 foreach ($columns as $index => $column) {
                     $value = $cftUsers->$column;
                     $counter = 0;
-                    //if($column == 'Production_person' && $cftUsers->$column == Auth::user()->id){
-
-
-                    //if ($index == 1 && $cftUsers->$column == Auth::user()->name) {
-                    //    $updateCFT->QualityAssurance_by = Auth::user()->name;
-                    //    $updateCFT->QualityAssurance_on = Carbon::now()->format('Y-m-d'); // Corrected line
-
-                    //    $history = new DeviationAuditTrail();
-                    //    $history->deviation_id = $id;
-                    //    $history->activity_type = 'Quality Assurance Completed By, Quality Assurance Completed On';
-
-                    //    if (is_null($lastDocument->QualityAssurance_by) || $lastDocument->QualityAssurance_on == '') {
-                    //        $history->previous = "";
-                    //    } else {
-                    //        $history->previous = $lastDocument->QualityAssurance_by . ' ,' .Helpers::getdateFormat ($lastDocument->QualityAssurance_on);
-                    //    }
-
-                    //    $history->action = 'CFT Review Complete';
-                    //    $history->current = $updateCFT->QualityAssurance_by . ',' .Helpers::getdateFormat ($updateCFT->QualityAssurance_on);
-                    //    $history->comment = $request->comment;
-                    //    $history->user_id = Auth::user()->id; // Use `id` instead of `name` for `user_id`
-                    //    $history->user_name = Auth::user()->name;
-                    //    $history->change_to = "Not Applicable";
-                    //    $history->change_from = $lastDocument->status;
-                    //    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    //    $history->origin_state = $lastDocument->status;
-                    //    $history->stage = 'CFT Review';
-
-                    //    if (is_null($lastDocument->QualityAssurance_by) || $lastDocument->QualityAssurance_on == '') {
-                    //        $history->action_name = 'New';
-                    //    } else {
-                    //        $history->action_name = 'Update';
-                    //    }
-
-                    //    $history->save();
-                    //}
 
 
                     //old code
@@ -5895,7 +5945,7 @@ class DeviationController extends Controller
                         $counter++;
 
                         $updateCFT->production_by = Auth::user()->name;
-                        $updateCFT->production_on = Carbon::now()->format('Y-m-d H:i A');
+                        $updateCFT->production_on = Carbon::now()->format('d-M-Y H:i A');
 
                         if ($getCft->production_by != $updateCFT->production_by) {
                             // return 'history';
@@ -5906,10 +5956,10 @@ class DeviationController extends Controller
                             if (is_null($getCft->production_by) || $getCft->production_on == '') {
                                 $history->previous = "";
                             } else {
-                                $history->previous = $getCft->production_by . ' , ' .Helpers::getdateFormat ($getCft->production_on);
+                                $history->previous = $getCft->production_by . ' , ' . $getCft->production_on;
                             }
 
-                            $history->current = $updateCFT->production_by . ' , ' .Helpers::getdateFormat ($updateCFT->production_on);
+                            $history->current = $updateCFT->production_by . ' , ' . $updateCFT->production_on;
                             $history->action = 'CFT Review Complete';
 
                             $history->comment = "Not Applicable";
@@ -5954,7 +6004,7 @@ class DeviationController extends Controller
                     if($index == 1 && $cftUsers->$column == Auth::user()->id){
 
                         $updateCFT->Warehouse_by = Auth::user()->name;
-                        $updateCFT->Warehouse_on = Carbon::now()->format('Y-m-d H:i A');
+                        $updateCFT->Warehouse_on = Carbon::now()->format('d-M-Y H:i A');
 
                         if ($getCft->Warehouse_by != $updateCFT->Warehouse_by) {
                             // return 'history';
@@ -5964,10 +6014,10 @@ class DeviationController extends Controller
                             if (is_null($getCft->Warehouse_by) || $getCft->Warehouse_on == '') {
                                 $history->previous = "";
                             } else {
-                                $history->previous = $getCft->Warehouse_by . ' , ' .Helpers::getdateFormat ($getCft->Warehouse_on);
+                                $history->previous = $getCft->Warehouse_by . ' , ' . $getCft->Warehouse_on;
                             }
 
-                            $history->current = $updateCFT->Warehouse_by . ' , ' .Helpers::getdateFormat ($updateCFT->Warehouse_on);
+                            $history->current = $updateCFT->Warehouse_by . ' , ' . $updateCFT->Warehouse_on;
                             //$history->action = 'CFT Review Complete';
 
                             $history->comment = "Not Applicable";
@@ -5990,7 +6040,7 @@ class DeviationController extends Controller
                     if($index == 2 && $cftUsers->$column == Auth::user()->id){
 
                         $updateCFT->Quality_Control_by = Auth::user()->name;
-                        $updateCFT->Quality_Control_on = Carbon::now()->format('Y-m-d H:i A');
+                        $updateCFT->Quality_Control_on = Carbon::now()->format('d-M-Y H:i A');
 
                         if ($getCft->Quality_Control_by != $updateCFT->Quality_Control_by) {
                             // return 'history';
@@ -6001,10 +6051,10 @@ class DeviationController extends Controller
                             if (is_null($getCft->Quality_Control_by) || $getCft->Quality_Control_on == '') {
                                 $history->previous = "";
                             } else {
-                                $history->previous = $getCft->Quality_Control_by . ' , ' .Helpers::getdateFormat ($getCft->Quality_Control_on);
+                                $history->previous = $getCft->Quality_Control_by . ' , ' . $getCft->Quality_Control_on;
                             }
 
-                            $history->current = $updateCFT->Quality_Control_by . ' , ' .Helpers::getdateFormat ($updateCFT->Quality_Control_on);
+                            $history->current = $updateCFT->Quality_Control_by . ' , ' . $updateCFT->Quality_Control_on;
                             //$history->action = 'CFT Review Complete';
 
                             $history->comment = "Not Applicable";
@@ -6030,7 +6080,7 @@ class DeviationController extends Controller
                     if($index == 3 && $cftUsers->$column == Auth::user()->id){
 
                         $updateCFT->QualityAssurance_by = Auth::user()->name;
-                        $updateCFT->QualityAssurance_on = Carbon::now()->format('Y-m-d H:i A');
+                        $updateCFT->QualityAssurance_on = Carbon::now()->format('d-M-Y H:i A');
 
                         if ($getCft->QualityAssurance_by != $updateCFT->QualityAssurance_by) {
                             // return 'history';
@@ -6041,10 +6091,10 @@ class DeviationController extends Controller
                             if (is_null($getCft->QualityAssurance_by) || $getCft->QualityAssurance_on == '') {
                                 $history->previous = "";
                             } else {
-                                $history->previous = $getCft->QualityAssurance_by . ' , ' .Helpers::getdateFormat ($getCft->QualityAssurance_on);
+                                $history->previous = $getCft->QualityAssurance_by . ' , ' . $getCft->QualityAssurance_on;
                             }
 
-                            $history->current = $updateCFT->QualityAssurance_by . ' , ' .Helpers::getdateFormat ($updateCFT->QualityAssurance_on);
+                            $history->current = $updateCFT->QualityAssurance_by . ' , ' . $updateCFT->QualityAssurance_on;
                             //$history->action = 'CFT Review Complete';
 
                             $history->comment = "Not Applicable";
@@ -6068,7 +6118,7 @@ class DeviationController extends Controller
                     if($index == 4 && $cftUsers->$column == Auth::user()->id){
 
                         $updateCFT->Engineering_by = Auth::user()->name;
-                        $updateCFT->Engineering_on = Carbon::now()->format('Y-m-d H:i A');
+                        $updateCFT->Engineering_on = Carbon::now()->format('d-M-Y H:i A');
 
                         if ($getCft->Engineering_by != $updateCFT->Engineering_by) {
                         // return 'history';
@@ -6079,10 +6129,10 @@ class DeviationController extends Controller
                         if (is_null($getCft->Engineering_by) || $getCft->Engineering_on == '') {
                             $history->previous = "";
                         } else {
-                            $history->previous = $getCft->Engineering_by . ' , ' .Helpers::getdateFormat ($getCft->Engineering_on);
+                            $history->previous = $getCft->Engineering_by . ' , ' . $getCft->Engineering_on;
                         }
 
-                        $history->current = $updateCFT->Engineering_by . ' , ' .Helpers::getdateFormat ($updateCFT->Engineering_on);
+                        $history->current = $updateCFT->Engineering_by . ' , ' . $updateCFT->Engineering_on;
                         //$history->action = 'CFT Review Complete';
 
                         $history->comment = "Not Applicable";
@@ -6128,7 +6178,7 @@ class DeviationController extends Controller
                     if($index == 5 && $cftUsers->$column == Auth::user()->id){
 
                         $updateCFT->Analytical_Development_by = Auth::user()->name;
-                        $updateCFT->Analytical_Development_on = Carbon::now()->format('Y-m-d H:i A');
+                        $updateCFT->Analytical_Development_on = Carbon::now()->format('d-M-Y H:i A');
 
                         if ($getCft->Analytical_Development_by != $updateCFT->Analytical_Development_by) {
                         // return 'history';
@@ -6139,10 +6189,10 @@ class DeviationController extends Controller
                         if (is_null($getCft->Analytical_Development_by) || $getCft->Analytical_Development_on == '') {
                             $history->previous = "";
                         } else {
-                            $history->previous = $getCft->Analytical_Development_by . ' , ' .Helpers::getdateFormat ($getCft->Analytical_Development_on);
+                            $history->previous = $getCft->Analytical_Development_by . ' , ' . $getCft->Analytical_Development_on;
                         }
 
-                        $history->current = $updateCFT->Analytical_Development_by . ' , ' .Helpers::getdateFormat ($updateCFT->Analytical_Development_on);
+                        $history->current = $updateCFT->Analytical_Development_by . ' , ' . $updateCFT->Analytical_Development_on;
                         //$history->action = 'CFT Review Complete';
 
                         $history->comment = "Not Applicable";
@@ -6187,7 +6237,7 @@ class DeviationController extends Controller
                     if($index == 6 && $cftUsers->$column == Auth::user()->id){
 
                         $updateCFT->Kilo_Lab_attachment_by = Auth::user()->name;
-                        $updateCFT->Kilo_Lab_attachment_on = Carbon::now()->format('Y-m-d H:i A');
+                        $updateCFT->Kilo_Lab_attachment_on = Carbon::now()->format('d-M-Y H:i A');
 
                         if ($getCft->Kilo_Lab_attachment_by != $updateCFT->Kilo_Lab_attachment_by) {
                         // return 'history';
@@ -6198,10 +6248,10 @@ class DeviationController extends Controller
                         if (is_null($getCft->Kilo_Lab_attachment_by) || $getCft->Kilo_Lab_attachment_on == '') {
                             $history->previous = "";
                         } else {
-                            $history->previous = $getCft->Kilo_Lab_attachment_by . ' , ' .Helpers::getdateFormat ($getCft->Kilo_Lab_attachment_on);
+                            $history->previous = $getCft->Kilo_Lab_attachment_by . ' , ' . $getCft->Kilo_Lab_attachment_on;
                         }
 
-                        $history->current = $updateCFT->Kilo_Lab_attachment_by . ' , ' .Helpers::getdateFormat ($updateCFT->Kilo_Lab_attachment_on);
+                        $history->current = $updateCFT->Kilo_Lab_attachment_by . ' , ' . $updateCFT->Kilo_Lab_attachment_on;
                         //$history->action = 'CFT Review Complete';
 
                         $history->comment = "Not Applicable";
@@ -6248,7 +6298,7 @@ class DeviationController extends Controller
                     if($index == 7 && $cftUsers->$column == Auth::user()->id){
 
                         $updateCFT->Technology_transfer_by = Auth::user()->name;
-                        $updateCFT->Technology_transfer_on = Carbon::now()->format('Y-m-d H:i A');
+                        $updateCFT->Technology_transfer_on = Carbon::now()->format('d-M-Y H:i A');
 
                         if ($getCft->Technology_transfer_by != $updateCFT->Technology_transfer_by) {
                         // return 'history';
@@ -6259,10 +6309,10 @@ class DeviationController extends Controller
                         if (is_null($getCft->Technology_transfer_by) || $getCft->Technology_transfer_on == '') {
                             $history->previous = "";
                         } else {
-                            $history->previous = $getCft->Technology_transfer_by . ' , ' .Helpers::getdateFormat ($getCft->Technology_transfer_on);
+                            $history->previous = $getCft->Technology_transfer_by . ' , ' . $getCft->Technology_transfer_on;
                         }
 
-                        $history->current = $updateCFT->Technology_transfer_by . ' , ' .Helpers::getdateFormat ($updateCFT->Technology_transfer_on);
+                        $history->current = $updateCFT->Technology_transfer_by . ' , ' . $updateCFT->Technology_transfer_on;
                         //$history->action = 'CFT Review Complete';
 
                         $history->comment = "Not Applicable";
@@ -6308,7 +6358,7 @@ class DeviationController extends Controller
                     if($index == 8 && $cftUsers->$column == Auth::user()->id){
 
                         $updateCFT->Environment_Health_Safety_by = Auth::user()->name;
-                        $updateCFT->Environment_Health_Safety_on = Carbon::now()->format('Y-m-d H:i A');
+                        $updateCFT->Environment_Health_Safety_on = Carbon::now()->format('d-M-Y H:i A');
 
                         if ($getCft->Environment_Health_Safety_by != $updateCFT->Environment_Health_Safety_by) {
                         // return 'history';
@@ -6319,10 +6369,10 @@ class DeviationController extends Controller
                         if (is_null($getCft->Environment_Health_Safety_by) || $getCft->Environment_Health_Safety_on == '') {
                             $history->previous = "";
                         } else {
-                            $history->previous = $getCft->Environment_Health_Safety_by . ' , ' .Helpers::getdateFormat ($getCft->Environment_Health_Safety_on);
+                            $history->previous = $getCft->Environment_Health_Safety_by . ' , ' . $getCft->Environment_Health_Safety_on;
                         }
 
-                        $history->current = $updateCFT->Environment_Health_Safety_by . ' , ' .Helpers::getdateFormat ($updateCFT->Environment_Health_Safety_on);
+                        $history->current = $updateCFT->Environment_Health_Safety_by . ' , ' . $updateCFT->Environment_Health_Safety_on;
                         //$history->action = 'CFT Review Complete';
 
                         $history->comment = "Not Applicable";
@@ -6368,7 +6418,7 @@ class DeviationController extends Controller
                     if($index == 9 && $cftUsers->$column == Auth::user()->id){
 
                        $updateCFT->Human_Resource_by = Auth::user()->name;
-                       $updateCFT->Human_Resource_on = Carbon::now()->format('Y-m-d H:i A');
+                       $updateCFT->Human_Resource_on = Carbon::now()->format('d-M-Y H:i A');
 
 
                        if ($getCft->Human_Resource_by != $updateCFT->Human_Resource_by) {
@@ -6380,10 +6430,10 @@ class DeviationController extends Controller
                         if (is_null($getCft->Human_Resource_by) || $getCft->Human_Resource_on == '') {
                             $history->previous = "";
                         } else {
-                            $history->previous = $getCft->Human_Resource_by . ' , ' .Helpers::getdateFormat ($getCft->Human_Resource_on);
+                            $history->previous = $getCft->Human_Resource_by . ' , ' . $getCft->Human_Resource_on;
                         }
 
-                        $history->current = $updateCFT->Human_Resource_by . ' , ' .Helpers::getdateFormat ($updateCFT->Human_Resource_on);
+                        $history->current = $updateCFT->Human_Resource_by . ' , ' . $updateCFT->Human_Resource_on;
                         //$history->action = 'CFT Review Complete';
 
                         $history->comment = "Not Applicable";
@@ -6430,7 +6480,7 @@ class DeviationController extends Controller
                     if($index == 10 && $cftUsers->$column == Auth::user()->id){
 
                         $updateCFT->Information_Technology_by = Auth::user()->name;
-                        $updateCFT->Information_Technology_on = Carbon::now()->format('Y-m-d');
+                        $updateCFT->Information_Technology_on = Carbon::now()->format('d-M-Y H:i A');
 
                         if ($getCft->Information_Technology_by != $updateCFT->Information_Technology_by) {
                         // return 'history';
@@ -6441,10 +6491,10 @@ class DeviationController extends Controller
                         if (is_null($getCft->Information_Technology_by) || $getCft->Information_Technology_on == '') {
                             $history->previous = "";
                         } else {
-                            $history->previous = $getCft->Information_Technology_by . ' , ' .Helpers::getdateFormat ($getCft->Information_Technology_on);
+                            $history->previous = $getCft->Information_Technology_by . ' , ' . $getCft->Information_Technology_on;
                         }
 
-                        $history->current = $updateCFT->Information_Technology_by . ' , ' .Helpers::getdateFormat ($updateCFT->Information_Technology_on);
+                        $history->current = $updateCFT->Information_Technology_by . ' , ' . $updateCFT->Information_Technology_on;
                         //$history->action = 'CFT Review Complete';
 
                         $history->comment = "Not Applicable";
@@ -6490,7 +6540,7 @@ class DeviationController extends Controller
                     if($index == 11 && $cftUsers->$column == Auth::user()->id){
 
                         $updateCFT->Project_management_by = Auth::user()->name;
-                        $updateCFT->Project_management_on = Carbon::now()->format('Y-m-d H:i A');
+                        $updateCFT->Project_management_on = Carbon::now()->format('d-M-Y H:i A');
 
                         if ($getCft->Project_management_by != $updateCFT->Project_management_by) {
                         // return 'history';
@@ -6501,10 +6551,10 @@ class DeviationController extends Controller
                         if (is_null($getCft->Project_management_by) || $getCft->Project_management_on == '') {
                             $history->previous = "";
                         } else {
-                            $history->previous = $getCft->Project_management_by . ' , ' .Helpers::getdateFormat ($getCft->Project_management_on);
+                            $history->previous = $getCft->Project_management_by . ' , ' . $getCft->Project_management_on;
                         }
 
-                        $history->current = $updateCFT->Project_management_by . ' , ' .Helpers::getdateFormat ($updateCFT->Project_management_on);
+                        $history->current = $updateCFT->Project_management_by . ' , ' . $updateCFT->Project_management_on;
                         //$history->action = 'CFT Review Complete';
 
                         $history->comment = "Not Applicable";
@@ -6552,7 +6602,7 @@ class DeviationController extends Controller
                     if($index == 12 && $cftUsers->$column == Auth::user()->id){
 
                         $updateCFT->Other1_by = Auth::user()->name;
-                        $updateCFT->Other1_on = Carbon::now()->format('Y-m-d H:i A');
+                        $updateCFT->Other1_on = Carbon::now()->format('d-M-Y H:i A');
 
                         if ($getCft->Other1_by != $updateCFT->Other1_by) {
                         // return 'history';
@@ -6563,10 +6613,10 @@ class DeviationController extends Controller
                         if (is_null($getCft->Other1_by) || $getCft->Other1_on == '') {
                             $history->previous = "";
                         } else {
-                            $history->previous = $getCft->Other1_by . ' , ' .Helpers::getdateFormat ($getCft->Other1_on);
+                            $history->previous = $getCft->Other1_by . ' , ' . $getCft->Other1_on;
                         }
 
-                        $history->current = $updateCFT->Other1_by . ' , ' .Helpers::getdateFormat ($updateCFT->Other1_on);
+                        $history->current = $updateCFT->Other1_by . ' , ' . $updateCFT->Other1_on;
                         //$history->action = 'CFT Review Complete';
 
                         $history->comment = "Not Applicable";
@@ -6613,7 +6663,7 @@ class DeviationController extends Controller
                     if($index == 13 && $cftUsers->$column == Auth::user()->id){
 
                         $updateCFT->Other2_by = Auth::user()->name;
-                        $updateCFT->Other2_on = Carbon::now()->format('Y-m-d H:i A');
+                        $updateCFT->Other2_on = Carbon::now()->format('d-M-Y H:i A');
 
                         if ($getCft->Other2_by != $updateCFT->Other2_by) {
                         // return 'history';
@@ -6624,10 +6674,10 @@ class DeviationController extends Controller
                         if (is_null($getCft->Other2_by) || $getCft->Other2_on == '') {
                             $history->previous = "";
                         } else {
-                            $history->previous = $getCft->Other2_by . ' , ' . Helpers::getdateFormat ($getCft->Other2_on);
+                            $history->previous = $getCft->Other2_by . ' , ' . $getCft->Other2_on;
                         }
 
-                        $history->current = $updateCFT->Other2_by . ' , ' . Helpers::getdateFormat ($updateCFT->Other2_on);
+                        $history->current = $updateCFT->Other2_by . ' , ' . $updateCFT->Other2_on;
                         //$history->action = 'CFT Review Complete';
 
                         $history->comment = "Not Applicable";
@@ -6675,7 +6725,7 @@ class DeviationController extends Controller
                     if($index == 14 && $cftUsers->$column == Auth::user()->id){
 
                         $updateCFT->Other3_by = Auth::user()->name;
-                        $updateCFT->Other3_on = Carbon::now()->format('Y-m-d H:i A');
+                        $updateCFT->Other3_on = Carbon::now()->format('d-M-Y H:i A');
 
                         if ($getCft->Other3_by != $updateCFT->Other3_by) {
                         // return 'history';
@@ -6686,10 +6736,10 @@ class DeviationController extends Controller
                         if (is_null($getCft->Other3_by) || $getCft->Other3_on == '') {
                             $history->previous = "";
                         } else {
-                            $history->previous = $getCft->Other3_by . ' , ' . Helpers::getdateFormat ($getCft->Other3_on);
+                            $history->previous = $getCft->Other3_by . ' , ' . $getCft->Other3_on;
                         }
 
-                        $history->current = $updateCFT->Other3_by . ' , ' . Helpers::getdateFormat ($updateCFT->Other3_on);
+                        $history->current = $updateCFT->Other3_by . ' , ' . $updateCFT->Other3_on;
                         //$history->action = 'CFT Review Complete';
 
                         $history->comment = "Not Applicable";
@@ -6735,7 +6785,7 @@ class DeviationController extends Controller
                     if($index == 15 && $cftUsers->$column == Auth::user()->id){
 
                         $updateCFT->Other4_by = Auth::user()->name;
-                        $updateCFT->Other4_on = Carbon::now()->format('Y-m-d H:i A');
+                        $updateCFT->Other4_on = Carbon::now()->format('d-M-Y H:i A');
 
                         if ($getCft->Other4_by != $updateCFT->Other4_by) {
                         // return 'history';
@@ -6746,10 +6796,10 @@ class DeviationController extends Controller
                         if (is_null($getCft->Other4_by) || $getCft->Other4_on == '') {
                             $history->previous = "";
                         } else {
-                            $history->previous = $getCft->Other4_by . ' , ' . Helpers::getdateFormat ($getCft->Other4_on);
+                            $history->previous = $getCft->Other4_by . ' , ' . $getCft->Other4_on;
                         }
 
-                        $history->current = $updateCFT->Other4_by . ' , ' . Helpers::getdateFormat ($updateCFT->Other4_on);
+                        $history->current = $updateCFT->Other4_by . ' , ' . $updateCFT->Other4_on;
                         //$history->action = 'CFT Review Complete';
 
                         $history->comment = "Not Applicable";
@@ -6796,7 +6846,7 @@ class DeviationController extends Controller
                     if($index == 16 && $cftUsers->$column == Auth::user()->id){
 
                         $updateCFT->Other5_by = Auth::user()->name;
-                        $updateCFT->Other5_on = Carbon::now()->format('Y-m-d H:i A');
+                        $updateCFT->Other5_on = Carbon::now()->format('d-M-Y H:i A');
 
                         if ($getCft->Other5_by != $updateCFT->Other5_by) {
                         // return 'history';
@@ -6807,10 +6857,10 @@ class DeviationController extends Controller
                         if (is_null($getCft->Other5_by) || $getCft->Other5_on == '') {
                             $history->previous = "";
                         } else {
-                            $history->previous = $getCft->Other5_by . ' , ' . Helpers::getdateFormat ($getCft->Other5_on);
+                            $history->previous = $getCft->Other5_by . ' , ' . $getCft->Other5_on;
                         }
 
-                        $history->current = $updateCFT->Other5_by . ' , ' . Helpers::getdateFormat ($updateCFT->Other5_on);
+                        $history->current = $updateCFT->Other5_by . ' , ' . $updateCFT->Other5_on;
                         //$history->action = 'CFT Review Complete';
 
                         $history->comment = "Not Applicable";
@@ -6888,7 +6938,7 @@ class DeviationController extends Controller
                 // dd(count(array_unique($valuesArray)), $checkCFTCount);
 
 
-                //if ($checkCFTCount) {
+                //if (!$IsCFTRequired || $checkCFTCount) {
                     //dd("test");
 
                     $deviation->stage = "5";
@@ -6928,6 +6978,34 @@ class DeviationController extends Controller
 
 
                     $list = Helpers::getQAHeadUserList($deviation->division_id);
+
+                    $userIds = collect($list)->pluck('user_id')->toArray();
+                    $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                    $userId = $users->pluck('id')->implode(',');
+                    if(!empty($users)){
+                        try {
+                            $history = new DeviationAuditTrail();
+                            $history->deviation_id = $id;
+                            $history->activity_type = "Not Applicable";
+                            $history->previous = "Not Applicable";
+                            $history->current = "Not Applicable";
+                            $history->action = 'Notification';
+                            $history->comment = "";
+                            $history->user_id = Auth::user()->id;
+                            $history->user_name = Auth::user()->name;
+                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->origin_state = "Not Applicable";
+                            $history->change_to = "Not Applicable";
+                            $history->change_from = "CFT Review";
+                            $history->stage = "";
+                            $history->action_name = "";
+                            $history->mailUserId = $userId;
+                            $history->role_name = "Initiator";
+                            $history->save();
+                        } catch (\Throwable $e) {
+                            \Log::error('Mail failed to send: ' . $e->getMessage());
+                        }
+                    }
                      foreach ($list as $u) {
                         // if ($u->q_m_s_divisions_id == $deviation->division_id) {
                              $email = Helpers::getQAHeadEmail($u->user_id);
@@ -7143,6 +7221,34 @@ class DeviationController extends Controller
                 //}
 
                 $list = Helpers::getInitiatorUserList($deviation->division_id);
+
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if(!empty($users)){
+                    try {
+                        $history = new DeviationAuditTrail();
+                        $history->deviation_id = $id;
+                        $history->activity_type = "Not Applicable";
+                        $history->previous = "Not Applicable";
+                        $history->current = "Not Applicable";
+                        $history->action = 'Notification';
+                        $history->comment = "";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable";
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = "QA Head/Manager Designee Primary Approval";
+                        $history->stage = "";
+                        $history->action_name = "";
+                        $history->mailUserId = $userId;
+                        $history->role_name = "Initiator";
+                        $history->save();
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
                 foreach ($list as $u) {
                     //if ($u->q_m_s_divisions_id == $deviation->division_id) {
                         $email = Helpers::getInitiatorEmail($u->user_id);
@@ -7248,6 +7354,35 @@ class DeviationController extends Controller
 
                 $history->save();
                 $list = Helpers::getHodUserList($deviation->division_id);
+
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if(!empty($users)){
+                    try {
+                        $history = new DeviationAuditTrail();
+                        $history->deviation_id = $id;
+                        $history->activity_type = "Not Applicable";
+                        $history->previous = "Not Applicable";
+                        $history->current = "Not Applicable";
+                        $history->action = 'Notification';
+                        $history->comment = "";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable";
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = "Pending Initiator Update";
+                        $history->stage = "";
+                        $history->action_name = "";
+                        $history->mailUserId = $userId;
+                        $history->role_name = "Initiator";
+                        $history->save();
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+
                 foreach ($list as $u) {
                     //if ($u->q_m_s_divisions_id == $deviation->division_id) {
                         $email = Helpers::getHODEmail($u->user_id);
@@ -7331,6 +7466,35 @@ class DeviationController extends Controller
 
                 $history->save();
                  $list = Helpers::getQaReviewerList($deviation->division_id);
+
+                 $userIds = collect($list)->pluck('user_id')->toArray();
+                 $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                 $userId = $users->pluck('id')->implode(',');
+                 if(!empty($users)){
+                     try {
+                         $history = new DeviationAuditTrail();
+                         $history->deviation_id = $id;
+                         $history->activity_type = "Not Applicable";
+                         $history->previous = "Not Applicable";
+                         $history->current = "Not Applicable";
+                         $history->action = 'Notification';
+                         $history->comment = "";
+                         $history->user_id = Auth::user()->id;
+                         $history->user_name = Auth::user()->name;
+                         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                         $history->origin_state = "Not Applicable";
+                         $history->change_to = "Not Applicable";
+                         $history->change_from = "HOD Final Review";
+                         $history->stage = "";
+                         $history->action_name = "";
+                         $history->mailUserId = $userId;
+                         $history->role_name = "Initiator";
+                         $history->save();
+                     } catch (\Throwable $e) {
+                         \Log::error('Mail failed to send: ' . $e->getMessage());
+                     }
+                 }
+
                  foreach ($list as $u) {
                     // if ($u->q_m_s_divisions_id == $deviation->division_id) {
                          $email = Helpers::getQAReviewerEmail($u->user_id);
@@ -7415,6 +7579,35 @@ class DeviationController extends Controller
 
                 $history->save();
                 $list = Helpers::getQAHeadUserList($deviation->division_id);
+
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if(!empty($users)){
+                    try {
+                        $history = new DeviationAuditTrail();
+                        $history->deviation_id = $id;
+                        $history->activity_type = "Not Applicable";
+                        $history->previous = "Not Applicable";
+                        $history->current = "Not Applicable";
+                        $history->action = 'Notification';
+                        $history->comment = "";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable";
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = "QA Final Review";
+                        $history->stage = "";
+                        $history->action_name = "";
+                        $history->mailUserId = $userId;
+                        $history->role_name = "Initiator";
+                        $history->save();
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+
                 foreach ($list as $u) {
                     //if ($u->q_m_s_divisions_id == $deviation->division_id) {
                         $email = Helpers::getQAHeadEmail($u->user_id);
@@ -7535,6 +7728,35 @@ class DeviationController extends Controller
 
                 $history->save();
                 $list = Helpers::getInitiatorUserList($deviation->division_id);
+
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if(!empty($users)){
+                    try {
+                        $history = new DeviationAuditTrail();
+                        $history->deviation_id = $id;
+                        $history->activity_type = "Not Applicable";
+                        $history->previous = "Not Applicable";
+                        $history->current = "Not Applicable";
+                        $history->action = 'Notification';
+                        $history->comment = "";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable";
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = "QA Final Approval";
+                        $history->stage = "";
+                        $history->action_name = "";
+                        $history->mailUserId = $userId;
+                        $history->role_name = "Initiator";
+                        $history->save();
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+
                 foreach ($list as $u) {
                     //if ($u->q_m_s_divisions_id == $deviation->division_id) {
                         $email = Helpers::getInitiatorEmail($u->user_id);
@@ -7561,6 +7783,35 @@ class DeviationController extends Controller
                 }
 
                 $list = Helpers::getHodUserList($deviation->division_id);
+
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if(!empty($users)){
+                    try {
+                        $history = new DeviationAuditTrail();
+                        $history->deviation_id = $id;
+                        $history->activity_type = "Not Applicable";
+                        $history->previous = "Not Applicable";
+                        $history->current = "Not Applicable";
+                        $history->action = 'Notification';
+                        $history->comment = "";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable";
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = "QA Final Approval";
+                        $history->stage = "";
+                        $history->action_name = "";
+                        $history->mailUserId = $userId;
+                        $history->role_name = "Initiator";
+                        $history->save();
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+
                 foreach ($list as $u) {
                     //if ($u->q_m_s_divisions_id == $deviation->division_id) {
                         $email = Helpers::getHODEmail($u->user_id);
@@ -7587,6 +7838,35 @@ class DeviationController extends Controller
                 }
 
                 $list = Helpers::getQAUserList($deviation->division_id);
+
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if(!empty($users)){
+                    try {
+                        $history = new DeviationAuditTrail();
+                        $history->deviation_id = $id;
+                        $history->activity_type = "Not Applicable";
+                        $history->previous = "Not Applicable";
+                        $history->current = "Not Applicable";
+                        $history->action = 'Notification';
+                        $history->comment = "";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable";
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = "QA Final Approval";
+                        $history->stage = "";
+                        $history->action_name = "";
+                        $history->mailUserId = $userId;
+                        $history->role_name = "Initiator";
+                        $history->save();
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+
                 foreach ($list as $u) {
                     //if ($u->q_m_s_divisions_id == $deviation->division_id) {
                         $email = Helpers::getQAEmail($u->user_id);
@@ -7613,6 +7893,35 @@ class DeviationController extends Controller
                 }
 
                 $list = Helpers::getCFTUserList($deviation->division_id);
+
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if(!empty($users)){
+                    try {
+                        $history = new DeviationAuditTrail();
+                        $history->deviation_id = $id;
+                        $history->activity_type = "Not Applicable";
+                        $history->previous = "Not Applicable";
+                        $history->current = "Not Applicable";
+                        $history->action = 'Notification';
+                        $history->comment = "";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable";
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = "QA Final Approval";
+                        $history->stage = "";
+                        $history->action_name = "";
+                        $history->mailUserId = $userId;
+                        $history->role_name = "Initiator";
+                        $history->save();
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+
                 foreach ($list as $u) {
                     //if ($u->q_m_s_divisions_id == $deviation->division_id) {
                         $email = Helpers::getCFTEmail($u->user_id);
@@ -7639,6 +7948,35 @@ class DeviationController extends Controller
                 }
 
                 $list = Helpers::getQaReviewerList($deviation->division_id);
+
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if(!empty($users)){
+                    try {
+                        $history = new DeviationAuditTrail();
+                        $history->deviation_id = $id;
+                        $history->activity_type = "Not Applicable";
+                        $history->previous = "Not Applicable";
+                        $history->current = "Not Applicable";
+                        $history->action = 'Notification';
+                        $history->comment = "";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable";
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = "QA Final Approval";
+                        $history->stage = "";
+                        $history->action_name = "";
+                        $history->mailUserId = $userId;
+                        $history->role_name = "Initiator";
+                        $history->save();
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+
                 foreach ($list as $u) {
                     //if ($u->q_m_s_divisions_id == $deviation->division_id) {
                         $email = Helpers::getQAReviewerEmail($u->user_id);
@@ -7720,6 +8058,35 @@ class DeviationController extends Controller
                 $history->save();
 
                 $list = Helpers::getQAHeadUserList($deviation->division_id);
+
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if(!empty($users)){
+                    try {
+                        $history = new DeviationAuditTrail();
+                        $history->deviation_id = $id;
+                        $history->activity_type = "Not Applicable";
+                        $history->previous = "Not Applicable";
+                        $history->current = "Not Applicable";
+                        $history->action = 'Notification';
+                        $history->comment = "";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable";
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = " QA Initial Review";
+                        $history->stage = "";
+                        $history->action_name = "";
+                        $history->mailUserId = $userId;
+                        $history->role_name = "Initiator";
+                        $history->save();
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+
                 foreach ($list as $u) {
                     //if ($u->q_m_s_divisions_id == $deviation->division_id) {
                         $email = Helpers::getQAHeadEmail($u->user_id);
@@ -7807,6 +8174,35 @@ class DeviationController extends Controller
                 $deviation->update();
 
                 $list = Helpers::getInitiatorUserList($deviation->division_id);
+
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if(!empty($users)){
+                    try {
+                        $history = new DeviationAuditTrail();
+                        $history->deviation_id = $id;
+                        $history->activity_type = "Not Applicable";
+                        $history->previous = "Not Applicable";
+                        $history->current = "Not Applicable";
+                        $history->action = 'Notification';
+                        $history->comment = "";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable";
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = "Opened";
+                        $history->stage = "";
+                        $history->action_name = "";
+                        $history->mailUserId = $userId;
+                        $history->role_name = "Initiator";
+                        $history->save();
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+
                 foreach ($list as $u) {
                     //if ($u->q_m_s_divisions_id == $deviation->division_id) {
                         $email = Helpers::getInitiatorEmail($u->user_id);
@@ -7833,6 +8229,35 @@ class DeviationController extends Controller
                 }
 
                 $list = Helpers::getHodUserList($deviation->division_id);
+
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if(!empty($users)){
+                    try {
+                        $history = new DeviationAuditTrail();
+                        $history->deviation_id = $id;
+                        $history->activity_type = "Not Applicable";
+                        $history->previous = "Not Applicable";
+                        $history->current = "Not Applicable";
+                        $history->action = 'Notification';
+                        $history->comment = "";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable";
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = "Opened";
+                        $history->stage = "";
+                        $history->action_name = "";
+                        $history->mailUserId = $userId;
+                        $history->role_name = "Initiator";
+                        $history->save();
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+
                 foreach ($list as $u) {
                     //if ($u->q_m_s_divisions_id == $deviation->division_id) {
                         $email = Helpers::getHODEmail($u->user_id);
@@ -7859,6 +8284,35 @@ class DeviationController extends Controller
                 }
 
                 $list = Helpers::getQAUserList($deviation->division_id);
+
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if(!empty($users)){
+                    try {
+                        $history = new DeviationAuditTrail();
+                        $history->deviation_id = $id;
+                        $history->activity_type = "Not Applicable";
+                        $history->previous = "Not Applicable";
+                        $history->current = "Not Applicable";
+                        $history->action = 'Notification';
+                        $history->comment = "";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable";
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = "Opened";
+                        $history->stage = "";
+                        $history->action_name = "";
+                        $history->mailUserId = $userId;
+                        $history->role_name = "Initiator";
+                        $history->save();
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+
                 foreach ($list as $u) {
                     //if ($u->q_m_s_divisions_id == $deviation->division_id) {
                         $email = Helpers::getQAEmail($u->user_id);
@@ -7885,6 +8339,35 @@ class DeviationController extends Controller
                 }
 
                 $list = Helpers::getCFTUserList($deviation->division_id);
+
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if(!empty($users)){
+                    try {
+                        $history = new DeviationAuditTrail();
+                        $history->deviation_id = $id;
+                        $history->activity_type = "Not Applicable";
+                        $history->previous = "Not Applicable";
+                        $history->current = "Not Applicable";
+                        $history->action = 'Notification';
+                        $history->comment = "";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable";
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = "Opened";
+                        $history->stage = "";
+                        $history->action_name = "";
+                        $history->mailUserId = $userId;
+                        $history->role_name = "Initiator";
+                        $history->save();
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+
                 foreach ($list as $u) {
                     //if ($u->q_m_s_divisions_id == $deviation->division_id) {
                         $email = Helpers::getCFTEmail($u->user_id);
@@ -7911,6 +8394,34 @@ class DeviationController extends Controller
                 }
 
                 $list = Helpers::getQAHeadUserList($deviation->division_id);
+
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if(!empty($users)){
+                    try {
+                        $history = new DeviationAuditTrail();
+                        $history->deviation_id = $id;
+                        $history->activity_type = "Not Applicable";
+                        $history->previous = "Not Applicable";
+                        $history->current = "Not Applicable";
+                        $history->action = 'Notification';
+                        $history->comment = "";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable";
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = "Opened";
+                        $history->stage = "";
+                        $history->action_name = "";
+                        $history->mailUserId = $userId;
+                        $history->role_name = "Initiator";
+                        $history->save();
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
                 foreach ($list as $u) {
                     //if ($u->q_m_s_divisions_id == $deviation->division_id) {
                         $email = Helpers::getQAHeadEmail($u->user_id);
@@ -7938,6 +8449,35 @@ class DeviationController extends Controller
 
 
                 $list = Helpers::getQaReviewerList($deviation->division_id);
+
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if(!empty($users)){
+                    try {
+                        $history = new DeviationAuditTrail();
+                        $history->deviation_id = $id;
+                        $history->activity_type = "Not Applicable";
+                        $history->previous = "Not Applicable";
+                        $history->current = "Not Applicable";
+                        $history->action = 'Notification';
+                        $history->comment = "";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable";
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = "Opened";
+                        $history->stage = "";
+                        $history->action_name = "";
+                        $history->mailUserId = $userId;
+                        $history->role_name = "Initiator";
+                        $history->save();
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+
                 foreach ($list as $u) {
                     //if ($u->q_m_s_divisions_id == $deviation->division_id) {
                         $email = Helpers::getQAReviewerEmail($u->user_id);
@@ -8007,6 +8547,34 @@ class DeviationController extends Controller
                             $deviation->update();
 
                             $list = Helpers::getInitiatorUserList($deviation->division_id);
+
+                            $userIds = collect($list)->pluck('user_id')->toArray();
+                            $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                            $userId = $users->pluck('id')->implode(',');
+                            if(!empty($users)){
+                                try {
+                                    $history = new DeviationAuditTrail();
+                                    $history->deviation_id = $id;
+                                    $history->activity_type = "Not Applicable";
+                                    $history->previous = "Not Applicable";
+                                    $history->current = "Not Applicable";
+                                    $history->action = 'Notification';
+                                    $history->comment = "";
+                                    $history->user_id = Auth::user()->id;
+                                    $history->user_name = Auth::user()->name;
+                                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                    $history->origin_state = "Not Applicable";
+                                    $history->change_to = "Not Applicable";
+                                    $history->change_from = "HOD Review";
+                                    $history->stage = "";
+                                    $history->action_name = "";
+                                    $history->mailUserId = $userId;
+                                    $history->role_name = "Initiator";
+                                    $history->save();
+                                } catch (\Throwable $e) {
+                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                                }
+                            }
                             foreach ($list as $u) {
                                 //if ($u->q_m_s_divisions_id == $deviation->division_id) {
                                     $email = Helpers::getInitiatorEmail($u->user_id);
@@ -8033,6 +8601,35 @@ class DeviationController extends Controller
                             }
 
                             $list = Helpers::getHodUserList($deviation->division_id);
+
+                            $userIds = collect($list)->pluck('user_id')->toArray();
+                            $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                            $userId = $users->pluck('id')->implode(',');
+                            if(!empty($users)){
+                                try {
+                                    $history = new DeviationAuditTrail();
+                                    $history->deviation_id = $id;
+                                    $history->activity_type = "Not Applicable";
+                                    $history->previous = "Not Applicable";
+                                    $history->current = "Not Applicable";
+                                    $history->action = 'Notification';
+                                    $history->comment = "";
+                                    $history->user_id = Auth::user()->id;
+                                    $history->user_name = Auth::user()->name;
+                                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                    $history->origin_state = "Not Applicable";
+                                    $history->change_to = "Not Applicable";
+                                    $history->change_from = "HOD Review";
+                                    $history->stage = "";
+                                    $history->action_name = "";
+                                    $history->mailUserId = $userId;
+                                    $history->role_name = "Initiator";
+                                    $history->save();
+                                } catch (\Throwable $e) {
+                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                                }
+                            }
+
                             foreach ($list as $u) {
                                 //if ($u->q_m_s_divisions_id == $deviation->division_id) {
                                     $email = Helpers::getHODEmail($u->user_id);
@@ -8059,6 +8656,34 @@ class DeviationController extends Controller
                             }
 
                             $list = Helpers::getQAUserList($deviation->division_id);
+
+                            $userIds = collect($list)->pluck('user_id')->toArray();
+                            $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                            $userId = $users->pluck('id')->implode(',');
+                            if(!empty($users)){
+                                try {
+                                    $history = new DeviationAuditTrail();
+                                    $history->deviation_id = $id;
+                                    $history->activity_type = "Not Applicable";
+                                    $history->previous = "Not Applicable";
+                                    $history->current = "Not Applicable";
+                                    $history->action = 'Notification';
+                                    $history->comment = "";
+                                    $history->user_id = Auth::user()->id;
+                                    $history->user_name = Auth::user()->name;
+                                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                    $history->origin_state = "Not Applicable";
+                                    $history->change_to = "Not Applicable";
+                                    $history->change_from = "HOD Review";
+                                    $history->stage = "";
+                                    $history->action_name = "";
+                                    $history->mailUserId = $userId;
+                                    $history->role_name = "Initiator";
+                                    $history->save();
+                                } catch (\Throwable $e) {
+                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                                }
+                            }
                             foreach ($list as $u) {
                                 //if ($u->q_m_s_divisions_id == $deviation->division_id) {
                                     $email = Helpers::getQAEmail($u->user_id);
@@ -8085,6 +8710,34 @@ class DeviationController extends Controller
                             }
 
                             $list = Helpers::getCFTUserList($deviation->division_id);
+
+                            $userIds = collect($list)->pluck('user_id')->toArray();
+                            $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                            $userId = $users->pluck('id')->implode(',');
+                            if(!empty($users)){
+                                try {
+                                    $history = new DeviationAuditTrail();
+                                    $history->deviation_id = $id;
+                                    $history->activity_type = "Not Applicable";
+                                    $history->previous = "Not Applicable";
+                                    $history->current = "Not Applicable";
+                                    $history->action = 'Notification';
+                                    $history->comment = "";
+                                    $history->user_id = Auth::user()->id;
+                                    $history->user_name = Auth::user()->name;
+                                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                    $history->origin_state = "Not Applicable";
+                                    $history->change_to = "Not Applicable";
+                                    $history->change_from = "HOD Review";
+                                    $history->stage = "";
+                                    $history->action_name = "";
+                                    $history->mailUserId = $userId;
+                                    $history->role_name = "Initiator";
+                                    $history->save();
+                                } catch (\Throwable $e) {
+                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                                }
+                            }
                             foreach ($list as $u) {
                                 //if ($u->q_m_s_divisions_id == $deviation->division_id) {
                                     $email = Helpers::getCFTEmail($u->user_id);
@@ -8111,6 +8764,34 @@ class DeviationController extends Controller
                             }
 
                             $list = Helpers::getQAHeadUserList($deviation->division_id);
+
+                            $userIds = collect($list)->pluck('user_id')->toArray();
+                            $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                            $userId = $users->pluck('id')->implode(',');
+                            if(!empty($users)){
+                                try {
+                                    $history = new DeviationAuditTrail();
+                                    $history->deviation_id = $id;
+                                    $history->activity_type = "Not Applicable";
+                                    $history->previous = "Not Applicable";
+                                    $history->current = "Not Applicable";
+                                    $history->action = 'Notification';
+                                    $history->comment = "";
+                                    $history->user_id = Auth::user()->id;
+                                    $history->user_name = Auth::user()->name;
+                                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                    $history->origin_state = "Not Applicable";
+                                    $history->change_to = "Not Applicable";
+                                    $history->change_from = "HOD Review";
+                                    $history->stage = "";
+                                    $history->action_name = "";
+                                    $history->mailUserId = $userId;
+                                    $history->role_name = "Initiator";
+                                    $history->save();
+                                } catch (\Throwable $e) {
+                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                                }
+                            }
                             foreach ($list as $u) {
                                 //if ($u->q_m_s_divisions_id == $deviation->division_id) {
                                     $email = Helpers::getQAHeadEmail($u->user_id);
@@ -8546,6 +9227,35 @@ class DeviationController extends Controller
         $history->save();
 
         $list = Helpers::getInitiatorUserList($deviation->division_id);
+
+        $userIds = collect($list)->pluck('user_id')->toArray();
+        $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+        $userId = $users->pluck('id')->implode(',');
+        if(!empty($users)){
+            try {
+                $history = new DeviationAuditTrail();
+                $history->deviation_id = $id;
+                $history->activity_type = "Not Applicable";
+                $history->previous = "Not Applicable";
+                $history->current = "Not Applicable";
+                $history->action = 'Notification';
+                $history->comment = "";
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = "Not Applicable";
+                $history->change_to = "Not Applicable";
+                $history->change_from = "HOD Final Review";
+                $history->stage = "";
+                $history->action_name = "";
+                $history->mailUserId = $userId;
+                $history->role_name = "Initiator";
+                $history->save();
+            } catch (\Throwable $e) {
+                \Log::error('Mail failed to send: ' . $e->getMessage());
+            }
+        }
+
         foreach ($list as $u) {
             //if ($u->q_m_s_divisions_id == $deviation->division_id) {
                 $email = Helpers::getInitiatorEmail($u->user_id);
@@ -8614,6 +9324,34 @@ class DeviationController extends Controller
             $history->save();
 
             $list = Helpers::getQAUserList($deviation->division_id);
+
+            $userIds = collect($list)->pluck('user_id')->toArray();
+            $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+            $userId = $users->pluck('id')->implode(',');
+            if(!empty($users)){
+                try {
+                    $history = new DeviationAuditTrail();
+                    $history->deviation_id = $id;
+                    $history->activity_type = "Not Applicable";
+                    $history->previous = "Not Applicable";
+                    $history->current = "Not Applicable";
+                    $history->action = 'Notification';
+                    $history->comment = "";
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = "Not Applicable";
+                    $history->change_to = "Not Applicable";
+                    $history->change_from = "QA Final Review";
+                    $history->stage = "";
+                    $history->action_name = "";
+                    $history->mailUserId = $userId;
+                    $history->role_name = "Initiator";
+                    $history->save();
+                } catch (\Throwable $e) {
+                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                }
+            }
             foreach ($list as $u) {
                 //if ($u->q_m_s_divisions_id == $deviation->division_id) {
                     $email = Helpers::getQAEmail($u->user_id);
@@ -8682,6 +9420,34 @@ class DeviationController extends Controller
             $history->save();
 
             $list = Helpers::getInitiatorUserList($deviation->division_id);
+
+            $userIds = collect($list)->pluck('user_id')->toArray();
+            $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+            $userId = $users->pluck('id')->implode(',');
+            if(!empty($users)){
+                try {
+                    $history = new DeviationAuditTrail();
+                    $history->deviation_id = $id;
+                    $history->activity_type = "Not Applicable";
+                    $history->previous = "Not Applicable";
+                    $history->current = "Not Applicable";
+                    $history->action = 'Notification';
+                    $history->comment = "";
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = "Not Applicable";
+                    $history->change_to = "Not Applicable";
+                    $history->change_from = "QA Final Approval";
+                    $history->stage = "";
+                    $history->action_name = "";
+                    $history->mailUserId = $userId;
+                    $history->role_name = "Initiator";
+                    $history->save();
+                } catch (\Throwable $e) {
+                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                }
+            }
             foreach ($list as $u) {
                 //if ($u->q_m_s_divisions_id == $deviation->division_id) {
                     $email = Helpers::getInitiatorEmail($u->user_id);
@@ -8781,6 +9547,35 @@ class DeviationController extends Controller
         $history->save();
 
         $list = Helpers::getInitiatorUserList($deviation->division_id);
+
+        $userIds = collect($list)->pluck('user_id')->toArray();
+        $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+        $userId = $users->pluck('id')->implode(',');
+        if(!empty($users)){
+            try {
+                $history = new DeviationAuditTrail();
+                $history->deviation_id = $id;
+                $history->activity_type = "Not Applicable";
+                $history->previous = "Not Applicable";
+                $history->current = "Not Applicable";
+                $history->action = 'Notification';
+                $history->comment = "";
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = "Not Applicable";
+                $history->change_to = "Not Applicable";
+                $history->change_from = "QA Secondary Review";
+                $history->stage = "";
+                $history->action_name = "";
+                $history->mailUserId = $userId;
+                $history->role_name = "Initiator";
+                $history->save();
+            } catch (\Throwable $e) {
+                \Log::error('Mail failed to send: ' . $e->getMessage());
+            }
+        }
+
         foreach ($list as $u) {
             //if ($u->q_m_s_divisions_id == $deviation->division_id) {
                 $email = Helpers::getInitiatorEmail($u->user_id);
@@ -8850,6 +9645,35 @@ class DeviationController extends Controller
         $history->save();
 
         $list = Helpers::getInitiatorUserList($deviation->division_id);
+
+        $userIds = collect($list)->pluck('user_id')->toArray();
+        $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+        $userId = $users->pluck('id')->implode(',');
+        if(!empty($users)){
+            try {
+                $history = new DeviationAuditTrail();
+                $history->deviation_id = $id;
+                $history->activity_type = "Not Applicable";
+                $history->previous = "Not Applicable";
+                $history->current = "Not Applicable";
+                $history->action = 'Notification';
+                $history->comment = "";
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = "Not Applicable";
+                $history->change_to = "Not Applicable";
+                $history->change_from = "Pending Initiator Update";
+                $history->stage = "";
+                $history->action_name = "";
+                $history->mailUserId = $userId;
+                $history->role_name = "Initiator";
+                $history->save();
+            } catch (\Throwable $e) {
+                \Log::error('Mail failed to send: ' . $e->getMessage());
+            }
+        }
+
         foreach ($list as $u) {
             //if ($u->q_m_s_divisions_id == $deviation->division_id) {
                 $email = Helpers::getInitiatorEmail($u->user_id);
@@ -8920,6 +9744,34 @@ class DeviationController extends Controller
 
 
         $list = Helpers::getInitiatorUserList($deviation->division_id);
+
+        $userIds = collect($list)->pluck('user_id')->toArray();
+        $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+        $userId = $users->pluck('id')->implode(',');
+        if(!empty($users)){
+            try {
+                $history = new DeviationAuditTrail();
+                $history->deviation_id = $id;
+                $history->activity_type = "Not Applicable";
+                $history->previous = "Not Applicable";
+                $history->current = "Not Applicable";
+                $history->action = 'Notification';
+                $history->comment = "";
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = "Not Applicable";
+                $history->change_to = "Not Applicable";
+                $history->change_from = "HOD Final Review";
+                $history->stage = "";
+                $history->action_name = "";
+                $history->mailUserId = $userId;
+                $history->role_name = "Initiator";
+                $history->save();
+            } catch (\Throwable $e) {
+                \Log::error('Mail failed to send: ' . $e->getMessage());
+            }
+        }
         foreach ($list as $u) {
             //if ($u->q_m_s_divisions_id == $deviation->division_id) {
                 $email = Helpers::getInitiatorEmail($u->user_id);
@@ -9019,6 +9871,34 @@ class DeviationController extends Controller
 
 
         $list = Helpers::getInitiatorUserList($deviation->division_id);
+
+        $userIds = collect($list)->pluck('user_id')->toArray();
+        $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+        $userId = $users->pluck('id')->implode(',');
+        if(!empty($users)){
+            try {
+                $history = new DeviationAuditTrail();
+                $history->deviation_id = $id;
+                $history->activity_type = "Not Applicable";
+                $history->previous = "Not Applicable";
+                $history->current = "Not Applicable";
+                $history->action = 'Notification';
+                $history->comment = "";
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = "Not Applicable";
+                $history->change_to = "Not Applicable";
+                $history->change_from = "QA Final Review";
+                $history->stage = "";
+                $history->action_name = "";
+                $history->mailUserId = $userId;
+                $history->role_name = "Initiator";
+                $history->save();
+            } catch (\Throwable $e) {
+                \Log::error('Mail failed to send: ' . $e->getMessage());
+            }
+        }
         foreach ($list as $u) {
             //if ($u->q_m_s_divisions_id == $deviation->division_id) {
                 $email = Helpers::getInitiatorEmail($u->user_id);
@@ -9089,6 +9969,34 @@ class DeviationController extends Controller
 
 
         $list = Helpers::getInitiatorUserList($deviation->division_id);
+
+        $userIds = collect($list)->pluck('user_id')->toArray();
+        $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+        $userId = $users->pluck('id')->implode(',');
+        if(!empty($users)){
+            try {
+                $history = new DeviationAuditTrail();
+                $history->deviation_id = $id;
+                $history->activity_type = "Not Applicable";
+                $history->previous = "Not Applicable";
+                $history->current = "Not Applicable";
+                $history->action = 'Notification';
+                $history->comment = "";
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = "Not Applicable";
+                $history->change_to = "Not Applicable";
+                $history->change_from = "QA Final Approval";
+                $history->stage = "";
+                $history->action_name = "";
+                $history->mailUserId = $userId;
+                $history->role_name = "Initiator";
+                $history->save();
+            } catch (\Throwable $e) {
+                \Log::error('Mail failed to send: ' . $e->getMessage());
+            }
+        }
         foreach ($list as $u) {
             //if ($u->q_m_s_divisions_id == $deviation->division_id) {
                 $email = Helpers::getInitiatorEmail($u->user_id);
@@ -9183,6 +10091,35 @@ class DeviationController extends Controller
         $history->save();
 
         $list = Helpers::getHodUserList($deviation->division_id);
+
+        $userIds = collect($list)->pluck('user_id')->toArray();
+        $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+        $userId = $users->pluck('id')->implode(',');
+        if(!empty($users)){
+            try {
+                $history = new DeviationAuditTrail();
+                $history->deviation_id = $id;
+                $history->activity_type = "Not Applicable";
+                $history->previous = "Not Applicable";
+                $history->current = "Not Applicable";
+                $history->action = 'Notification';
+                $history->comment = "";
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = "Not Applicable";
+                $history->change_to = "Not Applicable";
+                $history->change_from = "QA Secondary Review";
+                $history->stage = "";
+                $history->action_name = "";
+                $history->mailUserId = $userId;
+                $history->role_name = "Initiator";
+                $history->save();
+            } catch (\Throwable $e) {
+                \Log::error('Mail failed to send: ' . $e->getMessage());
+            }
+        }
+
         foreach ($list as $u) {
             //if ($u->q_m_s_divisions_id == $deviation->division_id) {
                 $email = Helpers::getHODEmail($u->user_id);
@@ -9252,6 +10189,35 @@ class DeviationController extends Controller
         $history->save();
 
         $list = Helpers::getHodUserList($deviation->division_id);
+
+        $userIds = collect($list)->pluck('user_id')->toArray();
+        $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+        $userId = $users->pluck('id')->implode(',');
+        if(!empty($users)){
+            try {
+                $history = new DeviationAuditTrail();
+                $history->deviation_id = $id;
+                $history->activity_type = "Not Applicable";
+                $history->previous = "Not Applicable";
+                $history->current = "Not Applicable";
+                $history->action = 'Notification';
+                $history->comment = "";
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = "Not Applicable";
+                $history->change_to = "Not Applicable";
+                $history->change_from = "Pending Initiator Update";
+                $history->stage = "";
+                $history->action_name = "";
+                $history->mailUserId = $userId;
+                $history->role_name = "Initiator";
+                $history->save();
+            } catch (\Throwable $e) {
+                \Log::error('Mail failed to send: ' . $e->getMessage());
+            }
+        }
+
         foreach ($list as $u) {
             //if ($u->q_m_s_divisions_id == $deviation->division_id) {
                 $email = Helpers::getHODEmail($u->user_id);
@@ -9321,6 +10287,34 @@ class DeviationController extends Controller
 
 
         $list = Helpers::getHodUserList($deviation->division_id);
+
+        $userIds = collect($list)->pluck('user_id')->toArray();
+        $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+        $userId = $users->pluck('id')->implode(',');
+        if(!empty($users)){
+            try {
+                $history = new DeviationAuditTrail();
+                $history->deviation_id = $id;
+                $history->activity_type = "Not Applicable";
+                $history->previous = "Not Applicable";
+                $history->current = "Not Applicable";
+                $history->action = 'Notification';
+                $history->comment = "";
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = "Not Applicable";
+                $history->change_to = "Not Applicable";
+                $history->change_from = "QA Final Review";
+                $history->stage = "";
+                $history->action_name = "";
+                $history->mailUserId = $userId;
+                $history->role_name = "Initiator";
+                $history->save();
+            } catch (\Throwable $e) {
+                \Log::error('Mail failed to send: ' . $e->getMessage());
+            }
+        }
         foreach ($list as $u) {
             //if ($u->q_m_s_divisions_id == $deviation->division_id) {
                 $email = Helpers::getHODEmail($u->user_id);
@@ -9389,6 +10383,34 @@ class DeviationController extends Controller
 
 
         $list = Helpers::getHodUserList($deviation->division_id);
+
+        $userIds = collect($list)->pluck('user_id')->toArray();
+        $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+        $userId = $users->pluck('id')->implode(',');
+        if(!empty($users)){
+            try {
+                $history = new DeviationAuditTrail();
+                $history->deviation_id = $id;
+                $history->activity_type = "Not Applicable";
+                $history->previous = "Not Applicable";
+                $history->current = "Not Applicable";
+                $history->action = 'Notification';
+                $history->comment = "";
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = "Not Applicable";
+                $history->change_to = "Not Applicable";
+                $history->change_from = "QA Final Approval";
+                $history->stage = "";
+                $history->action_name = "";
+                $history->mailUserId = $userId;
+                $history->role_name = "Initiator";
+                $history->save();
+            } catch (\Throwable $e) {
+                \Log::error('Mail failed to send: ' . $e->getMessage());
+            }
+        }
         foreach ($list as $u) {
             //if ($u->q_m_s_divisions_id == $deviation->division_id) {
                 $email = Helpers::getHODEmail($u->user_id);
@@ -9485,6 +10507,34 @@ class DeviationController extends Controller
             $history->save();
 
             $list = Helpers::getQAUserList($deviation->division_id);
+
+            $userIds = collect($list)->pluck('user_id')->toArray();
+            $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+            $userId = $users->pluck('id')->implode(',');
+            if(!empty($users)){
+                try {
+                    $history = new DeviationAuditTrail();
+                    $history->deviation_id = $id;
+                    $history->activity_type = "Not Applicable";
+                    $history->previous = "Not Applicable";
+                    $history->current = "Not Applicable";
+                    $history->action = 'Notification';
+                    $history->comment = "";
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = "Not Applicable";
+                    $history->change_to = "Not Applicable";
+                    $history->change_from = "QA Secondary Review";
+                    $history->stage = "";
+                    $history->action_name = "";
+                    $history->mailUserId = $userId;
+                    $history->role_name = "Initiator";
+                    $history->save();
+                } catch (\Throwable $e) {
+                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                }
+            }
                 foreach ($list as $u) {
                     //if ($u->q_m_s_divisions_id == $deviation->division_id) {
                         $email = Helpers::getQAEmail($u->user_id);
@@ -9554,6 +10604,35 @@ class DeviationController extends Controller
             $history->save();
 
             $list = Helpers::getQAUserList($deviation->division_id);
+
+            $userIds = collect($list)->pluck('user_id')->toArray();
+            $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+            $userId = $users->pluck('id')->implode(',');
+            if(!empty($users)){
+                try {
+                    $history = new DeviationAuditTrail();
+                    $history->deviation_id = $id;
+                    $history->activity_type = "Not Applicable";
+                    $history->previous = "Not Applicable";
+                    $history->current = "Not Applicable";
+                    $history->action = 'Notification';
+                    $history->comment = "";
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = "Not Applicable";
+                    $history->change_to = "Not Applicable";
+                    $history->change_from = "Pending Initiator Update";
+                    $history->stage = "";
+                    $history->action_name = "";
+                    $history->mailUserId = $userId;
+                    $history->role_name = "Initiator";
+                    $history->save();
+                } catch (\Throwable $e) {
+                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                }
+            }
+
             foreach ($list as $u) {
                 //if ($u->q_m_s_divisions_id == $deviation->division_id) {
                     $email = Helpers::getQAEmail($u->user_id);
@@ -9624,6 +10703,35 @@ class DeviationController extends Controller
             $history->save();
 
             $list = Helpers::getQAUserList($deviation->division_id);
+
+            $userIds = collect($list)->pluck('user_id')->toArray();
+            $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+            $userId = $users->pluck('id')->implode(',');
+            if(!empty($users)){
+                try {
+                    $history = new DeviationAuditTrail();
+                    $history->deviation_id = $id;
+                    $history->activity_type = "Not Applicable";
+                    $history->previous = "Not Applicable";
+                    $history->current = "Not Applicable";
+                    $history->action = 'Notification';
+                    $history->comment = "";
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = "Not Applicable";
+                    $history->change_to = "Not Applicable";
+                    $history->change_from = "QA Final Approval";
+                    $history->stage = "";
+                    $history->action_name = "";
+                    $history->mailUserId = $userId;
+                    $history->role_name = "Initiator";
+                    $history->save();
+                } catch (\Throwable $e) {
+                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                }
+            }
+
             foreach ($list as $u) {
                 //if ($u->q_m_s_divisions_id == $deviation->division_id) {
                     $email = Helpers::getQAEmail($u->user_id);
@@ -9711,6 +10819,34 @@ class DeviationController extends Controller
                 $deviation->update();
 
                 $list = Helpers::getInitiatorUserList($deviation->division_id);
+
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if(!empty($users)){
+                    try {
+                        $history = new DeviationAuditTrail();
+                        $history->deviation_id = $id;
+                        $history->activity_type = "Not Applicable";
+                        $history->previous = "Not Applicable";
+                        $history->current = "Not Applicable";
+                        $history->action = 'Notification';
+                        $history->comment = "";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable";
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = "HOD Review";
+                        $history->stage = "";
+                        $history->action_name = "";
+                        $history->mailUserId = $userId;
+                        $history->role_name = "Initiator";
+                        $history->save();
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
                 foreach ($list as $u) {
                     //if ($u->q_m_s_divisions_id == $deviation->division_id) {
                         $email = Helpers::getInitiatorEmail($u->user_id);
@@ -9820,6 +10956,34 @@ class DeviationController extends Controller
                 $deviation->update();
 
                 $list = Helpers::getHodUserList($deviation->division_id);
+
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if(!empty($users)){
+                    try {
+                        $history = new DeviationAuditTrail();
+                        $history->deviation_id = $id;
+                        $history->activity_type = "Not Applicable";
+                        $history->previous = "Not Applicable";
+                        $history->current = "Not Applicable";
+                        $history->action = 'Notification';
+                        $history->comment = "";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable";
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = "QA Initial Review";
+                        $history->stage = "";
+                        $history->action_name = "";
+                        $history->mailUserId = $userId;
+                        $history->role_name = "Initiator";
+                        $history->save();
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
                 foreach ($list as $u) {
                     //if ($u->q_m_s_divisions_id == $deviation->division_id) {
                         $email = Helpers::getHODEmail($u->user_id);
@@ -9936,6 +11100,35 @@ class DeviationController extends Controller
                 $history->status = "More Info Required";
 
                 $list = Helpers::getQAUserList($deviation->division_id);
+
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if(!empty($users)){
+                    try {
+                        $history = new DeviationAuditTrail();
+                        $history->deviation_id = $id;
+                        $history->activity_type = "Not Applicable";
+                        $history->previous = "Not Applicable";
+                        $history->current = "Not Applicable";
+                        $history->action = 'Notification';
+                        $history->comment = "";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable";
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = "CFT Review";
+                        $history->stage = "";
+                        $history->action_name = "";
+                        $history->mailUserId = $userId;
+                        $history->role_name = "Initiator";
+                        $history->save();
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+
                 foreach ($list as $u) {
                     //if ($u->q_m_s_divisions_id == $deviation->division_id) {
                         $email = Helpers::getQAEmail($u->user_id);

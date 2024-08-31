@@ -398,7 +398,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Division Code">Site/Location Code</label>
-                                        @if ($parent_division_id)
+                                        @if (!empty($parent_division_id))
                                             <input readonly type="text" name="division_code"
                                                 value="{{ Helpers::getDivisionName($parent_division_id) }}">
                                             <input type="hidden" name="division_id" value="{{ $parent_division_id }}">
@@ -446,18 +446,18 @@
                                     </div>
                                 </div>
                                 <!-- <div class="col-md-6 new-date-data-field">
-                                                <div class="group-input input-date ">
-                                                    <label for="due-date">Due Date<span class="text-danger">*</span></label>
-                                                    <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small>
+                                                    <div class="group-input input-date ">
+                                                        <label for="due-date">Due Date<span class="text-danger">*</span></label>
+                                                        <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small>
+                                                        </div>
+                                                        <div class="calenderauditee">
+                                                            <input type="text" id="due_date" readonly
+                                                                placeholder="DD-MMM-YYYY" />
+                                                            <input type="date" name="due_date" class="hide-input"
+                                                                oninput="handleDateInput(this, 'due_date')" />
+                                                        </div>
                                                     </div>
-                                                    <div class="calenderauditee">
-                                                        <input type="text" id="due_date" readonly
-                                                            placeholder="DD-MMM-YYYY" />
-                                                        <input type="date" name="due_date" class="hide-input"
-                                                            oninput="handleDateInput(this, 'due_date')" />
-                                                    </div>
-                                                </div>
-                                            </div> -->
+                                                </div> -->
                                 @php
                                     $initiationDate = date('Y-m-d');
                                     $dueDate = date('Y-m-d', strtotime($initiationDate . '+30 days'));
@@ -1509,48 +1509,48 @@
                                     </div>
                                 </div>
                                 <!-- <div class="col-12 sub-head">
-                                                Effectiveness Check Details
-                                            </div> -->
+                                                    Effectiveness Check Details
+                                                </div> -->
                                 <!-- <div class="col-12">
-                                                <div class="group-input">
-                                                    <label for="Effectiveness Check Required">Effectiveness Check
-                                                        Required?</label>
-                                                    <select name="effect_check" onChange="setCurrentDate(this.value)">
-                                                        <option value="">Enter Your Selection Here</option>
-                                                        <option value="yes">Yes</option>
-                                                        <option value="no">No</option>
-                                                    </select>
-                                                </div>
-                                            </div> -->
-                                <!-- <div class="col-6 new-date-data-field">
-                                                <div class="group-input input-date">
-                                                    <label for="EffectCheck Creation Date">Effectiveness Check Creation Date</label>
-                                                    {{-- <input type="date" name="effect_check_date"> --}}
-                                                    <div class="calenderauditee">
-                                                        <input type="text" name="effect_check_date" id="effect_check_date" readonly
-                                                            placeholder="DD-MMM-YYYY" />
-                                                        <input type="date" name="effect_check_date" class="hide-input"
-                                                            oninput="handleDateInput(this, 'effect_check_date')" />
+                                                    <div class="group-input">
+                                                        <label for="Effectiveness Check Required">Effectiveness Check
+                                                            Required?</label>
+                                                        <select name="effect_check" onChange="setCurrentDate(this.value)">
+                                                            <option value="">Enter Your Selection Here</option>
+                                                            <option value="yes">Yes</option>
+                                                            <option value="no">No</option>
+                                                        </select>
                                                     </div>
-                                                </div>
-                                            </div> -->
+                                                </div> -->
+                                <!-- <div class="col-6 new-date-data-field">
+                                                    <div class="group-input input-date">
+                                                        <label for="EffectCheck Creation Date">Effectiveness Check Creation Date</label>
+                                                        {{-- <input type="date" name="effect_check_date"> --}}
+                                                        <div class="calenderauditee">
+                                                            <input type="text" name="effect_check_date" id="effect_check_date" readonly
+                                                                placeholder="DD-MMM-YYYY" />
+                                                            <input type="date" name="effect_check_date" class="hide-input"
+                                                                oninput="handleDateInput(this, 'effect_check_date')" />
+                                                        </div>
+                                                    </div>
+                                                </div> -->
                                 <!-- <div class="col-6">
-                                                <div class="group-input">
-                                                    <label for="Effectiveness_checker">Effectiveness Checker</label>
-                                                    <select id="select-state" placeholder="Select..." name="Effectiveness_checker">
-                                                        <option value="">Select a person</option>
-                                                        @foreach ($users as $value)
+                                                    <div class="group-input">
+                                                        <label for="Effectiveness_checker">Effectiveness Checker</label>
+                                                        <select id="select-state" placeholder="Select..." name="Effectiveness_checker">
+                                                            <option value="">Select a person</option>
+                                                            @foreach ($users as $value)
     <option value="{{ $value->id }}">{{ $value->name }}</option>
     @endforeach
-                                                    </select>
-                                                </div>
-                                            </div> -->
+                                                        </select>
+                                                    </div>
+                                                </div> -->
                                 <!-- <div class="col-12">
-                                                <div class="group-input">
-                                                    <label for="effective_check_plan">Effectiveness Check Plan</label>
-                                                    <textarea name="effective_check_plan"></textarea>
-                                                </div>
-                                            </div> -->
+                                                    <div class="group-input">
+                                                        <label for="effective_check_plan">Effectiveness Check Plan</label>
+                                                        <textarea name="effective_check_plan"></textarea>
+                                                    </div>
+                                                </div> -->
                                 <div class="col-12 sub-head">
                                     Extension Justification
                                 </div>

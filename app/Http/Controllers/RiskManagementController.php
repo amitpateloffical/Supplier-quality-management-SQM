@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Support\Facades\Log;
 
 use App\Models\ActionItem;
@@ -3491,7 +3492,35 @@ class RiskManagementController extends Controller
                 $history->save();
 
                 $list = Helpers::getHodUserList($riskAssessment->division_id);
-                //  return $list;
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if (!empty($users)) {
+                    try {
+                        $history = new RiskAuditTrail();
+                        $history->risk_id = $id;
+                        $history->activity_type = "Not Applicable";
+                        $history->previous = "Not Applicable";
+                        $history->current = "Not Applicable";
+                        $history->action = 'Notification';
+                        $history->comment = "";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable";
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = "Risk Analysis & Work Group Assignment";
+                        $history->stage = "";
+                        $history->action_name = "";
+                        $history->mailUserId = $userId;
+                        $history->role_name = "HOD/Designee";
+                        $history->save();
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+
+
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $riskAssessment->division_id){
                     $email = Helpers::getHODEmail($u->user_id);
@@ -3554,6 +3583,34 @@ class RiskManagementController extends Controller
                 $history->save();
 
                 $list = Helpers::getWorkGroupUserList($riskAssessment->division_id);
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if (!empty($users)) {
+                    try {
+                        $history = new RiskAuditTrail();
+                        $history->risk_id = $id;
+                        $history->activity_type = "Not Applicable";
+                        $history->previous = "Not Applicable";
+                        $history->current = "Not Applicable";
+                        $history->action = 'Notification';
+                        $history->comment = "";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable";
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = "Risk Processing & Action Plan";
+                        $history->stage = "";
+                        $history->action_name = "";
+                        $history->mailUserId = $userId;
+                        $history->role_name = "Work Group";
+                        $history->save();
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $riskAssessment->division_id){
                     $email = Helpers::getWorkGroupEmail($u->user_id);
@@ -3610,6 +3667,35 @@ class RiskManagementController extends Controller
                 $history->save();
 
                 $list = Helpers::getHodUserList($riskAssessment->division_id);
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if (!empty($users)) {
+                    try {
+                        $history = new RiskAuditTrail();
+                        $history->risk_id = $id;
+                        $history->activity_type = "Not Applicable";
+                        $history->previous = "Not Applicable";
+                        $history->current = "Not Applicable";
+                        $history->action = 'Notification';
+                        $history->comment = "";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable";
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = "Pending HOD Approval";
+                        $history->stage = "";
+                        $history->action_name = "";
+                        $history->mailUserId = $userId;
+                        $history->role_name = "HOD/Designee";
+                        $history->save();
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+
+
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $riskAssessment->division_id){
                     $email = Helpers::getHODEmail($u->user_id);
@@ -3670,6 +3756,35 @@ class RiskManagementController extends Controller
                 $history->save();
 
                 $list = Helpers::getQAUserList($riskAssessment->division_id);
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if (!empty($users)) {
+                    try {
+                        $history = new RiskAuditTrail();
+                        $history->risk_id = $id;
+                        $history->activity_type = "Not Applicable";
+                        $history->previous = "Not Applicable";
+                        $history->current = "Not Applicable";
+                        $history->action = 'Notification';
+                        $history->comment = "";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable";
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = "Actions Items in Progress";
+                        $history->stage = "";
+                        $history->action_name = "";
+                        $history->mailUserId = $userId;
+                        $history->role_name = "QA";
+                        $history->save();
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+
+
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $riskAssessment->division_id){
                     $email = Helpers::getQAEmail($u->user_id);
@@ -3766,6 +3881,33 @@ class RiskManagementController extends Controller
                 $history->save();
 
                 $list = Helpers::getInitiatorUserList($riskAssessment->division_id);
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if (!empty($users)) {
+                    try {
+                        $history = new RiskAuditTrail();
+                        $history->risk_id = $id;
+                        $history->activity_type = "Not Applicable";
+                        $history->previous = "Not Applicable";
+                        $history->current = "Not Applicable";
+                        $history->action = 'Notification';
+                        $history->comment = "";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable";
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = "Closed - Done";
+                        $history->stage = "";
+                        $history->action_name = "";
+                        $history->mailUserId = $userId;
+                        $history->role_name = "Initiator";
+                        $history->save();
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $riskAssessment->division_id){
                     $email = Helpers::getInitiatorEmail($u->user_id);
@@ -3788,6 +3930,33 @@ class RiskManagementController extends Controller
                 }
 
                 $list = Helpers::getHodUserList($riskAssessment->division_id);
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if (!empty($users)) {
+                    try {
+                        $history = new RiskAuditTrail();
+                        $history->risk_id = $id;
+                        $history->activity_type = "Not Applicable";
+                        $history->previous = "Not Applicable";
+                        $history->current = "Not Applicable";
+                        $history->action = 'Notification';
+                        $history->comment = "";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable";
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = "Closed - Done";
+                        $history->stage = "";
+                        $history->action_name = "";
+                        $history->mailUserId = $userId;
+                        $history->role_name = "HOD/Designee";
+                        $history->save();
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $riskAssessment->division_id){
                     $email = Helpers::getHODEmail($u->user_id);
@@ -3810,6 +3979,33 @@ class RiskManagementController extends Controller
                 }
 
                 $list = Helpers::getWorkGroupUserList($riskAssessment->division_id);
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if (!empty($users)) {
+                    try {
+                        $history = new RiskAuditTrail();
+                        $history->risk_id = $id;
+                        $history->activity_type = "Not Applicable";
+                        $history->previous = "Not Applicable";
+                        $history->current = "Not Applicable";
+                        $history->action = 'Notification';
+                        $history->comment = "";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable";
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = "Closed - Done";
+                        $history->stage = "";
+                        $history->action_name = "";
+                        $history->mailUserId = $userId;
+                        $history->role_name = "Work Group";
+                        $history->save();
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $riskAssessment->division_id){
                     $email = Helpers::getWorkGroupEmail($u->user_id);
@@ -3880,6 +4076,33 @@ class RiskManagementController extends Controller
                 $history->save();
 
                 $list = Helpers::getWorkGroupUserList($riskAssessment->division_id);
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if (!empty($users)) {
+                    try {
+                        $history = new RiskAuditTrail();
+                        $history->risk_id = $id;
+                        $history->activity_type = "Not Applicable";
+                        $history->previous = "Not Applicable";
+                        $history->current = "Not Applicable";
+                        $history->action = 'Notification';
+                        $history->comment = "";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable";
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = "Closed - Cancelled";
+                        $history->stage = "";
+                        $history->action_name = "";
+                        $history->mailUserId = $userId;
+                        $history->role_name = "Work Group";
+                        $history->save();
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $riskAssessment->division_id){
                     $email = Helpers::getWorkGroupEmail($u->user_id);
@@ -3901,6 +4124,33 @@ class RiskManagementController extends Controller
                 }
 
                 $list = Helpers::getHodUserList($riskAssessment->division_id);
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if (!empty($users)) {
+                    try {
+                        $history = new RiskAuditTrail();
+                        $history->risk_id = $id;
+                        $history->activity_type = "Not Applicable";
+                        $history->previous = "Not Applicable";
+                        $history->current = "Not Applicable";
+                        $history->action = 'Notification';
+                        $history->comment = "";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable";
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = "Closed - Cancelled";
+                        $history->stage = "";
+                        $history->action_name = "";
+                        $history->mailUserId = $userId;
+                        $history->role_name = "HOD/Designee";
+                        $history->save();
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $riskAssessment->division_id){
                     $email = Helpers::getHODEmail($u->user_id);
@@ -3923,6 +4173,33 @@ class RiskManagementController extends Controller
                 }
 
                 $list = Helpers::getQAUserList($riskAssessment->division_id);
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if (!empty($users)) {
+                    try {
+                        $history = new RiskAuditTrail();
+                        $history->risk_id = $id;
+                        $history->activity_type = "Not Applicable";
+                        $history->previous = "Not Applicable";
+                        $history->current = "Not Applicable";
+                        $history->action = 'Notification';
+                        $history->comment = "";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable";
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = "Closed - Cancelled";
+                        $history->stage = "";
+                        $history->action_name = "";
+                        $history->mailUserId = $userId;
+                        $history->role_name = "QA";
+                        $history->save();
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $riskAssessment->division_id){
                     $email = Helpers::getQAEmail($u->user_id);
@@ -3981,6 +4258,33 @@ class RiskManagementController extends Controller
                 $history->save();
 
                 $list = Helpers::getWorkGroupUserList($riskAssessment->division_id);
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if (!empty($users)) {
+                    try {
+                        $history = new RiskAuditTrail();
+                        $history->risk_id = $id;
+                        $history->activity_type = "Not Applicable";
+                        $history->previous = "Not Applicable";
+                        $history->current = "Not Applicable";
+                        $history->action = 'Notification';
+                        $history->comment = "";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable";
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = "Closed - Cancelled";
+                        $history->stage = "";
+                        $history->action_name = "";
+                        $history->mailUserId = $userId;
+                        $history->role_name = "Work Group";
+                        $history->save();
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $riskAssessment->division_id){
                     $email = Helpers::getWorkGroupEmail($u->user_id);
@@ -4002,6 +4306,33 @@ class RiskManagementController extends Controller
                 }
 
                 $list = Helpers::getHodUserList($riskAssessment->division_id);
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if (!empty($users)) {
+                    try {
+                        $history = new RiskAuditTrail();
+                        $history->risk_id = $id;
+                        $history->activity_type = "Not Applicable";
+                        $history->previous = "Not Applicable";
+                        $history->current = "Not Applicable";
+                        $history->action = 'Notification';
+                        $history->comment = "";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable";
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = "Closed - Cancelled";
+                        $history->stage = "";
+                        $history->action_name = "";
+                        $history->mailUserId = $userId;
+                        $history->role_name = "HOD/Designee";
+                        $history->save();
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $riskAssessment->division_id){
                     $email = Helpers::getHODEmail($u->user_id);
@@ -4024,6 +4355,33 @@ class RiskManagementController extends Controller
                 }
 
                 $list = Helpers::getQAUserList($riskAssessment->division_id);
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if (!empty($users)) {
+                    try {
+                        $history = new RiskAuditTrail();
+                        $history->risk_id = $id;
+                        $history->activity_type = "Not Applicable";
+                        $history->previous = "Not Applicable";
+                        $history->current = "Not Applicable";
+                        $history->action = 'Notification';
+                        $history->comment = "";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable";
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = "Closed - Cancelled";
+                        $history->stage = "";
+                        $history->action_name = "";
+                        $history->mailUserId = $userId;
+                        $history->role_name = "QA";
+                        $history->save();
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $riskAssessment->division_id){
                     $email = Helpers::getQAEmail($u->user_id);
@@ -4094,6 +4452,33 @@ class RiskManagementController extends Controller
                 $history->save();
 
                 $list = Helpers::getInitiatorUserList($riskAssessment->division_id);
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if (!empty($users)) {
+                    try {
+                        $history = new RiskAuditTrail();
+                        $history->risk_id = $id;
+                        $history->activity_type = "Not Applicable";
+                        $history->previous = "Not Applicable";
+                        $history->current = "Not Applicable";
+                        $history->action = 'Notification';
+                        $history->comment = "";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable";
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = "Opened";
+                        $history->stage = "";
+                        $history->action_name = "";
+                        $history->mailUserId = $userId;
+                        $history->role_name = "Initiator";
+                        $history->save();
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
                 //  return $list;
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $riskAssessment->division_id){
@@ -4153,6 +4538,33 @@ class RiskManagementController extends Controller
                 $history->save();
 
                 $list = Helpers::getHodUserList($riskAssessment->division_id);
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if (!empty($users)) {
+                    try {
+                        $history = new RiskAuditTrail();
+                        $history->risk_id = $id;
+                        $history->activity_type = "Not Applicable";
+                        $history->previous = "Not Applicable";
+                        $history->current = "Not Applicable";
+                        $history->action = 'Notification';
+                        $history->comment = "";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable";
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = "Risk Analysis & Work Group Assignment";
+                        $history->stage = "";
+                        $history->action_name = "";
+                        $history->mailUserId = $userId;
+                        $history->role_name = "HOD/Designee";
+                        $history->save();
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
                 //  return $list;
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $riskAssessment->division_id){
@@ -4211,6 +4623,33 @@ class RiskManagementController extends Controller
                 $history->save();
 
                 $list = Helpers::getWorkGroupUserList($riskAssessment->division_id);
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if (!empty($users)) {
+                    try {
+                        $history = new RiskAuditTrail();
+                        $history->risk_id = $id;
+                        $history->activity_type = "Not Applicable";
+                        $history->previous = "Not Applicable";
+                        $history->current = "Not Applicable";
+                        $history->action = 'Notification';
+                        $history->comment = "";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable";
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = "Risk Processing & Action Plan";
+                        $history->stage = "";
+                        $history->action_name = "";
+                        $history->mailUserId = $userId;
+                        $history->role_name = "Work Group";
+                        $history->save();
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
                 //  return $list;
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $riskAssessment->division_id){
@@ -4269,6 +4708,33 @@ class RiskManagementController extends Controller
                 $history->save();
 
                 $list = Helpers::getHodUserList($riskAssessment->division_id);
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if (!empty($users)) {
+                    try {
+                        $history = new RiskAuditTrail();
+                        $history->risk_id = $id;
+                        $history->activity_type = "Not Applicable";
+                        $history->previous = "Not Applicable";
+                        $history->current = "Not Applicable";
+                        $history->action = 'Notification';
+                        $history->comment = "";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable";
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = "Pending HOD Approval";
+                        $history->stage = "";
+                        $history->action_name = "";
+                        $history->mailUserId = $userId;
+                        $history->role_name = "HOD/Designee";
+                        $history->save();
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
                 //  return $list;
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $riskAssessment->division_id){

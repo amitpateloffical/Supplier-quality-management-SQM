@@ -1139,6 +1139,33 @@ class EffectivenessCheckController extends Controller
 
 
                 $list = Helpers::getSupervisorUserList($effectiveness->division_id);
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if (!empty($users)) {
+                    try {
+                        $history = new EffectivenessCheckAuditTrail();
+                        $history->effectiveness_check_id = $id;
+                        $history->activity_type = "Not Applicable";
+                        $history->previous = "Not Applicable";
+                        $history->current = "Not Applicable";
+                        $history->action = 'Notification';
+                        $history->comment = "";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable";
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = "Pending Effectiveness Check";
+                        $history->stage = "";
+                        $history->action_name = "";
+                        $history->mailUserId = $userId;
+                        $history->role_name = "Supervisor";
+                        $history->save();
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $effectiveness->division_id){
                     $email = Helpers::getSupervisorEmail($u->user_id);
@@ -1222,6 +1249,33 @@ class EffectivenessCheckController extends Controller
                 $history->save();
 
                 $list = Helpers::getQAUserList($effectiveness->division_id);
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if (!empty($users)) {
+                    try {
+                        $history = new EffectivenessCheckAuditTrail();
+                        $history->effectiveness_check_id = $id;
+                        $history->activity_type = "Not Applicable";
+                        $history->previous = "Not Applicable";
+                        $history->current = "Not Applicable";
+                        $history->action = 'Notification';
+                        $history->comment = "";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable";
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = "QA Approval-Effective";
+                        $history->stage = "";
+                        $history->action_name = "";
+                        $history->mailUserId = $userId;
+                        $history->role_name = "QA";
+                        $history->save();
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $effectiveness->division_id){
                     $email = Helpers::getQAEmail($u->user_id);
@@ -1290,6 +1344,33 @@ class EffectivenessCheckController extends Controller
                 $history->save();
 
                 $list = Helpers::getSupervisorUserList($effectiveness->division_id);
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if (!empty($users)) {
+                    try {
+                        $history = new EffectivenessCheckAuditTrail();
+                        $history->effectiveness_check_id = $id;
+                        $history->activity_type = "Not Applicable";
+                        $history->previous = "Not Applicable";
+                        $history->current = "Not Applicable";
+                        $history->action = 'Notification';
+                        $history->comment = "";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable";
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = "Closed  Effective";
+                        $history->stage = "";
+                        $history->action_name = "";
+                        $history->mailUserId = $userId;
+                        $history->role_name = "Supervisor";
+                        $history->save();
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $effectiveness->division_id){
                     $email = Helpers::getSupervisorEmail($u->user_id);
@@ -1310,6 +1391,33 @@ class EffectivenessCheckController extends Controller
                 }
 
                 $list = Helpers::getInitiatorUserList($effectiveness->division_id);
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if (!empty($users)) {
+                    try {
+                        $history = new EffectivenessCheckAuditTrail();
+                        $history->effectiveness_check_id = $id;
+                        $history->activity_type = "Not Applicable";
+                        $history->previous = "Not Applicable";
+                        $history->current = "Not Applicable";
+                        $history->action = 'Notification';
+                        $history->comment = "";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable";
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = "Closed  Effective";
+                        $history->stage = "";
+                        $history->action_name = "";
+                        $history->mailUserId = $userId;
+                        $history->role_name = "Initiator";
+                        $history->save();
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $effectiveness->division_id){
                     $email = Helpers::getInitiatorEmail($u->user_id);
@@ -1392,6 +1500,33 @@ class EffectivenessCheckController extends Controller
                 $history->save();
 
                 $list = Helpers::getQAUserList($effectiveness->division_id);
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if (!empty($users)) {
+                    try {
+                        $history = new EffectivenessCheckAuditTrail();
+                        $history->effectiveness_check_id = $id;
+                        $history->activity_type = "Not Applicable";
+                        $history->previous = "Not Applicable";
+                        $history->current = "Not Applicable";
+                        $history->action = 'Notification';
+                        $history->comment = "";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable";
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = "QA Approval-Not Effective";
+                        $history->stage = "";
+                        $history->action_name = "";
+                        $history->mailUserId = $userId;
+                        $history->role_name = "QA";
+                        $history->save();
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $effectiveness->division_id){
                     $email = Helpers::getQAEmail($u->user_id);
@@ -1461,6 +1596,33 @@ class EffectivenessCheckController extends Controller
                 $history->save();
 
                 $list = Helpers::getSupervisorUserList($effectiveness->division_id);
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if (!empty($users)) {
+                    try {
+                        $history = new EffectivenessCheckAuditTrail();
+                        $history->effectiveness_check_id = $id;
+                        $history->activity_type = "Not Applicable";
+                        $history->previous = "Not Applicable";
+                        $history->current = "Not Applicable";
+                        $history->action = 'Notification';
+                        $history->comment = "";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable";
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = "Closed - Not Effective";
+                        $history->stage = "";
+                        $history->action_name = "";
+                        $history->mailUserId = $userId;
+                        $history->role_name = "Supervisor";
+                        $history->save();
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $effectiveness->division_id){
                     $email = Helpers::getSupervisorEmail($u->user_id);
@@ -1481,6 +1643,33 @@ class EffectivenessCheckController extends Controller
                 }
 
                 $list = Helpers::getInitiatorUserList($effectiveness->division_id);
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if (!empty($users)) {
+                    try {
+                        $history = new EffectivenessCheckAuditTrail();
+                        $history->effectiveness_check_id = $id;
+                        $history->activity_type = "Not Applicable";
+                        $history->previous = "Not Applicable";
+                        $history->current = "Not Applicable";
+                        $history->action = 'Notification';
+                        $history->comment = "";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable";
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = "Closed - Not Effective";
+                        $history->stage = "";
+                        $history->action_name = "";
+                        $history->mailUserId = $userId;
+                        $history->role_name = "Initiator";
+                        $history->save();
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $effectiveness->division_id){
                     $email = Helpers::getInitiatorEmail($u->user_id);
@@ -1562,6 +1751,33 @@ class EffectivenessCheckController extends Controller
                 $history->save();
 
                 $list = Helpers::getSupervisorUserList($effectiveness->division_id);
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if (!empty($users)) {
+                    try {
+                        $history = new EffectivenessCheckAuditTrail();
+                        $history->effectiveness_check_id = $id;
+                        $history->activity_type = "Not Applicable";
+                        $history->previous = "Not Applicable";
+                        $history->current = "Not Applicable";
+                        $history->action = 'Notification';
+                        $history->comment = "";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable";
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = "Pending Effectiveness Check";
+                        $history->stage = "";
+                        $history->action_name = "";
+                        $history->mailUserId = $userId;
+                        $history->role_name = "Supervisor";
+                        $history->save();
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $effectiveness->division_id){
                     $email = Helpers::getSupervisorEmail($u->user_id);
@@ -1633,6 +1849,33 @@ class EffectivenessCheckController extends Controller
                 $history->save();
 
                 $list = Helpers::getSupervisorUserList($effectiveness->division_id);
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if (!empty($users)) {
+                    try {
+                        $history = new EffectivenessCheckAuditTrail();
+                        $history->effectiveness_check_id = $id;
+                        $history->activity_type = "Not Applicable";
+                        $history->previous = "Not Applicable";
+                        $history->current = "Not Applicable";
+                        $history->action = 'Notification';
+                        $history->comment = "";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable";
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = "Pending Effectiveness Check";
+                        $history->stage = "";
+                        $history->action_name = "";
+                        $history->mailUserId = $userId;
+                        $history->role_name = "Supervisor";
+                        $history->save();
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $effectiveness->division_id){
                     $email = Helpers::getSupervisorEmail($u->user_id);

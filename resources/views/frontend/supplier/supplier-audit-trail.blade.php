@@ -404,7 +404,7 @@
                                 <div>
                                     <strong> Action Name :</strong>
                                     @if($dataDemo->action == "Notification")
-                                        <a href="{{ route('notification-detail', $dataDemo->id) }}" target = "_blank">{{ $dataDemo->action ? $dataDemo->action : 'Not Applicable' }}<a>
+                                        <a href="{{ route('notification-detail', ['slug' => 'Supplier', 'id' => $dataDemo->id]) }}" target = "_blank">{{ $dataDemo->action ? $dataDemo->action : 'Not Applicable' }}<a>
                                     @else
                                         {{ $dataDemo->action ? $dataDemo->action : 'Not Applicable' }}  
                                     @endif

@@ -8011,15 +8011,180 @@ class SupplierController extends Controller
 
     }
 
-    public function notificationDetail($id){
-        $notification = SupplierAuditTrail::find($id);
-        if($notification){
-            $supplierId = $notification->supplier_id;
-            $supplierData = Supplier::where('id', $supplierId)->first();
+    public function notificationDetail($slug, $id){
+        switch ($slug) {
+            case 'Supplier':
+                $notification = SupplierAuditTrail::find($id);
+                if($notification){
+                    $supplierId = $notification->supplier_id;
+                    $parentData = Supplier::where('id', $supplierId)->first();
+        
+                    $userId = explode(',', $notification->mailUserId);
+                    $getName = User::whereIn('id', $userId)->get(['name', 'email']);
+                    return view('frontend.supplier.notification_detail', compact('notification', 'getName', 'parentData'));
+                }
+                break;
+                
+                
+            case 'SupplierSite':
+                $notification = SupplierSiteAuditTrail::find($id);
+                if($notification){
+                    $supplierSiteId = $notification->supplier_site_id;
+                    $parentData = SupplierSite::where('id', $supplierSiteId)->first();
+        
+                    $userId = explode(',', $notification->mailUserId);
+                    $getName = User::whereIn('id', $userId)->get(['name', 'email']);
+                    return view('frontend.supplier.notification_detail', compact('notification', 'getName', 'parentData'));
+                }
+                break;
+                   
+                
+            case 'SupplierAudit':
+                $notification = ExternalAuditTrailSupplier::find($id);
+                if($notification){
+                    $supplierAuditId = $notification->audit_id;
+                    $parentData = SupplierAudit::where('id', $supplierAuditId)->first();
+        
+                    $userId = explode(',', $notification->mailUserId);
+                    $getName = User::whereIn('id', $userId)->get(['name', 'email']);
+                    return view('frontend.supplier.notification_detail', compact('notification', 'getName', 'parentData'));
+                }
+                break;
+                   
+                
+            case 'RiskAssessment':
+                $notification = RiskManagement::find($id);
+                if($notification){
+                    $riskAssessmentId = $notification->audit_id;
+                    $parentData = SupplierSite::where('id', $risk_id)->first();
+        
+                    $userId = explode(',', $notification->mailUserId);
+                    $getName = User::whereIn('id', $userId)->get(['name', 'email']);
+                    return view('frontend.supplier.notification_detail', compact('notification', 'getName', 'parentData'));
+                }
+                break;
+                   
+                
+            case 'ChangeControl':
+                $notification = RcmDocHistory::find($id);
+                if($notification){
+                    $changeControlId = $notification->cc_id;
+                    $parentData = CC::where('id', $changeControlId)->first();
+        
+                    $userId = explode(',', $notification->mailUserId);
+                    $getName = User::whereIn('id', $userId)->get(['name', 'email']);
+                    return view('frontend.supplier.notification_detail', compact('notification', 'getName', 'parentData'));
+                }
+                break;
+                   
+                
+            case 'CAPA':
+                $notification = CapaAuditTrial::find($id);
+                if($notification){
+                    $CapaId = $notification->capa_id;
+                    $parentData = Capa::where('id', $CapaId)->first();
+        
+                    $userId = explode(',', $notification->mailUserId);
+                    $getName = User::whereIn('id', $userId)->get(['name', 'email']);
+                    return view('frontend.supplier.notification_detail', compact('notification', 'getName', 'parentData'));
+                }
+                break;
+                   
+                
+            case 'Observation':
+                $notification = AuditTrialObservation::find($id);
+                if($notification){
+                    $observationId = $notification->Observation_id;
+                    $parentData = Observation::where('id', $observationId)->first();
+        
+                    $userId = explode(',', $notification->mailUserId);
+                    $getName = User::whereIn('id', $userId)->get(['name', 'email']);
+                    return view('frontend.supplier.notification_detail', compact('notification', 'getName', 'parentData'));
+                }
+                break;
+                   
+                
+            case 'Deviation':
+                $notification = DeviationAuditTrail::find($id);
+                if($notification){
+                    $deviationId = $notification->deviation_id;
+                    $parentData = Deviation::where('id', $deviationId)->first();
+        
+                    $userId = explode(',', $notification->mailUserId);
+                    $getName = User::whereIn('id', $userId)->get(['name', 'email']);
+                    return view('frontend.supplier.notification_detail', compact('notification', 'getName', 'parentData'));
+                }
+                break;
+                   
+                
+            case 'ActionItem':
+                $notification = ActionItemHistory::find($id);
+                if($notification){
+                    $actionItemId = $notification->cc_id;
+                    $parentData = ActionItem::where('id', $actionItemId)->first();
+        
+                    $userId = explode(',', $notification->mailUserId);
+                    $getName = User::whereIn('id', $userId)->get(['name', 'email']);
+                    return view('frontend.supplier.notification_detail', compact('notification', 'getName', 'parentData'));
+                }
+                break;
+                   
+                
+            case 'Extension':
+                $notification = ExtensionAuditTrail::find($id);
+                if($notification){
+                    $extensionId = $notification->extension_id;
+                    $parentData = SupplierSite::where('id', $extensionId)->first();
+        
+                    $userId = explode(',', $notification->mailUserId);
+                    $getName = User::whereIn('id', $userId)->get(['name', 'email']);
+                    return view('frontend.supplier.notification_detail', compact('notification', 'getName', 'parentData'));
+                }
+                break;
+                   
+                
+            case 'EffectivenessCheck':
+                $notification = EffectivenessCheckAuditTrail::find($id);
+                if($notification){
+                    $effectivenessCheckId = $notification->effectiveness_check_id;
+                    $parentData = EffectivenessCheck::where('id', $effectivenessCheckId)->first();
+        
+                    $userId = explode(',', $notification->mailUserId);
+                    $getName = User::whereIn('id', $userId)->get(['name', 'email']);
+                    return view('frontend.supplier.notification_detail', compact('notification', 'getName', 'parentData'));
+                }
+                break;
+                   
+                
+            case 'SCAR':
+                $notification = ScarAuditTrail::find($id);
+                if($notification){
+                    $ScarId = $notification->scar_id;
+                    $parentData = SCAR::where('id', $ScarId)->first();
+        
+                    $userId = explode(',', $notification->mailUserId);
+                    $getName = User::whereIn('id', $userId)->get(['name', 'email']);
+                    return view('frontend.supplier.notification_detail', compact('notification', 'getName', 'parentData'));
+                }
+                break;
+                   
+                
+            case 'RCA':
+                $notification = RootAuditTrial::find($id);
+                if($notification){
+                    $rootCauseId = $notification->root_id;
+                    $parentData = RootCauseAnalysis::where('id', $rootCauseId)->first();
+        
+                    $userId = explode(',', $notification->mailUserId);
+                    $getName = User::whereIn('id', $userId)->get(['name', 'email']);
+                    return view('frontend.supplier.notification_detail', compact('notification', 'getName', 'parentData'));
+                }
+                break;
+            
 
-            $userId = explode(',', $notification->mailUserId);
-            $getName = User::whereIn('id', $userId)->get(['name', 'email']);
-            return view('frontend.supplier.notification_detail', compact('notification', 'getName', 'supplierData'));
+            default:
+                return $slug;
+                break;
         }
     }
 }

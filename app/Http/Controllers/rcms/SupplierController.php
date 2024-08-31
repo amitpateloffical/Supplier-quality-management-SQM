@@ -6005,7 +6005,35 @@ class SupplierController extends Controller
                     }
                     $history->save();
 
-                    $list = Helpers::getInitiatorUserList($supplier->division_id);             
+                    $list = Helpers::getInitiatorUserList($supplier->division_id);
+                    $userIds = collect($list)->pluck('user_id')->toArray();
+                    $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                    $userId = $users->pluck('id')->implode(',');
+                    if(!empty($users)){
+                        try {
+                            $history = new SupplierAuditTrail();
+                            $history->supplier_id = $id;
+                            $history->activity_type = "Not Applicable";
+                            $history->previous = "Not Applicable";
+                            $history->current = "Not Applicable";
+                            $history->action = 'Notification';
+                            $history->comment = "";
+                            $history->user_id = Auth::user()->id;
+                            $history->user_name = Auth::user()->name;
+                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->origin_state = "Not Applicable";
+                            $history->change_to = "Not Applicable";
+                            $history->change_from = "Pending Initiating Department Update";
+                            $history->stage = "";
+                            $history->action_name = "";
+                            $history->mailUserId = $userId;
+                            $history->role_name = "Initiator";
+                            $history->save(); 
+                        } catch (\Throwable $e) {
+                            \Log::error('Mail failed to send: ' . $e->getMessage());
+                        }
+                    }
+
                     foreach ($list as $u) {
                         $email = Helpers::getInitiatorEmail($u->user_id);
                             if ($email) {
@@ -7981,5 +8009,17 @@ class SupplierController extends Controller
             return view('frontend.scar.scar_new', compact('record_number','supplierName','supplierProduct','distributionSites', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','pre','old_record','old_record'));
         }
 
+    }
+
+    public function notificationDetail($id){
+        $notification = SupplierAuditTrail::find($id);
+        if($notification){
+            $supplierId = $notification->supplier_id;
+            $supplierData = Supplier::where('id', $supplierId)->first();
+
+            $userId = explode(',', $notification->mailUserId);
+            $getName = User::whereIn('id', $userId)->get(['name', 'email']);
+            return view('frontend.supplier.notification_detail', compact('notification', 'getName', 'supplierData'));
+        }
     }
 }

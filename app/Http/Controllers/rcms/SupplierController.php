@@ -6005,11 +6005,10 @@ class SupplierController extends Controller
                     }
                     $history->save();
 
-                    $list = Helpers::getInitiatorUserList($supplier->division_id);
+                    $list = Helpers::getInitiatorUserList($supplier->division_id);             
                     foreach ($list as $u) {
-                        // if($u->q_m_s_divisions_id == $supplier->division_id){
-                            $email = Helpers::getInitiatorEmail($u->user_id);
-                            if (!empty($email)) {
+                        $email = Helpers::getInitiatorEmail($u->user_id);
+                            if ($email) {
                                 try {
                                     Mail::send(
                                         'mail.view-mail',
@@ -6023,7 +6022,6 @@ class SupplierController extends Controller
                                     \Log::error('Mail failed to send: ' . $e->getMessage());
                                 }
                             }
-                        // }
                     }
 
                     $supplier->update();

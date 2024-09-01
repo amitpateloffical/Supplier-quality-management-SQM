@@ -27,16 +27,16 @@
         }
 
         /* .sub-head {
-            margin-left: 280px;
-            margin-right: 280px;
-            color: #4274da;
-            border-bottom: 2px solid #4274da;
-            padding-bottom: 5px;
-            margin-bottom: 20px;
-            font-weight: bold;
-            font-size: 1.2rem;
+                    margin-left: 280px;
+                    margin-right: 280px;
+                    color: #4274da;
+                    border-bottom: 2px solid #4274da;
+                    padding-bottom: 5px;
+                    margin-bottom: 20px;
+                    font-weight: bold;
+                    font-size: 1.2rem;
 
-        } */
+                } */
 
         .create-entity {
             background: #323c50;
@@ -70,8 +70,8 @@
         }
 
         /* .modal-header{
-            background: gainsboro !important;
-        } */
+                    background: gainsboro !important;
+                } */
         .main_head_modal li {
             margin-bottom: 10px;
         }
@@ -115,10 +115,10 @@
         }
 
         /* .saveButton:disabled{
-                background: black!important;
-                border:  black!important;
+                        background: black!important;
+                        border:  black!important;
 
-            } */
+                    } */
     </style>
     <style>
         #start-record-btn {
@@ -127,14 +127,19 @@
             outline: none;
             cursor: pointer;
         }
+
         #start-record-btn i {
-            color: black; /* Set the color of the icon */
-            box-shadow: none; /* Remove shadow */
+            color: black;
+            /* Set the color of the icon */
+            box-shadow: none;
+            /* Remove shadow */
         }
+
         #start-record-btn:focus,
         #start-record-btn:hover,
         #start-record-btn:active {
-            box-shadow: none; /* Remove shadow on hover/focus/active */
+            box-shadow: none;
+            /* Remove shadow on hover/focus/active */
         }
     </style>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
@@ -562,11 +567,11 @@
 
         <div class="division-bar">
             <strong>Site Division/Project</strong>:
-                @if(!empty($parent_division_id))
+            @if (!empty($parent_division_id))
                 {{ Helpers::getDivisionName($parent_division_id) }}/Deviation
-                @else
+            @else
                 {{ Helpers::getDivisionName(session()->get('division')) }}/Deviation
-                @endif
+            @endif
         </div>
     </div>
 
@@ -587,11 +592,10 @@
                 <button class="cctablinks " onclick="openCity(event, 'CCForm7')">CFT</button>
                 <button class="cctablinks " id="Investigation_button" style="display: none"
                     onclick="openCity(event, 'CCForm9')">Investigation</button>
-               <button id="QRM_button" class="cctablinks"
-                    onclick="openCity(event, 'CCForm115')">QA Secondary Review</button>
+                <button id="QRM_button" class="cctablinks" onclick="openCity(event, 'CCForm115')">QA Secondary
+                    Review</button>
 
-                <button id="CAPA_button" class="cctablinks"
-                    onclick="openCity(event, 'CCForm105')">Initiator Update</button>
+                <button id="CAPA_button" class="cctablinks" onclick="openCity(event, 'CCForm105')">Initiator Update</button>
                 {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Investigation & CAPA</button> --}}
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">HOD Final Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm13')">QA Final Review</button>
@@ -601,7 +605,8 @@
 
                 <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
             </div>
-            <form id="auditform" action="{{ route('deviationstore') }}" method="post" enctype="multipart/form-data" class="formSubmit">
+            <form id="auditform" action="{{ route('deviationstore') }}" method="post" enctype="multipart/form-data"
+                class="formSubmit">
                 @csrf
                 <input type="hidden" name="form_name" id="formNameField" value="">
                 <div id="step-form">
@@ -634,14 +639,15 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Division Code"><b>Site/Location Code</b></label>
-                                        @if(!empty($parent_division_id))
+                                        @if (!empty($parent_division_id))
                                             <input disabled type="text" name="division_code"
                                                 value="{{ Helpers::getDivisionName($parent_division_id) }}">
                                             <input type="hidden" name="division_id" value="{{ $parent_division_id }}">
                                         @else
                                             <input disabled type="text" name="division_code"
                                                 value="{{ Helpers::getDivisionName(session()->get('division')) }}">
-                                            <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
+                                            <input type="hidden" name="division_id"
+                                                value="{{ session()->get('division') }}">
                                         @endif
                                     </div>
                                 </div>
@@ -673,10 +679,10 @@
                                         <label for="Due Date">Due Date</label>
                                         <div><small class="text-primary">If revising Due Date, kindly mention revision
                                                 reason in "Due Date Extension Justification" data field.</small></div>
-                                                <div class="calenderauditee">
-                                                    <input type="text" name="due_date" readonly value="{{$dueDate}}" />
-                                                    <!-- <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('d-M-Y') }}" class="hide-input" oninput="handleDateInput(this, 'due_date')" /> -->
-                                                </div>
+                                        <div class="calenderauditee">
+                                            <input type="text" name="due_date" readonly value="{{ $dueDate }}" />
+                                            <!-- <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('d-M-Y') }}" class="hide-input" oninput="handleDateInput(this, 'due_date')" /> -->
+                                        </div>
                                     </div>
                                 </div>
 
@@ -723,7 +729,8 @@
                                                     var dueDateFormatted = `${formattedDay}/${formattedMonth}/${formattedYear}`;
 
                                                     document.getElementById('due_date_display').value = dueDateFormatted;
-                                                    document.getElementById('due_date').value = `${formattedYear}-${formattedMonth}-${formattedDay}`;
+                                                    document.getElementById('due_date').value =
+                                                        `${formattedYear}-${formattedMonth}-${formattedDay}`;
                                                 }
                                             }
                                         }
@@ -793,24 +800,26 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Short Description">Short Description<span
-                                            class="text-danger">*</span></label><span id="rchars">255</span> characters remaining
+                                                class="text-danger">*</span></label><span id="rchars">255</span>
+                                        characters remaining
                                         <div class="relative-container">
-                                                <input id="docname" type="text" name="short_description" maxlength="255" class="mic-input" required>
+                                            <input id="docname" type="text" name="short_description"
+                                                maxlength="255" class="mic-input" required>
 
                                             @component('frontend.forms.language-model')
                                             @endcomponent
                                         </div>
-                                    {{--<div style="position:relative;">
+                                        {{-- <div style="position:relative;">
                                     <input id="docname" type="text" name="short_description" maxlength="255" class="mic-input" required>
                                     <button class="mic-btn" type="button" style="position: absolute; right: 45px; top: 51%; transform: translateY(-50%);">
                                         <i class="fas fa-microphone"></i>
                                     </button>
-                                </div>--}}
-                            </div>
-                                @error('short_description')
-                                    <div class="text-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
+                                </div> --}}
+                                    </div>
+                                    @error('short_description')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
 
 
 
@@ -837,7 +846,8 @@
                                 <div class="col-lg-6 new-time-data-field">
                                     <div class="group-input input-time">
                                         <label for="deviation_time">Deviation Observed On (Time)</label>
-                                        <input type="text" name="deviation_time" id="deviation_time" placeholder="Enter Deviation Observed On Time">
+                                        <input type="text" name="deviation_time" id="deviation_time"
+                                            placeholder="Enter Deviation Observed On Time">
                                     </div>
                                     @error('Deviation_date')
                                         <div class="text-danger">{{ $message }}</div>
@@ -854,12 +864,12 @@
                                             @component('frontend.forms.language-model')
                                             @endcomponent
                                         </div>
-                                        {{--<div style="position:relative;">
+                                        {{-- <div style="position:relative;">
                                             <textarea id="Delay_Justification" name="Delay_Justification" class="mic-input"></textarea>
                                             <button class="mic-btn" type="button" style="position: absolute; right: 15px; top: 51%; transform: translateY(-50%);">
                                                 <i class="fas fa-microphone"></i>
                                             </button>
-                                        </div>--}}
+                                        </div> --}}
                                     </div>
                                     {{-- @error('Deviation_date')
                                         <div class="text-danger">{{ $message }}</div>
@@ -880,18 +890,19 @@
                                     <div class="group-input">
                                         <label for="facility">Deviation Observed By</label>
                                         <div class="relative-container">
-                                            <input id="deviation_observed_by" name="Facility" maxlength="255" class="mic-input" placeholder="Enter Facility Name">
+                                            <input id="deviation_observed_by" name="Facility" maxlength="255"
+                                                class="mic-input" placeholder="Enter Facility Name">
 
                                             @component('frontend.forms.language-model')
                                             @endcomponent
                                         </div>
 
-                                        {{--<div style="position:relative;">
+                                        {{-- <div style="position:relative;">
                                             <input type="text" name="Facility" id="deviation_observed_by" placeholder="Enter Facility Name" class="mic-input">
                                             <button class="mic-btn" type="button" style="position: absolute; right: 45px; top: 51%; transform: translateY(-50%);">
                                                 <i class="fas fa-microphone"></i>
                                             </button>
-                                        </div>--}}
+                                        </div> --}}
                                     </div>
                                 </div>
                                 <div class="col-lg-6 new-date-data-field">
@@ -1074,7 +1085,7 @@
                                                 <td><input type="text" name="IDnumber[]" class="id-number"></td>
                                                 <td><input type="text" name="Remarks[]" class="remarks"></td>
                                                 <td><button type="text" class="removeRowBtn">Remove</button></td>
-                                                {{--<td><input type="text" name="Action[]" class="action" readonly></td>--}}
+                                                {{-- <td><input type="text" name="Action[]" class="action" readonly></td> --}}
                                             </tbody>
 
                                         </table>
@@ -1164,8 +1175,8 @@
                                                         name="ReferenceDocumentName[]"></td>
                                                 <td><input type="text" class="Document_Remarks"
                                                         name="Document_Remarks[]"></td>
-                                                        <td><button type="text" class="removeRowBtn">Remove</button></td>
-                                                {{--<td><input type="text" class="" name="Action[]" readonly></td>--}}
+                                                <td><button type="text" class="removeRowBtn">Remove</button></td>
+                                                {{-- <td><input type="text" class="" name="Action[]" readonly></td> --}}
 
 
                                             </tbody>
@@ -1280,7 +1291,7 @@
                                                     <td><input type="text" class="productBatchNo" name="batch_no[]">
                                                     </td>
                                                     <td><button type="text" class="removeRowBtn">Remove</button></td>
-                                                    {{--<td><input type="text" class="Removebtn" name="Action[]" readonly>--}}
+                                                    {{-- <td><input type="text" class="Removebtn" name="Action[]" readonly> --}}
                                                     </td>
 
 
@@ -1338,55 +1349,55 @@
                                     });
                                 </script>
                                 <!-- <div class="col-lg-6">
-                                        <div class="group-input" id="external_agencies_req">
-                                            <label for="others">HOD / Designee<span class="text-danger d-none">*</span></label>
-                                          <select name="hod_designee" id="">
-                                            <option value="">-- Select --</option>
-                                            <option value="person1">person 1</option>
-                                            <option value="person2">person 2</option>
-                                          </select>
+                                                <div class="group-input" id="external_agencies_req">
+                                                    <label for="others">HOD / Designee<span class="text-danger d-none">*</span></label>
+                                                  <select name="hod_designee" id="">
+                                                    <option value="">-- Select --</option>
+                                                    <option value="person1">person 1</option>
+                                                    <option value="person2">person 2</option>
+                                                  </select>
 
 
 
-                                        </div>
-                          </div> -->
+                                                </div>
+                                  </div> -->
                                 <!-- <div class="col-lg-6">
-                                        <div class="group-input" id="external_agencies_req">
-                                            <label for="others">Head QA / Designee<span class="text-danger d-none">*</span></label>
-                                          <select name="hod_designee" id="">
-                                            <option value="">-- Select --</option>
-                                            <option value="person1">person 1</option>
-                                            <option value="person2">person 2</option>
-                                          </select>
+                                                <div class="group-input" id="external_agencies_req">
+                                                    <label for="others">Head QA / Designee<span class="text-danger d-none">*</span></label>
+                                                  <select name="hod_designee" id="">
+                                                    <option value="">-- Select --</option>
+                                                    <option value="person1">person 1</option>
+                                                    <option value="person2">person 2</option>
+                                                  </select>
 
 
 
-                                        </div>
-                          </div> -->
+                                                </div>
+                                  </div> -->
                                 <!-- <div class="col-lg-6">
-                                        <div class="group-input" id="external_agencies_req">
-                                            <label for="others">QA<span class="text-danger d-none">*</span></label>
-                                          <select name="hod_designee" id="">
-                                            <option value="">-- Select --</option>
-                                            <option value="person1">person 1</option>
-                                            <option value="person2">person 2</option>
-                                          </select>
+                                                <div class="group-input" id="external_agencies_req">
+                                                    <label for="others">QA<span class="text-danger d-none">*</span></label>
+                                                  <select name="hod_designee" id="">
+                                                    <option value="">-- Select --</option>
+                                                    <option value="person1">person 1</option>
+                                                    <option value="person2">person 2</option>
+                                                  </select>
 
 
-                                        </div>
-                          </div> -->
+                                                </div>
+                                  </div> -->
                                 <!-- <div class="col-6">
-                                        <div class="group-input">
-                                            <label for="Facility Name">Notify To</label>
-                                            <select multiple name="Facility[]" placeholder="Select Facility Name"
-                                                data-search="false" data-silent-initial-value-set="true" id="Facility">
-                                                <option value="Plant 1"> 1</option>
-                                                <option value="Plant 1"> 2</option>
-                                                <option value="Plant 1"> 3</option>
+                                                <div class="group-input">
+                                                    <label for="Facility Name">Notify To</label>
+                                                    <select multiple name="Facility[]" placeholder="Select Facility Name"
+                                                        data-search="false" data-silent-initial-value-set="true" id="Facility">
+                                                        <option value="Plant 1"> 1</option>
+                                                        <option value="Plant 1"> 2</option>
+                                                        <option value="Plant 1"> 3</option>
 
-                                            </select>
-                                        </div>
-                                    </div> -->
+                                                    </select>
+                                                </div>
+                                            </div> -->
 
                                 {{-- <div class="col-6">
                                     <div class="group-input">
@@ -1397,19 +1408,21 @@
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
                                         <label for="Description Deviation">Description of Deviation</label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                                not require completion</small></div>
                                         <div class="relative-container">
-                                            <textarea id="deviation_observed_by" name="Description_Deviation[]" class="mic-input" placeholder="Enter Description of Deviation" required></textarea>
+                                            <textarea id="deviation_observed_by" name="Description_Deviation[]" class="mic-input"
+                                                placeholder="Enter Description of Deviation" required></textarea>
 
                                             @component('frontend.forms.language-model')
                                             @endcomponent
                                         </div>
-                                        {{--<div style="position:relative;">
+                                        {{-- <div style="position:relative;">
                                             <textarea class="tiny-disable mic-input" name="Description_Deviation[]" id="summernote-1" required></textarea>
                                             <button class="mic-btn" type="button" style="position: absolute; right: 15px; top: 51%; transform: translateY(-50%);">
                                                 <i class="fas fa-microphone"></i>
                                             </button>
-                                        </div>--}}
+                                        </div> --}}
                                     </div>
                                     @error('Description_Deviation[]')
                                         <div class="text-danger">{{ $message }}</div>
@@ -1426,19 +1439,21 @@
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
                                         <label for="Immediate Action">Immediate Action (if any)</label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                                not require completion</small></div>
                                         <div class="relative-container">
-                                            <textarea id="summernote-2" name="Immediate_Action[]" class="mic-input" placeholder="Enter Immediate Action" required></textarea>
+                                            <textarea id="summernote-2" name="Immediate_Action[]" class="mic-input" placeholder="Enter Immediate Action"
+                                                required></textarea>
                                             @component('frontend.forms.language-model')
                                             @endcomponent
                                         </div>
 
-                                        {{--<div style="position:relative;">
+                                        {{-- <div style="position:relative;">
                                             <textarea class="tiny-disable mic-input" name="Immediate_Action[]" id="summernote-2" required></textarea>
                                             <button class="mic-btn" type="button" style="position: absolute; right: 15px; top: 51%; transform: translateY(-50%);">
                                                 <i class="fas fa-microphone"></i>
                                             </button>
-                                        </div>--}}
+                                        </div> --}}
                                     </div>
                                     @error('record')
                                         <div class="text-danger">{{ $message }}</div>
@@ -1454,19 +1469,21 @@
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
                                         <label for="Preliminary Impact">Preliminary Impact of Deviation</label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                                not require completion</small></div>
                                         <div class="relative-container">
-                                            <textarea id="summernote-3" name="Preliminary_Impact[]" class="mic-input" placeholder="Enter Preliminary Impact of Deviation" required></textarea>
+                                            <textarea id="summernote-3" name="Preliminary_Impact[]" class="mic-input"
+                                                placeholder="Enter Preliminary Impact of Deviation" required></textarea>
                                             @component('frontend.forms.language-model')
                                             @endcomponent
                                         </div>
 
-                                        {{--<div style="position:relative;">
+                                        {{-- <div style="position:relative;">
                                             <textarea class="tiny-disable mic-input" name="Preliminary_Impact[]" id="summernote-3" required></textarea>
                                             <button class="mic-btn" type="button" style="position: absolute; right: 15px; top: 51%; transform: translateY(-50%);">
                                                 <i class="fas fa-microphone"></i>
                                             </button>
-                                        </div>--}}
+                                        </div> --}}
                                     </div>
                                     @error('Preliminary_Impact')
                                         <div class="text-danger">{{ $message }}</div>
@@ -1493,7 +1510,8 @@
 
                                 <button style="justify-content: center; width: 4rem; margin-left: auto;" type="submit"
                                     id="ChangesaveButton0011" onclick="submitForm()"
-                                    class="saveButton saveAuditFormBtn d-flex on-submit-disable-button" style="align-items: center;">
+                                    class="saveButton saveAuditFormBtn d-flex on-submit-disable-button"
+                                    style="align-items: center;">
                                     <div class="spinner-border spinner-border-sm auditFormSpinner" style="display: none"
                                         role="status">
                                         <span class="sr-only">Loading...</span>
@@ -1544,17 +1562,21 @@
 
                             </div>
                             <div class="button-block">
-                                <button type="submit" style=" justify-content: center; width: 4rem; margin-left: auto;" class="saveButton on-submit-disable-button">Save </button>
-                                <button type="button" style=" justify-content: center; width: 4rem; " class="backButton" onclick="previousStep()">Back</button>
-                                <button type="button" style=" justify-content: center; width: 4rem; " class="nextButton" onclick="nextStep()">Next</button>
-                                <button type="button" style=" justify-content: center; width: 4rem; "> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                <button type="submit" style=" justify-content: center; width: 4rem; margin-left: auto;"
+                                    class="saveButton on-submit-disable-button">Save </button>
+                                <button type="button" style=" justify-content: center; width: 4rem; " class="backButton"
+                                    onclick="previousStep()">Back</button>
+                                <button type="button" style=" justify-content: center; width: 4rem; " class="nextButton"
+                                    onclick="nextStep()">Next</button>
+                                <button type="button" style=" justify-content: center; width: 4rem; "> <a
+                                        href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                         Exit </a> </button>
-                                        {{-- <a style="  justify-content: center; width: 10rem; margin-left: auto;" type="button"
+                                {{-- <a style="  justify-content: center; width: 10rem; margin-left: auto;" type="button"
                                         class="button  launch_extension" data-bs-toggle="modal"
                                         data-bs-target="#launch_extension">
                                         Launch Extension
                                     </a> --}}
-                                    {{-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
+                                {{-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
                                         data-bs-target="#effectivenss_extension">
                                         Launch Effectiveness Check
                                     </a> --}}
@@ -1655,10 +1677,11 @@
 
 
 
-                                 <div class="col-lg-6">
+                                <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Investigation required">Investigation Required ?</label>
-                                        <select disabled name="Investigation_required" id="Investigation_required" disabled>
+                                        <select disabled name="Investigation_required" id="Investigation_required"
+                                            disabled>
                                             <option value="">-- Select --</option>
                                             <option value="yes">Yes</option>
                                             <option value="no">No</option>
@@ -1666,7 +1689,7 @@
                                     </div>
                                 </div>
 
-                               {{-- <div class="col-lg-6">
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="capa_required"> CAPA Required ?</label>
                                         <select name="capa_required" id="capa_required" disabled>
@@ -1686,7 +1709,7 @@
                                             <option value="no">No</option>
                                         </select>
                                     </div>
-                                </div>--}}
+                                </div> --}}
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="short_description_required">Repeat Deviation?</label>
@@ -1775,15 +1798,12 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Customer notification">Customer Notification Required ? <span
-                                            class="text-danger">*</span></label>
-                                        <select disabled name="Customer_notification" id="Customer_notification" >
+                                                class="text-danger">*</span></label>
+                                        <select disabled name="Customer_notification" id="Customer_notification">
                                             <option value="">-- Select --</option>
-                                            <option
-                                            value="Yes">Yes</option>
-                                            <option
-                                            value="No">No</option>
-                                            <option
-                                                value="NA">NA</option>
+                                            <option value="Yes">Yes</option>
+                                            <option value="No">No</option>
+                                            <option value="NA">NA</option>
                                         </select>
                                         @error('Customer_notification')
                                             <div class="text-danger">{{ $message }}</div>
@@ -1810,24 +1830,28 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="Initial_attachment[]"
-                                                    oninput="addMultipleFiles(this, 'Initial_attachment')" multiple disabled>
+                                                    oninput="addMultipleFiles(this, 'Initial_attachment')" multiple
+                                                    disabled>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="button-block">
-                                <button type="submit" style=" justify-content: center; width: 4rem;" class="saveButton on-submit-disable-button">Save</button>
+                                <button type="submit" style=" justify-content: center; width: 4rem;"
+                                    class="saveButton on-submit-disable-button">Save</button>
                                 <button type="button" onclick="previousStep()" class="backButton">Back</button>
-                                <button type="button" style=" justify-content: center; width: 4rem;"  class="nextButton" onclick="nextStep()">Next</button>
-                                <button type="button" style=" justify-content: center; width: 4rem;"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                <button type="button" style=" justify-content: center; width: 4rem;" class="nextButton"
+                                    onclick="nextStep()">Next</button>
+                                <button type="button" style=" justify-content: center; width: 4rem;"> <a
+                                        href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                         Exit </a> </button>
-                                        {{-- <a style="  justify-content: center; width: 10rem; margin-left: auto;" type="button"
+                                {{-- <a style="  justify-content: center; width: 10rem; margin-left: auto;" type="button"
                                         class="button  launch_extension" data-bs-toggle="modal"
                                         data-bs-target="#launch_extension">
                                         Launch Extension
                                     </a> --}}
-                                    {{-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
+                                {{-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
                                         data-bs-target="#effectivenss_extension">
                                         Launch Effectiveness Check
                                     </a> --}}
@@ -1951,8 +1975,8 @@
                         //         }
                         //     });
 
-                            // Trigger change event on page load if already selected value is "Recurring"
-                            // $('#Investigation_required').change();
+                        // Trigger change event on page load if already selected value is "Recurring"
+                        // $('#Investigation_required').change();
                         // });
                         $(document).ready(function() {
                             $('#Customer_notification').change(function() {
@@ -2072,14 +2096,29 @@
                                     </div>
                                 </div>
                                 @php
-                                    $division = DB::table('q_m_s_divisions')
-                                        ->where('name', Helpers::getDivisionName(session()->get('division')))
-                                        ->first();
-                                    $userRoles = DB::table('user_roles')
-                                        ->where(['q_m_s_roles_id' => 22, 'q_m_s_divisions_id' => $division->id])
-                                        ->get();
-                                    $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                    if (!empty($parent_division_id)) {
+                                        // $division = DB::table('q_m_s_divisions')
+                                        //     ->where('name', Helpers::getDivisionName(session()->get('division')))
+                                        //     ->first();
+                                        $userRoles = DB::table('user_roles')
+                                            ->where([
+                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_divisions_id' => $parent_division_id,
+                                            ])
+                                            ->get();
+                                        $userRoleIds = $userRoles->pluck('user_id')->toArray();
+                                        $users = DB::table('users')->whereIn('id', $userRoleIds)->get();
+                                    } else {
+                                        $division = DB::table('q_m_s_divisions')
+                                            ->where('name', Helpers::getDivisionName(session()->get('division')))
+                                            ->first();
+                                        $userRoles = DB::table('user_roles')
+                                            ->where(['q_m_s_roles_id' => 22, 'q_m_s_divisions_id' => $division->id])
+                                            ->get();
+                                        $userRoleIds = $userRoles->pluck('user_id')->toArray();
+                                        $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                    }
+
                                 @endphp
 
                                 <div class="col-lg-6 p_erson">
@@ -2093,7 +2132,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-12 mb-3 p_erson" >
+                                <div class="col-md-12 mb-3 p_erson">
                                     <div class="group-input">
                                         <label for="Production assessment">Impact Assessment (By Production)</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
@@ -2137,8 +2176,7 @@
                                     <div class="group-input input-date">
                                         <label for="Production Review Completed On">Production Review Completed On</label>
                                         <div class="calenderauditee">
-                                            <input type="text" id="production_on" readonly
-                                                placeholder="DD-MM-YYYY" />
+                                            <input type="text" id="production_on" readonly placeholder="DD-MM-YYYY" />
                                             <input type="date" name="production_on"
                                                 min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
                                                 oninput="handleDateInput(this, 'production_on')" />
@@ -2592,7 +2630,8 @@
                                     <div class="group-input">
                                         <label for="Analytical Development Laboratory Review Required">Analytical
                                             Development Laboratory Review Required ?</label>
-                                        <select name="Analytical_Development_review" id="Analytical_Development_review" disabled>
+                                        <select name="Analytical_Development_review" id="Analytical_Development_review"
+                                            disabled>
                                             <option value="">-- Select --</option>
                                             <option value="yes">Yes</option>
                                             <option value="no">No</option>
@@ -2822,7 +2861,8 @@
                                     <div class="group-input">
                                         <label for="Design Review Required">Technology Transfer / Design Review Required
                                             ?</label>
-                                        <select name="Technology_transfer_review" id="Technology_transfer_review" disabled>
+                                        <select name="Technology_transfer_review" id="Technology_transfer_review"
+                                            disabled>
                                             <option value="">-- Select --</option>
                                             <option value="yes">Yes</option>
                                             <option value="no">No</option>
@@ -2931,7 +2971,8 @@
                                     <div class="group-input">
                                         <label for="Safety Review Required">Environment, Health & Safety Review Required
                                             ?</label>
-                                        <select name="Environment_Health_review" id="Environment_Health_review" disabled>
+                                        <select name="Environment_Health_review" id="Environment_Health_review"
+                                            disabled>
                                             <option value="">-- Select --</option>
                                             <option value="yes">Yes</option>
                                             <option value="no">No</option>
@@ -3063,7 +3104,7 @@
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
                                     $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
                                 @endphp
-                                <div class="col-lg-6 human_resources" >
+                                <div class="col-lg-6 human_resources">
                                     <div class="group-input">
                                         <label for="Administration Person"> Human Resource & Administration Person</label>
                                         <select name="Human_Resource_person" id="Human_Resource_person">
@@ -3266,7 +3307,8 @@
                                     <div class="group-input">
                                         <label for="Project management Review Required"> Project management Review
                                             Required ?</label>
-                                        <select name="Project_management_review" id="Project_management_review" disabled>
+                                        <select name="Project_management_review" id="Project_management_review"
+                                            disabled>
                                             <option value="">-- Select --</option>
                                             <option value="yes">Yes</option>
                                             <option value="no">No</option>
@@ -4001,18 +4043,21 @@
                                 </div>
                             </div>
                             <div class="button-block">
-                                <button type="submit" id="ChangesaveButton" style=" justify-content: center; width: 4rem;" class="saveButton on-submit-disable-button">Save</button>
+                                <button type="submit" id="ChangesaveButton"
+                                    style=" justify-content: center; width: 4rem;"
+                                    class="saveButton on-submit-disable-button">Save</button>
                                 <button type="button" onclick="previousStep()" class="backButton">Back</button>
-                                <button type="button" style=" justify-content: center; width: 4rem;" id="ChangeNextButton" class="nextButton"
-                                    onclick="nextStep()">Next</button>
-                                <button type="button" style=" justify-content: center; width: 4rem;"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                <button type="button" style=" justify-content: center; width: 4rem;"
+                                    id="ChangeNextButton" class="nextButton" onclick="nextStep()">Next</button>
+                                <button type="button" style=" justify-content: center; width: 4rem;"> <a
+                                        href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                         Exit </a> </button>
-                                        {{-- <a style="  justify-content: center; width: 10rem; margin-left: auto;" type="button"
+                                {{-- <a style="  justify-content: center; width: 10rem; margin-left: auto;" type="button"
                                         class="button  launch_extension" data-bs-toggle="modal"
                                         data-bs-target="#launch_extension">
                                         Launch Extension
                                     </a> --}}
-                                    {{-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
+                                {{-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
                                         data-bs-target="#effectivenss_extension">
                                         Launch Effectiveness Check
                                     </a> --}}
@@ -4438,44 +4483,44 @@
                                             // Populate options based on selected category
                                             if (selectedCategory === 'M-Machine(Equipment)') {
                                                 subCategorySelect.append(
-                                                '<option value="Infrequent_Audits">Infrequent Audits</option>');
+                                                    '<option value="Infrequent_Audits">Infrequent Audits</option>');
                                                 subCategorySelect.append(
                                                     '<option value="No_Preventive_Maintenance">No Preventive Maintenance</option>');
                                                 subCategorySelect.append('<option value="Other">Other</option>');
                                                 subCategorySelect.append(
                                                     '<option value="Poor_Maintenance_or_Design">Poor Maintenance or Design</option>'
-                                                    );
+                                                );
                                                 subCategorySelect.append(
                                                     '<option value="Poor_Maintenance_or_Design">Poor Maintenance or Design</option>'
-                                                    );
+                                                );
 
                                                 subCategorySelect.append(
                                                     '<option value="Poor_Maintenance_or_Design">Poor Maintenance or Design</option>'
-                                                    );
+                                                );
 
                                                 subCategorySelect.append(
                                                     '<option value="Poor_Maintenance_or_Design">Poor Maintenance or Design</option>'
-                                                    );
+                                                );
 
                                                 subCategorySelect.append(
                                                     '<option value="Poor_Maintenance_or_Design">Poor Maintenance or Design</option>'
-                                                    );
+                                                );
                                                 subCategorySelect.append(
                                                     '<option value="Poor_Maintenance_or_Design">Poor Maintenance or Design</option>'
-                                                    );
+                                                );
                                                 subCategorySelect.append(
                                                     '<option value="Poor_Maintenance_or_Design">Poor Maintenance or Design</option>'
-                                                    );
+                                                );
 
                                             } else if (selectedCategory === 'M-Maintenance') {
                                                 subCategorySelect.append(
-                                                '<option value="Infrequent_Audits">Infrequent Audits</option>');
+                                                    '<option value="Infrequent_Audits">Infrequent Audits</option>');
                                                 subCategorySelect.append(
                                                     '<option value="No_Preventive_Maintenance">No Preventive Maintenance</option>');
                                                 subCategorySelect.append('<option value="Other">Other</option>');
                                                 subCategorySelect.append(
                                                     '<option value="Maintenance_Needs_Improvement">Maintenance Needs Improvement</option>'
-                                                    );
+                                                );
                                             } else if (selectedCategory === 'M-Man Power (physical work)') {
                                                 subCategorySelect.append(
                                                     '<option value="Failure_to_Follow_SOP">Failure to Follow SOP</option>');
@@ -4483,7 +4528,7 @@
                                                     '<option value="Human_Machine_Interface">Human-Machine Interface</option>');
                                                 subCategorySelect.append(
                                                     '<option value="Misunderstood_Verbal_Communication">Misunderstood Verbal Communication</option>'
-                                                    );
+                                                );
                                                 subCategorySelect.append('<option value="Other">Other</option>');
                                             }
                                         });
@@ -4683,17 +4728,20 @@
                             </div>
 
                             <div class="button-block">
-                                <button type="submit" class="saveButton" style=" justify-content: center; width: 4rem;">Save</button>
-                                <button type="button" onclick="previousStep()" class="backButton" >Back</button>
-                                <button type="button" class="nextButton" style=" justify-content: center; width: 4rem;" onclick="nextStep()">Next</button>
-                                <button type="button" style=" justify-content: center; width: 4rem;"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                <button type="submit" class="saveButton"
+                                    style=" justify-content: center; width: 4rem;">Save</button>
+                                <button type="button" onclick="previousStep()" class="backButton">Back</button>
+                                <button type="button" class="nextButton"
+                                    style=" justify-content: center; width: 4rem;" onclick="nextStep()">Next</button>
+                                <button type="button" style=" justify-content: center; width: 4rem;"> <a
+                                        href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                         Exit </a> </button>
-                                        {{-- <a style="  justify-content: center; width: 10rem; margin-left: auto;" type="button"
+                                {{-- <a style="  justify-content: center; width: 10rem; margin-left: auto;" type="button"
                                         class="button  launch_extension" data-bs-toggle="modal"
                                         data-bs-target="#launch_extension">
                                         Launch Extension
                                     </a> --}}
-                                    {{-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
+                                {{-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
                                         data-bs-target="#effectivenss_extension">
                                         Launch Effectiveness Check
                                     </a> --}}
@@ -4714,7 +4762,8 @@
                                             <button type="button" name="agenda"
                                                 onclick="addRiskAssessment('risk-assessment-risk-management')">+</button>
                                             <span class="text-primary" data-bs-toggle="modal"
-                                            data-bs-target="#failure_mode_and_effect_analysis" style="font-size: 0.8rem; font-weight: 400;">
+                                                data-bs-target="#failure_mode_and_effect_analysis"
+                                                style="font-size: 0.8rem; font-weight: 400;">
                                                 (Launch Instruction)
                                             </span>
                                         </label>
@@ -4826,8 +4875,8 @@
                                         <label for="agenda">
                                             Risk Matrix
                                             <button type="button" name="agenda" id="risk_matrix_details">+</button>
-                                            <span class="text-primary" style="font-size: 0.8rem; font-weight: 400;" data-bs-toggle="modal"
-                                            data-bs-target="#risk_matrix">
+                                            <span class="text-primary" style="font-size: 0.8rem; font-weight: 400;"
+                                                data-bs-toggle="modal" data-bs-target="#risk_matrix">
                                                 (Launch Instruction)
                                             </span>
                                         </label>
@@ -4885,17 +4934,21 @@
                                 }
                             </script>
                             <div class="button-block">
-                                <button type="submit" class="saveButton" style=" justify-content: center; width: 4rem;">Save</button>
-                                <button type="button" onclick="previousStep()" style=" justify-content: center; width: 4rem;" class="backButton">Back</button>
-                                <button type="button"  style=" justify-content: center; width: 4rem;" class="nextButton" onclick="nextStep()">Next</button>
-                                <button type="button" style=" justify-content: center; width: 4rem;"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                <button type="submit" class="saveButton"
+                                    style=" justify-content: center; width: 4rem;">Save</button>
+                                <button type="button" onclick="previousStep()"
+                                    style=" justify-content: center; width: 4rem;" class="backButton">Back</button>
+                                <button type="button" style=" justify-content: center; width: 4rem;"
+                                    class="nextButton" onclick="nextStep()">Next</button>
+                                <button type="button" style=" justify-content: center; width: 4rem;"> <a
+                                        href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                         Exit </a> </button>
-                                        {{-- <a style="  justify-content: center; width: 10rem; margin-left: auto;" type="button"
+                                {{-- <a style="  justify-content: center; width: 10rem; margin-left: auto;" type="button"
                                         class="button  launch_extension" data-bs-toggle="modal"
                                         data-bs-target="#launch_extension">
                                         Launch Extension
                                     </a> --}}
-                                    {{-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
+                                {{-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
                                         data-bs-target="#effectivenss_extension">
                                         Launch Effectiveness Check
                                     </a> --}}
@@ -5135,18 +5188,20 @@
                                 </div>
 
                                 <div class="button-block">
-                                    <button type="submit" style=" justify-content: center; width: 4rem;" class="saveButton on-submit-disable-button">Save</button>
+                                    <button type="submit" style=" justify-content: center; width: 4rem;"
+                                        class="saveButton on-submit-disable-button">Save</button>
                                     <button type="button" onclick="previousStep()" class="backButton">Back</button>
-                                    <button type="button" style=" justify-content: center; width: 4rem;" class="nextButton" onclick="nextStep()">Next</button>
-                                    <button type="button" style=" justify-content: center; width: 4rem;" > <a href="{{ url('rcms/qms-dashboard') }}"
-                                            class="text-white">
+                                    <button type="button" style=" justify-content: center; width: 4rem;"
+                                        class="nextButton" onclick="nextStep()">Next</button>
+                                    <button type="button" style=" justify-content: center; width: 4rem;"> <a
+                                            href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                             Exit </a> </button>
-                                            {{-- <a style="  justify-content: center; width: 10rem; margin-left: auto;" type="button"
+                                    {{-- <a style="  justify-content: center; width: 10rem; margin-left: auto;" type="button"
                                             class="button  launch_extension" data-bs-toggle="modal"
                                             data-bs-target="#launch_extension">
                                             Launch Extension
                                         </a> --}}
-                                        {{-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
+                                    {{-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
                                             data-bs-target="#effectivenss_extension">
                                             Launch Effectiveness Check
                                         </a> --}}
@@ -5290,108 +5345,116 @@
                         </div>
                     </div>  --}}
                     <!-- QA secondary review review -->
-<div id="CCForm115" class="inner-block cctabcontent">
-    <div class="inner-block-content">
-        <div class="row">
-            <div class="col-md-12 mb-3">
-                <div class="group-input">
-                    <label for="QA Feedbacks">Initial Deviation category</label>
-                    <select name="" disabled id="">
-                        <option value="">-- select --</option>
-                    </select>
-                </div>
-            </div>
-            <div class="col-md-12 mb-3">
-                <div class="group-input">
-                    <label for="QA Feedbacks">Justification for categorization</label>
-                    <div><small class="text-primary">Please insert "NA" in the data field if it does
-                            not require completion</small></div>
-                    <textarea disabled class="tiny-disable" name="qa_final_remarks" id="summernote-14"></textarea>
-                </div>
-            </div>
-            <div class="col-md-12 mb-3">
-                <div class="group-input">
-                    <label for="QA Feedbacks">Investigation Required</label>
-                    <select name="" disabled id="">
-                        <option value="">-- select --</option>
-                    </select>
-                </div>
-            </div>
-            <div class="col-md-12 mb-3">
-                <div class="group-input">
-                    <label for="QA Feedbacks">QA Feedbacks</label>
-                    <div><small class="text-primary">Please insert "NA" in the data field if it does
-                            not require completion</small></div>
-                    <textarea disabled class="tiny-disable" name="qa_final_remarks" id="summernote-14"></textarea>
-                </div>
-            </div>
-            <div class="col-lg-12">
-                <div class="group-input">
-                    <label for="QA attachments">QA Attachments</label>
-                    <div><small class="text-primary">Please Attach all relevant or supporting
-                            documents</small></div>
-                    <div class="file-attachment-field">
-                        <div class="file-attachment-list" id="hod_final"></div>
-                        <div class="add-btn">
-                            <div>Add</div>
-                            <input disabled type="file" id="myfile" name="hod_final_attachments[]"
-                                oninput="addMultipleFiles(this, 'hod_final_attachments')" multiple>
+                    <div id="CCForm115" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
+                            <div class="row">
+                                <div class="col-md-12 mb-3">
+                                    <div class="group-input">
+                                        <label for="QA Feedbacks">Initial Deviation category</label>
+                                        <select name="" disabled id="">
+                                            <option value="">-- select --</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mb-3">
+                                    <div class="group-input">
+                                        <label for="QA Feedbacks">Justification for categorization</label>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                                not require completion</small></div>
+                                        <textarea disabled class="tiny-disable" name="qa_final_remarks" id="summernote-14"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mb-3">
+                                    <div class="group-input">
+                                        <label for="QA Feedbacks">Investigation Required</label>
+                                        <select name="" disabled id="">
+                                            <option value="">-- select --</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mb-3">
+                                    <div class="group-input">
+                                        <label for="QA Feedbacks">QA Feedbacks</label>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                                not require completion</small></div>
+                                        <textarea disabled class="tiny-disable" name="qa_final_remarks" id="summernote-14"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="QA attachments">QA Attachments</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="hod_final"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input disabled type="file" id="myfile"
+                                                    name="hod_final_attachments[]"
+                                                    oninput="addMultipleFiles(this, 'hod_final_attachments')" multiple>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="button-block">
+                                <button type="submit" style=" justify-content: center; width: 4rem;"
+                                    class="saveButton on-submit-disable-button">Save</button>
+                                <button type="button" onclick="previousStep()" class="backButton">Back</button>
+                                <button type="button" style=" justify-content: center; width: 4rem;"
+                                    class="nextButton" onclick="nextStep()">Next</button>
+                                <button type="button" style=" justify-content: center; width: 4rem;"> <a
+                                        href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                        Exit </a> </button>
+
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-
-        </div>
-        <div class="button-block">
-            <button type="submit" style=" justify-content: center; width: 4rem;" class="saveButton on-submit-disable-button">Save</button>
-            <button type="button" onclick="previousStep()" class="backButton">Back</button>
-            <button type="button" style=" justify-content: center; width: 4rem;" class="nextButton" onclick="nextStep()">Next</button>
-            <button type="button" style=" justify-content: center; width: 4rem;"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
-                    Exit </a> </button>
-
-        </div>
-    </div>
-</div>
-<!-- initiator update review -->
-<div id="CCForm105" class="inner-block cctabcontent">
-    <div class="inner-block-content">
-        <div class="row">
-            <div class="col-md-12 mb-3">
-                <div class="group-input">
-                    <label for="QA Feedbacks">Initiator Final Remarks</label>
-                    <div><small class="text-primary">Please insert "NA" in the data field if it does
-                            not require completion</small></div>
-                    <textarea disabled class="tiny-disable" name="" id="summernote-14">
+                    <!-- initiator update review -->
+                    <div id="CCForm105" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
+                            <div class="row">
+                                <div class="col-md-12 mb-3">
+                                    <div class="group-input">
+                                        <label for="QA Feedbacks">Initiator Final Remarks</label>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                                not require completion</small></div>
+                                        <textarea disabled class="tiny-disable" name="" id="summernote-14">
                 </textarea>
-                </div>
-            </div>
-            <div class="col-lg-12">
-                <div class="group-input">
-                    <label for="QA attachments">Initiator Final Attachments</label>
-                    <div><small class="text-primary">Please Attach all relevant or supporting
-                            documents</small></div>
-                    <div class="file-attachment-field">
-                        <div class="file-attachment-list" id="hod_final"></div>
-                        <div class="add-btn">
-                            <div>Add</div>
-                            <input disabled type="file" id="myfile" name="hod_final_attachments[]"
-                                oninput="addMultipleFiles(this, 'hod_final_attachments')" multiple>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="QA attachments">Initiator Final Attachments</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="hod_final"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input disabled type="file" id="myfile"
+                                                    name="hod_final_attachments[]"
+                                                    oninput="addMultipleFiles(this, 'hod_final_attachments')" multiple>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="button-block">
+                                <button type="submit" style=" justify-content: center; width: 4rem;"
+                                    class="saveButton on-submit-disable-button">Save</button>
+                                <button type="button" onclick="previousStep()" class="backButton">Back</button>
+                                <button type="button" style=" justify-content: center; width: 4rem;"
+                                    class="nextButton" onclick="nextStep()">Next</button>
+                                <button type="button" style=" justify-content: center; width: 4rem;"> <a
+                                        href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                        Exit </a> </button>
+
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-
-        </div>
-        <div class="button-block">
-            <button type="submit" style=" justify-content: center; width: 4rem;" class="saveButton on-submit-disable-button">Save</button>
-            <button type="button" onclick="previousStep()" class="backButton">Back</button>
-            <button type="button" style=" justify-content: center; width: 4rem;" class="nextButton" onclick="nextStep()">Next</button>
-            <button type="button" style=" justify-content: center; width: 4rem;"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
-                    Exit </a> </button>
-
-        </div>
-    </div>
-</div>
                     <!-- hod final review -->
                     <div id="CCForm4" class="inner-block cctabcontent">
                         <div class="inner-block-content">
@@ -5414,7 +5477,8 @@
                                             <div class="file-attachment-list" id="hod_final_attachments"></div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input disabled type="file" id="myfile" name="hod_final_attachments[]"
+                                                <input disabled type="file" id="myfile"
+                                                    name="hod_final_attachments[]"
                                                     oninput="addMultipleFiles(this, 'hod_final_attachments')" multiple>
                                             </div>
                                         </div>
@@ -5423,18 +5487,21 @@
 
                             </div>
                             <div class="button-block">
-                                <button type="submit" style=" justify-content: center; width: 4rem;" class="saveButton on-submit-disable-button">Save</button>
+                                <button type="submit" style=" justify-content: center; width: 4rem;"
+                                    class="saveButton on-submit-disable-button">Save</button>
                                 <button type="button" onclick="previousStep()" class="backButton">Back</button>
-                                <button type="button" style=" justify-content: center; width: 4rem;" class="nextButton" onclick="nextStep()">Next</button>
-                                <button type="button" style=" justify-content: center; width: 4rem;"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                <button type="button" style=" justify-content: center; width: 4rem;"
+                                    class="nextButton" onclick="nextStep()">Next</button>
+                                <button type="button" style=" justify-content: center; width: 4rem;"> <a
+                                        href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                         Exit </a> </button>
 
                             </div>
                         </div>
                     </div>
 
-                     <!-- QA final review -->
-                     <div id="CCForm13" class="inner-block cctabcontent">
+                    <!-- QA final review -->
+                    <div id="CCForm13" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
                                 <div class="col-md-12 mb-3">
@@ -5455,7 +5522,8 @@
                                             <div class="file-attachment-list" id="qa_final_attachments"></div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input disabled type="file" id="myfile" name="qa_final_attachments[]"
+                                                <input disabled type="file" id="myfile"
+                                                    name="qa_final_attachments[]"
                                                     oninput="addMultipleFiles(this, 'qa_final_attachments')" multiple>
                                             </div>
                                         </div>
@@ -5464,10 +5532,13 @@
 
                             </div>
                             <div class="button-block">
-                                <button type="submit" style=" justify-content: center; width: 4rem;" class="saveButton on-submit-disable-button">Save</button>
+                                <button type="submit" style=" justify-content: center; width: 4rem;"
+                                    class="saveButton on-submit-disable-button">Save</button>
                                 <button type="button" onclick="previousStep()" class="backButton">Back</button>
-                                <button type="button" style=" justify-content: center; width: 4rem;" class="nextButton" onclick="nextStep()">Next</button>
-                                <button type="button" style=" justify-content: center; width: 4rem;"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                <button type="button" style=" justify-content: center; width: 4rem;"
+                                    class="nextButton" onclick="nextStep()">Next</button>
+                                <button type="button" style=" justify-content: center; width: 4rem;"> <a
+                                        href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                         Exit </a> </button>
 
                             </div>
@@ -5525,7 +5596,8 @@
                                             <div class="file-attachment-list" id="closure_attachment"></div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input disabled type="file" id="myfile" name="closure_attachment[]"
+                                                <input disabled type="file" id="myfile"
+                                                    name="closure_attachment[]"
                                                     oninput="addMultipleFiles(this, 'closure_attachment')" multiple>
                                             </div>
                                         </div>
@@ -5534,17 +5606,20 @@
 
                             </div>
                             <div class="button-block">
-                                <button type="submit" style=" justify-content: center; width: 4rem;" class="saveButton">Save</button>
+                                <button type="submit" style=" justify-content: center; width: 4rem;"
+                                    class="saveButton">Save</button>
                                 <button type="button" onclick="previousStep()" class="backButton">Back</button>
-                                <button type="button" style=" justify-content: center; width: 4rem;" class="nextButton" onclick="nextStep()">Next</button>
-                                <button type="button" style=" justify-content: center; width: 4rem;"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                <button type="button" style=" justify-content: center; width: 4rem;"
+                                    class="nextButton" onclick="nextStep()">Next</button>
+                                <button type="button" style=" justify-content: center; width: 4rem;"> <a
+                                        href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                         Exit </a> </button>
-                                        {{-- <a style="  justify-content: center; width: 10rem; margin-left: auto;" type="button"
+                                {{-- <a style="  justify-content: center; width: 10rem; margin-left: auto;" type="button"
                                         class="button  launch_extension" data-bs-toggle="modal"
                                         data-bs-target="#launch_extension">
                                         Launch Extension
                                     </a> --}}
-                                    {{-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
+                                {{-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
                                         data-bs-target="#effectivenss_extension">
                                         Launch Effectiveness Check
                                     </a> --}}
@@ -5566,7 +5641,7 @@
                                         <label for="Audit Schedule End Date">Proposed Due Date (Deviation)</label>
                                         <div class="calenderauditee">
                                             <input type="text" id="Proposed_Due_date_deviation" readonly
-                                                placeholder="DD-MM-YYYY" disabled/>
+                                                placeholder="DD-MM-YYYY" disabled />
                                             <input type="date" name="Proposed_Due_date_deviation"
                                                 min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
                                                 oninput="handleDateInput(this, 'Proposed_Due_date_deviation')" disabled />
@@ -5604,10 +5679,11 @@
                                         <label for="Audit Schedule End Date">Deviation Extension Completed On</label>
                                         <div class="calenderauditee">
                                             <input type="text" id="Deviation_Extension_Completed_On" readonly
-                                                placeholder="DD-MM-YYYY" disabled/>
+                                                placeholder="DD-MM-YYYY" disabled />
                                             <input type="date" name="Deviation_Extension_Completed_On"
                                                 min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                oninput="handleDateInput(this, 'Deviation_Extension_Completed_On')" disabled/>
+                                                oninput="handleDateInput(this, 'Deviation_Extension_Completed_On')"
+                                                disabled />
                                         </div>
                                     </div>
                                 </div>
@@ -5647,7 +5723,8 @@
                                         <div class="group-input">
                                             <label for=" CAPA_Extension_Completed_By"> CAPA Extension Completed By
                                             </label>
-                                            <select name="CAPA_Extension_Completed_By" id="CAPA_Extension_Completed_By" disabled>
+                                            <select name="CAPA_Extension_Completed_By" id="CAPA_Extension_Completed_By"
+                                                disabled>
                                                 <option value="">-- Select --</option>
                                                 @foreach ($users as $user)
                                                     <option value="{{ $user->id }}">{{ $user->name }}</option>
@@ -5665,7 +5742,8 @@
                                                 <input type="date" name="CAPA_Extension_Completed_On"
                                                     max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                     class="hide-input"
-                                                    oninput="handleDateInput(this, 'CAPA_Extension_Completed_On')" disabled />
+                                                    oninput="handleDateInput(this, 'CAPA_Extension_Completed_On')"
+                                                    disabled />
                                             </div>
                                         </div>
                                     </div>
@@ -5730,7 +5808,8 @@
                                                     name="Quality_Risk_Management_Extension_Completed_ON"
                                                     min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                     class="hide-input"
-                                                    oninput="handleDateInput(this, 'Quality_Risk_Management_Extension_Completed_ON')" disabled />
+                                                    oninput="handleDateInput(this, 'Quality_Risk_Management_Extension_Completed_ON')"
+                                                    disabled />
                                             </div>
                                         </div>
                                     </div>
@@ -5749,7 +5828,8 @@
                                                 placeholder="DD-MM-YYYY" disabled />
                                             <input type="date" name="Proposed_Due_date_investigation"
                                                 min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                oninput="handleDateInput(this, 'Proposed_Due_date_investigation')" disabled />
+                                                oninput="handleDateInput(this, 'Proposed_Due_date_investigation')"
+                                                disabled />
                                         </div>
                                     </div>
                                 </div>
@@ -5792,7 +5872,8 @@
                                                 <input type="date" name="Investigation_Extension_Completed_On"
                                                     min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                     class="hide-input"
-                                                    oninput="handleDateInput(this, 'Investigation_Extension_Completed_On')" disabled />
+                                                    oninput="handleDateInput(this, 'Investigation_Extension_Completed_On')"
+                                                    disabled />
                                             </div>
                                         </div>
                                     </div>
@@ -6216,210 +6297,212 @@
                                             </div>
                                         </div>
                                     </div> --}}
-                                </div>
+                            </div>
 
-                                <div class="button-block">
-                                    <button type="submit" style=" justify-content: center; width: 4rem; margin-left: auto;" class="saveButton on-submit-disable-button">Save</button>
-                                    <button type="button" onclick="previousStep()" class="backButton">Back</button>
-                                    <button type="button" style=" justify-content: center; width: 4rem; margin-left: auto;" class="nextButton" onclick="nextStep()">Next</button>
-                                    <button type="button" style=" justify-content: center; width: 4rem; margin-left: auto;"> <a href="{{ url('rcms/qms-dashboard') }}"
-                                            class="text-white">
-                                            Exit </a> </button>
-                                            {{-- <a style="  justify-content: center; width: 10rem; margin-left: auto;" type="button"
+                            <div class="button-block">
+                                <button type="submit" style=" justify-content: center; width: 4rem; margin-left: auto;"
+                                    class="saveButton on-submit-disable-button">Save</button>
+                                <button type="button" onclick="previousStep()" class="backButton">Back</button>
+                                <button type="button" style=" justify-content: center; width: 4rem; margin-left: auto;"
+                                    class="nextButton" onclick="nextStep()">Next</button>
+                                <button type="button"
+                                    style=" justify-content: center; width: 4rem; margin-left: auto;"> <a
+                                        href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                        Exit </a> </button>
+                                {{-- <a style="  justify-content: center; width: 10rem; margin-left: auto;" type="button"
                                             class="button  launch_extension" data-bs-toggle="modal"
                                             data-bs-target="#launch_extension">
                                             Launch Extension
                                         </a> --}}
-                                        {{-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
+                                {{-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
                                             data-bs-target="#effectivenss_extension">
                                             Launch Effectiveness Check
                                         </a> --}}
-                                </div>
                             </div>
                         </div>
                     </div>
+                </div>
 
 
 
 
-                    <!-- Activity Log content -->
-                    <div id="CCForm6" class="inner-block cctabcontent">
-                        <div class="inner-block-content">
-                            <div class="row">
-                                <div class="sub-head">Submission</div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="submit by">Submit By :-</label>
-                                        <div class="static"></div>
-                                    </div>
+                <!-- Activity Log content -->
+                <div id="CCForm6" class="inner-block cctabcontent">
+                    <div class="inner-block-content">
+                        <div class="row">
+                            <div class="sub-head">Submission</div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="submit by">Submit By :-</label>
+                                    <div class="static"></div>
                                 </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="submit on">Submit On :-</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="submit comment">Submit Comments :-</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="sub-head">HOD Review Completed</div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="HOD Review Complete By">HOD Review Complete By :-</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="HOD Review Complete On">HOD Review Complete On :-</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="HOD Review Comments">HOD Review Comments :-</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-
-
-                                <div class="sub-head">QA Initial Review Completed</div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="QA Initial Review Complete By">QA Initial Review Complete By
-                                            :-</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="QA Initial Review Complete On">QA Initial Review Complete On
-                                            :-</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="QA Initial Review Comments">QA Initial Review Comments:-</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="sub-head">CFT Review Complete</div>
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="CFT Review Complete By">CFT Review Complete By :-</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="CFT Review Complete On">CFT Review Complete On :-</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="CFT Review Comments">CFT Review Comments :-</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="sub-head">Initiator Update</div>
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="CFT Review Complete By">Initiator Update Complete By :-</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="CFT Review Complete On">Initiator Update Complete On :-</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="CFT Review Comments">Initiator Update Comments :-</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-
-                                <div class="sub-head"> QA Final Review Completed</div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="QA Final Review Complete By"> QA Final Review Complete By :-</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="QA Final Review Complete On"> QA Final Review Complete On :-</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="QA Final Review Comments"> QA Final Review Comments :-</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="sub-head"> Approved</div>
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Approved By">Approved By :-</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Approved On">Approved On :-</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="Approved Comments">Approved Comments :-</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-
-
-
-
-
-
                             </div>
-                            <div class="button-block">
-                                <button type="submit" class="saveButton">Save</button>
-                                <a href="/rcms/qms-dashboard">
-                                    <button type="button" class="backButton">Back</button>
-                                </a>
-                                <button type="submit">Submit</button>
-                                <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}"
-                                        class="text-white">
-                                        Exit </a> </button>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="submit on">Submit On :-</label>
+                                    <div class="static"></div>
+                                </div>
                             </div>
+                            <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for="submit comment">Submit Comments :-</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="sub-head">HOD Review Completed</div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="HOD Review Complete By">HOD Review Complete By :-</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="HOD Review Complete On">HOD Review Complete On :-</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for="HOD Review Comments">HOD Review Comments :-</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+
+
+                            <div class="sub-head">QA Initial Review Completed</div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="QA Initial Review Complete By">QA Initial Review Complete By
+                                        :-</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="QA Initial Review Complete On">QA Initial Review Complete On
+                                        :-</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for="QA Initial Review Comments">QA Initial Review Comments:-</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="sub-head">CFT Review Complete</div>
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="CFT Review Complete By">CFT Review Complete By :-</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="CFT Review Complete On">CFT Review Complete On :-</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for="CFT Review Comments">CFT Review Comments :-</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="sub-head">Initiator Update</div>
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="CFT Review Complete By">Initiator Update Complete By :-</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="CFT Review Complete On">Initiator Update Complete On :-</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for="CFT Review Comments">Initiator Update Comments :-</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+
+                            <div class="sub-head"> QA Final Review Completed</div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="QA Final Review Complete By"> QA Final Review Complete By :-</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="QA Final Review Complete On"> QA Final Review Complete On :-</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for="QA Final Review Comments"> QA Final Review Comments :-</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="sub-head"> Approved</div>
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Approved By">Approved By :-</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Approved On">Approved On :-</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for="Approved Comments">Approved Comments :-</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+
+
+
+
+
+
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" class="saveButton">Save</button>
+                            <a href="/rcms/qms-dashboard">
+                                <button type="button" class="backButton">Back</button>
+                            </a>
+                            <button type="submit">Submit</button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                    Exit </a> </button>
                         </div>
                     </div>
-
                 </div>
-            </form>
-            <div class="sticky-buttons">
-                <div>
-                    <a type="button" class="" data-toggle="modal" data-target="#myModal">
 
-                        <svg width="18" height="24" viewBox="0 0 384 512" xmlns="http://www.w3.org/2000/svg">
-                            <path fill="#ffffff"
-                                d="M369.9 97.9L286 14C277 5 264.8-.1 252.1-.1H48C21.5 0 0 21.5 0 48v416c0 26.5 21.5 48 48 48h288c26.5 0 48-21.5 48-48V131.9c0-12.7-5.1-25-14.1-34M332.1 128H256V51.9zM48 464V48h160v104c0 13.3 10.7 24 24 24h104v288zm220.1-208c-5.7 0-10.6 4-11.7 9.5c-20.6 97.7-20.4 95.4-21 103.5c-.2-1.2-.4-2.6-.7-4.3c-.8-5.1.3.2-23.6-99.5c-1.3-5.4-6.1-9.2-11.7-9.2h-13.3c-5.5 0-10.3 3.8-11.7 9.1c-24.4 99-24 96.2-24.8 103.7c-.1-1.1-.2-2.5-.5-4.2c-.7-5.2-14.1-73.3-19.1-99c-1.1-5.6-6-9.7-11.8-9.7h-16.8c-7.8 0-13.5 7.3-11.7 14.8c8 32.6 26.7 109.5 33.2 136c1.3 5.4 6.1 9.1 11.7 9.1h25.2c5.5 0 10.3-3.7 11.6-9.1l17.9-71.4c1.5-6.2 2.5-12 3-17.3l2.9 17.3c.1.4 12.6 50.5 17.9 71.4c1.3 5.3 6.1 9.1 11.6 9.1h24.7c5.5 0 10.3-3.7 11.6-9.1c20.8-81.9 30.2-119 34.5-136c1.9-7.6-3.8-14.9-11.6-14.9h-15.8z" />
-                        </svg>
-                    </a>
-                </div>
-                {{-- <div
+        </div>
+        </form>
+        <div class="sticky-buttons">
+            <div>
+                <a type="button" class="" data-toggle="modal" data-target="#myModal">
+
+                    <svg width="18" height="24" viewBox="0 0 384 512" xmlns="http://www.w3.org/2000/svg">
+                        <path fill="#ffffff"
+                            d="M369.9 97.9L286 14C277 5 264.8-.1 252.1-.1H48C21.5 0 0 21.5 0 48v416c0 26.5 21.5 48 48 48h288c26.5 0 48-21.5 48-48V131.9c0-12.7-5.1-25-14.1-34M332.1 128H256V51.9zM48 464V48h160v104c0 13.3 10.7 24 24 24h104v288zm220.1-208c-5.7 0-10.6 4-11.7 9.5c-20.6 97.7-20.4 95.4-21 103.5c-.2-1.2-.4-2.6-.7-4.3c-.8-5.1.3.2-23.6-99.5c-1.3-5.4-6.1-9.2-11.7-9.2h-13.3c-5.5 0-10.3 3.8-11.7 9.1c-24.4 99-24 96.2-24.8 103.7c-.1-1.1-.2-2.5-.5-4.2c-.7-5.2-14.1-73.3-19.1-99c-1.1-5.6-6-9.7-11.8-9.7h-16.8c-7.8 0-13.5 7.3-11.7 14.8c8 32.6 26.7 109.5 33.2 136c1.3 5.4 6.1 9.1 11.7 9.1h25.2c5.5 0 10.3-3.7 11.6-9.1l17.9-71.4c1.5-6.2 2.5-12 3-17.3l2.9 17.3c.1.4 12.6 50.5 17.9 71.4c1.3 5.3 6.1 9.1 11.6 9.1h24.7c5.5 0 10.3-3.7 11.6-9.1c20.8-81.9 30.2-119 34.5-136c1.9-7.6-3.8-14.9-11.6-14.9h-15.8z" />
+                    </svg>
+                </a>
+            </div>
+            {{-- <div
 
           >
           <a type="button" class="" data-toggle="modal" data-target="#myModal1">
@@ -6433,8 +6516,8 @@
         </a>
 
           </div> --}}
-            </div>
         </div>
+    </div>
     </div>
 
 
@@ -8075,16 +8158,14 @@
             }
         </script>
 
-    <script>
-        $(document).ready(function() {
+        <script>
+            $(document).ready(function() {
 
-            $('.formSubmit').on('submit', function(e) {
-                $('.on-submit-disable-button').prop('disabled', true);
-            });
-        })
-
-
-    </script>
+                $('.formSubmit').on('submit', function(e) {
+                    $('.on-submit-disable-button').prop('disabled', true);
+                });
+            })
+        </script>
 
 
-@endsection
+    @endsection

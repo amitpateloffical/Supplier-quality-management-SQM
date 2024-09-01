@@ -188,7 +188,7 @@
                             ->get();
                         $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
                         $auditCollect = DB::table('audit_reviewers_details')
-                            ->where(['doc_id' => $document->id, 'type' =>'CC', 'user_id' => Auth::user()->id])
+                            ->where(['doc_id' => $document->id, 'type' => 'CC', 'user_id' => Auth::user()->id])
                             ->latest()
                             ->first();
                     @endphp
@@ -281,35 +281,35 @@
                                     <h4 class="modal-title">Audit Reviewers</h4>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                 </div>
-                                    <form action="{{ route('store_audit_review', $document->id) }}" method="POST">
-                                        @csrf
-                                        <div class="modal-body">
-                                            <div class="group-input">
-                                                <label for="Reviewer commnet">Reviewer Comment <span id=""
-                                                        class="text-danger">*</span></label>
-                                                <div><small class="text-primary">Please insert "NA" in the data field if it
-                                                        does not require completion</small></div>
-                                                <textarea {{ $auditCollect ? 'disabled' : '' }} class="summernote w-100" name="reviewer_comment" id="summernote-17">{{ $auditCollect ? $auditCollect->reviewer_comment : '' }}</textarea>
-                                            </div>
-                                            <div class="group-input">
-                                                <label for="Reviewer Completed By">Reviewer Completed By</label>
-                                                <input disabled type="text" class="form-control"
-                                                    name="reviewer_completed_by" id="reviewer_completed_by"
-                                                    value="{{ $auditCollect ? $auditCollect->reviewer_comment_by : '' }}">
-                                            </div>
-                                            <div class="group-input">
-                                                <label for="Reviewer Completed on">Reviewer Completed On</label>
-                                                <input disabled type="text" class="form-control"
-                                                    name="reviewer_completed_on" id="reviewer_completed_on"
-                                                    value="{{ $auditCollect ? $auditCollect->reviewer_comment_on : '' }}">
-                                            </div>
-                                            <input type="hidden" id="type" name="type" value="CC">
+                                <form action="{{ route('store_audit_review', $document->id) }}" method="POST">
+                                    @csrf
+                                    <div class="modal-body">
+                                        <div class="group-input">
+                                            <label for="Reviewer commnet">Reviewer Comment <span id=""
+                                                    class="text-danger">*</span></label>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it
+                                                    does not require completion</small></div>
+                                            <textarea {{ $auditCollect ? 'disabled' : '' }} class="summernote w-100" name="reviewer_comment" id="summernote-17">{{ $auditCollect ? $auditCollect->reviewer_comment : '' }}</textarea>
                                         </div>
-                                        <div class="modal-footer">
-                                            {!! $auditCollect ? '' : '<button type="submit" >Submit</button>' !!}
-                                            <button type="button" data-bs-dismiss="modal">Close</button>
+                                        <div class="group-input">
+                                            <label for="Reviewer Completed By">Reviewer Completed By</label>
+                                            <input disabled type="text" class="form-control" name="reviewer_completed_by"
+                                                id="reviewer_completed_by"
+                                                value="{{ $auditCollect ? $auditCollect->reviewer_comment_by : '' }}">
                                         </div>
-                                    </form>
+                                        <div class="group-input">
+                                            <label for="Reviewer Completed on">Reviewer Completed On</label>
+                                            <input disabled type="text" class="form-control" name="reviewer_completed_on"
+                                                id="reviewer_completed_on"
+                                                value="{{ $auditCollect ? $auditCollect->reviewer_comment_on : '' }}">
+                                        </div>
+                                        <input type="hidden" id="type" name="type" value="CC">
+                                    </div>
+                                    <div class="modal-footer">
+                                        {!! $auditCollect ? '' : '<button type="submit" >Submit</button>' !!}
+                                        <button type="button" data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                </form>
 
                             </div>
                         </div>
@@ -332,10 +332,10 @@
                             <div style="margin-bottom: 5px;  font-weight: bold;">Due Date : {{ $document->due_date }}</div>
 
                         </div>
-                    </div>
-                </table>
+        </div>
+        </table>
 
-            </header>
+        </header>
 
         <div class="inner-block">
             <div class="division">
@@ -369,7 +369,8 @@
                             </td>
                             <td>
                                 <div>
-                                    <strong> Data Field Name :</strong>{{ $dataDemo->activity_type ? $dataDemo->activity_type : 'Not Applicable' }}
+                                    <strong> Data Field Name
+                                        :</strong>{{ $dataDemo->activity_type ? $dataDemo->activity_type : 'Not Applicable' }}
                                 </div>
                                 <div style="margin-top: 5px;">
                                     @if ($dataDemo->activity_type == 'Activity Log')
@@ -397,8 +398,14 @@
                             </td>
                             <td>
                                 <div>
-                                    <strong> Action Name
-                                        :</strong>{{ $dataDemo->action ? $dataDemo->action : 'Not Applicable' }}
+                                    <strong> Action Name :</strong>
+                                    {{-- {{ $dataDemo->action ? $dataDemo->action : 'Not Applicable' }} --}}
+                                    @if ($dataDemo->action == 'Notification')
+                                        <a href="{{ route('notification-detail', ['slug' => 'ChangeControl', 'id' => $dataDemo->id]) }}"
+                                            target = "_blank">{{ $dataDemo->action ? $dataDemo->action : 'Not Applicable' }}<a>
+                                            @else
+                                                {{ $dataDemo->action ? $dataDemo->action : 'Not Applicable' }}
+                                    @endif
 
                                 </div>
                             </td>
@@ -417,7 +424,7 @@
                     @endforeach
                 </table>
             </div>
-        </div> 
+        </div>
         <div style="float: inline-end; margin: 10px;">
             <style>
                 .pagination>.active>span {

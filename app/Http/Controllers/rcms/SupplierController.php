@@ -6028,7 +6028,7 @@ class SupplierController extends Controller
                             $history->action_name = "";
                             $history->mailUserId = $userId;
                             $history->role_name = "Initiator";
-                            $history->save(); 
+                            $history->save();
                         } catch (\Throwable $e) {
                             \Log::error('Mail failed to send: ' . $e->getMessage());
                         }
@@ -6112,7 +6112,7 @@ class SupplierController extends Controller
                             $history->action_name = "";
                             $history->mailUserId = $userId;
                             $history->role_name = "CQA";
-                            $history->save(); 
+                            $history->save();
                         } catch (\Throwable $e) {
                             \Log::error('Mail failed to send: ' . $e->getMessage());
                         }
@@ -6157,7 +6157,7 @@ class SupplierController extends Controller
                     $history->previous = "Null";
                 } else {
                     $history->previous = $lastDocument->prepurchase_sample_by . ' , ' . $lastDocument->prepurchase_sample_on;
-                }                
+                }
                 $history->current = $supplier->prepurchase_sample_by . ' , ' . $supplier->prepurchase_sample_on;
 
                 $history->action = 'Pre-Purchase Sample Required';
@@ -6175,7 +6175,7 @@ class SupplierController extends Controller
                     $history->action_name = 'Update';
                 }
                 $history->save();
-                
+
                 $list = Helpers::getPurchaseDepartmentList($supplier->division_id);
                 $userIds = collect($list)->pluck('user_id')->toArray();
                 $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
@@ -6199,7 +6199,7 @@ class SupplierController extends Controller
                         $history->action_name = "";
                         $history->mailUserId = $userId;
                         $history->role_name = "Purchase Department";
-                        $history->save(); 
+                        $history->save();
                     } catch (\Throwable $e) {
                         \Log::error('Mail failed to send: ' . $e->getMessage());
                     }
@@ -6284,7 +6284,7 @@ class SupplierController extends Controller
                         $history->action_name = "";
                         $history->mailUserId = $userId;
                         $history->role_name = "CQA";
-                        $history->save(); 
+                        $history->save();
                     } catch (\Throwable $e) {
                         \Log::error('Mail failed to send: ' . $e->getMessage());
                     }
@@ -6309,7 +6309,7 @@ class SupplierController extends Controller
                         }
                     // }
                 }
-                    
+
                 $supplier->update();
 
                 toastr()->success('Document Sent');
@@ -6347,7 +6347,7 @@ class SupplierController extends Controller
                     $history->action_name = 'Update';
                 }
                 $history->save();
-                
+
                 $list = Helpers::getFormulationDepartmentList($supplier->division_id);
                 $userIds = collect($list)->pluck('user_id')->toArray();
                 $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
@@ -6371,7 +6371,7 @@ class SupplierController extends Controller
                         $history->action_name = "";
                         $history->mailUserId = $userId;
                         $history->role_name = "Formulation Department";
-                        $history->save(); 
+                        $history->save();
                     } catch (\Throwable $e) {
                         \Log::error('Mail failed to send: ' . $e->getMessage());
                     }
@@ -6433,7 +6433,7 @@ class SupplierController extends Controller
                     $history->action_name = 'Update';
                 }
                 $history->save();
-                
+
                 $list = Helpers::getPurchaseDepartmentList($supplier->division_id);
                 $userIds = collect($list)->pluck('user_id')->toArray();
                 $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
@@ -6457,7 +6457,7 @@ class SupplierController extends Controller
                         $history->action_name = "";
                         $history->mailUserId = $userId;
                         $history->role_name = "Purchase Department";
-                        $history->save(); 
+                        $history->save();
                     } catch (\Throwable $e) {
                         \Log::error('Mail failed to send: ' . $e->getMessage());
                     }
@@ -6518,7 +6518,7 @@ class SupplierController extends Controller
                     $history->action_name = 'Update';
                 }
                 $history->save();
-                
+
                 $list = Helpers::getCqaDepartmentList($supplier->division_id);
                 $userIds = collect($list)->pluck('user_id')->toArray();
                 $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
@@ -6542,7 +6542,7 @@ class SupplierController extends Controller
                         $history->action_name = "";
                         $history->mailUserId = $userId;
                         $history->role_name = "CQA";
-                        $history->save(); 
+                        $history->save();
                     } catch (\Throwable $e) {
                         \Log::error('Mail failed to send: ' . $e->getMessage());
                     }
@@ -6892,7 +6892,7 @@ class SupplierController extends Controller
                         $history->action_name = "";
                         $history->mailUserId = $userId;
                         $history->role_name = "Purchase Department";
-                        $history->save(); 
+                        $history->save();
                     } catch (\Throwable $e) {
                         \Log::error('Mail failed to send: ' . $e->getMessage());
                     }
@@ -6941,7 +6941,7 @@ class SupplierController extends Controller
                         $history->action_name = "";
                         $history->mailUserId = $userId;
                         $history->role_name = "Formulation Department";
-                        $history->save(); 
+                        $history->save();
                     } catch (\Throwable $e) {
                         \Log::error('Mail failed to send: ' . $e->getMessage());
                     }
@@ -6990,7 +6990,7 @@ class SupplierController extends Controller
                         $history->action_name = "";
                         $history->mailUserId = $userId;
                         $history->role_name = "Initiator";
-                        $history->save(); 
+                        $history->save();
                     } catch (\Throwable $e) {
                         \Log::error('Mail failed to send: ' . $e->getMessage());
                     }
@@ -7014,7 +7014,7 @@ class SupplierController extends Controller
                             }
                         }
                     // }
-                }                
+                }
                 $supplier->update();
 
                 toastr()->success('Document Sent to Manufacturer Rejected');
@@ -7063,7 +7063,7 @@ class SupplierController extends Controller
                 $history->action_name = 'Update';
             }
             $history->save();
-           
+
             // $list = Helpers::getCqaDepartmentList($supplier->division_id);
             // foreach ($list as $u) {
             //     if($u->q_m_s_divisions_id == $supplier->division_id){
@@ -7343,7 +7343,7 @@ class SupplierController extends Controller
                     $history->action_name = 'Update';
                 }
                 $history->save();
-                
+
                 $list = Helpers::getPurchaseDepartmentList($supplier->division_id);
                 $userIds = collect($list)->pluck('user_id')->toArray();
                 $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
@@ -7367,7 +7367,7 @@ class SupplierController extends Controller
                         $history->action_name = "";
                         $history->mailUserId = $userId;
                         $history->role_name = "Purchase Department";
-                        $history->save(); 
+                        $history->save();
                     } catch (\Throwable $e) {
                         \Log::error('Mail failed to send: ' . $e->getMessage());
                     }
@@ -7430,7 +7430,7 @@ class SupplierController extends Controller
                     $history->action_name = 'Update';
                 }
                 $history->save();
-                
+
                 $list = Helpers::getFormulationDepartmentList($supplier->division_id);
                 $userIds = collect($list)->pluck('user_id')->toArray();
                 $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
@@ -7454,7 +7454,7 @@ class SupplierController extends Controller
                         $history->action_name = "";
                         $history->mailUserId = $userId;
                         $history->role_name = "Formulation Department";
-                        $history->save(); 
+                        $history->save();
                     } catch (\Throwable $e) {
                         \Log::error('Mail failed to send: ' . $e->getMessage());
                     }
@@ -7517,7 +7517,7 @@ class SupplierController extends Controller
                     $history->action_name = 'Update';
                 }
                 $history->save();
-                
+
                 $list = Helpers::getCqaDepartmentList($supplier->division_id);
                 $userIds = collect($list)->pluck('user_id')->toArray();
                 $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
@@ -7541,7 +7541,7 @@ class SupplierController extends Controller
                         $history->action_name = "";
                         $history->mailUserId = $userId;
                         $history->role_name = "CQA";
-                        $history->save(); 
+                        $history->save();
                     } catch (\Throwable $e) {
                         \Log::error('Mail failed to send: ' . $e->getMessage());
                     }
@@ -7628,7 +7628,7 @@ class SupplierController extends Controller
                         $history->action_name = "";
                         $history->mailUserId = $userId;
                         $history->role_name = "Purchase Department";
-                        $history->save(); 
+                        $history->save();
                     } catch (\Throwable $e) {
                         \Log::error('Mail failed to send: ' . $e->getMessage());
                     }
@@ -7713,7 +7713,7 @@ class SupplierController extends Controller
                         $history->action_name = "";
                         $history->mailUserId = $userId;
                         $history->role_name = "CQA";
-                        $history->save(); 
+                        $history->save();
                     } catch (\Throwable $e) {
                         \Log::error('Mail failed to send: ' . $e->getMessage());
                     }
@@ -7774,7 +7774,7 @@ class SupplierController extends Controller
                     $history->action_name = 'Update';
                 }
                 $history->save();
-                
+
                 $list = Helpers::getInitiatorUserList($supplier->division_id);
                 $userIds = collect($list)->pluck('user_id')->toArray();
                 $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
@@ -7798,7 +7798,7 @@ class SupplierController extends Controller
                         $history->action_name = "";
                         $history->mailUserId = $userId;
                         $history->role_name = "Initiator";
-                        $history->save(); 
+                        $history->save();
                     } catch (\Throwable $e) {
                         \Log::error('Mail failed to send: ' . $e->getMessage());
                     }
@@ -7859,7 +7859,7 @@ class SupplierController extends Controller
                     $history->action_name = 'Update';
                 }
                 $history->save();
-                
+
                 $list = Helpers::getPurchaseDepartmentList($supplier->division_id);
                 $userIds = collect($list)->pluck('user_id')->toArray();
                 $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
@@ -7883,7 +7883,7 @@ class SupplierController extends Controller
                         $history->action_name = "";
                         $history->mailUserId = $userId;
                         $history->role_name = "Purchase Department";
-                        $history->save(); 
+                        $history->save();
                     } catch (\Throwable $e) {
                         \Log::error('Mail failed to send: ' . $e->getMessage());
                     }
@@ -7944,7 +7944,7 @@ class SupplierController extends Controller
                     $history->action_name = 'Update';
                 }
                 $history->save();
-                    
+
 
                 $list = Helpers::getCqaDepartmentList($supplier->division_id);
                 $userIds = collect($list)->pluck('user_id')->toArray();
@@ -7969,7 +7969,7 @@ class SupplierController extends Controller
                         $history->action_name = "";
                         $history->mailUserId = $userId;
                         $history->role_name = "CQA";
-                        $history->save(); 
+                        $history->save();
                     } catch (\Throwable $e) {
                         \Log::error('Mail failed to send: ' . $e->getMessage());
                     }
@@ -8018,7 +8018,7 @@ class SupplierController extends Controller
                         $history->action_name = "";
                         $history->mailUserId = $userId;
                         $history->role_name = "Initiator";
-                        $history->save(); 
+                        $history->save();
                     } catch (\Throwable $e) {
                         \Log::error('Mail failed to send: ' . $e->getMessage());
                     }
@@ -8067,7 +8067,7 @@ class SupplierController extends Controller
                         $history->action_name = "";
                         $history->mailUserId = $userId;
                         $history->role_name = "Formulation Department";
-                        $history->save(); 
+                        $history->save();
                     } catch (\Throwable $e) {
                         \Log::error('Mail failed to send: ' . $e->getMessage());
                     }
@@ -8140,7 +8140,7 @@ class SupplierController extends Controller
                 $history->action_name = 'Update';
             }
             $history->save();
-           
+
             $list = Helpers::getCqaDepartmentList($supplier->division_id);
             $userIds = collect($list)->pluck('user_id')->toArray();
             $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
@@ -8164,7 +8164,7 @@ class SupplierController extends Controller
                     $history->action_name = "";
                     $history->mailUserId = $userId;
                     $history->role_name = "CQA";
-                    $history->save(); 
+                    $history->save();
                 } catch (\Throwable $e) {
                     \Log::error('Mail failed to send: ' . $e->getMessage());
                 }
@@ -8328,7 +8328,7 @@ class SupplierController extends Controller
                     $history->action_name = "";
                     $history->mailUserId = $userId;
                     $history->role_name = "Purchase Department";
-                    $history->save(); 
+                    $history->save();
                 } catch (\Throwable $e) {
                     \Log::error('Mail failed to send: ' . $e->getMessage());
                 }
@@ -8377,7 +8377,7 @@ class SupplierController extends Controller
                     $history->action_name = "";
                     $history->mailUserId = $userId;
                     $history->role_name = "Formulation Department";
-                    $history->save(); 
+                    $history->save();
                 } catch (\Throwable $e) {
                     \Log::error('Mail failed to send: ' . $e->getMessage());
                 }
@@ -8426,7 +8426,7 @@ class SupplierController extends Controller
                     $history->action_name = "";
                     $history->mailUserId = $userId;
                     $history->role_name = "Initiator";
-                    $history->save(); 
+                    $history->save();
                 } catch (\Throwable $e) {
                     \Log::error('Mail failed to send: ' . $e->getMessage());
                 }
@@ -8452,7 +8452,7 @@ class SupplierController extends Controller
                 // }
             }
 
-            
+
             $supplier->update();
             toastr()->success('Document Sent');
             return back();
@@ -8497,7 +8497,7 @@ class SupplierController extends Controller
                 $history->action_name = 'Update';
             }
             $history->save();
-            
+
             $list = Helpers::getCqaDepartmentList($supplier->division_id);
             $userIds = collect($list)->pluck('user_id')->toArray();
             $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
@@ -8521,7 +8521,7 @@ class SupplierController extends Controller
                     $history->action_name = "";
                     $history->mailUserId = $userId;
                     $history->role_name = "CQA";
-                    $history->save(); 
+                    $history->save();
                 } catch (\Throwable $e) {
                     \Log::error('Mail failed to send: ' . $e->getMessage());
                 }
@@ -8570,7 +8570,7 @@ class SupplierController extends Controller
                     $history->action_name = "";
                     $history->mailUserId = $userId;
                     $history->role_name = "Initiator";
-                    $history->save(); 
+                    $history->save();
                 } catch (\Throwable $e) {
                     \Log::error('Mail failed to send: ' . $e->getMessage());
                 }
@@ -8619,7 +8619,7 @@ class SupplierController extends Controller
                     $history->action_name = "";
                     $history->mailUserId = $userId;
                     $history->role_name = "Formulation Department";
-                    $history->save(); 
+                    $history->save();
                 } catch (\Throwable $e) {
                     \Log::error('Mail failed to send: ' . $e->getMessage());
                 }
@@ -8644,7 +8644,7 @@ class SupplierController extends Controller
                     }
                 // }
             }
-            
+
             $supplier->update();
             toastr()->success('Document Sent');
             return back();
@@ -8696,7 +8696,7 @@ class SupplierController extends Controller
             return view('frontend.forms.action-item', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
 
         }
-  
+
         if ($request->revision == "changecontrol") {
             $supplierA->originator = User::where('id', $supplierA->initiator_id)->value('name');
             return view('frontend.change-control.new-change-control', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','hod','cft','pre'));
@@ -8745,169 +8745,169 @@ class SupplierController extends Controller
                 if($notification){
                     $supplierId = $notification->supplier_id;
                     $parentData = Supplier::where('id', $supplierId)->first();
-        
+
                     $userId = explode(',', $notification->mailUserId);
                     $getName = User::whereIn('id', $userId)->get(['name', 'email']);
                     return view('frontend.supplier.notification_detail', compact('notification', 'getName', 'parentData'));
                 }
                 break;
-                
-                
+
+
             case 'SupplierSite':
                 $notification = SupplierSiteAuditTrail::find($id);
                 if($notification){
                     $supplierSiteId = $notification->supplier_site_id;
                     $parentData = SupplierSite::where('id', $supplierSiteId)->first();
-        
+
                     $userId = explode(',', $notification->mailUserId);
                     $getName = User::whereIn('id', $userId)->get(['name', 'email']);
                     return view('frontend.supplier.notification_detail', compact('notification', 'getName', 'parentData'));
                 }
                 break;
-                   
-                
+
+
             case 'SupplierAudit':
                 $notification = ExternalAuditTrailSupplier::find($id);
                 if($notification){
                     $supplierAuditId = $notification->audit_id;
                     $parentData = SupplierAudit::where('id', $supplierAuditId)->first();
-        
+
                     $userId = explode(',', $notification->mailUserId);
                     $getName = User::whereIn('id', $userId)->get(['name', 'email']);
                     return view('frontend.supplier.notification_detail', compact('notification', 'getName', 'parentData'));
                 }
                 break;
-                   
-                
+
+
             case 'RiskAssessment':
                 $notification = RiskManagement::find($id);
                 if($notification){
                     $riskAssessmentId = $notification->audit_id;
-                    $parentData = SupplierSite::where('id', $risk_id)->first();
-        
+                    $parentData = RiskManagement::where('id', $risk_id)->first();
+
                     $userId = explode(',', $notification->mailUserId);
                     $getName = User::whereIn('id', $userId)->get(['name', 'email']);
                     return view('frontend.supplier.notification_detail', compact('notification', 'getName', 'parentData'));
                 }
                 break;
-                   
-                
+
+
             case 'ChangeControl':
                 $notification = RcmDocHistory::find($id);
                 if($notification){
                     $changeControlId = $notification->cc_id;
                     $parentData = CC::where('id', $changeControlId)->first();
-        
+
                     $userId = explode(',', $notification->mailUserId);
                     $getName = User::whereIn('id', $userId)->get(['name', 'email']);
                     return view('frontend.supplier.notification_detail', compact('notification', 'getName', 'parentData'));
                 }
                 break;
-                   
-                
+
+
             case 'CAPA':
                 $notification = CapaAuditTrial::find($id);
                 if($notification){
                     $CapaId = $notification->capa_id;
                     $parentData = Capa::where('id', $CapaId)->first();
-        
+
                     $userId = explode(',', $notification->mailUserId);
                     $getName = User::whereIn('id', $userId)->get(['name', 'email']);
                     return view('frontend.supplier.notification_detail', compact('notification', 'getName', 'parentData'));
                 }
                 break;
-                   
-                
+
+
             case 'Observation':
                 $notification = AuditTrialObservation::find($id);
                 if($notification){
                     $observationId = $notification->Observation_id;
                     $parentData = Observation::where('id', $observationId)->first();
-        
+
                     $userId = explode(',', $notification->mailUserId);
                     $getName = User::whereIn('id', $userId)->get(['name', 'email']);
                     return view('frontend.supplier.notification_detail', compact('notification', 'getName', 'parentData'));
                 }
                 break;
-                   
-                
+
+
             case 'Deviation':
                 $notification = DeviationAuditTrail::find($id);
                 if($notification){
                     $deviationId = $notification->deviation_id;
                     $parentData = Deviation::where('id', $deviationId)->first();
-        
+
                     $userId = explode(',', $notification->mailUserId);
                     $getName = User::whereIn('id', $userId)->get(['name', 'email']);
                     return view('frontend.supplier.notification_detail', compact('notification', 'getName', 'parentData'));
                 }
                 break;
-                   
-                
+
+
             case 'ActionItem':
                 $notification = ActionItemHistory::find($id);
                 if($notification){
                     $actionItemId = $notification->cc_id;
                     $parentData = ActionItem::where('id', $actionItemId)->first();
-        
+
                     $userId = explode(',', $notification->mailUserId);
                     $getName = User::whereIn('id', $userId)->get(['name', 'email']);
                     return view('frontend.supplier.notification_detail', compact('notification', 'getName', 'parentData'));
                 }
                 break;
-                   
-                
+
+
             case 'Extension':
-                $notification = ExtensionAuditTrail::find($id);
+                $notification = ExtensionNewAuditTrail::find($id);
                 if($notification){
                     $extensionId = $notification->extension_id;
-                    $parentData = SupplierSite::where('id', $extensionId)->first();
-        
+                    $parentData = extension_new::where('id', $extensionId)->first();
+
                     $userId = explode(',', $notification->mailUserId);
                     $getName = User::whereIn('id', $userId)->get(['name', 'email']);
                     return view('frontend.supplier.notification_detail', compact('notification', 'getName', 'parentData'));
                 }
                 break;
-                   
-                
+
+
             case 'EffectivenessCheck':
                 $notification = EffectivenessCheckAuditTrail::find($id);
                 if($notification){
                     $effectivenessCheckId = $notification->effectiveness_check_id;
                     $parentData = EffectivenessCheck::where('id', $effectivenessCheckId)->first();
-        
+
                     $userId = explode(',', $notification->mailUserId);
                     $getName = User::whereIn('id', $userId)->get(['name', 'email']);
                     return view('frontend.supplier.notification_detail', compact('notification', 'getName', 'parentData'));
                 }
                 break;
-                   
-                
+
+
             case 'SCAR':
                 $notification = ScarAuditTrail::find($id);
                 if($notification){
                     $ScarId = $notification->scar_id;
                     $parentData = SCAR::where('id', $ScarId)->first();
-        
+
                     $userId = explode(',', $notification->mailUserId);
                     $getName = User::whereIn('id', $userId)->get(['name', 'email']);
                     return view('frontend.supplier.notification_detail', compact('notification', 'getName', 'parentData'));
                 }
                 break;
-                   
-                
+
+
             case 'RCA':
                 $notification = RootAuditTrial::find($id);
                 if($notification){
                     $rootCauseId = $notification->root_id;
                     $parentData = RootCauseAnalysis::where('id', $rootCauseId)->first();
-        
+
                     $userId = explode(',', $notification->mailUserId);
                     $getName = User::whereIn('id', $userId)->get(['name', 'email']);
                     return view('frontend.supplier.notification_detail', compact('notification', 'getName', 'parentData'));
                 }
                 break;
-            
+
 
             default:
                 return $slug;

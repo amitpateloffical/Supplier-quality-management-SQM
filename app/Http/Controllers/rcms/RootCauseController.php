@@ -909,8 +909,8 @@ $history->save();
 
         if (!empty($request->root_cause_initial_attachment)) {
             if ($root->root_cause_initial_attachment) {
-                $existinginitialFiles = json_decode($root->root_cause_initial_attachment, true); // Convert to associative array
-                if (is_array($existinginitialFiles )) {
+                $existingFiles = json_decode($root->root_cause_initial_attachment, true); // Convert to associative array
+                if (is_array($existingFiles )) {
                     $files = array_values($existingFiles);
                 }
             }
@@ -942,8 +942,8 @@ $history->save();
 
         if (!empty($request->cft_attchament_new)) {
             if ($root->cft_attchament_new) {
-                $existingCFTFiles = json_decode($root->cft_attchament_new, true); // Convert to associative array
-                if (is_array($existingCFTFiles)) {
+                $existingFiles = json_decode($root->cft_attchament_new, true); // Convert to associative array
+                if (is_array($existingFiles)) {
                     $files = array_values($existingFiles); // Re-index the array to ensure it's a proper array
                 }
             }
@@ -1673,7 +1673,36 @@ $history->save();
 
                 $history->save();
 
+
                 $list = Helpers::getInitiatorUserList($root->division_id);
+
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if(!empty($users)){
+                    try {
+                        $history = new RootAuditTrial();
+                        $history->supplier_id = $id;
+                        $history->activity_type = "Not Applicable";
+                        $history->previous = "Not Applicable";
+                        $history->current = "Not Applicable";
+                        $history->action = 'Notification';
+                        $history->comment = "";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable";
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = "Investigation in Progress";
+                        $history->stage = "";
+                        $history->action_name = "";
+                        $history->mailUserId = $userId;
+                        $history->role_name = "Initiator";
+                        $history->save(); 
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $root->division_id){
                         $email = Helpers::getQAEmail($u->user_id);
@@ -1775,6 +1804,33 @@ $history->save();
                 }
                 $history->save();
                 $list = Helpers::getQAUserList($root->division_id);
+                 $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if(!empty($users)){
+                    try {
+                        $history = new RootAuditTrial();
+                        $history->supplier_id = $id;
+                        $history->activity_type = "Not Applicable";
+                        $history->previous = "Not Applicable";
+                        $history->current = "Not Applicable";
+                        $history->action = 'Notification';
+                        $history->comment = "";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable";
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = "Closed - Done";
+                        $history->stage = "";
+                        $history->action_name = "";
+                        $history->mailUserId = $userId;
+                        $history->role_name = "QA";
+                        $history->save(); 
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $supplier->division_id){
                         $email = Helpers::getInitiatorEmail($u->user_id);
@@ -1852,8 +1908,35 @@ $history->save();
                 $history->save();
     
                 $list = Helpers::getInitiatorUserList($root->division_id);
-                  
-                    foreach ($list as $u) {
+
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if(!empty($users)){
+                    try {
+                        $history = new RootAuditTrial();
+                        $history->supplier_id = $id;
+                        $history->activity_type = "Not Applicable";
+                        $history->previous = "Not Applicable";
+                        $history->current = "Not Applicable";
+                        $history->action = 'Notification';
+                        $history->comment = "";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable";
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = "Closed-Cancelled";
+                        $history->stage = "";
+                        $history->action_name = "";
+                        $history->mailUserId = $userId;
+                        $history->role_name = "Initiator";
+                        $history->save(); 
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+                 foreach ($list as $u) {
                         // if($u->q_m_s_divisions_id == $root->division_id){
                             $email = Helpers::getQAEmail($u->user_id);
                             if ($email !== null) {
@@ -1928,9 +2011,8 @@ $history->save();
                 $history->stage = 'Pending QA Review';
                 $history->change_from = $lastDocument->status;
                 $history->change_to = "Investigation in Progress";
-                // $history->action = 'More Info Required';
-                
-                 if (is_null($lastDocument->moreinfo_on ) || $lastDocument->moreinfo_on  === '') {
+                $history->action = 'More Info Required';
+                if (is_null($lastDocument->moreinfo_on ) || $lastDocument->moreinfo_on  === '') {
                     $history->action_name = 'New';
                 } else {
                     $history->action_name = 'Update';
@@ -1940,24 +2022,21 @@ $history->save();
                 $root->update();
                 toastr()->success('Document Sent 8');
                 return back();
+              }
+              } else {
+               toastr()->error('E-signature Not match');
+              return back();
             }
-        } else {
-            toastr()->error('E-signature Not match');
-            return back();
         }
-    }
-
-
-    public function rootAuditTrial($id)
-    {
+        public function rootAuditTrial($id)
+       {
         $audit = RootAuditTrial::where('root_id', $id)->orderByDESC('id')->paginate(5);
         $today = Carbon::now()->format('d-m-y');
         $document = RootCauseAnalysis::where('id', $id)->first();
         // dd($document);
         $document->originator = User::where('id', $document->initiator_id)->value('name');
-
         return view("frontend.root-cause-analysis.root-audit-trail", compact('audit', 'document', 'today'));
-    }
+       }
 
     public function auditDetailsroot($id)
     {
@@ -2021,6 +2100,29 @@ $history->save();
             $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
             $canvas->page_text($width / 4, $height / 2, $doc->status, null, 25, [0, 0, 0], 2, 6, -20);
             return $pdf->stream('Root-Audit' . $id . '.pdf');
+        }
+    }
+
+
+    public function notificationDetail($slug, $id){
+        switch ($slug) {
+               
+            case 'RCA':
+                $notification = RootAuditTrial::find($id);
+                if($notification){
+                    $rootCauseId = $notification->root_id;
+                    $parentData = RootCauseAnalysis::where('id', $rootCauseId)->first();
+        
+                    $userId = explode(',', $notification->mailUserId);
+                    $getName = User::whereIn('id', $userId)->get(['name', 'email']);
+                    return view('frontend.supplier.notification_detail', compact('notification', 'getName', 'parentData'));
+                }
+                break;
+            
+
+            default:
+                return $slug;
+                break;
         }
     }
 }

@@ -399,7 +399,12 @@
                             <td>
                                 <div>
                                     <strong> Action Name
-                                        :</strong>{{ $dataDemo->action ? $dataDemo->action : 'Not Applicable' }}
+                                        :</strong>
+                                        @if($dataDemo->action == "Notification")
+                                          <a href="{{ route('notification-detail', ['slug' => 'RCA', 'id' => $dataDemo->id]) }}" target = "_blank">{{ $dataDemo->action ? $dataDemo->action : 'Not Applicable' }}<a>
+                                         @else
+                                           {{ $dataDemo->action ? $dataDemo->action : 'Not Applicable' }}  
+                                        @endif
 
                                 </div>
                             </td>

@@ -1306,7 +1306,7 @@
                                     </tr>
 
                                     <tr>
-                                        <th class="w-20">Closed - Cancelled By By</th>
+                                        <th class="w-20">Closed - Cancelled By</th>
                                         <td class="w-30">
                                             @if ($data->cancelled_by)
                                                 {{ $data->cancelled_by }}

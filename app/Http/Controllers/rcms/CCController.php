@@ -3206,7 +3206,7 @@ class CCController extends Controller
 
                 $history = new RcmDocHistory;
                 $history->cc_id = $id;
-                $history->activity_type = 'Submited By, Submited On';
+                $history->activity_type = 'Submitted By, Submitted On';
                 if (is_null($lastDocument->submitted_by) || $lastDocument->submitted_by === '') {
                     $history->previous = "";
                 } else {

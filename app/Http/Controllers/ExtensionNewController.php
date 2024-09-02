@@ -706,11 +706,11 @@ class ExtensionNewController extends Controller
 
         if ($lastextensionNew->justification_reason != $extensionNew->justification_reason || !empty($request->comment)) {
             $lastDocumentAuditTrail = ExtensionNewAuditTrail::where('extension_id', $extensionNew->id)
-                ->where('activity_type', 'Justification Reason')
+                ->where('activity_type', 'Justification / Reason')
                 ->exists();
             $history = new ExtensionNewAuditTrail;
             $history->extension_id = $id;
-            $history->activity_type = 'Justification Reason';
+            $history->activity_type = 'Justification / Reason';
             $history->previous = $lastextensionNew->justification_reason;
             $history->current = $extensionNew->justification_reason;
             $history->comment = $extensionNew->comment;

@@ -1120,7 +1120,33 @@ class ActionItemController extends Controller
                 $history->save();
 
                 $list = Helpers::getInitiatorUserList($openState->division_id);
-                  
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if(!empty($users)){
+                    try {
+                        $history = new ActionItemHistory();
+                        $history->supplier_id = $id;
+                        $history->activity_type = "Not Applicable";
+                        $history->previous = "Not Applicable";
+                        $history->current = "Not Applicable";
+                        $history->action = 'Notification';
+                        $history->comment = "";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable";
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = "Work In Progress";
+                        $history->stage = "";
+                        $history->action_name = "";
+                        $history->mailUserId = $userId;
+                        $history->role_name = "Initiator";
+                        $history->save(); 
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $root->division_id){
                         $email = Helpers::getActionOwnerEmail($u->user_id);
@@ -1204,6 +1230,34 @@ class ActionItemController extends Controller
 
 
                 $list = Helpers::getActionOwnerUserList($openState->division_id);
+
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if(!empty($users)){
+                    try {
+                        $history = new ActionItemHistory();
+                        $history->supplier_id = $id;
+                        $history->activity_type = "Not Applicable";
+                        $history->previous = "Not Applicable";
+                        $history->current = "Not Applicable";
+                        $history->action = 'Notification';
+                        $history->comment = "";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable";
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = "Closed-Done";
+                        $history->stage = "";
+                        $history->action_name = "";
+                        $history->mailUserId = $userId;
+                        $history->role_name = "Action Owner";
+                        $history->save(); 
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
               foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $root->division_id){
                         $email = Helpers::getInitiatorEmail($u->user_id);
@@ -1323,7 +1377,33 @@ class ActionItemController extends Controller
 
 
              $list = Helpers::getInitiatorUserList($openState->division_id);
-                  
+             $userIds = collect($list)->pluck('user_id')->toArray();
+             $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+             $userId = $users->pluck('id')->implode(',');
+             if(!empty($users)){
+                 try {
+                     $history = new ActionItemHistory();
+                     $history->supplier_id = $id;
+                     $history->activity_type = "Not Applicable";
+                     $history->previous = "Not Applicable";
+                     $history->current = "Not Applicable";
+                     $history->action = 'Notification';
+                     $history->comment = "";
+                     $history->user_id = Auth::user()->id;
+                     $history->user_name = Auth::user()->name;
+                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                     $history->origin_state = "Not Applicable";
+                     $history->change_to = "Not Applicable";
+                     $history->change_from = "Closed-Cancelled";
+                     $history->stage = "";
+                     $history->action_name = "";
+                     $history->mailUserId = $userId;
+                     $history->role_name = "Initiator";
+                     $history->save(); 
+                 } catch (\Throwable $e) {
+                     \Log::error('Mail failed to send: ' . $e->getMessage());
+                 }
+             } 
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $root->division_id){
                         $email = Helpers::getActionOwnerEmail($u->user_id);
@@ -1408,7 +1488,33 @@ class ActionItemController extends Controller
                 $history->save();
 
                 $list = Helpers::getActionOwnerUserList($openState->division_id);
-                  
+                $userIds = collect($list)->pluck('user_id')->toArray();
+             $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+             $userId = $users->pluck('id')->implode(',');
+             if(!empty($users)){
+                 try {
+                     $history = new ActionItemHistory();
+                     $history->supplier_id = $id;
+                     $history->activity_type = "Not Applicable";
+                     $history->previous = "Not Applicable";
+                     $history->current = "Not Applicable";
+                     $history->action = 'Notification';
+                     $history->comment = "";
+                     $history->user_id = Auth::user()->id;
+                     $history->user_name = Auth::user()->name;
+                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                     $history->origin_state = "Not Applicable";
+                     $history->change_to = "Not Applicable";
+                     $history->change_from = "Closed-Cancelled";
+                     $history->stage = "";
+                     $history->action_name = "";
+                     $history->mailUserId = $userId;
+                     $history->role_name = "Action Owner";
+                     $history->save(); 
+                 } catch (\Throwable $e) {
+                     \Log::error('Mail failed to send: ' . $e->getMessage());
+                 }
+             }   
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $root->division_id){
                         $email = Helpers::getInitiatorEmail($u->user_id);
@@ -1525,6 +1631,29 @@ class ActionItemController extends Controller
             $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
             $canvas->page_text($width / 4, $height / 2, $doc->status, null, 25, [0, 0, 0], 2, 6, -20);
             return $pdf->stream('ActionItem-Audit' . $id . '.pdf');
+        }
+    }
+
+
+
+    public function notificationDetail($slug, $id){
+        switch ($slug) {
+             
+            case 'ActionItem':
+                $notification = ActionItemHistory::find($id);
+                if($notification){
+                    $actionItemId = $notification->cc_id;
+                    $parentData = ActionItem::where('id', $actionItemId)->first();
+        
+                    $userId = explode(',', $notification->mailUserId);
+                    $getName = User::whereIn('id', $userId)->get(['name', 'email']);
+                    return view('frontend.supplier.notification_detail', compact('notification', 'getName', 'parentData'));
+                }
+                break;
+                   
+             default:
+                return $slug;
+                break;
         }
     }
 }

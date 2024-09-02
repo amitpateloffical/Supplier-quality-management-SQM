@@ -1128,6 +1128,24 @@ class DeviationController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
+
+        if (!empty ($request->Product_Details_Required)){
+            $history = new DeviationAuditTrail();
+            $history->deviation_id = $deviation->id;
+            $history->activity_type = 'Product/Batch Required';
+            $history->previous = "Null";
+            $history->current = $deviation->Product_Details_Required;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $deviation->status;
+            $history->action_name = 'Create';
+            $history->save();
+        }
+
         if ($request->Description_Deviation[0] !== null){
             $history = new DeviationAuditTrail();
             $history->deviation_id = $deviation->id;
@@ -4484,6 +4502,28 @@ class DeviationController extends Controller
             $history->save();
         }
 
+        if ($lastDeviation->Product_Details_Required != $deviation->Product_Details_Required || !empty ($request->comment)) {
+            // return 'history';
+            $history = new DeviationAuditTrail;
+            $history->deviation_id = $id;
+            $history->activity_type = 'Product/Batch Required';
+            $history->previous = $lastDeviation->Product_Details_Required;
+            $history->current = $deviation->Product_Details_Required;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDeviation->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastDeviation->status;
+            if (is_null($lastDeviation->Product_Details_Required) || $lastDeviation->Product_Details_Required === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
+            $history->save();
+        }
+
         if ($lastDeviation->Description_Deviation != $deviation->Description_Deviation || !empty ($request->comment)) {
             // return 'history';
             $history = new DeviationAuditTrail;
@@ -5368,6 +5408,10 @@ class DeviationController extends Controller
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $deviation = Deviation::find($id);
             $updateCFT = DeviationCft::where('deviation_id', $id)->latest()->first();
+
+            $getCft = DeviationCft::find($id);
+            //$Cft = DeviationCft::withoutTrashed()->where('deviation_id', $id)->first();
+
             $lastDocument = Deviation::find($id);
             $cftDetails = DeviationCftsResponse::withoutTrashed()->where(['status' => 'In-progress', 'deviation_id' => $id])->distinct('cft_user_id')->count();
 
@@ -5901,6 +5945,23 @@ class DeviationController extends Controller
             //}
             if ($deviation->stage == 4) {
 
+                if ($deviation->form_progress !== 'cft')
+                {
+                    Session::flash('swal', [
+                        'type' => 'warning',
+                        'title' => 'Mandatory Fields!',
+                        'message' => 'CFT Tab is yet to be filled'
+                    ]);
+
+                    return redirect()->back();
+                } else {
+                    Session::flash('swal', [
+                        'type' => 'success',
+                        'title' => 'Success',
+                        'message' => 'Sent for Investigation and CAPA review state'
+                    ]);
+                }
+
                 // CFT review state update form_progress
 //                if ($deviation->form_progress !== 'cft')
 //                {
@@ -5922,8 +5983,6 @@ class DeviationController extends Controller
 //                }
 
 
-                $getCft = DeviationCft::find($id);
-                $Cft = DeviationCft::withoutTrashed()->where('deviation_id', $id)->first();
 
                 $IsCFTRequired = DeviationCftsResponse::withoutTrashed()->where(['is_required' => 1, 'deviation_id' => $id])->latest()->first();
                 $cftUsers = DB::table('deviationcfts')->where(['deviation_id' => $id])->first();
@@ -6938,7 +6997,7 @@ class DeviationController extends Controller
                 // dd(count(array_unique($valuesArray)), $checkCFTCount);
 
 
-                //if (!$IsCFTRequired || $checkCFTCount) {
+                if (!$IsCFTRequired || $checkCFTCount) {
                     //dd("test");
 
                     $deviation->stage = "5";
@@ -7033,7 +7092,7 @@ class DeviationController extends Controller
                     $deviation->update();
                     toastr()->success('Document Sent');
                     return back();
-            //}
+            }
         }
 
             if ($deviation->stage == 5) {

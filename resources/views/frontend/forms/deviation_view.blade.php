@@ -786,8 +786,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
                             </button>
-                        @elseif(
-                        ($data->stage == 4 && Helpers::check_roles($data->division_id, 'Deviation', 5)) || in_array(Auth::user()->id, $valuesArray))
+                        @elseif(($data->stage == 4 && Helpers::check_roles($data->division_id, 'Deviation', 5)) || in_array(Auth::user()->id, $valuesArray))
                         <!-- @if(!$cftCompleteUser) -->
                                 <button class="button_theme1" data-bs-toggle="modal"data-bs-target="#more-info-required-modal">
                                     More Info Required
@@ -913,8 +912,6 @@
                             @else
                                 <div class="">CFT Review</div>
                             @endif
-
-
                             @if ($data->stage >= 5)
                                 <div class="active">QA Secondary Review</div>
                             @else
@@ -3391,7 +3388,7 @@
                                                     does not require completion</small></div>
 
                                                     <div class="relative-container">
-                                                        <textarea @if ($data1->Production_Review == 'Yes' && $data->stage == 4) required @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Production_person || $data->stage == 11 ? 'tiny Production_assessment' : 'tiny-disable' }}
+                                                        <textarea @if ($data1->Production_Review == 'Yes' && $data->stage == 4) required @endif class={{$data->stage == 4 || Auth::user()->id == $data1->Production_person || $data->stage == 11 ? 'Production_assessment' : 'tiny-disable' }}
                                                             @if ($data->stage == 3 || Auth::user()->id != $data1->Production_person) readonly @endif name="Production_assessment" id="summernote-17" class="mic-input">{{ $data1->Production_assessment }}</textarea>
 
                                                             @component('frontend.forms.language-model', [
@@ -3593,7 +3590,7 @@
                                                 On</label>
                                             <input type="text" id="production_on" readonly
                                                 name="production_on" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
-                                                value="{{ $data1->production_on ? \Carbon\Carbon::parse($data1->production_on)->format('d-m-Y') : '' }}">
+                                                value="{{ $data1->production_on ? $data1->production_on : '' }}">
                                         </div>
                                     </div>
                                 @endif
@@ -3793,9 +3790,10 @@
                                                 On</label>
                                             <input type="text" id="Warehouse_on" readonly
                                                 name="Warehouse_on" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
-                                                value="{{ $data1->Warehouse_on ? \Carbon\Carbon::parse($data1->Warehouse_on)->format('d-m-Y') : ''}}">
+                                                value="{{ $data1->Warehouse_on ? $data1->Warehouse_on : ''}}">
                                         </div>
                                     </div>
+                                    {{-- value="{{ $data1->Warehouse_on ? \Carbon\Carbon::parse($data1->Warehouse_on)->format('d-m-Y') : ''}}"> --}}
                                 @else
                                     <div class="col-lg-6 ">
                                         <div class="group-input">
@@ -3921,7 +3919,7 @@
                                     <label for="Warehouse Review Completed On">Warehouse Review Completed On</label>
                                     <input type="text" id="Warehouse_on" readonly
                                                 name="Warehouse_on" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
-                                                value="{{ $data1->Warehouse_on ? \Carbon\Carbon::parse($data1->Warehouse_on)->format('d-m-Y') : ''}}">
+                                                value="{{ $data1->Warehouse_on ? $data1->Warehouse_on : ''}}">
                                 </div>
                             </div>
                             @endif
@@ -4104,7 +4102,7 @@
                                             On</label>
                                             <input type="text" id="Quality_Control_on" readonly
                                                 name="Quality_Control_on" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
-                                                value="{{ $data1->Quality_Control_on ? \Carbon\Carbon::parse($data1->Quality_Control_on)->format('d-m-Y') : '' }}">
+                                                value="{{ $data1->Quality_Control_on ? $data1->Quality_Control_on : '' }}">
                                     </div>
                                 </div>
                                 <div class="sub-head">
@@ -4288,7 +4286,7 @@
                                             Completed On</label>
                                             <input type="text" id="QualityAssurance_on" readonly
                                                 name="QualityAssurance_on" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
-                                                value="{{ $data1->QualityAssurance_on ? \Carbon\Carbon::parse($data1->QualityAssurance_on)->format('d-m-Y') : '' }}">
+                                                value="{{ $data1->QualityAssurance_on ? $data1->QualityAssurance_on : '' }}">
                                     </div>
                                 </div>
                                 <div class="sub-head">
@@ -4470,7 +4468,7 @@
                                             On</label>
                                             <input type="text" id="Engineering_on" readonly
                                                 name="Engineering_on" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
-                                                value="{{ $data1->Engineering_on ? \Carbon\Carbon::parse($data1->Engineering_on)->format('d-m-Y') : ''}}">
+                                                value="{{ $data1->Engineering_on ? $data1->Engineering_on : ''}}">
                                     </div>
                                 </div>
                                 <div class="sub-head">
@@ -4657,7 +4655,7 @@
                                             Development Laboratory Review Completed On</label>
                                          <input type="text" id="Analytical_Development_on" readonly
                                                 name="Analytical_Development_on" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
-                                                value="{{ $data1->Analytical_Development_on ? \Carbon\Carbon::parse($data1->Analytical_Development_on)->format('d-m-Y') : ''}}">
+                                                value="{{ $data1->Analytical_Development_on ? $data1->Analytical_Development_on : ''}}">
                                     </div>
                                 </div>
                                 <div class="sub-head">
@@ -4837,7 +4835,7 @@
                                             Lab Review Completed On</label>
                                             <input type="text" id="Kilo_Lab_attachment_on" readonly
                                                 name="Kilo_Lab_attachment_on" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
-                                                value="{{ $data1->Kilo_Lab_attachment_on ? \Carbon\Carbon::parse($data1->Kilo_Lab_attachment_on)->format('d-m-Y') : '' }}">
+                                                value="{{ $data1->Kilo_Lab_attachment_on ? $data1->Kilo_Lab_attachment_on : '' }}">
 
                                     </div>
                                 </div>
@@ -5024,7 +5022,7 @@
                                             On</label>
                                             <input type="text" id="Technology_transfer_on" readonly
                                                 name="Technology_transfer_on" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
-                                                value="{{ $data1->Technology_transfer_on ? \Carbon\Carbon::parse($data1->Technology_transfer_on)->format('d-m-Y') : ''}}">
+                                                value="{{ $data1->Technology_transfer_on ? $data1->Technology_transfer_on : ''}}">
                                     </div>
                                 </div>
                                 <div class="sub-head">
@@ -5212,7 +5210,7 @@
                                             Completed On</label>
                                             <input type="text" id="Environment_Health_Safety_on" readonly
                                                 name="Environment_Health_Safety_on" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
-                                                value="{{ $data1->Environment_Health_Safety_on ? \Carbon\Carbon::parse($data1->Environment_Health_Safety_on)->format('d-m-Y') : '' }}">
+                                                value="{{ $data1->Environment_Health_Safety_on ? $data1->Environment_Health_Safety_on : '' }}">
 
                                     </div>
                                 </div>
@@ -5395,7 +5393,7 @@
                                             Review Completed On</label>
                                             <input type="text" id="Human_Resource_on" readonly
                                                 name="Human_Resource_on" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
-                                                value="{{ $data1->Human_Resource_on ? \Carbon\Carbon::parse($data1->Human_Resource_on)->format('d-m-Y') : ''}}">
+                                                value="{{ $data1->Human_Resource_on ? $data1->Human_Resource_on : ''}}">
                                     </div>
                                 </div>
                                 <div class="sub-head">
@@ -5579,7 +5577,7 @@
                                             Review Completed On</label>
                                             <input type="text" id="Information_Technology_on" readonly
                                                 name="Information_Technology_on" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
-                                                value="{{ $data1->Information_Technology_on ? \Carbon\Carbon::parse($data1->Information_Technology_on)->format('d-m-Y') : ''}}">
+                                                value="{{ $data1->Information_Technology_on ? $data1->Information_Technology_on : ''}}">
                                     </div>
                                 </div>
                                 <div class="sub-head">
@@ -5760,7 +5758,7 @@
                                             Completed On</label>
                                             <input type="text" id="Project_management_on" readonly
                                                 name="Project_management_on" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
-                                                value="{{ $data1->Project_management_on ? \Carbon\Carbon::parse($data1->Project_management_on)->format('d-m-Y') : ''}}">
+                                                value="{{ $data1->Project_management_on ? $data1->Project_management_on : ''}}">
 
 
                                     </div>
@@ -5884,7 +5882,7 @@
                                             On</label>
                                             <input type="text" id="Quality_Control_on" readonly
                                                 name="Quality_Control_on" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
-                                                value="{{ $data1->Quality_Control_on ? \Carbon\Carbon::parse($data1->Quality_Control_on)->format('d-m-Y') : ''}}">
+                                                value="{{ $data1->Quality_Control_on ? $data1->Quality_Control_on : ''}}">
                                     </div>
                                 </div>
                                 <div class="sub-head">
@@ -6002,7 +6000,7 @@
                                             Completed On</label>
                                             <input type="text" id="QualityAssurance_on" readonly
                                                 name="QualityAssurance_on" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
-                                                value="{{ $data1->QualityAssurance_on ? \Carbon\Carbon::parse($data1->QualityAssurance_on)->format('d-m-Y') : ''}}">
+                                                value="{{ $data1->QualityAssurance_on ? $data1->QualityAssurance_on : ''}}">
                                     </div>
                                 </div>
                                 <div class="sub-head">
@@ -6116,7 +6114,7 @@
                                             On</label>
                                             <input type="text" id="Engineering_on" readonly
                                                 name="Engineering_on" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
-                                                value="{{ $data1->Engineering_on ? \Carbon\Carbon::parse($data1->Engineering_on)->format('d-m-Y') : ''}}">
+                                                value="{{ $data1->Engineering_on ? $data1->Engineering_on : ''}}">
                                     </div>
                                 </div>
                                 <div class="sub-head">
@@ -6241,7 +6239,7 @@
                                             Development Laboratory Review Completed On</label>
                                             <input type="text" id="Analytical_Development_on" readonly
                                                 name="Analytical_Development_on" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
-                                                value="{{ $data1->Analytical_Development_on ? \Carbon\Carbon::parse($data1->Analytical_Development_on)->format('d-m-Y') : ''}}">
+                                                value="{{ $data1->Analytical_Development_on ? $data1->Analytical_Development_on : ''}}">
                                     </div>
                                 </div>
                                 <div class="sub-head">
@@ -6358,7 +6356,7 @@
                                             Lab Review Completed On</label>
                                         <input type="text" id="Kilo_Lab_attachment_on" readonly
                                                 name="Kilo_Lab_attachment_on" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
-                                                value="{{ $data1->Kilo_Lab_attachment_on ? \Carbon\Carbon::parse($data1->Kilo_Lab_attachment_on)->format('d-m-Y') : ''}}">
+                                                value="{{ $data1->Kilo_Lab_attachment_on ? $data1->Kilo_Lab_attachment_on : ''}}">
 
                                     </div>
                                 </div>
@@ -6609,7 +6607,7 @@
                                             Completed On</label>
                                             <input type="text" id="Environment_Health_Safety_on" readonly
                                                 name="Environment_Health_Safety_on" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
-                                                value="{{ $data1->Environment_Health_Safety_on ? \Carbon\Carbon::parse($data1->Environment_Health_Safety_on)->format('d-m-Y') : ''}}">
+                                                value="{{ $data1->Environment_Health_Safety_on ? $data1->Environment_Health_Safety_on : ''}}">
 
                                     </div>
                                 </div>
@@ -6729,7 +6727,7 @@
                                             Review Completed On</label>
                                             <input type="text" id="Human_Resource_on" readonly
                                                 name="Human_Resource_on" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
-                                                value="{{ $data1->Human_Resource_on ? \Carbon\Carbon::parse($data1->Human_Resource_on)->format('d-m-Y') : ''}}">
+                                                value="{{ $data1->Human_Resource_on ? $data1->Human_Resource_on : ''}}">
                                     </div>
                                 </div>
                                 <div class="sub-head">
@@ -6856,7 +6854,7 @@
                                             Review Completed On</label>
                                             <input type="text" id="Information_Technology_on" readonly
                                                 name="Information_Technology_on" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
-                                                value="{{ $data1->Information_Technology_on ? \Carbon\Carbon::parse($data1->Information_Technology_on)->format('d-m-Y') : ''}}">
+                                                value="{{ $data1->Information_Technology_on ? $data1->Information_Technology_on : ''}}">
                                     </div>
                                 </div>
                                 <div class="sub-head">
@@ -6972,7 +6970,7 @@
                                             Completed On</label>
                                             <input type="text" id="Project_management_on" readonly
                                                 name="Project_management_on" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
-                                                value="{{ $data1->Project_management_on ? \Carbon\Carbon::parse($data1->Project_management_on)->format('d-m-Y')  : ''}}">
+                                                value="{{ $data1->Project_management_on ? $data1->Project_management_on  : ''}}">
 
 
                                     </div>
@@ -7200,7 +7198,7 @@
                                         <label for="Review Completed On1">Other's 1 Review Completed On</label>
                                         <input type="text" id="Other1_on" readonly
                                                 name="Other1_on" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
-                                                value="{{ $data1->Other1_on ? \Carbon\Carbon::parse($data1->Other1_on)->format('d-m-Y') : ''}}">
+                                                value="{{ $data1->Other1_on ? $data1->Other1_on : ''}}">
 
                                     </div>
                                 </div>
@@ -7421,7 +7419,7 @@
                                         <label for="Review Completed On2">Other's 2 Review Completed On</label>
                                         <input type="text" id="Other2_on" readonly
                                                 name="Other2_on" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
-                                                value="{{ $data1->Other2_on ? \Carbon\Carbon::parse($data1->Other2_on)->format('d-m-Y') : ''}}">
+                                                value="{{ $data1->Other2_on ? $data1->Other2_on : ''}}">
                                     </div>
                                 </div>
 
@@ -7643,7 +7641,7 @@
                                         <label for="productionfeedback">Other's 3 Review Completed On</label>
                                         <input type="text" id="Other3_on" readonly
                                                 name="Other3_on" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
-                                                value="{{ $data1->Other3_on ? \Carbon\Carbon::parse($data1->Other3_on)->format('d-m-Y') : ''}}">
+                                                value="{{ $data1->Other3_on ? $data1->Other3_on : ''}}">
                                     </div>
                                 </div>
                                 <div class="sub-head">
@@ -7861,7 +7859,7 @@
                                         <label for="Review Completed On4">Other's 4 Review Completed On</label>
                                         <input type="text" id="Other4_on" readonly
                                                 name="Other4_on" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
-                                                value="{{ $data1->Other4_on ? \Carbon\Carbon::parse($data1->Other4_on)->format('d-m-Y') : ''}}">
+                                                value="{{ $data1->Other4_on ? $data1->Other4_on : ''}}">
                                     </div>
                                 </div>
 
@@ -8052,7 +8050,7 @@
                                         <label for="Review Completed On5">Other's 5 Review Completed On</label>
                                         <input type="text" id="Other5_on" readonly
                                                 name="Other5_on" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
-                                                value="{{ $data1->Other5_on ? \Carbon\Carbon::parse($data1->Other5_on)->format('d-m-Y') : ''}}">
+                                                value="{{ $data1->Other5_on ? $data1->Other5_on : ''}}">
                                     </div>
                                 </div>
 
@@ -8251,7 +8249,7 @@
                                         <label for="Review Completed On1">Other's 1 Review Completed On</label>
                                         <input type="text" id="Other1_on" readonly
                                                 name="Other1_on" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
-                                                value="{{ $data1->Other1_on ? \Carbon\Carbon::parse($data1->Other1_on)->format('d-m-Y') : ''}}">
+                                                value="{{ $data1->Other1_on ? $data1->Other1_on : ''}}">
 
                                     </div>
                                 </div>
@@ -8400,7 +8398,7 @@
                                         <label for="Review Completed On2">Other's 2 Review Completed On</label>
                                         <input type="text" id="Other2_on" readonly
                                                 name="Other2_on" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
-                                                value="{{ $data1->Other2_on ? \Carbon\Carbon::parse($data1->Other2_on)->format('d-m-Y') : ''}}">
+                                                value="{{ $data1->Other2_on ? $data1->Other2_on : ''}}">
                                     </div>
                                 </div>
 
@@ -8549,7 +8547,7 @@
                                         <label for="productionfeedback">Other's 3 Review Completed On</label>
                                         <input type="text" id="Other3_on" readonly
                                                 name="Other3_on" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
-                                                value="{{ $data1->Other3_on ? \Carbon\Carbon::parse($data1->Other3_on)->format('d-m-Y') : ''}}">
+                                                value="{{ $data1->Other3_on ? $data1->Other3_on : ''}}">
                                     </div>
                                 </div>
                                 <div class="sub-head">
@@ -8703,7 +8701,7 @@
                                         <label for="Review Completed On4">Other's 4 Review Completed On</label>
                                         <input type="text" id="Other4_on" readonly
                                                 name="Other4_on" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
-                                                value="{{ $data1->Other4_on ? \Carbon\Carbon::parse($data1->Other4_on)->format('d-m-Y') : ''}}">
+                                                value="{{ $data1->Other4_on ? $data1->Other4_on : ''}}">
 
                                     </div>
                                 </div>
@@ -8830,7 +8828,7 @@
                                         <label for="Review Completed On5">Other's 5 Review Completed On</label>
                                         <input type="text" id="Other5_on" readonly
                                                 name="Other5_on" {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
-                                                value="{{ $data1->Other5_on ? \Carbon\Carbon::parse($data1->Other5_on)->format('d-m-Y') : ''}}">
+                                                value="{{ $data1->Other5_on ? $data1->Other5_on : ''}}">
                                     </div>
                                 </div>
 

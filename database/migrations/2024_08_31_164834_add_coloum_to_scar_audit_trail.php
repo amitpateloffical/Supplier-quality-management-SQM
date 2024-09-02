@@ -14,7 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::table('scar_audit_trail', function (Blueprint $table) {
-            //
+            $table->longText('mailUserId')->nullable();
+            $table->text('role_name')->nullable();
         });
     }
 

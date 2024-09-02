@@ -2208,6 +2208,35 @@ class CapaController extends Controller
                     $history->save();
 
                     $list = Helpers::getHodUserList($capa->division_id);
+
+                    $userIds = collect($list)->pluck('user_id')->toArray();
+                    $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                    $userId = $users->pluck('id')->implode(',');
+                    if(!empty($users)){
+                        try {
+                            $history = new CapaAuditTrial();
+                            $history->capa_id = $id;
+                            $history->activity_type = "Not Applicable";
+                            $history->previous = "Not Applicable";
+                            $history->current = "Not Applicable";
+                            $history->action = 'Notification';
+                            $history->comment = "";
+                            $history->user_id = Auth::user()->id;
+                            $history->user_name = Auth::user()->name;
+                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->origin_state = "Not Applicable";
+                            $history->change_to = "Not Applicable";
+                            $history->change_from = "Pending CAPA Plan";
+                            $history->stage = "";
+                            $history->action_name = "";
+                            $history->mailUserId = $userId;
+                            $history->role_name = "HOD ";
+                            $history->save(); 
+                        } catch (\Throwable $e) {
+                            \Log::error('Mail failed to send: ' . $e->getMessage());
+                        }
+                    }
+                       
                     foreach ($list as $u) {
                         // if($u->q_m_s_divisions_id == $capa->division_id){
                             $email = Helpers::getHODEmail($u->user_id);
@@ -2276,6 +2305,34 @@ class CapaController extends Controller
 
 
                     $list = Helpers::getQAUserList($capa->division_id);
+
+                    $userIds = collect($list)->pluck('user_id')->toArray();
+                    $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                    $userId = $users->pluck('id')->implode(',');
+                    if(!empty($users)){
+                        try {
+                            $history = new CapaAuditTrial();
+                            $history->capa_id = $id;
+                            $history->activity_type = "Not Applicable";
+                            $history->previous = "Not Applicable";
+                            $history->current = "Not Applicable";
+                            $history->action = 'Notification';
+                            $history->comment = "";
+                            $history->user_id = Auth::user()->id;
+                            $history->user_name = Auth::user()->name;
+                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->origin_state = "Not Applicable";
+                            $history->change_to = "Not Applicable";
+                            $history->change_from = "CAPA In Progress";
+                            $history->stage = "";
+                            $history->action_name = "";
+                            $history->mailUserId = $userId;
+                            $history->role_name = "QA ";
+                            $history->save(); 
+                        } catch (\Throwable $e) {
+                            \Log::error('Mail failed to send: ' . $e->getMessage());
+                        }
+                    }
                         foreach ($list as $u) {
                             // if($u->q_m_s_divisions_id == $capa->division_id){
                                 $email = Helpers::getQAEmail($u->user_id);
@@ -2378,6 +2435,34 @@ class CapaController extends Controller
                         $history->save();
 
                         $list = Helpers::getQAHeadUserList($capa->division_id);
+
+                              $userIds = collect($list)->pluck('user_id')->toArray();
+                                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                                $userId = $users->pluck('id')->implode(',');
+                                if(!empty($users)){
+                                    try {
+                                        $history = new CapaAuditTrial();
+                                        $history->capa_id = $id;
+                                        $history->activity_type = "Not Applicable";
+                                        $history->previous = "Not Applicable";
+                                        $history->current = "Not Applicable";
+                                        $history->action = 'Notification';
+                                        $history->comment = "";
+                                        $history->user_id = Auth::user()->id;
+                                        $history->user_name = Auth::user()->name;
+                                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                        $history->origin_state = "Not Applicable";
+                                        $history->change_to = "Not Applicable";
+                                        $history->change_from = "Pending Actions Completion";
+                                        $history->stage = "";
+                                        $history->action_name = "";
+                                        $history->mailUserId = $userId;
+                                        $history->role_name = "QA Head";
+                                        $history->save(); 
+                                    } catch (\Throwable $e) {
+                                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                                    }
+                                }
                         foreach ($list as $u) {
                             // if($u->q_m_s_divisions_id == $capa->division_id){
                                 $email = Helpers::getQAHeadEmail($u->user_id);
@@ -2441,6 +2526,36 @@ class CapaController extends Controller
                         }
                         $history->save();
                                 $list = Helpers::getQAUserList($capa->division_id);
+
+                                $userIds = collect($list)->pluck('user_id')->toArray();
+                                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                                $userId = $users->pluck('id')->implode(',');
+                                if(!empty($users)){
+                                    try {
+                                        $history = new CapaAuditTrial();
+                                        $history->capa_id = $id;
+                                        $history->activity_type = "Not Applicable";
+                                        $history->previous = "Not Applicable";
+                                        $history->current = "Not Applicable";
+                                        $history->action = 'Notification';
+                                        $history->comment = "";
+                                        $history->user_id = Auth::user()->id;
+                                        $history->user_name = Auth::user()->name;
+                                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                        $history->origin_state = "Not Applicable";
+                                        $history->change_to = "Not Applicable";
+                                        $history->change_from = "Closed - Done";
+                                        $history->stage = "";
+                                        $history->action_name = "";
+                                        $history->mailUserId = $userId;
+                                        $history->role_name = "QA";
+                                        $history->save(); 
+                                    } catch (\Throwable $e) {
+                                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                                    }
+                                }
+
+
                                 foreach ($list as $u) {
                                     // if($u->q_m_s_divisions_id == $capa->division_id){
                                         $email = Helpers::getQAEmail($u->user_id);
@@ -2467,6 +2582,34 @@ class CapaController extends Controller
                                 }
 
                                 $list = Helpers::getHodUserList($capa->division_id);
+
+                                $userIds = collect($list)->pluck('user_id')->toArray();
+                                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                                $userId = $users->pluck('id')->implode(',');
+                                if(!empty($users)){
+                                    try {
+                                        $history = new CapaAuditTrial();
+                                        $history->capa_id = $id;
+                                        $history->activity_type = "Not Applicable";
+                                        $history->previous = "Not Applicable";
+                                        $history->current = "Not Applicable";
+                                        $history->action = 'Notification';
+                                        $history->comment = "";
+                                        $history->user_id = Auth::user()->id;
+                                        $history->user_name = Auth::user()->name;
+                                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                        $history->origin_state = "Not Applicable";
+                                        $history->change_to = "Not Applicable";
+                                        $history->change_from = "Closed - Done";
+                                        $history->stage = "";
+                                        $history->action_name = "";
+                                        $history->mailUserId = $userId;
+                                        $history->role_name = "HOD";
+                                        $history->save(); 
+                                    } catch (\Throwable $e) {
+                                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                                    }
+                                }
                                 foreach ($list as $u) {
                                     // if($u->q_m_s_divisions_id == $capa->division_id){
                                         $email = Helpers::getHODEmail($u->user_id);
@@ -2494,6 +2637,34 @@ class CapaController extends Controller
                                 }
 
                                 $list = Helpers::getInitiatorUserList($capa->division_id);
+
+                                $userIds = collect($list)->pluck('user_id')->toArray();
+                    $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                    $userId = $users->pluck('id')->implode(',');
+                    if(!empty($users)){
+                        try {
+                            $history = new CapaAuditTrial();
+                            $history->capa_id = $id;
+                            $history->activity_type = "Not Applicable";
+                            $history->previous = "Not Applicable";
+                            $history->current = "Not Applicable";
+                            $history->action = 'Notification';
+                            $history->comment = "";
+                            $history->user_id = Auth::user()->id;
+                            $history->user_name = Auth::user()->name;
+                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->origin_state = "Not Applicable";
+                            $history->change_to = "Not Applicable";
+                            $history->change_from = "Closed - Done";
+                            $history->stage = "";
+                            $history->action_name = "";
+                            $history->mailUserId = $userId;
+                            $history->role_name = "Initiator";
+                            $history->save(); 
+                        } catch (\Throwable $e) {
+                            \Log::error('Mail failed to send: ' . $e->getMessage());
+                        }
+                    }
                                 foreach ($list as $u) {
                                     // if($u->q_m_s_divisions_id == $capa->division_id){
                                         $email = Helpers::getInitiatorEmail($u->user_id);
@@ -2568,6 +2739,34 @@ class CapaController extends Controller
                     $history->save();
 
                     $list = Helpers::getInitiatorUserList($capa->division_id);
+
+                    $userIds = collect($list)->pluck('user_id')->toArray();
+                    $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                    $userId = $users->pluck('id')->implode(',');
+                    if(!empty($users)){
+                        try {
+                            $history = new CapaAuditTrial();
+                            $history->capa_id = $id;
+                            $history->activity_type = "Not Applicable";
+                            $history->previous = "Not Applicable";
+                            $history->current = "Not Applicable";
+                            $history->action = 'Notification';
+                            $history->comment = "";
+                            $history->user_id = Auth::user()->id;
+                            $history->user_name = Auth::user()->name;
+                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->origin_state = "Not Applicable";
+                            $history->change_to = "Not Applicable";
+                            $history->change_from = "Closed-Cancelled";
+                            $history->stage = "";
+                            $history->action_name = "";
+                            $history->mailUserId = $userId;
+                            $history->role_name = "Initiator";
+                            $history->save(); 
+                        } catch (\Throwable $e) {
+                            \Log::error('Mail failed to send: ' . $e->getMessage());
+                        }
+                    }
                                 foreach ($list as $u) {
                                     // if($u->q_m_s_divisions_id == $capa->division_id){
                                         $email = Helpers::getInitiatorEmail($u->user_id);
@@ -2593,6 +2792,34 @@ class CapaController extends Controller
                                     // }
                                 }
                     $list = Helpers::getQAHeadUserList($capa->division_id);
+                    
+                    $userIds = collect($list)->pluck('user_id')->toArray();
+                    $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                    $userId = $users->pluck('id')->implode(',');
+                    if(!empty($users)){
+                        try {
+                            $history = new CapaAuditTrial();
+                            $history->capa_id = $id;
+                            $history->activity_type = "Not Applicable";
+                            $history->previous = "Not Applicable";
+                            $history->current = "Not Applicable";
+                            $history->action = 'Notification';
+                            $history->comment = "";
+                            $history->user_id = Auth::user()->id;
+                            $history->user_name = Auth::user()->name;
+                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->origin_state = "Not Applicable";
+                            $history->change_to = "Not Applicable";
+                            $history->change_from = "Closed-Cancelled";
+                            $history->stage = "";
+                            $history->action_name = "";
+                            $history->mailUserId = $userId;
+                            $history->role_name = "QA Head";
+                            $history->save(); 
+                        } catch (\Throwable $e) {
+                            \Log::error('Mail failed to send: ' . $e->getMessage());
+                        }
+                    } 
                                 foreach ($list as $u) {
                                     // if($u->q_m_s_divisions_id == $capa->division_id){
                                         $email = Helpers::getQAHeadEmail($u->user_id);
@@ -2697,6 +2924,34 @@ class CapaController extends Controller
                     $history->save();
 
                     $list = Helpers::getInitiatorUserList($capa->division_id);
+
+                    $userIds = collect($list)->pluck('user_id')->toArray();
+                    $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                    $userId = $users->pluck('id')->implode(',');
+                    if(!empty($users)){
+                        try {
+                            $history = new CapaAuditTrial();
+                            $history->capa_id = $id;
+                            $history->activity_type = "Not Applicable";
+                            $history->previous = "Not Applicable";
+                            $history->current = "Not Applicable";
+                            $history->action = 'Notification';
+                            $history->comment = "";
+                            $history->user_id = Auth::user()->id;
+                            $history->user_name = Auth::user()->name;
+                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->origin_state = "Not Applicable";
+                            $history->change_to = "Not Applicable";
+                            $history->change_from = "Opened";
+                            $history->stage = "";
+                            $history->action_name = "";
+                            $history->mailUserId = $userId;
+                            $history->role_name = "Initiator";
+                            $history->save(); 
+                        } catch (\Throwable $e) {
+                            \Log::error('Mail failed to send: ' . $e->getMessage());
+                        }
+                    } 
                             foreach ($list as $u) {
                                 // if($u->q_m_s_divisions_id == $capa->division_id){
                                     $email = Helpers::getInitiatorEmail($u->user_id);
@@ -2761,6 +3016,34 @@ class CapaController extends Controller
                     $history->save();
 
                     $list = Helpers::getHodUserList($capa->division_id);
+
+                    $userIds = collect($list)->pluck('user_id')->toArray();
+            $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+            $userId = $users->pluck('id')->implode(',');
+            if(!empty($users)){
+                try {
+                    $history = new CapaAuditTrial();
+                    $history->capa_id = $id;
+                    $history->activity_type = "Not Applicable";
+                    $history->previous = "Not Applicable";
+                    $history->current = "Not Applicable";
+                    $history->action = 'Notification';
+                    $history->comment = "";
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = "Not Applicable";
+                    $history->change_to = "Not Applicable";
+                    $history->change_from = "Pending CAPA plan";
+                    $history->stage = "";
+                    $history->action_name = "";
+                    $history->mailUserId = $userId;
+                    $history->role_name = "HOD";
+                    $history->save(); 
+                } catch (\Throwable $e) {
+                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                }
+            } 
                     foreach ($list as $u) {
                         // if($u->q_m_s_divisions_id == $capa->division_id){
                             $email = Helpers::getHODEmail($u->user_id);
@@ -2844,6 +3127,34 @@ class CapaController extends Controller
         $history->save();
 
             $list = Helpers::getInitiatorUserList(division_id);
+
+            $userIds = collect($list)->pluck('user_id')->toArray();
+            $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+            $userId = $users->pluck('id')->implode(',');
+            if(!empty($users)){
+                try {
+                    $history = new CapaAuditTrial();
+                    $history->capa_id = $id;
+                    $history->activity_type = "Not Applicable";
+                    $history->previous = "Not Applicable";
+                    $history->current = "Not Applicable";
+                    $history->action = 'Notification';
+                    $history->comment = "";
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = "Not Applicable";
+                    $history->change_to = "Not Applicable";
+                    $history->change_from = "Reject";
+                    $history->stage = "";
+                    $history->action_name = "";
+                    $history->mailUserId = $userId;
+                    $history->role_name = "CAPA In Progress";
+                    $history->save(); 
+                } catch (\Throwable $e) {
+                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                }
+            }  
             foreach ($list as $u) {
                 // if($u->q_m_s_divisions_id == $capa->division_id){
                 $email = Helpers::getInitiatorEmail($u->user_id);
@@ -2899,6 +3210,34 @@ class CapaController extends Controller
                 $history->status = "Opened";
 
                 $list = Helpers::getInitiatorUserList();
+
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if(!empty($users)){
+                    try {
+                        $history = new CapaAuditTrial();
+                        $history->capa_id = $id;
+                        $history->activity_type = "Not Applicable";
+                        $history->previous = "Not Applicable";
+                        $history->current = "Not Applicable";
+                        $history->action = 'Notification';
+                        $history->comment = "";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable";
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = "Opened";
+                        $history->stage = "";
+                        $history->action_name = "";
+                        $history->mailUserId = $userId;
+                        $history->role_name = "Initiator";
+                        $history->save(); 
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }   
                 foreach ($list as $u) {
                     if($u->q_m_s_divisions_id == $capa->division_id){
                     $email = Helpers::getInitiatorEmail($u->user_id);
@@ -3119,6 +3458,183 @@ class CapaController extends Controller
             $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
             $canvas->page_text($width / 2.5, $height / 2, $doc->status, null, 25, [0, 0, 0], 2, 6, -20);
             return $pdf->stream('CAPA-Audit' . $id . '.pdf');
+        }
+    }
+
+    public function notificationDetail($slug, $id){
+        switch ($slug) {
+            case 'Supplier':
+                $notification = SupplierAuditTrail::find($id);
+                if($notification){
+                    $supplierId = $notification->supplier_id;
+                    $parentData = Supplier::where('id', $supplierId)->first();
+
+                    $userId = explode(',', $notification->mailUserId);
+                    $getName = User::whereIn('id', $userId)->get(['name', 'email']);
+                    return view('frontend.supplier.notification_detail', compact('notification', 'getName', 'parentData'));
+                }
+                break;
+
+
+            case 'SupplierSite':
+                $notification = SupplierSiteAuditTrail::find($id);
+                if($notification){
+                    $supplierSiteId = $notification->supplier_site_id;
+                    $parentData = SupplierSite::where('id', $supplierSiteId)->first();
+
+                    $userId = explode(',', $notification->mailUserId);
+                    $getName = User::whereIn('id', $userId)->get(['name', 'email']);
+                    return view('frontend.supplier.notification_detail', compact('notification', 'getName', 'parentData'));
+                }
+                break;
+
+
+            case 'SupplierAudit':
+                $notification = ExternalAuditTrailSupplier::find($id);
+                if($notification){
+                    $supplierAuditId = $notification->audit_id;
+                    $parentData = SupplierAudit::where('id', $supplierAuditId)->first();
+
+                    $userId = explode(',', $notification->mailUserId);
+                    $getName = User::whereIn('id', $userId)->get(['name', 'email']);
+                    return view('frontend.supplier.notification_detail', compact('notification', 'getName', 'parentData'));
+                }
+                break;
+
+
+            case 'RiskAssessment':
+                $notification = RiskManagement::find($id);
+                if($notification){
+                    $riskAssessmentId = $notification->audit_id;
+                    $parentData = RiskManagement::where('id', $risk_id)->first();
+
+                    $userId = explode(',', $notification->mailUserId);
+                    $getName = User::whereIn('id', $userId)->get(['name', 'email']);
+                    return view('frontend.supplier.notification_detail', compact('notification', 'getName', 'parentData'));
+                }
+                break;
+
+
+            case 'ChangeControl':
+                $notification = RcmDocHistory::find($id);
+                if($notification){
+                    $changeControlId = $notification->cc_id;
+                    $parentData = CC::where('id', $changeControlId)->first();
+
+                    $userId = explode(',', $notification->mailUserId);
+                    $getName = User::whereIn('id', $userId)->get(['name', 'email']);
+                    return view('frontend.supplier.notification_detail', compact('notification', 'getName', 'parentData'));
+                }
+                break;
+
+
+            case 'CAPA':
+                $notification = CapaAuditTrial::find($id);
+                if($notification){
+                    $CapaId = $notification->capa_id;
+                    $parentData = Capa::where('id', $CapaId)->first();
+
+                    $userId = explode(',', $notification->mailUserId);
+                    $getName = User::whereIn('id', $userId)->get(['name', 'email']);
+                    return view('frontend.supplier.notification_detail', compact('notification', 'getName', 'parentData'));
+                }
+                break;
+
+
+            case 'Observation':
+                $notification = AuditTrialObservation::find($id);
+                if($notification){
+                    $observationId = $notification->Observation_id;
+                    $parentData = Observation::where('id', $observationId)->first();
+
+                    $userId = explode(',', $notification->mailUserId);
+                    $getName = User::whereIn('id', $userId)->get(['name', 'email']);
+                    return view('frontend.supplier.notification_detail', compact('notification', 'getName', 'parentData'));
+                }
+                break;
+
+
+            case 'Deviation':
+                $notification = DeviationAuditTrail::find($id);
+                if($notification){
+                    $deviationId = $notification->deviation_id;
+                    $parentData = Deviation::where('id', $deviationId)->first();
+
+                    $userId = explode(',', $notification->mailUserId);
+                    $getName = User::whereIn('id', $userId)->get(['name', 'email']);
+                    return view('frontend.supplier.notification_detail', compact('notification', 'getName', 'parentData'));
+                }
+                break;
+
+
+            case 'ActionItem':
+                $notification = ActionItemHistory::find($id);
+                if($notification){
+                    $actionItemId = $notification->cc_id;
+                    $parentData = ActionItem::where('id', $actionItemId)->first();
+
+                    $userId = explode(',', $notification->mailUserId);
+                    $getName = User::whereIn('id', $userId)->get(['name', 'email']);
+                    return view('frontend.supplier.notification_detail', compact('notification', 'getName', 'parentData'));
+                }
+                break;
+
+
+            case 'Extension':
+                $notification = ExtensionNewAuditTrail::find($id);
+                if($notification){
+                    $extensionId = $notification->extension_id;
+                    $parentData = extension_new::where('id', $extensionId)->first();
+
+                    $userId = explode(',', $notification->mailUserId);
+                    $getName = User::whereIn('id', $userId)->get(['name', 'email']);
+                    return view('frontend.supplier.notification_detail', compact('notification', 'getName', 'parentData'));
+                }
+                break;
+
+
+            case 'EffectivenessCheck':
+                $notification = EffectivenessCheckAuditTrail::find($id);
+                if($notification){
+                    $effectivenessCheckId = $notification->effectiveness_check_id;
+                    $parentData = EffectivenessCheck::where('id', $effectivenessCheckId)->first();
+
+                    $userId = explode(',', $notification->mailUserId);
+                    $getName = User::whereIn('id', $userId)->get(['name', 'email']);
+                    return view('frontend.supplier.notification_detail', compact('notification', 'getName', 'parentData'));
+                }
+                break;
+
+
+            case 'SCAR':
+                $notification = ScarAuditTrail::find($id);
+                if($notification){
+                    $ScarId = $notification->scar_id;
+                    $parentData = SCAR::where('id', $ScarId)->first();
+
+                    $userId = explode(',', $notification->mailUserId);
+                    $getName = User::whereIn('id', $userId)->get(['name', 'email']);
+                    return view('frontend.supplier.notification_detail', compact('notification', 'getName', 'parentData'));
+                }
+                break;
+
+
+            case 'RCA':
+                $notification = RootAuditTrial::find($id);
+                if($notification){
+                    $rootCauseId = $notification->root_id;
+                    $parentData = RootCauseAnalysis::where('id', $rootCauseId)->first();
+
+                    $userId = explode(',', $notification->mailUserId);
+                    $getName = User::whereIn('id', $userId)->get(['name', 'email']);
+                    return view('frontend.supplier.notification_detail', compact('notification', 'getName', 'parentData'));
+                }
+                break;
+
+
+            default:
+                return $slug;
+                break;
         }
     }
 }

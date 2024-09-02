@@ -722,11 +722,12 @@ class CCController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
+        
 
         if(!empty($request->reason_change)){
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
-            $history->activity_type = 'Reason for Change';
+            $history->activity_type = 'Reason For Change';
             $history->previous = "Null";
             $history->current = $request->reason_change;
             $history->comment = "Not Applicable";
@@ -779,7 +780,7 @@ class CCController extends Controller
         if(!empty($request->type_chnage)){
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
-            $history->activity_type = 'Type of Change';
+            $history->activity_type = 'Type Of Change';
             $history->previous = "Null";
             $history->current = $request->type_chnage;
             $history->comment = "Not Applicable";
@@ -1130,7 +1131,20 @@ class CCController extends Controller
             $history->cc_id = $openState->id;
             $history->activity_type = 'Severity';
             $history->previous = "Null";
-            $history->current = $openState->severity;
+            // $history->current = $openState->severity;
+            if ($request->severity == 1){
+                $history->current = "Negligible";
+            } elseif ($request->severity == 2){
+                $history->current = "Minor";
+            } elseif($request->severity == 3){
+                $history->current = "Moderate";
+            } elseif($request->severity == 4){
+                $history->current = "Major";
+            } elseif($request->severity == 5){
+                $history->current = "Fatel";
+            } else {
+                $history->current = "Not Applicable";
+            }
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1147,7 +1161,20 @@ class CCController extends Controller
             $history->cc_id = $openState->id;
             $history->activity_type = 'Occurrence';
             $history->previous = "Null";
-            $history->current = $openState->Occurance;
+            // $history->current = $openState->Occurance;
+            if ($request->Occurance == 1){
+                $history->current = "Extremely Unlikely";
+            } elseif ($request->Occurance == 2){
+                $history->current = "Rare";
+            } elseif($request->Occurance == 3){
+                $history->current = "Unlikely";
+            } elseif($request->Occurance == 4){
+                $history->current = "Likely";
+            } elseif($request->Occurance == 5){
+                $history->current = "Very Likely";
+            } else {
+                $history->current = "Not Applicable";
+            }
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1164,7 +1191,20 @@ class CCController extends Controller
             $history->cc_id = $openState->id;
             $history->activity_type = 'Detection';
             $history->previous = "Null";
-            $history->current = $openState->Detection;
+            // $history->current = $openState->Detection;
+            if ($request->Detection == 1){
+                $history->current = "Impossible";
+            } elseif ($request->Detection == 2){
+                $history->current = "Rare";
+            } elseif($request->Detection == 3){
+                $history->current = "Unlikely";
+            } elseif($request->Detection == 4){
+                $history->current = "Likely";
+            } else {
+                $history->current = "Not Applicable";
+            }
+
+            
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2222,11 +2262,11 @@ class CCController extends Controller
         }
         if ($lastDocument->reason_change != $request->reason_change) {
             $existingHistory = RcmDocHistory::where('cc_id', $id)
-            ->where('activity_type', 'Reason for Change')
+            ->where('activity_type', 'Reason For Change')
             ->exists();
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'Reason for Change';
+            $history->activity_type = 'Reason For Change';
             $history->previous = $lastDocument->proposed_change;
             $history->current = $request->proposed_change;
             $history->comment = "Not Applicable";
@@ -2294,11 +2334,11 @@ class CCController extends Controller
         /********** QA Review *********/
         if ($lastDocument->type_chnage != $request->type_chnage) {
             $existingHistory = RcmDocHistory::where('cc_id', $id)
-            ->where('activity_type', 'Type of Change')
+            ->where('activity_type', 'Type Of Change')
             ->exists();
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'Type of Change';
+            $history->activity_type = 'Type Of Change';
             $history->previous = $lastDocument->type_chnage;
             $history->current = $request->type_chnage;
             $history->comment = "Not Applicable";
@@ -4530,7 +4570,9 @@ class CCController extends Controller
     public function child(Request $request,$id){
         // return "hiii";
         $cc = CC::find($id);
-        $parent_name = "CC";
+        // $parent_division_id = $cc->division_id;
+        $parent_id = $id;
+        $parent_type = "CC";
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
@@ -4549,11 +4591,11 @@ class CCController extends Controller
 
         if($request->revision == "Action-Item"){
             $cc->originator = User::where('id',$cc->initiator_id)->value('name');
-            return view('frontend.forms.action-item',compact('parent_record','parent_name','record_number','cc','parent_data','parent_data1','parent_short_description','parent_initiator_id','parent_intiation_date','parent_division_id','due_date','old_record'));
+            return view('frontend.forms.action-item',compact('parent_record','parent_type','parent_id','record_number','cc','parent_data','parent_data1','parent_short_description','parent_initiator_id','parent_intiation_date','parent_division_id','due_date','old_record'));
         }
         if($request->revision == "Extension"){
             $cc->originator = User::where('id',$cc->initiator_id)->value('name');
-            return view('frontend.forms.extension',compact('parent_name','record_number','parent_short_description','parent_initiator_id','parent_intiation_date','parent_division_id', 'parent_record','cc'));
+            return view('frontend.forms.extension',compact('parent_type','parent_id','record_number','parent_short_description','parent_initiator_id','parent_intiation_date','parent_division_id', 'parent_record','cc'));
         }
         if($request->revision == "New Document"){
             $cc->originator = User::where('id',$cc->initiator_id)->value('name');

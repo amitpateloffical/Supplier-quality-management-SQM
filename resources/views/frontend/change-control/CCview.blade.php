@@ -439,12 +439,12 @@
                                                     <select name="severity_level1"
                                                         {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                         <option value="">-- Select --</option>
-                                                        <option @if ($data->severity_level1 == 'minor') selected @endif
-                                                            value="minor">Minor</option>
-                                                        <option @if ($data->severity_level1 == 'major') selected @endif
-                                                            value="major">Major</option>
-                                                        <option @if ($data->severity_level1 == 'critical') selected @endif
-                                                            value="critical">Critical</option>
+                                                        <option @if ($data->severity_level1 == 'Minor') selected @endif
+                                                            value="Minor">Minor</option>
+                                                        <option @if ($data->severity_level1 == 'Major') selected @endif
+                                                            value="Major">Major</option>
+                                                        <option @if ($data->severity_level1 == 'Critical') selected @endif
+                                                            value="Critical">Critical</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -457,22 +457,22 @@
                                                         {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                         onchange="otherController(this.value, 'others', 'initiated_through_req')">
                                                         <option value="">Enter Your Selection Here</option>
-                                                        <option @if ($data->initiated_through == 'recall') selected @endif
-                                                            value="recall">Recall</option>
-                                                        <option @if ($data->initiated_through == 'return') selected @endif
-                                                            value="return">Return</option>
-                                                        <option @if ($data->initiated_through == 'deviation') selected @endif
-                                                            value="deviation">Deviation</option>
-                                                        <option @if ($data->initiated_through == 'complaint') selected @endif
-                                                            value="complaint">Complaint</option>
-                                                        <option @if ($data->initiated_through == 'regulatory') selected @endif
-                                                            value="regulatory">Regulatory</option>
-                                                        <option @if ($data->initiated_through == 'lab-incident') selected @endif
-                                                            value="lab-incident">Lab Incident</option>
-                                                        <option @if ($data->initiated_through == 'improvement') selected @endif
-                                                            value="improvement">Improvement</option>
-                                                        <option @if ($data->initiated_through == 'others') selected @endif
-                                                            value="others">Others</option>
+                                                        <option @if ($data->initiated_through == 'Recall') selected @endif
+                                                            value="Recall">Recall</option>
+                                                        <option @if ($data->initiated_through == 'Return') selected @endif
+                                                            value="Return">Return</option>
+                                                        <option @if ($data->initiated_through == 'Deviation') selected @endif
+                                                            value="Deviation">Deviation</option>
+                                                        <option @if ($data->initiated_through == 'Complaint') selected @endif
+                                                            value="Complaint">Complaint</option>
+                                                        <option @if ($data->initiated_through == 'Regulatory') selected @endif
+                                                            value="Regulatory">Regulatory</option>
+                                                        <option @if ($data->initiated_through == 'Lab Incident') selected @endif
+                                                            value="Lab Incident">Lab Incident</option>
+                                                        <option @if ($data->initiated_through == 'Improvement') selected @endif
+                                                            value="Improvement">Improvement</option>
+                                                        <option @if ($data->initiated_through == 'Others') selected @endif
+                                                            value="Others">Others</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -499,12 +499,12 @@
                                                         onchange="otherController(this.value, 'yes', 'repeat_nature')"
                                                         {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                         <option value="">Enter Your Selection Here</option>
-                                                        <option @if ($data->repeat == 'yes') selected @endif
-                                                            value="yes">Yes</option>
-                                                        <option @if ($data->repeat == 'no') selected @endif
-                                                            value="no">No</option>
-                                                        <option @if ($data->repeat == 'na') selected @endif
-                                                            value="na">NA</option>
+                                                        <option @if ($data->repeat == 'Yes') selected @endif
+                                                            value="Yes">Yes</option>
+                                                        <option @if ($data->repeat == 'No') selected @endif
+                                                            value="No">No</option>
+                                                        <option @if ($data->repeat == 'NA') selected @endif
+                                                            value="NA">NA</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -740,7 +740,7 @@
                                             <div class="col-12">
                                                 <div class="group-input">
                                                     <label for="reason_change">
-                                                        Reason for Change
+                                                        Reason For Change
                                                     </label>
                                                     <div class="relative-container">
                                                         <textarea name="reason_change" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->reason_change }}</textarea>
@@ -795,16 +795,16 @@
                                         <div class="row">
                                             <div class="col-lg-12">
                                                 <div class="group-input">
-                                                    <label for="type_change"> Type of Change</label>
+                                                    <label for="type_change"> Type Of Change</label>
                                                     <select name="type_chnage"
                                                         {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                         <option value="">-- Select --</option>
-                                                        <option {{ $data->type_chnage == 'major' ? 'selected' : '' }}
-                                                            value="major">Major</option>
-                                                        <option {{ $data->type_chnage == 'minor' ? 'selected' : '' }}
-                                                            value="minor">Minor</option>
-                                                        <option {{ $data->type_chnage == 'critical' ? 'selected' : '' }}
-                                                            value="critical">Critical</option>
+                                                        <option {{ $data->type_chnage == 'Major' ? 'selected' : '' }}
+                                                            value="Major">Major</option>
+                                                        <option {{ $data->type_chnage == 'Minor' ? 'selected' : '' }}
+                                                            value="Minor">Minor</option>
+                                                        <option {{ $data->type_chnage == 'Critical' ? 'selected' : '' }}
+                                                            value="Critical">Critical</option>
 
                                                     </select>
                                                 </div>
@@ -975,10 +975,10 @@
                                             <select name="training_required"
                                                 {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                 <option value="">-- Select --</option>
-                                                <option {{ $data->training_required == 'no' ? 'selected' : '' }}
-                                                    value="no">No</option>
-                                                <option {{ $data->training_required == 'yes' ? 'selected' : '' }}
-                                                    value="yes">Yes</option>
+                                                <option {{ $data->training_required == 'No' ? 'selected' : '' }}
+                                                    value="No">No</option>
+                                                <option {{ $data->training_required == 'Yes' ? 'selected' : '' }}
+                                                    value="Yes">Yes</option>
                                             </select>
                                         </div>
 
@@ -1410,7 +1410,7 @@
                                                         <option {{ $data->severity == '4' ? 'selected' : '' }}
                                                             value="4">Major</option>
                                                         <option {{ $data->severity == '5' ? 'selected' : '' }}
-                                                            value="5">Fatel</option>
+                                                            value="5">Fatal</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -1422,16 +1422,16 @@
                                                     <select name="Occurance" id="analysisP" onchange='deleteFishBone'
                                                         {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                         <option value="">-- Select --</option>
-                                                        <option {{ $data->Occurance == 'Extremely Unlikely' ? 'selected' : '' }}
-                                                            value="Extremely Unlikely">Extremely Unlikely</option>
-                                                        <option {{ $data->Occurance == 'Rare' ? 'selected' : '' }}
-                                                            value="Rare">Rare</option>
-                                                        <option {{ $data->Occurance == 'Unlikely' ? 'selected' : '' }}
-                                                            value="Unlikely">Unlikely</option>
-                                                        <option {{ $data->Occurance == 'Likely' ? 'selected' : '' }}
-                                                            value="Likely">Likely</option>
-                                                        <option {{ $data->Occurance == 'Very Likely' ? 'selected' : '' }}
-                                                            value="Very Likely">Very Likely</option>
+                                                        <option {{ $data->Occurance == '1' ? 'selected' : '' }}
+                                                            value="1">Extremely Unlikely</option>
+                                                        <option {{ $data->Occurance == '2' ? 'selected' : '' }}
+                                                            value="2">Rare</option>
+                                                        <option {{ $data->Occurance == '3' ? 'selected' : '' }}
+                                                            value="3">Unlikely</option>
+                                                        <option {{ $data->Occurance == '4' ? 'selected' : '' }}
+                                                            value="4">Likely</option>
+                                                        <option {{ $data->Occurance == '5' ? 'selected' : '' }}
+                                                            value="5">Very Likely</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -1443,14 +1443,16 @@
                                                         onchange='calculateRiskAnalysis(this)'
                                                         {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                         <option value="">-- Select --</option>
-                                                        <option {{ $data->Detection == 'Impossible' ? 'selected' : '' }}
-                                                            value="Impossible">Impossible</option>
-                                                        <option {{ $data->Detection == 'Rare' ? 'selected' : '' }}
-                                                            value="Rare">Rare</option>
-                                                        <option {{ $data->Detection == 'Unlikely' ? 'selected' : '' }}
-                                                            value="Unlikely">Unlikely</option>
-                                                        <option {{ $data->Detection == 'Likely' ? 'selected' : '' }}
-                                                            value="Likely">Likely</option>
+                                                        <option {{ $data->Detection == '1' ? 'selected' : '' }}
+                                                            value="1">Impossible</option>
+                                                        <option {{ $data->Detection == '2' ? 'selected' : '' }}
+                                                            value="2">Rare</option>
+                                                        <option {{ $data->Detection == '3' ? 'selected' : '' }}
+                                                            value="3">Unlikely</option>
+                                                        <option {{ $data->Detection == '4' ? 'selected' : '' }}
+                                                            value="4">Likely</option>
+                                                        <option {{ $data->Detection == '5' ? 'selected' : '' }}
+                                                                value="5">Very Likely</option>
                                                     </select>
                                                 </div>
                                             </div>

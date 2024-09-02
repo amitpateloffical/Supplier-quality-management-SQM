@@ -318,7 +318,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12">
+                              {{--  <div class="col-12">
                                     <div class="group-input">
                                         <label for="current_practice">Current Practice</label>
                                         <div class="relative-container">
@@ -328,7 +328,7 @@
                                         </div>
 
                                     </div>
-                                </div>
+                                </div> --}}
 
 
 
@@ -340,9 +340,9 @@
                                             quality standards and mitigate critical risks.</span>
                                         <select name="severity_level1">
                                             <option value="">-- Select --</option>
-                                            <option value="minor">Minor</option>
-                                            <option value="major">Major</option>
-                                            <option value="critical">Critical</option>
+                                            <option value="Minor">Minor</option>
+                                            <option value="Major">Major</option>
+                                            <option value="Critical">Critical</option>
                                         </select>
                                     </div>
                                 </div>
@@ -354,14 +354,14 @@
                                         <select name="initiated_through"
                                             onchange="otherController(this.value, 'others', 'initiated_through_req')">
                                             <option value="">Enter Your Selection Here</option>
-                                            <option value="recall">Recall</option>
-                                            <option value="return">Return</option>
-                                            <option value="deviation">Deviation</option>
-                                            <option value="complaint">Complaint</option>
-                                            <option value="regulatory">Regulatory</option>
-                                            <option value="lab-incident">Lab Incident</option>
-                                            <option value="improvement">Improvement</option>
-                                            <option value="others">Others</option>
+                                            <option value="Recall">Recall</option>
+                                            <option value="Return">Return</option>
+                                            <option value="Deviation">Deviation</option>
+                                            <option value="Complaint">Complaint</option>
+                                            <option value="Regulatory">Regulatory</option>
+                                            <option value="Lab Incident">Lab Incident</option>
+                                            <option value="Improvement">Improvement</option>
+                                            <option value="Others">Others</option>
                                         </select>
                                     </div>
                                 </div>
@@ -386,9 +386,9 @@
                                         <select name="repeat"
                                             onchange="otherController(this.value, 'yes', 'repeat_nature')">
                                             <option value="">Enter Your Selection Here</option>
-                                            <option value="yes">Yes</option>
-                                            <option value="no">No</option>
-                                            <option value="na">NA</option>
+                                            <option value="Yes">Yes</option>
+                                            <option value="No">No</option>
+                                            <option value="NA">NA</option>
                                         </select>
                                     </div>
                                 </div>
@@ -547,7 +547,7 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="reason_change">Reason for Change</label>
+                                        <label for="reason_change">Reason For Change</label>
                                         <div class="relative-container">
                                             <textarea name="reason_change" id="reason_change" class="mic-input"></textarea>
                                             @component('frontend.forms.language-model')
@@ -596,7 +596,7 @@
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="type_change">
-                                            Type of Change
+                                            Type Of Change
                                             <span class="text-primary" data-bs-toggle="modal"
                                                 data-bs-target="#change-control-type-of-change-instruction-modal"
                                                 style="font-size: 0.8rem; font-weight: 400; cursor:pointer;">
@@ -605,9 +605,9 @@
                                         </label>
                                         <select name="type_chnage">
                                             <option value="">-- Select --</option>
-                                            <option value="major">Major</option>
-                                            <option value="minor">Minor</option>
-                                            <option value="critical">Critical</option>
+                                            <option value="Major">Major</option>
+                                            <option value="Minor">Minor</option>
+                                            <option value="Critical">Critical</option>
                                         </select>
                                     </div>
                                 </div>
@@ -705,8 +705,8 @@
                                 <label for="nature-change">Training Required</label>
                                 <select name="training_required">
                                     <option value="">-- Select --</option>
-                                    <option value="no">No</option>
-                                    <option value="yes">Yes</option>
+                                    <option value="No">No</option>
+                                    <option value="Yes">Yes</option>
                                 </select>
                             </div>
                             <div class="group-input">
@@ -1046,10 +1046,11 @@
                                     <label for="Severity Rate">Severity</label>
                                     <select name="severity" id="analysisR" onchange='calculateRiskAnalysis(this)'>
                                         <option value="">Enter Your Selection Here</option>
-                                        <option value="Negligible">Negligible</option>
-                                        <option value="Moderate">Moderate</option>
-                                        <option value="Major">Major</option>
-                                        <option value="Fatal">Fatal</option>
+                                        <option value="1">Negligible</option>
+                                        <option value="2">Minor</option>
+                                        <option value="3">Moderate</option>
+                                        <option value="4">Major</option>
+                                        <option value="5">Fatal</option>
                                     </select>
                                 </div>
                             </div>
@@ -1058,11 +1059,11 @@
                                     <label for="Occurrence">Occurrence</label>
                                     <select name="Occurance" id="analysisP" onchange='calculateRiskAnalysis(this)'>
                                         <option value="">Enter Your Selection Here</option>
-                                        <option value="Extremely Unlikely">Extremely Unlikely</option>
-                                        <option value="Rare">Rare</option>
-                                        <option value="Unlikely">Unlikely</option>
-                                        <option value="Likely">Likely</option>
-                                        <option value="Very Likely">Very Likely</option>
+                                        <option value="1">Extremely Unlikely</option>
+                                        <option value="2">Rare</option>
+                                        <option value="3">Unlikely</option>
+                                        <option value="4">Likely</option>
+                                        <option value="5">Very Likely</option>
                                     </select>
                                 </div>
                             </div>
@@ -1071,11 +1072,11 @@
                                     <label for="Detection">Detection</label>
                                     <select name="Detection" id="analysisN" onchange='calculateRiskAnalysis(this)'>
                                         <option value="">Enter Your Selection Here</option>
-                                        <option value="Impossible">Impossible</option>
-                                        <option value="Rare">Rare</option>
-                                        <option value="Unlikely">Unlikely</option>
-                                        <option value="Likely">Likely</option>
-                                        <option value="Very Likely">Very Likely</option>
+                                        <option value="1">Impossible</option>
+                                        <option value="2">Rare</option>
+                                        <option value="3">Unlikely</option>
+                                        <option value="4">Likely</option>
+                                        <option value="5">Very Likely</option>
                                     </select>
                                 </div>
                             </div>

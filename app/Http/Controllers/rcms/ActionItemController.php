@@ -1126,7 +1126,7 @@ class ActionItemController extends Controller
                 if(!empty($users)){
                     try {
                         $history = new ActionItemHistory();
-                        $history->supplier_id = $id;
+                        $history->cc_id = $id;
                         $history->activity_type = "Not Applicable";
                         $history->previous = "Not Applicable";
                         $history->current = "Not Applicable";
@@ -1237,7 +1237,7 @@ class ActionItemController extends Controller
                 if(!empty($users)){
                     try {
                         $history = new ActionItemHistory();
-                        $history->supplier_id = $id;
+                        $history->cc_id = $id;
                         $history->activity_type = "Not Applicable";
                         $history->previous = "Not Applicable";
                         $history->current = "Not Applicable";
@@ -1383,7 +1383,7 @@ class ActionItemController extends Controller
              if(!empty($users)){
                  try {
                      $history = new ActionItemHistory();
-                     $history->supplier_id = $id;
+                     $history->cc_id = $id;
                      $history->activity_type = "Not Applicable";
                      $history->previous = "Not Applicable";
                      $history->current = "Not Applicable";
@@ -1494,7 +1494,7 @@ class ActionItemController extends Controller
              if(!empty($users)){
                  try {
                      $history = new ActionItemHistory();
-                     $history->supplier_id = $id;
+                     $history->cc_id = $id;
                      $history->activity_type = "Not Applicable";
                      $history->previous = "Not Applicable";
                      $history->current = "Not Applicable";

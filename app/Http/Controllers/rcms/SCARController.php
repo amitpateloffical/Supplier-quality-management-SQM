@@ -951,7 +951,7 @@ class SCARController extends Controller
                     if(!empty($users)){
                         try {
                             $history = new ScarAuditTrail();
-                            $history->supplier_id = $id;
+                            $history->scar_id = $id;
                             $history->activity_type = "Not Applicable";
                             $history->previous = "Not Applicable";
                             $history->current = "Not Applicable";
@@ -1155,7 +1155,7 @@ class SCARController extends Controller
                     if(!empty($users)){
                         try {
                             $history = new ScarAuditTrail();
-                            $history->supplier_id = $id;
+                            $history->scar_id = $id;
                             $history->activity_type = "Not Applicable";
                             $history->previous = "Not Applicable";
                             $history->current = "Not Applicable";
@@ -1246,7 +1246,7 @@ class SCARController extends Controller
                     if(!empty($users)){
                         try {
                             $history = new ScarAuditTrail();
-                            $history->supplier_id = $id;
+                            $history->scar_id = $id;
                             $history->activity_type = "Not Applicable";
                             $history->previous = "Not Applicable";
                             $history->current = "Not Applicable";
@@ -1294,7 +1294,7 @@ class SCARController extends Controller
                     if(!empty($users)){
                         try {
                             $history = new ScarAuditTrail();
-                            $history->supplier_id = $id;
+                            $history->scar_id = $id;
                             $history->activity_type = "Not Applicable";
                             $history->previous = "Not Applicable";
                             $history->current = "Not Applicable";
@@ -1448,7 +1448,7 @@ class SCARController extends Controller
               if(!empty($users)){
                   try {
                       $history = new ScarAuditTrail();
-                      $history->supplier_id = $id;
+                      $history->scar_id = $id;
                       $history->activity_type = "Not Applicable";
                       $history->previous = "Not Applicable";
                       $history->current = "Not Applicable";

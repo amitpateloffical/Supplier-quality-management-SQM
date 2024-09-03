@@ -1682,7 +1682,7 @@ $history->save();
                 if(!empty($users)){
                     try {
                         $history = new RootAuditTrial();
-                        $history->supplier_id = $id;
+                        $history->root_id = $id;
                         $history->activity_type = "Not Applicable";
                         $history->previous = "Not Applicable";
                         $history->current = "Not Applicable";
@@ -1810,7 +1810,7 @@ $history->save();
                 if(!empty($users)){
                     try {
                         $history = new RootAuditTrial();
-                        $history->supplier_id = $id;
+                        $history->root_id = $id;
                         $history->activity_type = "Not Applicable";
                         $history->previous = "Not Applicable";
                         $history->current = "Not Applicable";
@@ -1915,7 +1915,7 @@ $history->save();
                 if(!empty($users)){
                     try {
                         $history = new RootAuditTrial();
-                        $history->supplier_id = $id;
+                        $history->root_id = $id;
                         $history->activity_type = "Not Applicable";
                         $history->previous = "Not Applicable";
                         $history->current = "Not Applicable";

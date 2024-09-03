@@ -29,10 +29,29 @@ CC,
 Deviation,
 User,
 OpenStage,
-SCAR,
 Capa,
+SupplierChecklist,
+SupplierSite,
+SupplierSiteAuditTrail,
 RiskManagement,
-SupplierChecklist
+RiskAuditTrail,
+SupplierAudit,
+ExternalAuditTrailSupplier,
+CapaAuditTrial,
+RcmDocHistory,
+DeviationAuditTrail,
+Observation,
+AuditTrialObservation,
+extension_new,
+ExtensionNewAuditTrail,
+ActionItem,
+ActionItemHistory,
+SCAR,
+ScarAuditTrail,
+EffectivenessCheck,
+EffectivenessCheckAuditTrail,
+RootCauseAnalysis,
+RootAuditTrial
 };
 
 class SupplierController extends Controller
@@ -2452,8 +2471,8 @@ class SupplierController extends Controller
         //     }
         //     $supplier->cep_attachment = json_encode($files);
         // }
-        $files = is_array($request->existing_attach_files_b) ? $request->existing_attach_files_b : null;
 
+        $files = is_array($request->existing_attach_files_b) ? $request->existing_attach_files_b : null;
         if (!empty($request->cep_attachment)) {
             if ($supplier->cep_attachment) {
                 $existingFiles = json_decode($supplier->cep_attachment, true); // Convert to associative array
@@ -8780,7 +8799,7 @@ class SupplierController extends Controller
 
 
             case 'RiskAssessment':
-                $notification = RiskManagement::find($id);
+                $notification = RiskAuditTrail::find($id);
                 if($notification){
                     $riskAssessmentId = $notification->audit_id;
                     $parentData = RiskManagement::where('id', $risk_id)->first();

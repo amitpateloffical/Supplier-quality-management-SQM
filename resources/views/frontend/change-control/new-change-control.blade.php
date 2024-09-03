@@ -247,9 +247,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="initiator-group">Initiator Group
-                                            <!-- > -->
-                                        </label>
+                                        <label for="initiator-group">Initiator Group</label>
                                         <select name="Initiator_Group" id="initiator_group">
                                             <option value="">-- Select --</option>
                                             <option value="CQA">

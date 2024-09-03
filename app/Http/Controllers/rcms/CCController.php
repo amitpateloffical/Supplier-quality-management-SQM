@@ -466,12 +466,12 @@ class CCController extends Controller
             $history->save();
         }
         
-        if(!empty($openState->Initiator_Group)){
+        if(!empty($openState->initiator_group_code)){
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
             $history->activity_type = 'Initiator Group';
             $history->previous = "Null";
-            $history->current = Helpers::getInitiatorGroupFullName($openState->Initiator_Group);
+            $history->current = Helpers::getInitiatorGroupFullName($openState->initiator_group_code);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1141,7 +1141,7 @@ class CCController extends Controller
             } elseif($request->severity == 4){
                 $history->current = "Major";
             } elseif($request->severity == 5){
-                $history->current = "Fatel";
+                $history->current = "Fatal";
             } else {
                 $history->current = "Not Applicable";
             }
@@ -1200,6 +1200,8 @@ class CCController extends Controller
                 $history->current = "Unlikely";
             } elseif($request->Detection == 4){
                 $history->current = "Likely";
+            } elseif($request->Detection == 5){
+                $history->current = "Very Likely";
             } else {
                 $history->current = "Not Applicable";
             }
@@ -1898,16 +1900,40 @@ class CCController extends Controller
             $history->save();
         }
 
-        if ($lastDocument->Initiator_Group != $openState->Initiator_Group) {
+        // if ($lastDocument->Initiator_Group != $openState->Initiator_Group) {
+        //     $existingHistory = RcmDocHistory::where('cc_id', $id)
+        //     ->where('activity_type', 'Initiator Group')
+        //     ->exists();
+        //     $history = new RcmDocHistory;
+        //     $history->cc_id = $id;
+        //     $history->activity_type = 'Initiator Group';
+        //     $history->previous = Helpers::getInitiatorGroupFullName($lastDocument->Initiator_Group);
+        //     $history->current = Helpers::getInitiatorGroupFullName($openState->Initiator_Group);
+        //     $history->comment = "Not Appliccable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
+        //     if ($existingHistory) {
+        //         $history->action_name = "Update";
+        //     } else {
+        //         $history->action_name = "New";
+        //     }
+        //     $history->save();
+        // }
+
+        if ($lastDocument->initiator_group_code != $openState->initiator_group_code) {
             $existingHistory = RcmDocHistory::where('cc_id', $id)
             ->where('activity_type', 'Initiator Group')
             ->exists();
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Initiator Group';
-            $history->previous = Helpers::getInitiatorGroupFullName($lastDocument->Initiator_Group);
-            $history->current = Helpers::getInitiatorGroupFullName($openState->Initiator_Group);
-            $history->comment = "Not Appliccable";
+            $history->previous = Helpers::getInitiatorGroupFullName($lastDocument->initiator_group_code);
+            $history->current = Helpers::getInitiatorGroupFullName($openState->initiator_group_code);
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -2834,9 +2860,9 @@ class CCController extends Controller
             } elseif($lastDocument->severity == 4){
                 $history->previous = "Major";
             } elseif($lastDocument->severity == 5){
-                $history->previous = "Fatel";
+                $history->previous = "Fatal";
             } else {
-                $history->previous = "NULL";
+                $history->previous = "Null";
             } 
 
             if ($request->severity == 1){
@@ -2848,7 +2874,7 @@ class CCController extends Controller
             } elseif($request->severity == 4){
                 $history->current = "Major";
             } elseif($request->severity == 5){
-                $history->current = "Fatel";
+                $history->current = "Fatal";
             } else {
                 $history->current = "Not Applicable";
             }
@@ -2887,7 +2913,7 @@ class CCController extends Controller
             } elseif($lastDocument->Occurance == 5){
                 $history->previous = "Very Likely";
             } else {
-                $history->previous = "NULL";
+                $history->previous = "Null";
             } 
 
             if ($request->Occurance == 1){
@@ -2935,8 +2961,10 @@ class CCController extends Controller
                 $history->previous = "Unlikely";
             } elseif($lastDocument->Detection == 4){
                 $history->previous = "Likely";
+            } elseif($lastDocument->Detection == 5){
+                $history->previous = "Very Likely";
             } else {
-                $history->previous = "NULL";
+                $history->previous = "Null";
             } 
 
             if ($request->Detection == 1){
@@ -2947,6 +2975,8 @@ class CCController extends Controller
                 $history->current = "Unlikely";
             } elseif($request->Detection == 4){
                 $history->current = "Likely";
+            } elseif($request->Detection == 5){
+                $history->current = "Very Likely";
             } else {
                 $history->current = "Not Applicable";
             }

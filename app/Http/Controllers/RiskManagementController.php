@@ -1090,7 +1090,7 @@ class RiskManagementController extends Controller
         if (!empty($data->justification)) {
             $history = new RiskAuditTrail();
             $history->risk_id = $data->id;
-            $history->activity_type = 'Justification';
+            $history->activity_type = 'Justification / Rationale';
             $history->previous = "Null";
             $history->current = $data->justification;
             $history->comment = "Not Applicable";
@@ -2696,11 +2696,11 @@ class RiskManagementController extends Controller
         // }
         if ($lastDocument->justification != $data->justification || !empty($request->justification_comment)) {
             $lastDocumentAuditTrail = RiskAuditTrail::where('risk_id', $data->id)
-                ->where('activity_type', 'Justification')
+                ->where('activity_type', 'Justification / Rationale')
                 ->exists();
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
-            $history->activity_type = 'Justification';
+            $history->activity_type = 'Justification / Rationale';
             $history->previous = $lastDocument->justification;
             $history->current = $data->justification;
             $history->comment = $request->justification_comment;

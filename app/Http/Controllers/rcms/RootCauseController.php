@@ -1674,7 +1674,7 @@ $history->save();
                 $history->save();
 
 
-                $list = Helpers::getInitiatorUserList($root->division_id);
+                $list = Helpers::getQAUserList($root->division_id);
 
                 $userIds = collect($list)->pluck('user_id')->toArray();
                 $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
@@ -1697,7 +1697,7 @@ $history->save();
                         $history->stage = "";
                         $history->action_name = "";
                         $history->mailUserId = $userId;
-                        $history->role_name = "Initiator";
+                        $history->role_name = "QA";
                         $history->save(); 
                     } catch (\Throwable $e) {
                         \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -1803,7 +1803,7 @@ $history->save();
                     $history->action_name = 'Update';
                 }
                 $history->save();
-                $list = Helpers::getQAUserList($root->division_id);
+                $list = Helpers::getInitiatorUserList($root->division_id);
                  $userIds = collect($list)->pluck('user_id')->toArray();
                 $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
                 $userId = $users->pluck('id')->implode(',');
@@ -1825,7 +1825,7 @@ $history->save();
                         $history->stage = "";
                         $history->action_name = "";
                         $history->mailUserId = $userId;
-                        $history->role_name = "QA";
+                        $history->role_name = "Initiator";
                         $history->save(); 
                     } catch (\Throwable $e) {
                         \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -1907,7 +1907,7 @@ $history->save();
                 }
                 $history->save();
     
-                $list = Helpers::getInitiatorUserList($root->division_id);
+                $list = Helpers::getQAUserList($root->division_id);
 
                 $userIds = collect($list)->pluck('user_id')->toArray();
                 $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
@@ -1930,7 +1930,7 @@ $history->save();
                         $history->stage = "";
                         $history->action_name = "";
                         $history->mailUserId = $userId;
-                        $history->role_name = "Initiator";
+                        $history->role_name = "QA";
                         $history->save(); 
                     } catch (\Throwable $e) {
                         \Log::error('Mail failed to send: ' . $e->getMessage());

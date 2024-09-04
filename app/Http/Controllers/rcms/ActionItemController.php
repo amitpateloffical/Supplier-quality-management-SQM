@@ -1159,7 +1159,7 @@ class ActionItemController extends Controller
                                 //     $message->to($email)
                                 //         ->subject("Document sent ".Auth::user()->name);
                                 // }
-                                ['data' => $openState, 'site'=>'AI', 'history'=>" - Activity: Submit " , 'process' => 'Action Item', 'comment' => $openState->submitted_comment,'user'=> Auth::user()->name],
+                                ['data' => $openState, 'site'=>'AI', 'history'=>" Submit " , 'process' => 'Action Item', 'comment' => $openState->submitted_comment,'user'=> Auth::user()->name],
                                 function ($message) use ($email,$openState) {
                                     $message->to($email)
                                         ->subject("QMS Notification: Action Item, Record #" . $openState->record . " - Activity: Submit Permormed");
@@ -1270,7 +1270,7 @@ class ActionItemController extends Controller
                                 //     $message->to($email)
                                 //         ->subject("Document sent ".Auth::user()->name);
                                 // }
-                                ['data' => $openState, 'site'=>'AI',  'history'=>" - Activity: Complete " , 'process' => 'Action Item', 'comment' => $openState->completed_comment,'user'=> Auth::user()->name],
+                                ['data' => $openState, 'site'=>'AI',  'history'=>" Complete " , 'process' => 'Action Item', 'comment' => $openState->completed_comment,'user'=> Auth::user()->name],
                                 function ($message) use ($email,$openState) {
                                     $message->to($email)
                                         ->subject("QMS Notification: Action Item, Record #" .  str_pad($openState->record, 4, '0', STR_PAD_LEFT) . " - Activity: Complete Permormed");
@@ -1411,7 +1411,7 @@ class ActionItemController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $openState, 'site'=>'AI', 'history'=>" - Activity: Cancel " , 'process' => 'Action Item', 'comment' => $openState->cancelled_comment,'user'=> Auth::user()->name],
+                                    ['data' => $openState, 'site'=>'AI', 'history'=>" Cancel " , 'process' => 'Action Item', 'comment' => $openState->cancelled_comment,'user'=> Auth::user()->name],
                                 function ($message) use ($email,$openState) {
                                     $message->to($email)
                                         ->subject("QMS Notification: Action Item, Record #" . str_pad($openState->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel Permormed");
@@ -1527,7 +1527,7 @@ class ActionItemController extends Controller
                                 //     $message->to($email)
                                 //         ->subject("Document sent ".Auth::user()->name);
                                 // }
-                                ['data' => $openState,'site'=>'AI', 'history'=>" - Activity: More Information Required " , 'process' => 'Action Item', 'comment' => $openState->more_information_required_comment,'user'=> Auth::user()->name],
+                                ['data' => $openState,'site'=>'AI', 'history'=>" More Information Required " , 'process' => 'Action Item', 'comment' => $openState->more_information_required_comment,'user'=> Auth::user()->name],
                                 function ($message) use ($email,$openState) {
                                     $message->to($email)
                                         ->subject("QMS Notification: Action Item, Record #" . str_pad($openState->record, 4, '0', STR_PAD_LEFT). " - Activity: More Information Required Permormed");
@@ -1636,24 +1636,24 @@ class ActionItemController extends Controller
 
 
 
-    public function notificationDetail($slug, $id){
-        switch ($slug) {
+    // public function notificationDetail($slug, $id){
+    //     switch ($slug) {
              
-            case 'ActionItem':
-                $notification = ActionItemHistory::find($id);
-                if($notification){
-                    $actionItemId = $notification->cc_id;
-                    $parentData = ActionItem::where('id', $actionItemId)->first();
+    //         case 'ActionItem':
+    //             $notification = ActionItemHistory::find($id);
+    //             if($notification){
+    //                 $actionItemId = $notification->cc_id;
+    //                 $parentData = ActionItem::where('id', $actionItemId)->first();
         
-                    $userId = explode(',', $notification->mailUserId);
-                    $getName = User::whereIn('id', $userId)->get(['name', 'email']);
-                    return view('frontend.supplier.notification_detail', compact('notification', 'getName', 'parentData'));
-                }
-                break;
+    //                 $userId = explode(',', $notification->mailUserId);
+    //                 $getName = User::whereIn('id', $userId)->get(['name', 'email']);
+    //                 return view('frontend.supplier.notification_detail', compact('notification', 'getName', 'parentData'));
+    //             }
+    //             break;
                    
-             default:
-                return $slug;
-                break;
-        }
-    }
+    //          default:
+    //             return $slug;
+    //             break;
+    //     }
+    // }
 }

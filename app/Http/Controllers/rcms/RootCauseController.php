@@ -1676,6 +1676,7 @@ $history->save();
 
                 $list = Helpers::getQAUserList($root->division_id);
 
+                
                 $userIds = collect($list)->pluck('user_id')->toArray();
                 $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
                 $userId = $users->pluck('id')->implode(',');
@@ -1693,11 +1694,11 @@ $history->save();
                         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                         $history->origin_state = "Not Applicable";
                         $history->change_to = "Not Applicable";
-                        $history->change_from = "Investigation in Progress";
+                        $history->change_from = "Submitted to Supplier";
                         $history->stage = "";
                         $history->action_name = "";
                         $history->mailUserId = $userId;
-                        $history->role_name = "QA";
+                        $history->role_name = "QA/Deginee";
                         $history->save(); 
                     } catch (\Throwable $e) {
                         \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -1710,7 +1711,7 @@ $history->save();
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $root , 'site'=>'RCA','history'=>" - Activity: Acknowledge "  ,'process' => ' Root Cause Analyses', 'comment' => $root->acknowledge_comment,'user'=> Auth::user()->name ],
+                                    ['data' => $root , 'site'=>'RCA','history'=>"  Acknowledge "  ,'process' => ' Root Cause Analyses', 'comment' => $root->acknowledge_comment,'user'=> Auth::user()->name ],
                                 function ($message) use ($email, $root ) {
                                     $message->to($email)
                                         ->subject("QMS Notification: Root Cause Analyses, Record #" . str_pad( $root->record, 4, '0', STR_PAD_LEFT) . " - Activity: Acknowledge Permormed");
@@ -1844,7 +1845,7 @@ $history->save();
                                     //             ->subject("Document is Sent By " . Auth::user()->name);
                                     // }
 
-                                    ['data' => $root , 'site'=>'RCA', 'history'=>" - Activity: QA Review Complete ",'process' => ' Root Cause Analyses', 'comment' => $root->qA_review_complete_comment,'user'=> Auth::user()->name ],
+                                    ['data' => $root , 'site'=>'RCA', 'history'=>"  QA Review Complete ",'process' => ' Root Cause Analyses', 'comment' => $root->qA_review_complete_comment,'user'=> Auth::user()->name ],
                                     function ($message) use ($email, $root ) {
                                         $message->to($email)
                                             ->subject("QMS Notification: Root Cause Analyses, Record #" . str_pad( $root->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA Review Complete Permormed");
@@ -1948,7 +1949,7 @@ $history->save();
                                     //     $message->to($email)
                                     //         ->subject("Document sent 6 ".Auth::user()->name);
                                     // }
-                                    ['data' => $root ,'site'=>'RCA', 'history'=>" - Activity: Cancel " ,'process' => ' Root Cause Analyses', 'comment' => $root->cancelled_comment,'user'=> Auth::user()->name ],
+                                    ['data' => $root ,'site'=>'RCA', 'history'=>"  Cancel " ,'process' => ' Root Cause Analyses', 'comment' => $root->cancelled_comment,'user'=> Auth::user()->name ],
                                     function ($message) use ($email, $root ) {
                                         $message->to($email)
                                             ->subject("QMS Notification: Root Cause Analyses, Record #" . str_pad( $root->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel Permormed");
@@ -2104,25 +2105,25 @@ $history->save();
     }
 
 
-    public function notificationDetail($slug, $id){
-        switch ($slug) {
+    // public function notificationDetail($slug, $id){
+    //     switch ($slug) {
                
-            case 'RCA':
-                $notification = RootAuditTrial::find($id);
-                if($notification){
-                    $rootCauseId = $notification->root_id;
-                    $parentData = RootCauseAnalysis::where('id', $rootCauseId)->first();
+    //         case 'RCA':
+    //             $notification = RootAuditTrial::find($id);
+    //             if($notification){
+    //                 $rootCauseId = $notification->root_id;
+    //                 $parentData = RootCauseAnalysis::where('id', $rootCauseId)->first();
         
-                    $userId = explode(',', $notification->mailUserId);
-                    $getName = User::whereIn('id', $userId)->get(['name', 'email']);
-                    return view('frontend.supplier.notification_detail', compact('notification', 'getName', 'parentData'));
-                }
-                break;
+    //                 $userId = explode(',', $notification->mailUserId);
+    //                 $getName = User::whereIn('id', $userId)->get(['name', 'email']);
+    //                 return view('frontend.supplier.notification_detail', compact('notification', 'getName', 'parentData'));
+    //             }
+    //             break;
             
 
-            default:
-                return $slug;
-                break;
-        }
-    }
+    //         default:
+    //             return $slug;
+    //             break;
+    //     }
+    // }
 }

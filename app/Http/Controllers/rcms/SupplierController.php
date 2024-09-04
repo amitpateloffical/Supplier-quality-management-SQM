@@ -6168,7 +6168,7 @@ class SupplierController extends Controller
                 $supplier->prepurchase_sample_on = Carbon::now()->format('d-M-Y');
                 $supplier->prepurchase_sample_comment = $request->comments;
 
-                $hitory = new SupplierAuditTrail();
+                $history = new SupplierAuditTrail();
                 $history->supplier_id = $id;
 
                 $history->activity_type = 'Pre-Purchase Sample Required By, Pre-Purchase Sample Required On';

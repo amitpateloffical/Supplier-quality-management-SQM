@@ -1119,7 +1119,7 @@ class ActionItemController extends Controller
                 }
                 $history->save();
 
-                $list = Helpers::getInitiatorUserList($openState->division_id);
+                $list = Helpers::getActionOwnerUserList($openState->division_id);
                 $userIds = collect($list)->pluck('user_id')->toArray();
                 $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
                 $userId = $users->pluck('id')->implode(',');
@@ -1141,7 +1141,7 @@ class ActionItemController extends Controller
                         $history->stage = "";
                         $history->action_name = "";
                         $history->mailUserId = $userId;
-                        $history->role_name = "Initiator";
+                        $history->role_name = "Action Owner";
                         $history->save(); 
                     } catch (\Throwable $e) {
                         \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -1229,7 +1229,7 @@ class ActionItemController extends Controller
                 $history->save();
 
 
-                $list = Helpers::getActionOwnerUserList($openState->division_id);
+                $list = Helpers::getInitiatorUserList($openState->division_id);
 
                 $userIds = collect($list)->pluck('user_id')->toArray();
                 $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
@@ -1252,7 +1252,7 @@ class ActionItemController extends Controller
                         $history->stage = "";
                         $history->action_name = "";
                         $history->mailUserId = $userId;
-                        $history->role_name = "Action Owner";
+                        $history->role_name = "Initiator";
                         $history->save(); 
                     } catch (\Throwable $e) {
                         \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -1376,7 +1376,7 @@ class ActionItemController extends Controller
 
 
 
-             $list = Helpers::getInitiatorUserList($openState->division_id);
+             $list = Helpers::getActionOwnerUserList($openState->division_id);
              $userIds = collect($list)->pluck('user_id')->toArray();
              $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
              $userId = $users->pluck('id')->implode(',');
@@ -1398,7 +1398,7 @@ class ActionItemController extends Controller
                      $history->stage = "";
                      $history->action_name = "";
                      $history->mailUserId = $userId;
-                     $history->role_name = "Initiator";
+                     $history->role_name = "Action Owner";
                      $history->save(); 
                  } catch (\Throwable $e) {
                      \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -1487,7 +1487,7 @@ class ActionItemController extends Controller
                 $history->stage = "More Information Required";
                 $history->save();
 
-                $list = Helpers::getActionOwnerUserList($openState->division_id);
+                $list = Helpers::getInitiatorUserList($openState->division_id);
                 $userIds = collect($list)->pluck('user_id')->toArray();
              $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
              $userId = $users->pluck('id')->implode(',');
@@ -1509,7 +1509,7 @@ class ActionItemController extends Controller
                      $history->stage = "";
                      $history->action_name = "";
                      $history->mailUserId = $userId;
-                     $history->role_name = "Action Owner";
+                     $history->role_name = "Initiator";
                      $history->save(); 
                  } catch (\Throwable $e) {
                      \Log::error('Mail failed to send: ' . $e->getMessage());

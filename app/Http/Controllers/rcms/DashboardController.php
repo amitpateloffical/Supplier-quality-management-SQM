@@ -814,6 +814,7 @@ class DashboardController extends Controller
             $audit = "internalauditReport/" . $data->id;
         } elseif ($type == "Risk-Assessment") {
             $data = RiskManagement::find($id);
+            $record = $data->record;
             $single = "riskSingleReport/" . $data->id;
             $audit = "riskAuditReport/" . $data->id;
             $parent = "#";

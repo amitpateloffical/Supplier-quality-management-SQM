@@ -2230,7 +2230,7 @@ class CapaController extends Controller
                             $history->stage = "";
                             $history->action_name = "";
                             $history->mailUserId = $userId;
-                            $history->role_name = "HOD ";
+                            $history->role_name = "HOD/Designee  ";
                             $history->save(); 
                         } catch (\Throwable $e) {
                             \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -2457,7 +2457,7 @@ class CapaController extends Controller
                                         $history->stage = "";
                                         $history->action_name = "";
                                         $history->mailUserId = $userId;
-                                        $history->role_name = "QA Head";
+                                        $history->role_name = "QA Head/Designee";
                                         $history->save(); 
                                     } catch (\Throwable $e) {
                                         \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -2604,7 +2604,7 @@ class CapaController extends Controller
                                         $history->stage = "";
                                         $history->action_name = "";
                                         $history->mailUserId = $userId;
-                                        $history->role_name = "HOD";
+                                        $history->role_name = "HOD/Designee";
                                         $history->save(); 
                                     } catch (\Throwable $e) {
                                         \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -2814,7 +2814,7 @@ class CapaController extends Controller
                             $history->stage = "";
                             $history->action_name = "";
                             $history->mailUserId = $userId;
-                            $history->role_name = "QA Head";
+                            $history->role_name = "QA Head/Designee";
                             $history->save(); 
                         } catch (\Throwable $e) {
                             \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -3038,7 +3038,7 @@ class CapaController extends Controller
                     $history->stage = "";
                     $history->action_name = "";
                     $history->mailUserId = $userId;
-                    $history->role_name = "HOD";
+                    $history->role_name = "HOD/Designee";
                     $history->save(); 
                 } catch (\Throwable $e) {
                     \Log::error('Mail failed to send: ' . $e->getMessage());
@@ -3126,56 +3126,7 @@ class CapaController extends Controller
         $history->status = $capa->status;
         $history->save();
 
-            $list = Helpers::getInitiatorUserList(division_id);
-
-            $userIds = collect($list)->pluck('user_id')->toArray();
-            $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
-            $userId = $users->pluck('id')->implode(',');
-            if(!empty($users)){
-                try {
-                    $history = new CapaAuditTrial();
-                    $history->capa_id = $id;
-                    $history->activity_type = "Not Applicable";
-                    $history->previous = "Not Applicable";
-                    $history->current = "Not Applicable";
-                    $history->action = 'Notification';
-                    $history->comment = "";
-                    $history->user_id = Auth::user()->id;
-                    $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    $history->origin_state = "Not Applicable";
-                    $history->change_to = "Not Applicable";
-                    $history->change_from = "Reject";
-                    $history->stage = "";
-                    $history->action_name = "";
-                    $history->mailUserId = $userId;
-                    $history->role_name = "CAPA In Progress";
-                    $history->save(); 
-                } catch (\Throwable $e) {
-                    \Log::error('Mail failed to send: ' . $e->getMessage());
-                }
-            }  
-            foreach ($list as $u) {
-                // if($u->q_m_s_divisions_id == $capa->division_id){
-                $email = Helpers::getInitiatorEmail($u->user_id);
-                if ($email !== null) {
-
-                    Mail::send(
-                        'mail.view-mail',
-                        ['data' => $capa, 'site' => "CAPA", 'history' => "Reject", 'process' => 'CAPA', 'comment' => $capa->reject_more_info_requierd_comment, 'user'=> Auth::user()->name],
-                        // function ($message) use ($email) {
-                        //     $message->to($email)
-                        //         ->subject("More Info Required ".Auth::user()->name);
-                        // }
-                        function ($message) use ($email, $capa) {
-                            $message->to($email)
-                            ->subject("QMS Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: Reject Performed");
-                        }
-                    );
-                  }
-                // }
-            }
-            $history->save();
+            
 
             toastr()->success('Document Sent');
             return back();
@@ -3283,6 +3234,63 @@ class CapaController extends Controller
                         $history->origin_state = $lastDocument->status;
                         $history->stage = 'Qa More Info Required';
                         $history->save();
+
+                        $list = Helpers::getHodUserList($capa->division_id);
+
+                        $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if(!empty($users)){
+                    try {
+                        $history = new CapaAuditTrial();
+                        $history->capa_id = $id;
+                        $history->activity_type = "Not Applicable";
+                        $history->previous = "Not Applicable";
+                        $history->current = "Not Applicable";
+                        $history->action = 'Notification';
+                        $history->comment = "";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Not Applicable";
+                        $history->change_to = "Not Applicable";
+                        $history->change_from = "CAPA In Progress";
+                        $history->stage = "";
+                        $history->action_name = "";
+                        $history->mailUserId = $userId;
+                        $history->role_name = "HOD/Designee";
+                        $history->save(); 
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                } 
+                        foreach ($list as $u) {
+                            // if($u->q_m_s_divisions_id == $capa->division_id){
+                                $email = Helpers::getHODEmail($u->user_id);
+                                 if ($email !== null) {
+                                    try {
+    
+                                  Mail::send(
+                                      'mail.view-mail',
+                                      ['data' => $capa, 'site' => "CAPA", 'history' => "More Info Required", 'process' => 'CAPA', 'comment' => $capa->more_info_review_comment, 'user'=> Auth::user()->name],
+                                    // function ($message) use ($email) {
+                                    //     $message->to($email)
+                                    //         ->subject("Document is sent By ".Auth::user()->name);
+                                    // }
+                                    function ($message) use ($email, $capa) {
+                                        $message->to($email)
+                                        ->subject("QMS Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Info Required Performed");
+                                    }
+                                  );
+                                } catch (\Exception $e) {
+                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                                    }
+                                }
+                            // }
+                        }
+    
+    
+
                 $capa->update();
                 $history = new CapaHistory();
                 $history->type = "Capa";

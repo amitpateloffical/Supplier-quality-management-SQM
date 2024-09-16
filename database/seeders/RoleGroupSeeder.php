@@ -36,6 +36,8 @@ class RoleGroupSeeder extends Seeder
             'Effectiveness Check' => ['Initiator', 'Supervisor', 'QA', 'View Only', 'FP'],
             'Root Cause Analysis' => ['Initiator', 'QA', 'View Only', 'FP'],
             'SCAR' => ['SCAR Initiator', 'Vendors', 'SCAR Initiator', 'View Only', 'FP'],
+            'OOS/OOT' => ['Initiatoe', 'QA', 'CQA', 'View Only', 'FP'],
+            'OOS Micro' => ['OOS Initiator', 'CQA', 'View Only', 'FP'],
         ];
 
         $start_from_id = 1; // Initialize your starting ID

@@ -118,7 +118,7 @@
             <div class="division-bar">
 
                 <strong>Site Division/Project :</strong>
-                {{ Helpers::getDivisionName($data->division_id) }} / Effectiveness-Check
+                {{ $data->division_id }}/Effectiveness-Check
             </div>
 
 
@@ -141,7 +141,7 @@
                                 class="button_theme1"> Audit Trail </button> </a>
 
                         @if ($data->stage == 1 && Helpers::check_roles($data->division_id, 'Effectiveness Check', 3))
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal"> 
                                 Submit
                             </button>
                         @elseif($data->stage == 2 && Helpers::check_roles($data->division_id, 'Effectiveness Check', 14))
@@ -275,14 +275,14 @@
                                         <div class="group-input">
                                             <label for="RLS Record Number">Record Number</label>
                                             <input disabled type="text" name="division_code"
-                                                value="{{ Helpers::getDivisionName($data->division_id) }}/EC/{{ Helpers::year($data->created_at) }}/{{ Helpers::recordFormat($data->record) }}">
+                                                value="{{ $data->division_id }}/EC/{{ Helpers::year($data->created_at) }}/{{ Helpers::recordFormat($data->record) }}">
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Division Code"><b>Division Code</b></label>
                                             <input disabled type="text" name="division_code"
-                                                value="{{ Helpers::getDivisionName($data->division_id) }}">
+                                                value="{{ $data->division_id }}">
 
                                         </div>
                                     </div>

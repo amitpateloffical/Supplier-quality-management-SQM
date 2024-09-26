@@ -3035,7 +3035,7 @@ class SupplierAuditController extends Controller
                         try {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $changeControl,'site'=>'SA','history' => 'Submit', 'process' => 'SCAR', 'comment' => $changeControl->comment,'user'=> Auth::user()->name],
+                                ['data' => $changeControl,'site'=>'SA','history' => 'Submit', 'process' => 'Supplier Audit', 'comment' => $changeControl->comment,'user'=> Auth::user()->name],
                                 function ($message) use ($email, $changeControl) {
                                  $message->to($email)
                                  ->subject("QMS Notification: Supplier Audit , Record #" . str_pad($record_number, 4, '0', STR_PAD_LEFT) . " - Activity: Submit Performed"); }
@@ -3158,7 +3158,7 @@ class SupplierAuditController extends Controller
                         try {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $changeControl,'site'=>'SA', 'history' => 'Issue Report ', 'process' => 'SCAR', 'comment' => $changeControl->pending_response_comment,'user'=> Auth::user()->name],
+                                ['data' => $changeControl,'site'=>'SA', 'history' => 'Issue Report ', 'process' => 'Supplier Audit', 'comment' => $changeControl->pending_response_comment,'user'=> Auth::user()->name],
                                 function ($message) use ($email, $changeControl) {
                                     $message->to($email)
                                     ->subject("QMS Notification: Supplier Audit , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Issue Report Performed"); }
@@ -3285,7 +3285,7 @@ class SupplierAuditController extends Controller
                             Mail::send(
                                 'mail.view-mail',
 
-                                ['data' => $changeControl,'site'=>'SA' ,'history' => 'All Capa Closed ', 'process' => 'SCAR', 'comment' => $changeControl->comment_closed_done_by_comment,'user'=> Auth::user()->name],
+                                ['data' => $changeControl,'site'=>'SA' ,'history' => 'All Capa Closed ', 'process' => 'Supplier Audit', 'comment' => $changeControl->comment_closed_done_by_comment,'user'=> Auth::user()->name],
                             //     function ($message) use ($email) {
                             //         $message->to($email)
                             //             ->subject("Document is Sent By " . Auth::user()->name);

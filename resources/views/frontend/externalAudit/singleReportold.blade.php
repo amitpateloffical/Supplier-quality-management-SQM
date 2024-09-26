@@ -192,6 +192,8 @@
                     General Information
                 </div>
                 <table>
+
+                    
                     <tr>  {{ $data->created_at }} added by {{ $data->originator }}
                         <th class="w-20">Initiator</th>
                         <td class="w-30">{{ $data->originator }}</td>

@@ -110,11 +110,11 @@
                         '<tr>' +
                         '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
                         '"></td>' +
-                        '<td><input type="text" name="observation_id[]"></td>' +
-                        '<td><input type="text" name="observation_description[]"></td>' +
-                        '<td><input type="text" name="area[]"></td>' +
-                        '<td><input type="text" name="auditee_response[]"></td>' +
-                        '<td><button type="button" class="removeRowBtn" style="background-color: black;color: white;">Remove</button></td>' +
+                        '<td><input type="text"  {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="observation_id[]"></td>' +
+                        '<td><input type="text"  {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="observation_description[]"></td>' +
+                        '<td><input type="text"  {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="area[]"></td>' +
+                        '<td><input type="text"  {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="auditee_response[]"></td>' +
+                        '<td><button type="button"  {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} class="removeRowBtn" style="background-color: black;color: white;">Remove</button></td>' +
                         '</tr>';
 
                     return html;
@@ -1559,7 +1559,7 @@
                                                                             {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                                             value="{{ unserialize($grid_data1->auditee_response)[$key] ? unserialize($grid_data1->auditee_response)[$key] : '' }}">
                                                                     </td>
-                                                                    <td><button type="button" class="removeRowBtn"
+                                                                    <td><button type="button" class="removeRowBtn"  {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                                             style="background-color: black;color: white;">Remove</button>
                                                                     </td>
                                                                 </tr>

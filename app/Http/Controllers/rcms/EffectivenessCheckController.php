@@ -36,7 +36,8 @@ class EffectivenessCheckController extends Controller
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('Y-m-d');
-        return view('frontend.forms.effectiveness-check', compact('due_date', 'record_number', 'old_record'));
+        $divisionId = session()->get('division');
+        return view('frontend.forms.effectiveness-check', compact('due_date', 'record_number', 'old_record', 'divisionId'));
     }
 
     public function index()

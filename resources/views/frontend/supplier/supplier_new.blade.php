@@ -182,7 +182,7 @@
 
                             <div class="col-md-6">
                                 <div class="group-input">
-                                    <label for="Short Description">Request Number</label>
+                                    <label for="Short Description">Record Number</label>
                                     <input id="request_number" type="text" name="request_number" value="{{ $requestNUmber }}" disabled>
                                 </div>
                             </div>
@@ -298,7 +298,7 @@
                                                 <div class="row">
                                                     <div class="col-lg-6">
                                                         <div class="group-input">
-                                                            <label for="Initiator Group">Initiation Department</label>
+                                                            <label for="Initiator Group"></label>
                                                             <select name="initiation_group" id="initiation_group">
                                                                 <option value="">-- Select --</option>
                                                                 <option value="CQA"> Corpo  Assurance Biopharma</option>

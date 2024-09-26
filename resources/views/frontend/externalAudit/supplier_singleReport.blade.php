@@ -182,6 +182,14 @@
             <div class="block">
                 <div class="block-head">General Information</div>
                 <table>
+
+                    <tr>
+                        <th class="w-20">Record Number</th>
+                        <td class="w-30">@if($data->record){{ Helpers::divisionNameForQMS($data->division_id) }}/SA/{{ Helpers::year($data->created_at) }}/{{  str_pad($data->record, 4, '0', STR_PAD_LEFT) }} @else Not Applicable @endif</td>
+                        <th class="w-20">Site/Location Code</th>
+                        <td class="w-30">@if($data->division_id){{ Helpers::getDivisionName($data->division_id) }} @else Not Applicable @endif</td>
+                    </tr>
+
                     <tr>
                         <th class="w-20">Initiator</th>
                         <td class="w-30">{{ Helpers::getInitiatorName($data->initiator_id) }}</td>
@@ -207,8 +215,8 @@
                         </td>
                     </tr>
                     <tr>
-                        <th class="w-20">Site/Location Code</th>
-                        <td class="w-30">{{ $data->division ? $data->division->name : 'Na' }}</td>
+                        {{-- <th class="w-20">Site/Location Code</th>
+                        <td class="w-30">{{ $data->division ? $data->division->name : 'Na' }}</td> --}}
                         <th class="w-20">Severity Level</th>
                         <td class="w-30">
                             @if ($data->severity_level)
@@ -319,8 +327,9 @@
                         </td>
                     </tr>
                 </table>
+
                 <div class="border-table">
-                    <div class="block-head">File Attachment</div>
+                    <div class="block-head">Initial Attachment</div>
                     <table>
                         <tr class="table_bg">
                             <th class="w-20">S.N.</th>

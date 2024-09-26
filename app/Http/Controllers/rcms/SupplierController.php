@@ -67,6 +67,7 @@ class SupplierController extends Controller
     }
 
     public function store(Request $request){
+
         $supplier = new Supplier();
         $supplier->type = "Supplier";
         $supplier->division_id = $request->division_id;
@@ -467,7 +468,7 @@ class SupplierController extends Controller
         $history->supplier_id = $supplier->id;
         $history->activity_type = 'Request Number';
         $history->previous = "Null";
-        $history->current = 'RV/RP/' . Helpers::year($supplier->created_at) . '/' . str_pad($supplier->record, 4, '0', STR_PAD_LEFT);
+        $history->current = 'RV/RP' . '/' . str_pad($supplier->record, 4, '0', STR_PAD_LEFT) . '/' . date('Y');
         $history->comment = "Not Applicable";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
@@ -570,12 +571,48 @@ class SupplierController extends Controller
             $history->save();
         }
 
-        if(!empty($request->initiation_group)){
-            $history = new SupplierAuditTrail;
+        // if(!empty($request->initiation_group)){
+        //     $history = new SupplierAuditTrail;
+        //     $history->supplier_id = $supplier->id;
+        //     $history->activity_type = 'Initiation Department';
+        //     $history->previous = "Null";
+        //     $history->current = Helpers::getInitiatorName($supplier->initiation_group);
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $supplier->status;
+        //     $history->change_to =   "Opened";
+        //     $history->change_from = "Initiation";
+        //     $history->action_name = 'Create';
+        //     $history->save();
+        // }
+ 
+        if (!empty($request->initiation_group)) {
+            $history = new ExternalAuditTrailSupplier();
             $history->supplier_id = $supplier->id;
             $history->activity_type = 'Initiation Department';
             $history->previous = "Null";
-            $history->current = Helpers::getInitiatorName($supplier->initiation_group);
+            $history->current = Helpers::getInitiatorGroupFullName($request->initiation_group);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = 'Opened';
+            $history->change_from = 'Initiation';
+            $history->action_name = "Create";
+            $history->origin_state = $supplier->status;
+            $history->save();
+        }
+        
+     
+
+        if(!empty($request->initiation_group)){
+            $history = new SupplierAuditTrail;
+            $history->supplier_id = $supplier->id;
+            $history->activity_type = 'Initiator Department';
+            $history->previous = "Null";
+            $history->current = Helpers::getFullDepartmentName($request->initiation_group);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -587,23 +624,22 @@ class SupplierController extends Controller
             $history->save();
         }
 
-        if(!empty($request->initiator_group_code)){
-            $history = new SupplierAuditTrail;
+        if (!empty($request->initiator_group_code)) {
+            $history = new SupplierAuditTrail();
             $history->supplier_id = $supplier->id;
             $history->activity_type = 'Initiator Department Code';
             $history->previous = "Null";
-            $history->current = Helpers::getInitiatorName($supplier->initiator_group_code);
+            $history->current = $request->initiator_group_code;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = 'Opened';
+            $history->change_from = 'Initiation';
+            $history->action_name = "Create";
             $history->origin_state = $supplier->status;
-            $history->change_to =   "Opened";
-            $history->change_from = "Initiation";
-            $history->action_name = 'Create';
             $history->save();
         }
-
         if(!empty($request->manufacturerName)){
             $history = new SupplierAuditTrail;
             $history->supplier_id = $supplier->id;
@@ -788,7 +824,7 @@ class SupplierController extends Controller
             $history->supplier_id = $supplier->id;
             $history->activity_type = 'Accepted By';
             $history->previous = "Null";
-            $history->current = $supplier->accepted_by;
+            $history->current =  Helpers::getInitiatorName($supplier->accepted_by);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -836,7 +872,7 @@ class SupplierController extends Controller
             $history->supplier_id = $supplier->id;
             $history->activity_type = 'CQA Coordinator';
             $history->previous = "Null";
-            $history->current = $supplier->cqa_coordinator;
+            $history->current =  Helpers::getInitiatorName($supplier->cqa_coordinator);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -997,7 +1033,7 @@ class SupplierController extends Controller
             $history->supplier_id = $supplier->id;
             $history->activity_type = 'CQA Designee';
             $history->previous = "Null";
-            $history->current = $supplier->cqa_designee;
+            $history->current = Helpers::getInitiatorName($supplier->cqa_designee);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1045,7 +1081,7 @@ class SupplierController extends Controller
             $history->supplier_id = $supplier->id;
             $history->activity_type = 'Acknowledge By';
             $history->previous = "Null";
-            $history->current = $supplier->acknowledge_by;
+            $history->current =  Helpers::getInitiatorName($supplier->acknowledge_by);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1814,7 +1850,7 @@ class SupplierController extends Controller
         if(!empty($request->quality_system_ranking)){
             $history = new SupplierAuditTrail;
             $history->supplier_id = $supplier->id;
-            $history->activity_type = 'Quality Systems Ranking';
+            $history->activity_type = 'Quality Systems Weight';
             $history->previous = "Null";
             $history->current = $supplier->quality_system_ranking;
             $history->comment = "Not Applicable";

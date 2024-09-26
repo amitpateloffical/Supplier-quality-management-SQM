@@ -209,12 +209,12 @@ class ObservationController extends Controller
             $history->save();
         }
 
-        if (! empty($data->record_no)) {
+        
             $history = new AuditTrialObservation();
             $history->Observation_id = $data->id;
             $history->activity_type = 'Record Number';
             $history->previous = "Null";
-            $history->current = $data->record_no;
+            $history->current = Helpers::getDivisionName(session()->get('division')) . "/OBS/" . Helpers::year($data->created_at) . "/" . str_pad($data->record, 4, '0', STR_PAD_LEFT) ;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -224,7 +224,7 @@ class ObservationController extends Controller
             $history->change_to = "Opened";
             $history->action_name = "Create";
             $history->save();
-        }
+        
 
 
         if (! empty($data->initiator_id)) {
@@ -864,7 +864,7 @@ class ObservationController extends Controller
     {
         $lastDocument = Observation::find($id);
         $data = Observation::find($id);
-        // $data->initiator_id = Auth::user()->id;
+         $data->initiator_id = Auth::user()->id;
         // $data->parent_id = $request->parent_id;
         // $data->parent_type = $request->parent_type;
         // $data->division_code = $request->division_code;

@@ -1201,24 +1201,19 @@
                                         </td>
                                         <td><input type="text" name="version_no[]">
                                         </td>
-                                        {{-- <td><input type="date" name="implementation_date[]">
-                                            </td> --}}
-                                        <td>
-                                            <input type="text" name="implementation_date[]" class="agenda-dates"
-                                                placeholder="DD-MM-YYYY">
+                                         <td><input type="date" name="implementation_date[]">
+                                            </td> 
+                                        <!-- <td>
 
-                                            {{-- <div class="group-input new-date-data-field mb-0">
-                                                <div class="input-date ">
-                                                    <div class="calenderauditee">
-                                                        <input type="text" id="implementation_date' + serialNumber +'"
-                                                            readonly placeholder="DD-MM-YYYY" />
-                                                        <input type="date" name="implementation_date[]"
-                                                            class="hide-input"
-                                                            oninput="handleDateInput(this, `implementation_date' + serialNumber +'`)" />
+                                                <div class="col-md-6 new-date-data-field">
+                                                    <div class="group-input input-date">
+                                                        <div class="calenderauditee">
+                                                            <input type="text" id="last_audit_date" readonly placeholder="DD-MMM-YYYY" />
+                                                            <input type="date" name="last_audit_date" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" oninput="handleDateInput(this, 'last_audit_date')" />
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div> --}}
-                                        </td>
+                                        </td> -->
                                         <td><input type="text" name="new_document_no[]">
                                         </td>
                                         <td><input type="text" name="new_version_no[]">

@@ -40,7 +40,7 @@ use Illuminate\Support\Facades\Hash;
         }
         $root = new RootCauseAnalysis();
         $root->form_type = "Root-cause-analysis"; 
-        $root->originator_id = $request->originator_id;
+        $root->originator_id = Auth::user()->id;
         $root->parent_id = $request->parent_id;
         $root->parent_type = $request->parent_type;
         $root->date_opened = $request->date_opened;
@@ -282,23 +282,21 @@ use Illuminate\Support\Facades\Hash;
             $history->action_name = 'Create';
             $history->save();
         }
-        if (!empty($root->Initiator)){
-            $history = new RootAuditTrial();
-            $history->root_id = $root->id;
-            $history->activity_type = 'Initiator';
-            $history->activity_type = '';
-            $history->previous = "Null";
-            $history->current = $root->Initiator;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $root->status;
-            $history->change_to =   "Opened";
-            $history->change_from = "Initiation";
-            $history->action_name = 'Create';
-            $history->save();
-        }
+
+        $history = new RootAuditTrial();
+        $history->root_id = $root->id;
+        $history->activity_type = 'Initiator';
+        $history->previous = "Null";
+        $history->current =  Helpers::getInitiatorName($root->originator_id);
+        $history->comment = "Not Applicable";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $root->status;
+        $history->change_to =   "Opened";
+        $history->change_from = "Initiation";
+        $history->action_name = 'Create';
+        $history->save();
            
          
         if (!empty($root->division_code)){

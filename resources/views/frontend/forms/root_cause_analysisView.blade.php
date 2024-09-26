@@ -965,13 +965,13 @@
                                                 Fishbone or Ishikawa Diagram
                                                 <button type="button" name="agenda"
                                                     onclick="addFishBone('.top-field-group', '.bottom-field-group')"{{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>+</button>
-                                                <button type="button" name="agenda" class="fishbone-del-btn"
-                                                    onclick="deleteFishBone('.top-field-group', '.bottom-field-group')">
+                                                <button type="button" name="agenda" class="fishbone-del-btn" 
+                                                    onclick="deleteFishBone('.top-field-group', '.bottom-field-group')" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
                                                     <i class="fa-solid fa-trash-can"></i>
                                                 </button>
                                                 <span class="text-primary" data-bs-toggle="modal"
                                                     data-bs-target="#fishbone-instruction-modal"
-                                                    style="font-size: 0.8rem; font-weight: 400;">
+                                                    style="font-size: 0.8rem; font-weight: 400;" >
                                                     (Launch Instruction)
                                                 </span>
                                             </label>
@@ -1252,7 +1252,7 @@
                                                 Is/Is Not Analysis
                                                 <span class="text-primary" data-bs-toggle="modal"
                                                     data-bs-target="#is_is_not-instruction-modal"
-                                                    style="font-size: 0.8rem; font-weight: 400;">
+                                                    style="font-size: 0.8rem; font-weight: 400;" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
                                                     (Launch Instruction)
                                                 </span>
                                             </label>

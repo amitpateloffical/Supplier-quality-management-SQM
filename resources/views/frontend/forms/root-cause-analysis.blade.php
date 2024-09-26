@@ -90,7 +90,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="originator">Initiator</label>
-                                        <input readonly type="text" name="originator_id"
+                                        <input readonly type="text"
                                             value="{{ Auth::user()->name }}" />
                                     </div>
                                 </div>

@@ -279,7 +279,7 @@
                         <th class="w-20">Reference Record</th>
                         <td class="w-80">
                             @if ($data->capa_related_record)
-                                {{ $data->capa_related_record }}
+                                {{ str_replace(',',', ', $data->capa_related_record) }}
                             @else
                                 Not Applicable
                             @endif

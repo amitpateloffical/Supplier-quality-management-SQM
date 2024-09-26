@@ -242,7 +242,7 @@
                         <th class="w-20">Action Item Related Records</th>
                         <td class="w-80">
                             @if ($data->Reference_Recores1)
-                                {{ $data->Reference_Recores1 }}
+                                {{ str_replace(',',', ', $data->Reference_Recores1) }}
                             @else
                                 Not Applicable
                             @endif

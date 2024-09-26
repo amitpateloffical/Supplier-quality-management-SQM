@@ -2293,8 +2293,8 @@ class CCController extends Controller
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Reason For Change';
-            $history->previous = $lastDocument->proposed_change;
-            $history->current = $request->proposed_change;
+            $history->previous = $lastDocument->reason_change;
+            $history->current = $request->reason_change;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
